@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers • Kancah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
+                    colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } },
+                    animation: { 'marquee': 'marquee 25s linear infinite' },
+                    keyframes: { marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-100%)' } } }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        body { font-family: 'Ubuntu', sans-serif; }
+        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
+        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .job-card { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+</head>
+<body class="bg-gray-50 text-kancah-dark overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
+
+    <nav class="fixed w-full z-50 top-0 bg-white/80 backdrop-blur-xl border-b border-white/40 h-16 sm:h-20 flex justify-between items-center px-6">
+        <a href="index.html"><img src="assets/kancah-logo.png" class="h-6 sm:h-8 md:h-9"></a>
+        <div class="hidden lg:flex gap-12 text-sm font-medium uppercase tracking-wide">
+            <a href="about.html" class="nav-link hover:text-kancah-blue transition-colors">Agency</a>
+            <a href="about.html#the-squad" class="nav-link hover:text-kancah-blue transition-colors">Team</a>
+            <a href="services.html" class="nav-link hover:text-kancah-blue transition-colors">Capabilities</a>
+            <a href="works.html" class="nav-link hover:text-kancah-blue transition-colors">Work</a>
+            <a href="careers.html" class="nav-link text-kancah-blue font-bold">Careers</a>
+        </div>
+        <a href="#contact" class="hidden lg:flex items-center gap-2 text-sm font-bold border border-gray-200 px-5 py-2 rounded-full hover:bg-kancah-dark hover:text-white transition-all group">
+            Let's Talk <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform"></i>
+        </a>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-[1400px] mx-auto min-h-screen">
+        <div class="max-w-2xl mb-16">
+            <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest block mb-4">Join Kancah</span>
+            <h2 class="text-5xl sm:text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9] mb-6 text-kancah-dark uppercase">
+                TEMPAT MAIN <br> ANAK <span class="text-kancah-blue italic">KREATIF</span>.
+            </h2>
+            <p class="text-gray-500 font-light text-base sm:text-lg mb-8 max-w-lg leading-relaxed">
+                Kita nyari orang yang gak cuma jago *tools*, tapi punya *taste* dan berani beda. Kalau kamu orangnya, ayo gabung.
+            </p>
+
+            <div class="flex flex-wrap gap-3">
+                <button onclick="fetchJobs('all')" class="filter-btn active px-8 py-3 rounded-full font-bold text-sm uppercase tracking-wider transition-all bg-kancah-blue text-white shadow-lg shadow-blue-100" data-filter="all">All Roles</button>
+                <button onclick="fetchJobs('Full-Time')" class="filter-btn px-8 py-3 rounded-full font-bold text-sm uppercase tracking-wider transition-all bg-white text-gray-400 border border-gray-200" data-filter="Full-Time">Full Time</button>
+                <button onclick="fetchJobs('Internship')" class="filter-btn px-8 py-3 rounded-full font-bold text-sm uppercase tracking-wider transition-all bg-white text-gray-400 border border-gray-200" data-filter="Internship">Internship</button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20" id="jobGrid">
+            <div class="col-span-full py-20 text-center text-gray-400 font-bold uppercase tracking-widest animate-pulse italic">Checking for positions...</div>
+        </div>
+
+        <div class="w-full bg-gradient-to-br from-kancah-blue to-[#0004a0] rounded-[2.5rem] p-8 sm:p-12 text-white flex flex-col md:flex-row justify-between items-center relative overflow-hidden group shadow-xl border border-white/10 hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.4)] transition-all duration-500">
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
+            <div class="absolute top-[-50%] right-[-10%] w-96 h-96 bg-white/20 rounded-full blur-[100px] pointer-events-none group-hover:scale-125 transition-transform duration-700"></div>
+
+            <div class="relative z-10 max-w-2xl mb-8 md:mb-0">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-14 h-14 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center animate-bounce shadow-lg backdrop-blur-sm">
+                        <i class="fa-regular fa-paper-plane text-2xl"></i>
+                    </div>
+                    <h3 class="text-3xl sm:text-4xl font-bold leading-tight uppercase">Posisi yang dicari nggak ada?</h3>
+                </div>
+                <p class="text-white/80 font-light leading-relaxed text-lg pl-0 md:pl-[4.5rem]">
+                    Kirirm aja portofolio dan CV terbaikmu. Kita selalu cari bakat baru, entah itu full-time atau magang.
+                </p>
+            </div>
+            
+            <a href="mailto:careers@kancah.agency" class="relative z-10 shrink-0 inline-flex items-center justify-center gap-3 bg-white text-kancah-blue px-10 py-5 rounded-full font-bold uppercase text-sm tracking-wider hover:bg-kancah-dark hover:text-white transition-colors shadow-lg">
+                Kirim Lamaran
+            </a>
+        </div>
+    </main>
+
+    <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
+    
+        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
+            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+            </div>
+        </div>
+    
+        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
+                
+                <div class="lg:col-span-5 flex flex-col justify-start items-start">
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
+                        PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
+                    </h2>
+                    
+                    <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
+                        Ayo Diskusi
+                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                    </a>
+                </div>
+    
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <div>
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
+                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
+                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
+                        </address>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <a href="mailto:hello@kancah.agency" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-regular fa-envelope"></i> hello@kancah.agency
+                        </a>
+                        <a href="https://wa.me/628123456789" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-brands fa-whatsapp"></i> +62 812-3456-7890
+                        </a>
+                    </div>
+                </div>
+    
+                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
+                    
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="services.html" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
+                            <li><a href="works.html" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
+                            <li><a href="about.html" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
+                            <li><a href="careers.html" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
+                        </ul>
+                    </div>
+    
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Instagram</a></li>
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">LinkedIn</a></li>
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Behance</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
+                <p class="text-center md:text-left">&copy; 2025 PT. Kancah Media Sejahtera.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
+        const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
+        const kancah = supabase.createClient(kancahUrl, kancahKey);
+
+        async function fetchJobs(filter = 'all') {
+            const grid = document.getElementById('jobGrid');
+            updateFilterButtons(filter);
+
+            let query = kancah.from('careers').select('*').order('created_at', { ascending: false });
+            if (filter !== 'all') { query = query.eq('type', filter); }
+
+            const { data: jobs, error } = await query;
+
+            if (error) { grid.innerHTML = `<p class="text-red-500">Error loading positions.</p>`; return; }
+            if (jobs.length === 0) { grid.innerHTML = `<p class="col-span-full py-20 text-center text-gray-400 font-bold uppercase italic tracking-widest">No vacancy available.</p>`; return; }
+
+           grid.innerHTML = '';
+jobs.forEach(job => {
+    grid.innerHTML += `
+        <div class="job-card flex flex-col justify-between bg-white/60 backdrop-blur-md rounded-[2.5rem] p-8 sm:p-10 hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.2)] transition-all duration-500 border border-kancah-blue/10 hover:border-kancah-blue/60 group">
+            <div>
+                <div class="flex flex-wrap gap-3 mb-6 items-center">
+                    <span class="px-4 py-1.5 rounded-full border border-kancah-blue/30 text-kancah-blue text-[10px] font-bold uppercase tracking-wider bg-blue-50/50">${job.type}</span>
+                    <span class="text-gray-400 text-xs flex items-center gap-1 font-medium"><i class="fa-solid fa-location-dot"></i> ${job.location}</span>
+                </div>
+                <h3 class="text-3xl font-bold group-hover:text-kancah-blue transition-colors mb-4 tracking-tight uppercase italic">${job.title}</h3>
+            </div>
+            
+            <div class="flex justify-between items-center mt-10">
+                <a href="${job.link || 'mailto:careers@kancah.agency'}" target="_blank" 
+                   class="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-gray-200 text-kancah-dark text-[10px] font-bold uppercase tracking-widest hover:bg-kancah-blue hover:text-white hover:border-kancah-blue transition-all duration-300 group/btn">
+                    Apply Now 
+                    <i class="fa-solid fa-arrow-right -rotate-45 group-hover/btn:rotate-0 transition-transform duration-300"></i>
+                </a>
+                
+                <span class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em]">Open Position</span>
+            </div>
+        </div>`;
+});
+        }
+
+        function updateFilterButtons(active) {
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(btn => {
+                if (btn.getAttribute('data-filter') === active) {
+                    btn.className = "filter-btn active px-8 py-3 rounded-full font-bold text-sm uppercase tracking-wider transition-all bg-kancah-blue text-white shadow-lg";
+                } else {
+                    btn.className = "filter-btn px-8 py-3 rounded-full font-bold text-sm uppercase tracking-wider transition-all bg-white text-gray-400 border border-gray-200 hover:border-kancah-blue hover:text-kancah-blue";
+                }
+            });
+        }
+
+        fetchJobs('all');
+    </script>
+</body>
+</html>

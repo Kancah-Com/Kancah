@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services • Kancah</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ['Ubuntu', 'sans-serif'] 
+                    },
+                    colors: { 
+                        kancah: { 
+                            blue: '#0006ff', 
+                            dark: '#111111', 
+                            gray: '#393939', 
+                            light: '#f4f4f5' 
+                        } 
+                    },
+                    screens: {
+                        'xs': '475px', // HP Kecil
+                        '3xl': '1920px' // Layar TV Besar
+                    },
+                    animation: { 
+                        'marquee': 'marquee 25s linear infinite' 
+                    },
+                    keyframes: { 
+                        marquee: { 
+                            '0%': { transform: 'translateX(0%)' }, 
+                            '100%': { transform: 'translateX(-100%)' } 
+                        } 
+                    },
+                    backgroundImage: {
+                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        body { font-family: 'Ubuntu', sans-serif; }
+        
+        /* Mobile Menu Animation */
+        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .menu-open { overflow: hidden; }
+    </style>
+</head>
+<body class="bg-gray-50 text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
+
+    <nav class="fixed w-full z-50 top-0 bg-white/80 backdrop-blur-xl border-b border-white/40 transition-all duration-300" id="navbar">
+        <div class="max-w-[1400px] mx-auto px-6 h-16 sm:h-20 flex justify-between items-center relative z-50">
+            <a href="index.html" class="flex items-center z-50">
+                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-8 md:h-9 w-auto object-contain">
+            </a>
+            
+            <div class="hidden lg:flex gap-12 text-sm font-medium uppercase tracking-wide" id="nav-links">
+                <a href="about.html" class="nav-link hover:text-kancah-blue transition-colors">Agency</a>
+                <a href="about.html#the-squad" class="nav-link hover:text-kancah-blue transition-colors">Team</a> 
+                <a href="services.html" class="nav-link hover:text-kancah-blue transition-colors text-kancah-blue font-bold">Capabilities</a>
+                <a href="works.html" class="nav-link hover:text-kancah-blue transition-colors">Work</a>
+                <a href="careers.html" class="nav-link hover:text-kancah-blue transition-colors">Careers</a>
+            </div>
+            
+            <a href="#contact" class="hidden lg:flex items-center gap-2 text-sm font-bold border border-gray-200 px-5 py-2 rounded-full hover:bg-kancah-dark hover:text-white transition-all group">
+                Let's Talk <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+            </a>
+            
+            <button class="lg:hidden text-2xl w-10 h-10 flex items-center justify-center z-50 relative" id="mobile-menu-button">
+                <i class="fa-solid fa-bars-staggered transition-all duration-300" id="menu-icon"></i>
+            </button>
+        </div>
+        
+        <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center h-screen w-screen translate-x-full lg:hidden">
+            <div class="flex flex-col gap-8 text-center text-2xl font-bold uppercase tracking-wider">
+                <a href="about.html" class="mobile-link hover:text-kancah-blue">Agency</a>
+                <a href="about.html#the-squad" class="mobile-link hover:text-kancah-blue">Team</a>
+                <a href="services.html" class="mobile-link text-kancah-blue font-bold">Capabilities</a>
+                <a href="works.html" class="mobile-link hover:text-kancah-blue">Work</a>
+                <a href="careers.html" class="mobile-link hover:text-kancah-blue">Careers</a>
+            </div>
+            <a href="#contact" class="mt-12 px-8 py-3 bg-kancah-dark text-white rounded-full font-bold uppercase tracking-widest text-sm mobile-link">Let's Talk</a>
+        </div>
+    </nav>
+
+    <main class="pt-28 sm:pt-32 pb-24 px-4 sm:px-6 max-w-[1400px] mx-auto min-h-screen">
+        
+        <div class="mb-16 sm:mb-24 relative z-10">
+            <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest block mb-4">What We Do</span>
+            <h1 class="leading-[0.9] tracking-tighter w-full">
+                <span class="block whitespace-nowrap text-[11.5vw] sm:text-7xl md:text-8xl font-semibold text-kancah-dark">FULL SERVICE</span>
+                <span class="block whitespace-nowrap text-[11.5vw] sm:text-7xl md:text-8xl font-extrabold italic text-kancah-blue">CREATIVE HOUSE.</span>
+            </h1>
+            <p class="text-gray-500 mt-6 sm:mt-8 max-w-xl text-base sm:text-lg font-light leading-relaxed">
+                Kami menyediakan solusi ujung-ke-ujung. Dari strategi abstrak di atas kertas, sampai eksekusi teknis di layar gadget user.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-10 relative z-10">
+
+            <div id="brand" class="group relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 bg-white/60 backdrop-blur-md border border-kancah-blue/20 shadow-[0_0_30px_-10px_rgba(0,6,255,0.1)] hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.3)] hover:border-kancah-blue/60 transition-all duration-500">
+                <span class="absolute top-[-2rem] right-0 text-[10rem] sm:text-[14rem] font-black text-kancah-blue/5 pointer-events-none leading-none z-0 group-hover:text-kancah-blue/10 transition-colors duration-500">01.</span>
+                
+                <div class="relative z-10">
+                    <div class="w-16 h-16 mb-6 rounded-2xl bg-white border border-kancah-blue/20 text-kancah-blue flex items-center justify-center text-3xl group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shadow-sm relative overflow-hidden">
+                        <i class="fa-solid fa-fingerprint relative z-10"></i>
+                        <div class="absolute inset-0 bg-kancah-blue/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">Brand Design</h2>
+                    <p class="text-gray-500 leading-relaxed text-sm sm:text-base mb-6">
+                        Bikin brand itu nggak cuma soal logo keren, tapi soal 'nyawa' bisnis kamu. Kita bantu gali ceritamu dan terjemahin jadi identitas visual yang bikin orang langsung 'ngeh' dan inget terus sama brandmu.
+                    </p>
+                    <ul class="text-sm font-bold text-kancah-dark space-y-2">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Brand Naming & Tagline</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Logo Design</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Concept & Philosophy</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Brand Identity System</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="stationery" class="group relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 bg-white/60 backdrop-blur-md border border-kancah-blue/20 shadow-[0_0_30px_-10px_rgba(0,6,255,0.1)] hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.3)] hover:border-kancah-blue/60 transition-all duration-500">
+                <span class="absolute top-[-2rem] right-0 text-[10rem] sm:text-[14rem] font-black text-kancah-blue/5 pointer-events-none leading-none z-0 group-hover:text-kancah-blue/10 transition-colors duration-500">02.</span>
+                
+                <div class="relative z-10">
+                    <div class="w-16 h-16 mb-6 rounded-2xl bg-white border border-kancah-blue/20 text-kancah-blue flex items-center justify-center text-3xl group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shadow-sm relative overflow-hidden">
+                        <i class="fa-solid fa-pen-ruler relative z-10"></i>
+                        <div class="absolute inset-0 bg-kancah-blue/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">Stationery Design</h2>
+                    <p class="text-gray-500 leading-relaxed text-sm sm:text-base mb-6">
+                        Hal-hal kecil kayak kartu nama atau kop surat itu ternyata ngaruh banget ke kesan pertama. Kita pastiin alat tempur administrasimu tampil sekece brand utamamu, biar kelihatan makin profesional di depan klien.
+                    </p>
+                    <ul class="text-sm font-bold text-kancah-dark space-y-2">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Business Card</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Letterhead</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Envelope</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Folder</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="collateral" class="group relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 bg-white/60 backdrop-blur-md border border-kancah-blue/20 shadow-[0_0_30px_-10px_rgba(0,6,255,0.1)] hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.3)] hover:border-kancah-blue/60 transition-all duration-500">
+                <span class="absolute top-[-2rem] right-0 text-[10rem] sm:text-[14rem] font-black text-kancah-blue/5 pointer-events-none leading-none z-0 group-hover:text-kancah-blue/10 transition-colors duration-500">03.</span>
+                
+                <div class="relative z-10">
+                    <div class="w-16 h-16 mb-6 rounded-2xl bg-white border border-kancah-blue/20 text-kancah-blue flex items-center justify-center text-3xl group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shadow-sm relative overflow-hidden">
+                        <i class="fa-solid fa-box-archive relative z-10"></i>
+                        <div class="absolute inset-0 bg-kancah-blue/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">Collateral Design</h2>
+                    <p class="text-gray-500 leading-relaxed text-sm sm:text-base mb-6">
+                        Ini soal barang-barang pendukung yang bikin brandmu makin nempel di hati audiens. Mulai dari kemasan produk sampai seragam tim, kita desain biar setiap sentuhan jadi momen branding yang berkesan.
+                    </p>
+                    <ul class="text-sm font-bold text-kancah-dark space-y-2">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Product Packaging & Label</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Car Branding</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Uniform & Merchandise</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="promotion" class="group relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 bg-white/60 backdrop-blur-md border border-kancah-blue/20 shadow-[0_0_30px_-10px_rgba(0,6,255,0.1)] hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.3)] hover:border-kancah-blue/60 transition-all duration-500">
+                <span class="absolute top-[-2rem] right-0 text-[10rem] sm:text-[14rem] font-black text-kancah-blue/5 pointer-events-none leading-none z-0 group-hover:text-kancah-blue/10 transition-colors duration-500">04.</span>
+                
+                <div class="relative z-10">
+                    <div class="w-16 h-16 mb-6 rounded-2xl bg-white border border-kancah-blue/20 text-kancah-blue flex items-center justify-center text-3xl group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shadow-sm relative overflow-hidden">
+                        <i class="fa-solid fa-bullhorn relative z-10"></i>
+                        <div class="absolute inset-0 bg-kancah-blue/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">Promotion Design</h2>
+                    <p class="text-gray-500 leading-relaxed text-sm sm:text-base mb-6">
+                        Udah bayar mahal buat sewa spot iklan, sayang banget kalau desainnya biasa aja, kan? Serahin ke kita buat bikin materi promosi yang nggak cuma estetik, tapi juga 'nendang' dan bikin orang mau melirik.
+                    </p>
+                    <ul class="text-sm font-bold text-kancah-dark space-y-2">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Banner, Prints & Billboard</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Digital Ads Assets</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="webdev" class="group relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 bg-white/60 backdrop-blur-md border border-kancah-blue/20 shadow-[0_0_30px_-10px_rgba(0,6,255,0.1)] hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.3)] hover:border-kancah-blue/60 transition-all duration-500">
+                <span class="absolute top-[-2rem] right-0 text-[10rem] sm:text-[14rem] font-black text-kancah-blue/5 pointer-events-none leading-none z-0 group-hover:text-kancah-blue/10 transition-colors duration-500">05.</span>
+                
+                <div class="relative z-10">
+                    <div class="w-16 h-16 mb-6 rounded-2xl bg-white border border-kancah-blue/20 text-kancah-blue flex items-center justify-center text-3xl group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shadow-sm relative overflow-hidden">
+                        <i class="fa-solid fa-code relative z-10"></i>
+                        <div class="absolute inset-0 bg-kancah-blue/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">Web Development</h2>
+                    <p class="text-gray-500 leading-relaxed text-sm sm:text-base mb-6">
+                        Hari gini masih tanya perlu website apa nggak? Jawabannya IYA BANGET. Website itu rumah digitalmu yang ningkatin kepercayaan pelanggan. Kita bangunin yang nyaman, gampang dipakai, dan pastinya fungsional buat bisnismu.
+                    </p>
+                    <ul class="text-sm font-bold text-kancah-dark space-y-2">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Content Strategy & Development</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> UI/UX Design</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Web Development</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> SEO Optimization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="digital" class="group relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 bg-white/60 backdrop-blur-md border border-kancah-blue/20 shadow-[0_0_30px_-10px_rgba(0,6,255,0.1)] hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.3)] hover:border-kancah-blue/60 transition-all duration-500">
+                <span class="absolute top-[-2rem] right-0 text-[10rem] sm:text-[14rem] font-black text-kancah-blue/5 pointer-events-none leading-none z-0 group-hover:text-kancah-blue/10 transition-colors duration-500">06.</span>
+                
+                <div class="relative z-10">
+                    <div class="w-16 h-16 mb-6 rounded-2xl bg-white border border-kancah-blue/20 text-kancah-blue flex items-center justify-center text-3xl group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shadow-sm relative overflow-hidden">
+                        <i class="fa-solid fa-share-nodes relative z-10"></i>
+                        <div class="absolute inset-0 bg-kancah-blue/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">Social Media Management</h2>
+                    <p class="text-gray-500 leading-relaxed text-sm sm:text-base mb-6">
+                        Pusing ngurusin medsos yang harus selalu update? Sini kita bantuin. Dari mikirin strategi konten, bikin desainnya, sampai jadwal posting, biar kamu bisa fokus jualan aja. Kita bikin medsosmu lebih hidup dan masif menjangkau pelanggan.
+                    </p>
+                    <ul class="text-sm font-bold text-kancah-dark space-y-2">
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Content Strategy & Planning</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Creation, Design & Scheduled Posting</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Digital Ads & Outreach Activity</li>
+                        <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Social Media Report</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="audiovisual" class="lg:col-span-2 group relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 bg-white/60 backdrop-blur-md border border-kancah-blue/20 shadow-[0_0_30px_-10px_rgba(0,6,255,0.1)] hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.3)] hover:border-kancah-blue/60 transition-all duration-500">
+                <span class="absolute top-[-2rem] right-0 text-[10rem] sm:text-[14rem] font-black text-kancah-blue/5 pointer-events-none leading-none z-0 group-hover:text-kancah-blue/10 transition-colors duration-500">07.</span>
+                
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="w-16 h-16 mb-6 rounded-2xl bg-white border border-kancah-blue/20 text-kancah-blue flex items-center justify-center text-3xl group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shadow-sm relative overflow-hidden">
+                            <i class="fa-solid fa-film relative z-10"></i>
+                            <div class="absolute inset-0 bg-kancah-blue/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-bold mb-4 leading-tight">Audio Visual</h2>
+                        <p class="text-gray-500 leading-relaxed text-sm sm:text-base">
+                            Kadang tulisan aja nggak cukup. Kita butuh visual yang bergerak dan bersuara biar pesanmu makin dapet feel-nya. Kita siap produksi foto dan video keren buat nyeritain brandmu dengan cara yang lebih hidup dan menangkap perhatian audiens.
+                        </p>
+                    </div>
+                    <div class="lg:pl-12 lg:border-l border-gray-200/50">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-kancah-blue mb-6 flex items-center gap-2">
+                            <i class="fa-solid fa-microchip"></i> Capabilities
+                        </h4>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-4 text-sm font-bold text-kancah-dark">
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Video Commercial (TVC)</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Professional Photography</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Motion Graphics</li>
+                            <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Event Documentation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </main>
+
+    <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
+    
+        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
+            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+            </div>
+        </div>
+    
+        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
+                
+                <div class="lg:col-span-5 flex flex-col justify-start items-start">
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
+                        PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
+                    </h2>
+                    
+                    <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
+                        Ayo Diskusi
+                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                    </a>
+                </div>
+    
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <div>
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
+                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
+                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
+                        </address>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <a href="mailto:hello@kancah.agency" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-regular fa-envelope"></i> hello@kancah.agency
+                        </a>
+                        <a href="https://wa.me/628123456789" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-brands fa-whatsapp"></i> +62 812-3456-7890
+                        </a>
+                    </div>
+                </div>
+    
+                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
+                    
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="services.html" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
+                            <li><a href="works.html" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
+                            <li><a href="about.html" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
+                            <li><a href="careers.html" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
+                        </ul>
+                    </div>
+    
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Instagram</a></li>
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">LinkedIn</a></li>
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Behance</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
+                <p class="text-center md:text-left">&copy; 2025 PT. Kancah Media Sejahtera.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // MOBILE MENU TOGGLE
+            const mobileBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = mobileBtn ? mobileBtn.querySelector('i') : null;
+            let isMenuOpen = false;
+
+            function toggleMenu() {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    document.body.classList.add('menu-open');
+                    menuIcon.classList.remove('fa-bars-staggered');
+                    menuIcon.classList.add('fa-xmark');
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    document.body.classList.remove('menu-open');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars-staggered');
+                }
+            }
+
+            if (mobileBtn && mobileMenu && menuIcon) {
+                mobileBtn.addEventListener('click', toggleMenu);
+                
+                // Close menu when clicking a link inside it
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if(isMenuOpen) toggleMenu();
+                    });
+                });
+            }
+
+            // AUTO ACTIVE LINK LOGIC
+            const currentPathRaw = window.location.pathname.split('/').pop().toLowerCase();
+            const currentPath = currentPathRaw === '' ? 'index.html' : currentPathRaw;
+            const links = document.querySelectorAll('.nav-link');
+
+            links.forEach(link => {
+                const hrefAttr = link.getAttribute('href');
+                if (!hrefAttr) return;
+                
+                const linkHref = hrefAttr.split('/').pop().split('#')[0].toLowerCase();
+                
+                // Cek apakah link sama dengan halaman saat ini
+                if (linkHref === currentPath || (linkHref === '' && currentPath === 'index.html')) {
+                    link.classList.add('text-kancah-blue', 'font-bold');
+                    link.classList.remove('hover:text-kancah-blue');
+                } else {
+                    link.classList.add('text-kancah-dark', 'font-medium');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

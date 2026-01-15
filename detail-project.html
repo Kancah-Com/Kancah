@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Project Detail • Kancah</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
+                    colors: { kancah: { blue: '#0006ff', dark: '#111111' } },
+                    animation: { 'marquee': 'marquee 25s linear infinite' },
+                    keyframes: { marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-100%)' } } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Ubuntu', sans-serif; }
+        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
+        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    </style>
+</head>
+<body class="bg-white text-kancah-dark overflow-x-hidden">
+
+    <nav class="fixed w-full z-50 top-0 bg-white/80 backdrop-blur-xl border-b border-white/40 transition-all duration-300" id="navbar">
+        <div class="max-w-[1400px] mx-auto px-6 h-16 sm:h-20 flex justify-between items-center relative z-50">
+            <a href="index.html" class="flex items-center z-50">
+                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-8 md:h-9 w-auto object-contain">
+            </a>
+            <div class="hidden lg:flex gap-12 text-sm font-medium uppercase tracking-wide" id="nav-links">
+                <a href="about.html" class="nav-link hover:text-kancah-blue transition-colors">Agency</a>
+                <a href="about.html#the-squad" class="nav-link hover:text-kancah-blue transition-colors">Team</a>
+                <a href="services.html" class="nav-link hover:text-kancah-blue transition-colors">Capabilities</a>
+                <a href="works.html" class="nav-link text-kancah-blue font-bold transition-colors">Work</a>
+                <a href="careers.html" class="nav-link hover:text-kancah-blue transition-colors">Careers</a>
+            </div>
+            <a href="#contact" class="hidden lg:flex items-center gap-2 text-sm font-bold border border-gray-200 px-5 py-2 rounded-full hover:bg-kancah-dark hover:text-white transition-all group">
+                Let's Talk <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+            </a>
+        </div>
+    </nav>
+
+    <main class="pt-24 lg:pt-32 pb-12 px-6 max-w-[1600px] mx-auto min-h-[calc(100vh-80px)] flex flex-col justify-center">
+        <div id="project-container" class="opacity-0 transition-opacity duration-700">
+            <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+                <div class="w-full lg:w-3/5">
+                    <div class="rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-2xl aspect-video lg:aspect-[4/3] xl:aspect-video bg-gray-100">
+                        <img id="p-image" src="" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="w-full lg:w-2/5 space-y-8">
+                    <div>
+                        <span id="p-category" class="text-kancah-blue font-bold text-[10px] uppercase tracking-[0.2em] block mb-2">Category</span>
+                        <h1 id="p-title" class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tighter leading-none uppercase mb-6 italic">Loading...</h1>
+                    </div>
+                    <div class="grid grid-cols-1 gap-6 border-t border-gray-100 pt-8">
+                        <div>
+                            <h4 class="text-[9px] font-bold text-kancah-blue uppercase tracking-widest mb-2 italic">The Challenge</h4>
+                            <p id="p-challenge" class="text-sm text-gray-600 leading-relaxed font-light">--</p>
+                        </div>
+                        <div>
+                            <h4 class="text-[9px] font-bold text-kancah-blue uppercase tracking-widest mb-2 italic">Strategic Idea</h4>
+                            <p id="p-strategy" class="text-sm text-gray-600 leading-relaxed font-light">--</p>
+                        </div>
+                        <div>
+                            <h4 class="text-[9px] font-bold text-kancah-blue uppercase tracking-widest mb-2 italic">Outcome</h4>
+                            <p id="p-outcome" class="text-sm text-gray-600 leading-relaxed font-light">--</p>
+                        </div>
+                    </div>
+                    <div class="pt-6">
+                        <a href="works.html" class="inline-flex items-center gap-3 font-bold uppercase text-[10px] tracking-widest hover:text-kancah-blue transition-all group">
+                            <span class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center group-hover:border-kancah-blue transition-all">←</span>
+                            Back to Works
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
+    
+        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
+            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+            </div>
+        </div>
+    
+        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
+                
+                <div class="lg:col-span-5 flex flex-col justify-start items-start">
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
+                        PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
+                    </h2>
+                    
+                    <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
+                        Ayo Diskusi
+                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                    </a>
+                </div>
+    
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <div>
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
+                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
+                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
+                        </address>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <a href="mailto:hello@kancah.agency" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-regular fa-envelope"></i> hello@kancah.agency
+                        </a>
+                        <a href="https://wa.me/628123456789" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-brands fa-whatsapp"></i> +62 812-3456-7890
+                        </a>
+                    </div>
+                </div>
+    
+                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
+                    
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="services.html" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
+                            <li><a href="works.html" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
+                            <li><a href="about.html" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
+                            <li><a href="careers.html" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
+                        </ul>
+                    </div>
+    
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Instagram</a></li>
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">LinkedIn</a></li>
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Behance</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
+                <p class="text-center md:text-left">&copy; 2025 PT. Kancah Media Sejahtera.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // INISIALISASI
+        const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
+        const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
+        const kancah = supabase.createClient(kancahUrl, kancahKey);
+
+        async function getProjectDetail() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('id');
+
+            if (!slug) { window.location.href = 'works.html'; return; }
+
+            const { data: project, error } = await kancah
+                .from('projects')
+                .select('*')
+                .eq('slug', slug)
+                .single();
+
+            if (error || !project) {
+                console.error("Gagal ambil data:", error);
+                return;
+            }
+
+            // Mapping Data ke UI
+            document.getElementById('page-title').innerText = `${project.title} • Kancah`;
+            document.getElementById('p-title').innerText = project.title;
+            document.getElementById('p-category').innerText = project.category;
+            document.getElementById('p-image').src = project.image_url;
+            document.getElementById('p-challenge').innerText = project.challenge || "Detail challenge belum ditambahkan.";
+            document.getElementById('p-strategy').innerText = project.strategy || "Detail strategy belum ditambahkan.";
+            document.getElementById('p-outcome').innerText = project.outcome || "Detail outcome belum ditambahkan.";
+
+            // Tampilkan container
+            document.getElementById('project-container').classList.remove('opacity-0');
+        }
+
+        getProjectDetail();
+    </script>
+</body>
+</html>

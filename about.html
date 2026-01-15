@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About • Kancah</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
+                    colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } },
+                    backgroundImage: {
+                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
+                    },
+                    animation: {
+                        'marquee': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-100%)' } },
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        body { font-family: 'Ubuntu', sans-serif; }
+        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .menu-open { overflow: hidden; }
+        .cursor-pointer { cursor: pointer; }
+        
+        /* Force smooth scroll via CSS for buttons */
+        .smooth-scroll { scroll-behavior: smooth !important; }
+        /* Force instant scroll for teleporting */
+        .auto-scroll { scroll-behavior: auto !important; }
+    </style>
+</head>
+<body class="bg-gray-50 text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
+
+    <nav class="fixed w-full z-50 top-0 bg-white/80 backdrop-blur-xl border-b border-white/40 transition-all duration-300" id="navbar">
+        <div class="max-w-[1400px] mx-auto px-6 h-16 sm:h-20 flex justify-between items-center relative z-50">
+            <a href="index.html" class="flex items-center z-50">
+                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-8 md:h-9 w-auto object-contain">
+            </a>
+
+            <div class="hidden lg:flex gap-12 text-sm font-medium uppercase tracking-wide">
+                <div onclick="goToAgency()" class="nav-link text-kancah-blue font-bold transition-colors cursor-pointer" id="desk-agency">Agency</div>
+                <div onclick="goToTeam()" class="nav-link text-kancah-dark font-medium hover:text-kancah-blue transition-colors cursor-pointer" id="desk-team">Team</div>
+                <a href="services.html" class="nav-link text-kancah-dark font-medium hover:text-kancah-blue transition-colors">Capabilities</a>
+                <a href="works.html" class="nav-link text-kancah-dark font-medium hover:text-kancah-blue transition-colors">Work</a>
+                <a href="careers.html" class="nav-link text-kancah-dark font-medium hover:text-kancah-blue transition-colors">Careers</a>
+            </div>
+
+            <a href="#contact" class="hidden lg:flex items-center gap-2 text-sm font-bold border border-gray-200 px-5 py-2 rounded-full hover:bg-kancah-dark hover:text-white transition-all group">
+                Let's Talk <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+            </a>
+
+            <button class="lg:hidden text-2xl w-10 h-10 flex items-center justify-center z-50 relative" id="mobile-menu-button">
+                <i class="fa-solid fa-bars-staggered transition-all duration-300" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center h-screen w-screen translate-x-full lg:hidden">
+            <div class="flex flex-col gap-8 text-center text-2xl font-bold uppercase tracking-wider">
+                <div onclick="goToAgency(); toggleMenu()" class="mobile-link text-kancah-blue font-bold cursor-pointer" id="mob-agency">Agency</div>
+                <div onclick="goToTeam(); toggleMenu()" class="mobile-link text-kancah-dark hover:text-kancah-blue cursor-pointer" id="mob-team">Team</div>
+                <a href="services.html" class="mobile-link text-kancah-dark hover:text-kancah-blue">Capabilities</a>
+                <a href="works.html" class="mobile-link text-kancah-dark hover:text-kancah-blue">Work</a>
+                <a href="careers.html" class="mobile-link text-kancah-dark hover:text-kancah-blue">Careers</a>
+            </div>
+            <a href="#contact" class="mt-12 px-8 py-3 bg-kancah-dark text-white rounded-full font-bold uppercase tracking-widest text-sm mobile-link">Let's Talk</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-24 px-6 max-w-[1400px] mx-auto min-h-screen">
+        
+        <div id="agency-top" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24 relative z-10">
+            <div>
+                <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest block mb-4">Who We Are</span>
+                <h1 class="text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9]">
+                    WE ARE THE <br> 
+                    <span class="text-kancah-blue italic">GAME CHANGERS.</span>
+                </h1>
+            </div>
+            <div class="lg:pl-10">
+                <p class="text-xl md:text-2xl font-light text-gray-600 leading-relaxed">
+                    Kancah lahir dari keresahan melihat brand yang "gitu-gitu aja". Kami di sini untuk mendobrak status quo, menyuntikkan nyawa ke dalam identitas visual, dan membuat audiens berhenti *scrolling*.
+                </p>
+            </div>
+        </div>
+
+        <div class="bg-kancah-dark text-white rounded-[3rem] p-8 md:p-16 mb-24 relative overflow-hidden shadow-xl z-10">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-kancah-blue/20 rounded-full blur-[120px] -mr-20 -mt-20"></div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+                <div class="relative rounded-2xl overflow-hidden aspect-square border border-white/10">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" alt="Meeting Room">
+                    <div class="absolute bottom-6 left-6 bg-black/50 backdrop-blur px-4 py-2 rounded-lg text-xs font-mono border border-white/20">
+                        EST. 2024 • YOGYAKARTA
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Cerita dari Warkop.</h2>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        Semuanya dimulai di sebuah kedai kopi kecil di Condongcatur. Tiga orang teman: seorang desainer idealis, seorang developer pragmatis, dan seorang marketing strategist yang ambisius.
+                    </p>
+                    <p class="text-gray-400 leading-relaxed mb-8">
+                        Kami sadar bahwa Yogyakarta punya segudang talenta kreatif, tapi seringkali terjebak dalam eksekusi yang monoton. Kami mendirikan Kancah dengan satu misi: <strong>Membawa standar global dengan jiwa lokal yang autentik.</strong>
+                    </p>
+                    <div class="flex gap-12">
+                        <div>
+                            <span class="block text-4xl md:text-5xl font-bold text-kancah-blue mb-1">50+</span>
+                            <span class="text-xs uppercase tracking-widest text-gray-500">Projects Done</span>
+                        </div>
+                        <div>
+                            <span class="block text-4xl md:text-5xl font-bold text-kancah-blue mb-1">15</span>
+                            <span class="text-xs uppercase tracking-widest text-gray-500">Creative Minds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-24 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest">Our DNA</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-2">YANG KAMI PEGANG TEGUH.</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-16 h-16 rounded-full bg-kancah-light flex items-center justify-center text-2xl mb-6 shadow-sm text-kancah-blue group-hover:bg-kancah-blue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Brutally Honest</h3>
+                    <p class="text-gray-500 leading-relaxed">
+                        Kami lebih baik jujur kalau ide itu jelek, daripada membiarkan klien buang uang. Kami partner debatmu, bukan sekadar tukang "Yes Boss".
+                    </p>
+                </div>
+
+                <div class="p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-16 h-16 rounded-full bg-kancah-light flex items-center justify-center text-2xl mb-6 shadow-sm text-kancah-blue group-hover:bg-kancah-blue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Data x Instinct</h3>
+                    <p class="text-gray-500 leading-relaxed">
+                        Kreativitas tanpa data itu seni. Kreativitas dengan data itu solusi. Kami menggabungkan riset pasar dengan intuisi visual yang tajam.
+                    </p>
+                </div>
+
+                <div class="p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+                    <div class="w-16 h-16 rounded-full bg-kancah-light flex items-center justify-center text-2xl mb-6 shadow-sm text-kancah-blue group-hover:bg-kancah-blue group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">People First</h3>
+                    <p class="text-gray-500 leading-relaxed">
+                        Teknologi boleh canggih, tapi yang menggerakkan brand adalah manusia. Kami mendesain untuk emosi dan pengalaman manusia.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <section id="the-squad" class="pt-10 pb-12 relative z-10">
+            <div class="flex flex-col sm:flex-row justify-between items-end mb-12 border-b border-gray-200/50 pb-8 px-2">
+                <div>
+                     <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest block mb-2">The Squad</span>
+                    <h2 class="text-4xl sm:text-5xl font-bold tracking-tight">Meet the <span class="text-kancah-blue">Minds.</span></h2>
+                </div>
+                <a href="careers.html" class="hidden md:inline-flex px-6 py-3 rounded-full border border-kancah-blue/30 text-kancah-blue font-bold hover:bg-kancah-blue hover:text-white transition-all text-sm uppercase tracking-wider">
+                    Join Us
+                </a>
+            </div>
+
+            <div class="relative w-full group">
+                
+                <button id="slideLeft" class="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 bg-white/20 backdrop-blur-lg border border-white/40 text-kancah-blue shadow-lg hover:bg-kancah-blue hover:text-white hover:shadow-[0_0_20px_rgba(0,6,255,0.5)] active:scale-95 cursor-pointer">
+                    <i class="fa-solid fa-chevron-left text-lg"></i>
+                </button>
+
+                <button id="slideRight" class="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 bg-white/20 backdrop-blur-lg border border-white/40 text-kancah-blue shadow-lg hover:bg-kancah-blue hover:text-white hover:shadow-[0_0_20px_rgba(0,6,255,0.5)] active:scale-95 cursor-pointer">
+                    <i class="fa-solid fa-chevron-right text-lg"></i>
+                </button>
+
+                <div id="infinite-slider" class="flex w-full gap-4 overflow-x-auto no-scrollbar py-6 px-4 smooth-scroll">
+                    
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/sandy.png" class="w-full h-full object-cover transition-all duration-700" alt="Sandy">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Sandy B.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Founder & CEO</p>
+                        </div>
+                    </div>
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/rian.png" class="w-full h-full object-cover transition-all duration-700" alt="Rian">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Rian H.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">CMO</p>
+                        </div>
+                    </div>
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/budi.png" class="w-full h-full object-cover transition-all duration-700" alt="Budi">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Budi S.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Head of Tech</p>
+                        </div>
+                    </div>
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/linda.png" class="w-full h-full object-cover transition-all duration-700" alt="Linda">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Linda K.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Manager</p>
+                        </div>
+                    </div>
+
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/sandy.png" class="w-full h-full object-cover transition-all duration-700" alt="Sandy">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Sandy B.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Founder & CEO</p>
+                        </div>
+                    </div>
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/rian.png" class="w-full h-full object-cover transition-all duration-700" alt="Rian">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Rian H.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">CMO</p>
+                        </div>
+                    </div>
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/budi.png" class="w-full h-full object-cover transition-all duration-700" alt="Budi">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Budi S.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Head of Tech</p>
+                        </div>
+                    </div>
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/linda.png" class="w-full h-full object-cover transition-all duration-700" alt="Linda">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Linda K.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Manager</p>
+                        </div>
+                    </div>
+
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/sandy.png" class="w-full h-full object-cover transition-all duration-700" alt="Sandy">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Sandy B.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Founder & CEO</p>
+                        </div>
+                    </div>
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/rian.png" class="w-full h-full object-cover transition-all duration-700" alt="Rian">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Rian H.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">CMO</p>
+                        </div>
+                    </div>
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/budi.png" class="w-full h-full object-cover transition-all duration-700" alt="Budi">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Budi S.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Head of Tech</p>
+                        </div>
+                    </div>
+                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
+                        <img src="assets/team/linda.png" class="w-full h-full object-cover transition-all duration-700" alt="Linda">
+                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
+                            <h3 class="text-xl font-bold text-white leading-none mb-1">Linda K.</h3>
+                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Manager</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
+    
+        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
+            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+            </div>
+        </div>
+    
+        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
+                
+                <div class="lg:col-span-5 flex flex-col justify-start items-start">
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
+                        PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
+                    </h2>
+                    
+                    <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
+                        Ayo Diskusi
+                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                    </a>
+                </div>
+    
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <div>
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
+                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
+                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
+                        </address>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <a href="mailto:hello@kancah.agency" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-regular fa-envelope"></i> hello@kancah.agency
+                        </a>
+                        <a href="https://wa.me/628123456789" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-brands fa-whatsapp"></i> +62 812-3456-7890
+                        </a>
+                    </div>
+                </div>
+    
+                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
+                    
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="services.html" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
+                            <li><a href="works.html" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
+                            <li><a href="about.html" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
+                            <li><a href="careers.html" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
+                        </ul>
+                    </div>
+    
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Instagram</a></li>
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">LinkedIn</a></li>
+                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Behance</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
+                <p class="text-center md:text-left">&copy; 2025 PT. Kancah Media Sejahtera.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. NAV & SCROLL LOGIC (Smooth + Manual Offset)
+        const deskAgency = document.getElementById('desk-agency');
+        const deskTeam = document.getElementById('desk-team');
+        const mobAgency = document.getElementById('mob-agency');
+        const mobTeam = document.getElementById('mob-team');
+
+        function setNavState(active) {
+            [deskAgency, deskTeam, mobAgency, mobTeam].forEach(el => {
+                if(el) {
+                    el.classList.remove('text-kancah-blue', 'font-bold');
+                    el.classList.add('text-kancah-dark', 'font-medium', 'hover:text-kancah-blue');
+                }
+            });
+
+            if (active === 'agency') {
+                [deskAgency, mobAgency].forEach(el => {
+                    if(el) {
+                        el.classList.remove('text-kancah-dark', 'font-medium', 'hover:text-kancah-blue');
+                        el.classList.add('text-kancah-blue', 'font-bold');
+                    }
+                });
+            } else if (active === 'team') {
+                [deskTeam, mobTeam].forEach(el => {
+                    if(el) {
+                        el.classList.remove('text-kancah-dark', 'font-medium', 'hover:text-kancah-blue');
+                        el.classList.add('text-kancah-blue', 'font-bold');
+                    }
+                });
+            }
+        }
+
+        window.goToAgency = function() {
+            setTimeout(function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                setNavState('agency');
+            }, 10);
+        }
+
+        window.goToTeam = function() {
+            const section = document.getElementById('the-squad');
+            if (section) {
+                setTimeout(function() {
+                    const offset = 50; 
+                    const elementTop = section.getBoundingClientRect().top + window.scrollY;
+                    const offsetPosition = elementTop - offset; 
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                    setNavState('team');
+                }, 10);
+            }
+        }
+
+        // 2. INFINITY SLIDER LOGIC (IMPROVED BOUNDARY CHECKS)
+        const slider = document.getElementById('infinite-slider');
+        const btnLeft = document.getElementById('slideLeft');
+        const btnRight = document.getElementById('slideRight');
+        
+        function getOneSetWidth() {
+            if(!slider) return 0;
+            return slider.scrollWidth / 3;
+        }
+
+        // Teleport Logic
+        if(slider) {
+            slider.addEventListener('scroll', () => {
+                const oneSetWidth = getOneSetWidth();
+                if(oneSetWidth <= 0) return;
+
+                // Loop Right -> Left (Reset if past set 2)
+                if (slider.scrollLeft >= oneSetWidth * 2) {
+                    slider.classList.remove('smooth-scroll');
+                    slider.classList.add('auto-scroll');
+                    slider.scrollLeft = slider.scrollLeft - oneSetWidth;
+                    setTimeout(() => {
+                        slider.classList.remove('auto-scroll');
+                        slider.classList.add('smooth-scroll');
+                    }, 0);
+                } 
+                // Loop Left -> Right (Reset if before set 1)
+                else if (slider.scrollLeft <= 10) { 
+                    slider.classList.remove('smooth-scroll');
+                    slider.classList.add('auto-scroll');
+                    slider.scrollLeft = slider.scrollLeft + oneSetWidth;
+                    setTimeout(() => {
+                        slider.classList.remove('auto-scroll');
+                        slider.classList.add('smooth-scroll');
+                    }, 0);
+                }
+            });
+        }
+
+        // Button Logic with "Pre-check"
+        if(btnRight) {
+            btnRight.addEventListener('click', () => {
+                const oneSetWidth = getOneSetWidth();
+                const scrollAmount = 280; // approximate scroll distance
+
+                // Pre-check right boundary
+                if (slider.scrollLeft + scrollAmount >= oneSetWidth * 2) {
+                    // Teleport left first
+                    slider.classList.remove('smooth-scroll');
+                    slider.classList.add('auto-scroll');
+                    slider.scrollLeft = slider.scrollLeft - oneSetWidth;
+                    
+                    setTimeout(() => {
+                        slider.classList.remove('auto-scroll');
+                        slider.classList.add('smooth-scroll');
+                        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                    }, 20);
+                } else {
+                    slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            });
+        }
+
+        if(btnLeft) {
+            btnLeft.addEventListener('click', () => {
+                const oneSetWidth = getOneSetWidth();
+                const scrollAmount = 280;
+
+                // Pre-check left boundary
+                if (slider.scrollLeft - scrollAmount <= 0) {
+                    // Teleport right first
+                    slider.classList.remove('smooth-scroll');
+                    slider.classList.add('auto-scroll');
+                    slider.scrollLeft = slider.scrollLeft + oneSetWidth;
+                    
+                    setTimeout(() => {
+                        slider.classList.remove('auto-scroll');
+                        slider.classList.add('smooth-scroll');
+                        slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                    }, 20);
+                } else {
+                    slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                }
+            });
+        }
+
+        // 3. INIT
+        window.addEventListener('load', function() {
+            // Set init scroll to middle set
+            if(slider) {
+                slider.scrollLeft = getOneSetWidth();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash === '#the-squad') {
+                setTimeout(goToTeam, 300);
+            } else {
+                setNavState('agency');
+            }
+
+            const mobileBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            let isMenuOpen = false;
+
+            window.toggleMenu = function() {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    document.body.classList.add('menu-open');
+                    menuIcon.classList.remove('fa-bars-staggered');
+                    menuIcon.classList.add('fa-xmark');
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    document.body.classList.remove('menu-open');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars-staggered');
+                }
+            }
+
+            if (mobileBtn) {
+                mobileBtn.addEventListener('click', toggleMenu);
+            }
+        });
+    </script>
+</body>
+</html>
