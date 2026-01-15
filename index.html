@@ -68,132 +68,150 @@
 </head>
 <body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
 
-    <nav class="fixed w-full z-50 top-0 bg-white/90 backdrop-blur-xl border-b border-gray-100 transition-all duration-300" id="navbar">
-        <div class="max-w-[1400px] mx-auto px-6 h-16 sm:h-20 flex justify-between items-center relative z-50">
-            <a href="index.html" class="flex items-center z-50">
-                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-8 md:h-9 w-auto object-contain">
-            </a>
-
-            <div class="hidden lg:flex gap-8 xl:gap-12 text-sm font-medium uppercase tracking-wide" id="nav-links">
-                <a href="about.html" class="nav-link hover:text-kancah-blue transition-colors">Agency</a>
-                <a href="about.html#the-squad" class="nav-link hover:text-kancah-blue transition-colors">Team</a>
-                <a href="services.html" class="nav-link hover:text-kancah-blue transition-colors">Capabilities</a>
-                <a href="works.html" class="nav-link hover:text-kancah-blue transition-colors">Work</a>
-                <a href="careers.html" class="nav-link hover:text-kancah-blue transition-colors">Careers</a>
-            </div>
-
-            <a href="contact.html" class="hidden lg:flex items-center gap-2 text-sm font-bold border border-gray-200 px-5 py-2 rounded-full hover:bg-kancah-dark hover:text-white transition-all group">
-                Let's Talk <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
-            </a>
-
-            <button class="lg:hidden text-2xl w-10 h-10 flex items-center justify-center z-50 relative" id="mobile-menu-button">
-                <i class="fa-solid fa-bars-staggered transition-all duration-300" id="menu-icon"></i>
-            </button>
-        </div>
-
-        <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center h-screen w-screen translate-x-full lg:hidden">
-            <div class="flex flex-col gap-8 text-center text-2xl font-bold uppercase tracking-wider">
-                <a href="about.html" class="mobile-link hover:text-kancah-blue">Agency</a>
-                <a href="about.html#the-squad" class="mobile-link hover:text-kancah-blue">Team</a>
-                <a href="services.html" class="mobile-link hover:text-kancah-blue">Capabilities</a>
-                <a href="works.html" class="mobile-link hover:text-kancah-blue">Work</a>
-                <a href="careers.html" class="mobile-link hover:text-kancah-blue">Careers</a>
-            </div>
-            <a href="contact.html" class="mt-12 px-8 py-3 bg-kancah-dark text-white rounded-full font-bold uppercase tracking-widest text-sm mobile-link">Let's Talk</a>
-        </div>
-    </nav>
-
-    <header class="relative min-h-screen pt-20 pb-10 px-6 flex flex-col justify-between max-w-[1400px] mx-auto overflow-hidden">
+    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
         
-        <div class="hidden lg:block relative z-10 pt-12">
-            <div class="flex justify-between items-end mb-10 fade-up">
-                <h1 class="text-7xl md:text-8xl lg:text-9xl font-bold leading-[0.9] tracking-tighter text-kancah-dark">
-                    FUTURE <br> <span class="text-kancah-blue italic">PROOF</span> <br> CREATIVE.
-                </h1>
-                <p class="text-gray-500 text-lg sm:text-xl leading-relaxed max-w-[450px] text-right mb-3 font-light">
-                    Kancah lahir dari keresahan melihat brand yang "gitu-gitu aja". Kami mendobrak status quo dan menyuntikkan nyawa ke identitas visual.
-                </p>
-            </div>
+        <div class="flex items-center">
+            <a href="index.html" class="flex-none">
+                <img src="assets/kancah-logo.png" alt="Logo" class="h-7 sm:h-9 w-auto object-contain">
+            </a>
+        </div>
 
-            <div class="flex gap-4 w-auto mb-16 fade-up delay-100">
-                <a href="works.html" class="inline-flex justify-center items-center gap-3 bg-kancah-dark text-white px-8 py-4 rounded-full font-bold uppercase text-sm hover:bg-kancah-blue transition-all shadow-lg">Lihat Karya</a>
-                <a href="about.html" class="inline-flex justify-center items-center gap-3 px-8 py-4 rounded-full font-bold uppercase text-sm border border-gray-200 hover:bg-gray-50 transition-all">Kenalan Dulu</a>
-            </div>
+        <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
+            <a href="about.html" class="hover:text-[#0006ff] transition-colors font-black">Agency</a>
+            <a href="services.html" class="hover:text-[#0006ff] transition-colors font-black">Capabilities</a>
+            <a href="works.html" class="hover:text-[#0006ff] transition-colors font-black">Work</a>
+            <a href="careers.html" class="hover:text-[#0006ff] transition-colors font-black">Careers</a>
+        </div>
 
-            <div class="w-full bg-[#111111] rounded-[3rem] p-12 shadow-2xl text-white relative overflow-hidden fade-up delay-200 group border border-white/5">
-                <div class="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] bg-kancah-blue/10 rounded-full blur-[120px] pointer-events-none opacity-30"></div>
-                
-                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    
-                    <div class="lg:col-span-5 bg-white/5 border border-white/10 rounded-[2.5rem] p-10 flex flex-col justify-between hover:border-kancah-blue/40 transition-all duration-500">
-                        <div class="relative">
-                            <div class="flex items-center gap-3 mb-8">
-                                <span class="w-12 h-[2px] bg-kancah-blue"></span>
-                                <span class="text-kancah-blue font-black tracking-[0.3em] uppercase text-[10px]">The Soul</span>
-                            </div>
-                            <h2 class="text-4xl lg:text-5xl font-bold mb-8 leading-[1.1] tracking-tighter text-white">
-                                BUKAN SEKADAR <br> 
-                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-gray-500">TUKANG DESAIN.</span>
-                            </h2>
-                            <p class="text-gray-400 text-lg font-light leading-relaxed">
-                                Kancah itu tentang <span class="text-white italic">"Kekancan"</span>. Kami bukan vendor yang cuma nunggu perintah, tapi partner yang ikut mikir dan tumbuh bareng brand lo.
-                            </p>
-                        </div>
-                        
-                        <div class="grid grid-cols-2 gap-4 border-t border-white/10 pt-8 mt-10">
-                            <div>
-                                <span class="block text-3xl font-bold text-white">50+</span>
-                                <span class="text-[9px] uppercase tracking-widest text-gray-500 font-bold">Projects Done</span>
-                            </div>
-                            <div>
-                                <span class="block text-3xl font-bold text-kancah-blue">100%</span>
-                                <span class="text-[9px] uppercase tracking-widest text-gray-500 font-bold">Passion</span>
-                            </div>
-                        </div>
+        <div class="flex items-center gap-2 sm:gap-4">
+            
+            <div id="weather-module" class="relative group hidden sm:block z-[110]">
+                <div class="flex flex-col items-center justify-center h-[52px] min-w-[180px] px-6 bg-white border border-[#0006ff] rounded-full cursor-pointer hover:bg-white transition-all duration-300 shadow-sm overflow-hidden">
+                    <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full tabular-nums">
+                        <span id="nav-time" class="text-[#111111] font-black text-[15px] tracking-tighter text-right">00:00:00</span>
+                        <span class="text-[#0006ff] font-bold px-3 scale-y-110">|</span>
+                        <span id="nav-temp" class="text-[#111111] font-black text-[15px] tracking-tighter text-left">--°C</span>
                     </div>
-                    
-                    <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        
-                        <div class="sm:col-span-2 group/item relative bg-white/5 border border-white/10 rounded-[2.5rem] p-10 hover:border-kancah-blue/50 transition-all duration-500">
-                            <span class="absolute top-8 right-10 text-7xl font-black text-white/[0.03] group-hover/item:text-kancah-blue/10 transition-colors">01</span>
-                            <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                                <div class="shrink-0 w-20 h-20 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center group-hover/item:bg-kancah-blue transition-all duration-500">
-                                    <i class="fa-solid fa-people-roof text-3xl text-kancah-blue group-hover/item:text-white"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-2xl font-bold mb-3 uppercase italic text-white">Konco, Bukan Bos.</h3>
-                                    <p class="text-gray-400 text-base font-light leading-relaxed max-w-md">Anti hierarki kaku. Di sini kita duduk sama rendah, berdiri sama tinggi. Lo punya visi, kita punya eksekusi.</p>
-                                </div>
-                            </div>
+                    <div class="flex items-center gap-1.5 mt-0.5 w-full justify-center">
+                        <div class="relative flex h-1 w-1 shrink-0">
+                            <span class="animate-ping absolute h-full w-full rounded-full bg-[#0006ff] opacity-40"></span>
+                            <span class="h-1 w-1 rounded-full bg-[#0006ff]"></span>
                         </div>
-
-                        <div class="group/item relative bg-white/5 border border-white/10 rounded-[2.5rem] p-8 hover:border-kancah-blue/50 transition-all duration-500">
-                            <span class="absolute top-4 right-6 text-4xl font-black text-white/[0.03] group-hover/item:text-kancah-blue/10 transition-colors">02</span>
-                            <div class="relative z-10">
-                                <div class="w-12 h-12 mb-6 rounded-2xl bg-white/5 flex items-center justify-center text-kancah-blue group-hover/item:bg-kancah-blue transition-all">
-                                    <i class="fa-solid fa-comments text-xl group-hover/item:text-white"></i>
-                                </div>
-                                <h3 class="text-xl font-bold mb-3 uppercase text-white">Rembugan Dulu</h3>
-                                <p class="text-gray-400 text-sm font-light leading-relaxed">Gak ada masalah yang gak kelar lewat diskusi jujur dan segelas kopi. Komunikasi frontal tapi sopan.</p>
-                            </div>
-                        </div>
-
-                        <div class="group/item relative bg-white/5 border border-white/10 rounded-[2.5rem] p-8 hover:border-kancah-blue/50 transition-all duration-500">
-                            <span class="absolute top-4 right-6 text-4xl font-black text-white/[0.03] group-hover/item:text-kancah-blue/10 transition-colors">03</span>
-                            <div class="relative z-10">
-                                <div class="w-12 h-12 mb-6 rounded-2xl bg-white/5 flex items-center justify-center text-kancah-blue group-hover/item:bg-kancah-blue transition-all">
-                                    <i class="fa-solid fa-infinity text-xl group-hover/item:text-white"></i>
-                                </div>
-                                <h3 class="text-xl font-bold mb-3 uppercase text-white">Saklawase</h3>
-                                <p class="text-gray-400 text-sm font-light leading-relaxed">Networking itu selamanya. Kami menjaga hubungan jangka panjang, bukan cuma nyari cuan sesaat.</p>
-                            </div>
-                        </div>
-
+                        <span class="text-[#0006ff] font-black text-[8px] uppercase tracking-[0.05em]">Kancah HQ, Yogyakarta</span>
                     </div>
                 </div>
             </div>
+
+            <div class="relative">
+                <div id="mobile-action-container" class="flex items-center justify-center h-10 sm:h-[52px] transition-all duration-300">
+                    
+                    <a href="contact.html" class="hidden sm:flex items-center justify-center h-full min-w-[120px] px-8 bg-[#0006ff] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all shadow-md active:scale-95 whitespace-nowrap">
+                        Let's Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
+                    </a>
+
+                   <div class="flex sm:hidden flex-col items-center justify-center h-7 min-w-[90px] px-2.5 bg-white border-[0.5px] border-[#0006ff]/40 rounded-full tabular-nums shadow-sm">
+    <div class="flex items-center justify-center gap-1">
+        <span id="nav-time-mobile" class="text-[#111111] font-black text-[11px] tracking-tighter leading-none">00:00</span>
+        <span class="text-[#0006ff] font-medium text-[8px] leading-none opacity-50">|</span>
+        <span id="nav-temp-mobile" class="text-[#111111] font-black text-[11px] tracking-tighter leading-none">--°C</span>
+    </div>
+    <span class="text-[#0006ff] font-black text-[6px] uppercase tracking-[0.05em] leading-none mt-0.5 opacity-60">
+        YOGYAKARTA
+    </span>
+</div>
+                </div>
+            </div>
+
+            <button class="lg:hidden flex items-center justify-center w-10 h-10 text-[#111111]" id="mobile-menu-button">
+                <i class="fa-solid fa-bars-staggered text-xl" id="menu-icon"></i>
+            </button>
         </div>
-    </header>
+    </div>
+</nav>
+<div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full transition-transform duration-500 lg:hidden">
+    <button class="absolute top-6 right-6 text-3xl" id="close-menu">
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
+        <a href="about.html" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
+        <a href="services.html" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
+        <a href="works.html" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
+        <a href="careers.html" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
+        <a href="contact.html" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
+    </div>
+</div>
+    <header class="relative min-h-screen flex flex-col justify-center pt-24 lg:pt-28 pb-12 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden bg-white">
+    
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]" 
+         style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 30px 30px;">
+    </div>
+
+    <div class="relative z-10 w-full flex flex-col gap-6 lg:gap-10">
+        
+        <div class="flex flex-col gap-4 lg:gap-6">
+           <div class="flex items-center gap-3">
+    <div class="relative flex h-2 w-2 lg:h-2.5 lg:w-2.5 mr-1">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0006ff] opacity-75"></span>
+        <span id="radar-dot" class="relative inline-flex rounded-full h-2 w-2 lg:h-2.5 lg:w-2.5 bg-[#0006ff]"></span>
+    </div>
+    <span class="text-[#0006ff] font-bold text-[10px] lg:text-xs uppercase tracking-[0.4em]">Creative Agency — 2026</span>
+</div>
+
+            <h1 class="flex flex-col leading-[0.82] tracking-tighter text-[#111111]">
+                <span class="text-[15vw] lg:text-[11vw] font-black uppercase">FUTURE</span>
+                
+                <div class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-10">
+                    <span class="text-[15vw] lg:text-[11vw] font-black italic text-[#0006ff] uppercase">PROOF</span>
+                    
+                    <p class="hidden lg:block text-gray-400 text-lg font-light leading-snug max-w-md normal-case tracking-normal pt-4">
+                        Partner debat, teman mikir, dan eksekutor andalan untuk ide yang <span class="text-[#111111] font-medium italic">"nggak mungkin"</span>.
+                    </p>
+                </div>
+                
+                <span class="text-[15vw] lg:text-[11vw] font-black uppercase">CREATIVE.</span>
+            </h1>
+
+            <p class="lg:hidden text-gray-400 text-sm sm:text-base font-light leading-relaxed max-w-sm">
+                Partner debat, teman mikir, dan eksekutor andalan untuk ide yang <span class="text-[#111111] font-medium italic">"nggak mungkin"</span>.
+            </p>
+
+            <div class="flex flex-row gap-3 lg:gap-4 mt-2">
+                <a href="works.html" class="bg-[#111111] text-white px-7 lg:px-10 py-3 lg:py-4 rounded-full font-bold uppercase tracking-widest text-[9px] lg:text-[10px] hover:bg-[#0006ff] transition-all">Explore Work</a>
+                <a href="contact.html" class="border-2 border-[#111111] px-7 lg:px-10 py-3 lg:py-4 rounded-full font-bold uppercase tracking-widest text-[9px] lg:text-[10px] hover:bg-[#111111] hover:text-white transition-all">Let's Talk</a>
+            </div>
+        </div>
+
+        
+</header>
+
+<script>
+    document.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        // 1. Gerakan Parallax Grid
+        const grid = document.getElementById('grid-bg');
+        if(grid) {
+            const moveX = (clientX - centerX) / 40;
+            const moveY = (clientY - centerY) / 40;
+            grid.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+        }
+
+        // 2. 3D Tilt Soul Card (Desktop Only)
+        const card = document.getElementById('soul-card');
+        if (card && window.innerWidth > 1024) {
+            const rect = card.getBoundingClientRect();
+            const cardX = clientX - rect.left;
+            const cardY = clientY - rect.top;
+            const rotateX = (10 * (cardY - rect.height / 2)) / rect.height;
+            const rotateY = (-10 * (cardX - rect.width / 2)) / rect.width;
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
+        }
+    });
+</script>
 
     <section id="services" class="py-24 bg-kancah-dark text-white relative overflow-hidden">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-kancah-blue/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -666,6 +684,279 @@ const { data: partners } = await kancah
             }
         });
     });
+    document.addEventListener('DOMContentLoaded', () => {
+    // 1. Logic Menu Mobile
+    const menuBtn = document.getElementById('mobile-menu-button');
+    const btn = document.getElementById('mobile-menu-button');
+    const menu = document.getElementById('mobile-menu');
+    const icon = document.getElementById('menu-icon');
+    const links = document.querySelectorAll('.mobile-link');
+    const closeBtn = document.getElementById('close-menu');
+
+    function toggleMenu() {
+        const isOpen = menu.classList.contains('translate-x-0');
+        if (isOpen) {
+            menu.classList.replace('translate-x-0', 'translate-x-full');
+            icon.classList.replace('fa-xmark', 'fa-bars-staggered');
+            document.body.style.overflow = ''; // unlock scroll
+        } else {
+            menu.classList.replace('translate-x-full', 'translate-x-0');
+            icon.classList.replace('fa-bars-staggered', 'fa-xmark');
+            document.body.style.overflow = 'hidden'; // lock scroll
+        }
+    }
+// Listener buat tombol hamburger
+    if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+
+    // TAMBAHKAN INI: Listener buat tombol X di dalem menu
+    if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
+
+    // Listener buat link-link menu (biar pas diklik, menu otomatis tutup)
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', toggleMenu);
+    });
+
+    btn.addEventListener('click', toggleMenu);
+    links.forEach(link => link.addEventListener('click', toggleMenu));
+
+    // 2. Logic Weather Alert
+    function updateWeatherDisplay(temp) {
+        const tempEl = document.getElementById('nav-temp');
+        const statusEl = document.getElementById('nav-status-desktop');
+        const detailEl = document.getElementById('nav-status-detail');
+
+        tempEl.innerText = `${temp}°C`;
+
+        let message = "";
+        if (temp < 22) {
+            message = "Dingin amat, ngopi yuk";
+        } else if (temp >= 22 && temp <= 28) {
+            message = "Suhu yang pas buat kerja";
+        } else {
+            message = "Panas betull, yukk kejar deadline";
+        }
+
+        statusEl.innerText = message;
+        detailEl.innerText = message;
+    }
+
+  
+});
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Mobile Menu Logic
+    const menuBtn = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const links = document.querySelectorAll('.mobile-link');
+
+    function toggleMenu() {
+        const isOpen = mobileMenu.classList.contains('translate-x-0');
+        if (isOpen) {
+            mobileMenu.classList.replace('translate-x-0', 'translate-x-full');
+            menuIcon.classList.replace('fa-xmark', 'fa-bars-staggered');
+            document.body.style.overflow = '';
+        } else {
+            mobileMenu.classList.replace('translate-x-full', 'translate-x-0');
+            menuIcon.classList.replace('fa-bars-staggered', 'fa-xmark');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    menuBtn.addEventListener('click', toggleMenu);
+    links.forEach(l => l.addEventListener('click', toggleMenu));
+
+    // 2. Clock Logic with Seconds
+    function updateClock() {
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+        
+        // Update Desktop
+        const timeDesktop = document.getElementById('nav-time');
+        if(timeDesktop) timeDesktop.innerText = `${h}:${m}:${s}`;
+        
+        // Update Mobile (Lebih ringkas tanpa detik agar pas di box kecil)
+        const timeMobile = document.getElementById('nav-time-mobile');
+        if(timeMobile) timeMobile.innerText = `${h}:${m}`;
+    }
+    
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // 3. Weather UI Logic
+    function updateWeatherUI(temp) {
+        const tempElement = document.getElementById('nav-temp');
+        const statusElement = document.getElementById('nav-status-desktop');
+        const detailElement = document.getElementById('nav-status-detail');
+
+        tempElement.innerText = `${temp}°C`;
+
+        let message = "";
+        if (temp < 22) {
+            message = "Dingin amat, ngopi yuk";
+        } else if (temp >= 22 && temp <= 28) {
+            message = "Suhu yang pas buat kerja";
+        } else {
+            message = "Panas betull, yukk kejar deadline";
+        }
+
+        statusElement.innerText = message;
+        detailElement.innerText = message;
+    }
+});
+async function updateWeather() {
+        try {
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+            const data = await res.json();
+            if (data && data.current_weather) {
+                const temp = Math.round(data.current_weather.temperature) + "°C";
+                
+                // Update Desktop & Mobile Temp
+                if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = temp;
+                if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = temp;
+            }
+        } catch (e) { console.error("Radar offline"); }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        updateClock();
+        setInterval(updateClock, 1000);
+        updateWeather();
+    });
+   // 1. Fungsi Utama Ambil Data Cuaca Real-time (Open-Meteo)
+    async function updateNavWeather() {
+        try {
+            // Mengambil data Yogyakarta (Kancah HQ)
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+            const data = await res.json();
+            
+            if (data && data.current_weather) {
+                const temp = Math.round(data.current_weather.temperature);
+                
+                // Update UI menggunakan fungsi terpisah agar rapi
+                renderWeatherUI(temp);
+            }
+        } catch (e) { 
+            console.error("Radar Signal Lost:", e);
+            const statusEl = document.getElementById('nav-status-desktop');
+            if (statusEl) statusEl.innerText = "RADAR SIGNAL LOST";
+        }
+    }
+
+    // 2. Fungsi Render Teks Alert Berdasarkan Suhu
+    function renderWeatherUI(temp) {
+        const tempEl = document.getElementById('nav-temp');
+        const statusEl = document.getElementById('nav-status-desktop');
+        const detailEl = document.getElementById('nav-status-detail'); // Untuk tooltip hitam
+
+        // Set Angka Suhu
+        if (tempEl) tempEl.innerText = `${temp}°C`;
+
+        // Logika Pesan sesuai keinginanmu
+        let message = "";
+        if (temp < 22) {
+            message = "Dingin amat, ngopi yuk 🍵";
+        } else if (temp >= 22 && temp <= 28) {
+            message = "Suhu pas buat kerja 👍";
+        } else {
+            message = "Panas bet, kejar deadline 🔥";
+        }
+
+        // Update Teks di Navbar (Baris Bawah) dan Tooltip
+        if (statusEl) statusEl.innerText = message.toUpperCase();
+        if (detailEl) detailEl.innerText = message;
+    }
+
+    // 3. Fungsi Jam Digital (HH:mm:ss)
+    function updateClock() {
+        const timeEl = document.getElementById('nav-time');
+        if (!timeEl) return;
+        
+        const now = new Date();
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+        
+        timeEl.innerText = `${h}:${m}:${s}`;
+    }
+
+    // 4. Inisialisasi Saat Halaman Dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+        // Jalankan Jam & Update Tiap Detik
+        updateClock();
+        setInterval(updateClock, 1000);
+        
+        // Jalankan Update Cuaca
+        updateNavWeather();
+
+        // Menu Toggle Logic
+        const btn = document.getElementById('mobile-menu-button');
+        const menu = document.getElementById('mobile-menu');
+        const icon = document.getElementById('menu-icon');
+        const links = document.querySelectorAll('.mobile-link');
+        let isOpen = false;
+
+        function toggleMenu() {
+            isOpen = !isOpen;
+            menu.classList.toggle('translate-x-full', !isOpen);
+            icon.classList.toggle('fa-bars-staggered', !isOpen);
+            icon.classList.toggle('fa-xmark', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        }
+
+        if(btn) btn.addEventListener('click', toggleMenu);
+        links.forEach(link => link.addEventListener('click', () => {
+            if(isOpen) toggleMenu();
+        }));
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+        const dot = document.getElementById('radar-dot');
+        
+        // Fungsi untuk simulasi aktifitas "Radar"
+        function animateRadar() {
+            // Memberikan efek kedip acak antara 0.1s - 0.5s
+            const randomTime = Math.random() * (500 - 100) + 100;
+            
+            dot.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                dot.style.opacity = '1';
+                // Panggil kembali fungsi untuk loop tak terbatas
+                setTimeout(animateRadar, randomTime);
+            }, 50);
+        }
+
+        animateRadar();
+    });
+document.addEventListener('DOMContentLoaded', () => {
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const body = document.body;
+
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const isOpen = mobileMenu.classList.contains('translate-x-0');
+                
+                if (isOpen) {
+                    mobileMenu.classList.remove('translate-x-0');
+                    mobileMenu.classList.add('translate-x-full');
+                    menuIcon.classList.replace('fa-xmark', 'fa-bars-staggered');
+                    body.style.overflow = ''; // Aktifkan scroll
+                } else {
+                    mobileMenu.classList.remove('translate-x-full');
+                    mobileMenu.classList.add('translate-x-0');
+                    menuIcon.classList.replace('fa-bars-staggered', 'fa-xmark');
+                    body.style.overflow = 'hidden'; // Matikan scroll saat menu buka
+                }
+            });
+        }
+    });
 </script>
 </body>
+
 </html>

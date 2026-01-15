@@ -74,11 +74,9 @@
 
     <main class="pt-24 sm:pt-32 pb-16 relative"> 
         <section id="contact-main" class="relative z-10">
-            
             <div class="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-kancah-blue/5 rounded-full blur-[100px] pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
     
             <div class="max-w-[1400px] mx-auto px-6 w-full">
-                
                 <div class="mb-10 sm:mb-12 border-b border-gray-100 pb-8 flex flex-col md:flex-row justify-between items-end gap-6">
                     <div>
                         <div class="flex items-center gap-3 mb-3">
@@ -97,7 +95,6 @@
                 </div>
     
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
-                    
                     <div class="lg:col-span-5 flex flex-col justify-start h-full order-2 lg:order-1 lg:sticky lg:top-32">
                         <div class="space-y-8">
                             <div class="group">
@@ -111,7 +108,7 @@
                             <div class="group">
                                 <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Jalur Cepat (Direct Line)</h3>
                                 <div class="flex flex-col gap-2">
-                                    <a href="https://wa.me/628123456789" class="text-2xl sm:text-3xl font-bold hover:text-kancah-blue transition-colors flex items-center gap-3">
+                                    <a href="https://wa.me/6281234567890" class="text-2xl sm:text-3xl font-bold hover:text-kancah-blue transition-colors flex items-center gap-3">
                                         <i class="fa-brands fa-whatsapp text-xl"></i> 0812-3456-7890
                                     </a>
                                     <a href="mailto:hello@kancah.agency" class="text-xl sm:text-3xl font-bold hover:text-kancah-blue transition-colors flex items-center gap-3 break-all sm:break-normal">
@@ -133,31 +130,31 @@
                     </div>
     
                     <div class="lg:col-span-7 order-1 lg:order-2">
-                        <form class="space-y-6 sm:space-y-8 bg-white">
+                        <form id="contact-form" class="space-y-6 sm:space-y-8 bg-white">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                                 <div class="relative group">
-                                    <input type="text" id="name" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Nama">
+                                    <input type="text" id="name" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Nama">
                                     <label for="name" class="absolute left-0 -top-3.5 text-gray-400 text-xs font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-xs peer-focus:font-bold">Nama Panggilan</label>
                                 </div>
                                 <div class="relative group">
-                                    <input type="text" id="brand" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Brand">
+                                    <input type="text" id="brand" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Brand">
                                     <label for="brand" class="absolute left-0 -top-3.5 text-gray-400 text-xs font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-xs peer-focus:font-bold">Nama Brand / Bisnis</label>
                                 </div>
                             </div>
     
                             <div class="relative group">
-                                <input type="email" id="email" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Email">
+                                <input type="email" id="email" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Email">
                                 <label for="email" class="absolute left-0 -top-3.5 text-gray-400 text-xs font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-xs peer-focus:font-bold">Email Aktif</label>
                             </div>
     
                             <div class="relative group">
-                                <textarea id="message" rows="1" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent resize-none h-auto min-h-[80px]" placeholder="Pesan" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                                <textarea id="message" required rows="1" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent resize-none h-auto min-h-[80px]" placeholder="Pesan" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
                                 <label for="message" class="absolute left-0 -top-3.5 text-gray-400 text-xs font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-xs peer-focus:font-bold">Ceritain Dikit Needs Kamu</label>
                             </div>
     
                             <div class="pt-6 sm:pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
                                 <div class="text-[10px] sm:text-xs font-bold text-gray-300 uppercase tracking-widest max-w-[200px]">
-                                    *Tenang, kita bukan robot. Emailmu aman.
+                                    *Pesanmu akan tetap kita baca, tapi sabar ya, kita bukan robot, hehe.
                                 </div>
                                 <button type="submit" class="w-full sm:w-auto group relative inline-flex items-center justify-center gap-3 bg-kancah-dark text-white px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-kancah-blue transition-all duration-300 shadow-xl hover:shadow-kancah-blue/30 overflow-hidden">
                                     <span class="relative z-10">Kirim Sinyal</span>
@@ -167,35 +164,29 @@
                             </div>
                         </form>
                     </div>
-    
                 </div>
             </div>
         </section>
     </main>
 
     <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
-    
         <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
             <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
                 <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
                 <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
             </div>
         </div>
-    
         <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
-                
                 <div class="lg:col-span-5 flex flex-col justify-start items-start">
                     <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
                         PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
                     </h2>
-                    
                     <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
                         Ayo Diskusi
                         <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
                     </a>
                 </div>
-    
                 <div class="lg:col-span-4 flex flex-col gap-6">
                     <div>
                         <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
@@ -207,14 +198,12 @@
                         <a href="mailto:hello@kancah.agency" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
                             <i class="fa-regular fa-envelope"></i> hello@kancah.agency
                         </a>
-                        <a href="https://wa.me/628123456789" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
+                        <a href="https://wa.me/6281234567890" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
                             <i class="fa-brands fa-whatsapp"></i> +62 812-3456-7890
                         </a>
                     </div>
                 </div>
-    
                 <div class="lg:col-span-3 grid grid-cols-2 gap-8">
-                    
                     <div class="flex flex-col gap-4">
                         <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
                         <ul class="flex flex-col gap-3 font-medium text-sm">
@@ -224,7 +213,6 @@
                             <li><a href="careers.html" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
                         </ul>
                     </div>
-    
                     <div class="flex flex-col gap-4">
                         <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
                         <ul class="flex flex-col gap-3 font-medium text-sm">
@@ -235,9 +223,8 @@
                     </div>
                 </div>
             </div>
-    
             <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
-                <p class="text-center md:text-left">&copy; 2025 PT. Kancah Media Sejahtera.</p>
+                <p class="text-center md:text-left">© 2025 PT. Kancah Media Sejahtera.</p>
                 <div class="flex gap-6">
                     <a href="#" class="hover:text-white transition-colors">Privacy</a>
                     <a href="#" class="hover:text-white transition-colors">Terms</a>
@@ -270,26 +257,36 @@
             }
         }
 
-        if (mobileBtn) {
-            mobileBtn.addEventListener('click', toggleMenu);
-        }
+        if (mobileBtn) { mobileBtn.addEventListener('click', toggleMenu); }
 
-        // Close menu when a link is clicked
         mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if(isMenuOpen) toggleMenu();
-            });
+            link.addEventListener('click', () => { if(isMenuOpen) toggleMenu(); });
         });
 
-        // Active Link Logic
-        const currentPath = window.location.pathname.split('/').pop().toLowerCase() || 'contact.html'; 
-        const links = document.querySelectorAll('.nav-link');
+        // WHATSAPP FORM LOGIC
+        const contactForm = document.getElementById('contact-form');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        links.forEach(link => {
-            const linkHref = link.getAttribute('href').split('/').pop().split('#')[0].toLowerCase() || 'index.html';
-            if (currentPath.includes('contact') && linkHref.includes('contact')) {
-                 // Active logic handle
-            }
+            // Ambil data
+            const name = document.getElementById('name').value;
+            const brand = document.getElementById('brand').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            // Nomor WA (Tanpa +, awali 62)
+            const phoneNumber = "62895339328011"; 
+
+            // Format Pesan
+            const fullMessage = `Halo Kancah Agency! 👋%0A%0A` +
+                                `*Nama:* ${name}%0A` +
+                                `*Brand:* ${brand}%0A` +
+                                `*Email:* ${email}%0A%0A` +
+                                `*Pesan:*%0A${message}`;
+
+            // Redirect
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${fullMessage}`;
+            window.open(whatsappUrl, '_blank');
         });
     });
     </script>

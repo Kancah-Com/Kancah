@@ -1,539 +1,410 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About • Kancah</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
+        
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
-                    colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } },
-                    backgroundImage: {
-                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
-                    },
-                    animation: {
-                        'marquee': 'marquee 25s linear infinite',
-                    },
-                    keyframes: {
-                        marquee: { '0%': { transform: 'translateX(0%)' }, '100%': { transform: 'translateX(-100%)' } },
-                    }
+                    colors: { kancah: { blue: '#0006ff', dark: '#111111' } }
                 }
             }
         }
     </script>
     <style>
+  /* Animasi Running Text Footer */
+.footer-marquee-content { 
+    display: flex; 
+    width: max-content; 
+    animation: footer-marquee 20s linear infinite; 
+}
+
+@keyframes footer-marquee { 
+    0% { transform: translateX(0); } 
+    100% { transform: translateX(-50%); } 
+}
+
+/* Memastikan teks tetap halus saat bergeser */
+.footer-marquee-content span {
+    white-space: nowrap;
+}
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        body { font-family: 'Ubuntu', sans-serif; }
-        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .menu-open { overflow: hidden; }
-        .cursor-pointer { cursor: pointer; }
+        body { font-family: 'Ubuntu', sans-serif; background-color: #ffffff; }
+        .text-outline-blue { -webkit-text-stroke: 1.5px #0006ff; color: transparent; }
         
-        /* Force smooth scroll via CSS for buttons */
-        .smooth-scroll { scroll-behavior: smooth !important; }
-        /* Force instant scroll for teleporting */
-        .auto-scroll { scroll-behavior: auto !important; }
+        /* INNOVATION: THE LOGIC PIPE (CENTER TIMELINE) */
+        .timeline-container { position: relative; padding: 100px 0; }
+        .logic-pipe { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: #eee; transform: translateX(-50%); }
+        .logic-pipe-fill { position: absolute; left: 50%; top: 0; width: 2px; background: #0006ff; transform: translateX(-50%); height: 70%; z-index: 1; }
+        
+        @media (max-width: 1024px) {
+            .logic-pipe, .logic-pipe-fill { left: 24px; transform: none; }
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
+<body class="selection:bg-kancah-blue selection:text-white overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 top-0 bg-white/80 backdrop-blur-xl border-b border-white/40 transition-all duration-300" id="navbar">
-        <div class="max-w-[1400px] mx-auto px-6 h-16 sm:h-20 flex justify-between items-center relative z-50">
-            <a href="index.html" class="flex items-center z-50">
-                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-8 md:h-9 w-auto object-contain">
+    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
+        
+        <div class="flex items-center">
+            <a href="index.html" class="flex-none">
+                <img src="assets/kancah-logo.png" alt="Logo" class="h-7 sm:h-9 w-auto object-contain">
             </a>
+        </div>
 
-            <div class="hidden lg:flex gap-12 text-sm font-medium uppercase tracking-wide">
-                <div onclick="goToAgency()" class="nav-link text-kancah-blue font-bold transition-colors cursor-pointer" id="desk-agency">Agency</div>
-                <div onclick="goToTeam()" class="nav-link text-kancah-dark font-medium hover:text-kancah-blue transition-colors cursor-pointer" id="desk-team">Team</div>
-                <a href="services.html" class="nav-link text-kancah-dark font-medium hover:text-kancah-blue transition-colors">Capabilities</a>
-                <a href="works.html" class="nav-link text-kancah-dark font-medium hover:text-kancah-blue transition-colors">Work</a>
-                <a href="careers.html" class="nav-link text-kancah-dark font-medium hover:text-kancah-blue transition-colors">Careers</a>
+        <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
+            <a href="about.html" class="text-kancah-blue font-black transition-colors">Agency</a>
+            <a href="services.html" class="hover:text-[#0006ff] transition-colors">Capabilities</a>
+            <a href="works.html" class="hover:text-[#0006ff] transition-colors">Work</a>
+            <a href="careers.html" class="hover:text-[#0006ff] transition-colors">Careers</a>
+        </div>
+
+        <div class="flex items-center gap-2 sm:gap-4">
+            
+            <div id="weather-module" class="relative group hidden sm:block">
+                <div class="flex flex-col items-center justify-center h-[52px] min-w-[180px] px-6 bg-white border border-[#0006ff] rounded-full shadow-sm overflow-hidden">
+                    <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full tabular-nums">
+                        <span id="nav-time" class="text-[#111111] font-black text-[15px] tracking-tighter text-right">00:00:00</span>
+                        <span class="text-[#0006ff] font-bold px-3">|</span>
+                        <span id="nav-temp" class="text-[#111111] font-black text-[15px] tracking-tighter text-left">--°C</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 mt-0.5 w-full justify-center">
+                        <div class="relative flex h-1 w-1">
+                            <span class="animate-ping absolute h-full w-full rounded-full bg-[#0006ff] opacity-40"></span>
+                            <span class="h-1 w-1 rounded-full bg-[#0006ff]"></span>
+                        </div>
+                        <span class="text-[#0006ff] font-black text-[8px] uppercase tracking-[0.05em]">Kancah HQ, Yogyakarta</span>
+                    </div>
+                </div>
             </div>
 
-            <a href="#contact" class="hidden lg:flex items-center gap-2 text-sm font-bold border border-gray-200 px-5 py-2 rounded-full hover:bg-kancah-dark hover:text-white transition-all group">
-                Let's Talk <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+            <div class="flex sm:hidden flex-col items-center justify-center h-7 min-w-[90px] px-2.5 bg-white border border-[#0006ff]/40 rounded-full tabular-nums shadow-sm">
+                <div class="flex items-center justify-center gap-1">
+                    <span id="nav-time-mobile" class="text-[#111111] font-black text-[11px] tracking-tighter">00:00</span>
+                    <span class="text-[#0006ff] font-medium text-[8px] opacity-50">|</span>
+                    <span id="nav-temp-mobile" class="text-[#111111] font-black text-[11px] tracking-tighter">--°C</span>
+                </div>
+            </div>
+
+            <a href="contact.html" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-[#0006ff] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all shadow-md active:scale-95">
+                Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
             </a>
 
-            <button class="lg:hidden text-2xl w-10 h-10 flex items-center justify-center z-50 relative" id="mobile-menu-button">
-                <i class="fa-solid fa-bars-staggered transition-all duration-300" id="menu-icon"></i>
+            <button class="lg:hidden flex items-center justify-center w-10 h-10 text-[#111111]" id="mobile-menu-button">
+                <i class="fa-solid fa-bars-staggered text-xl" id="menu-icon"></i>
             </button>
         </div>
+    </div>
+</nav>
 
-        <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center h-screen w-screen translate-x-full lg:hidden">
-            <div class="flex flex-col gap-8 text-center text-2xl font-bold uppercase tracking-wider">
-                <div onclick="goToAgency(); toggleMenu()" class="mobile-link text-kancah-blue font-bold cursor-pointer" id="mob-agency">Agency</div>
-                <div onclick="goToTeam(); toggleMenu()" class="mobile-link text-kancah-dark hover:text-kancah-blue cursor-pointer" id="mob-team">Team</div>
-                <a href="services.html" class="mobile-link text-kancah-dark hover:text-kancah-blue">Capabilities</a>
-                <a href="works.html" class="mobile-link text-kancah-dark hover:text-kancah-blue">Work</a>
-                <a href="careers.html" class="mobile-link text-kancah-dark hover:text-kancah-blue">Careers</a>
-            </div>
-            <a href="#contact" class="mt-12 px-8 py-3 bg-kancah-dark text-white rounded-full font-bold uppercase tracking-widest text-sm mobile-link">Let's Talk</a>
+    <header class="relative min-h-screen flex flex-col justify-center pt-24 lg:pt-28 pb-12 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden bg-white">
+        <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.04]" 
+             style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 40px 40px;">
         </div>
-    </nav>
 
-    <main class="pt-32 pb-24 px-6 max-w-[1400px] mx-auto min-h-screen">
-        
-        <div id="agency-top" class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-24 relative z-10">
-            <div>
-                <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest block mb-4">Who We Are</span>
-                <h1 class="text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9]">
-                    WE ARE THE <br> 
-                    <span class="text-kancah-blue italic">GAME CHANGERS.</span>
+        <div class="relative z-10 w-full flex flex-col gap-8 lg:gap-12">
+            <div class="flex flex-col gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="relative flex h-2 w-2 lg:h-2.5 lg:w-2.5">
+                    </div>
+                    <span class="text-[#0006ff] font-black text-[10px] lg:text-xs uppercase tracking-[0.5em]">Who, we are?</span>
+                </div>
+                <h1 class="flex flex-col leading-[0.82] tracking-tighter text-[#111111]">
+                    <span class="text-[14vw] lg:text-[10vw] font-black uppercase">CREATIVE</span>
+                    <div class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-12">
+                        <span class="text-[14vw] lg:text-[10vw] font-black italic text-[#0006ff] uppercase">LOGIC</span>
+                        <div class="max-w-xl pt-4">
+                           <p class="text-gray-500 text-lg lg:text-xl font-light leading-relaxed normal-case tracking-normal">
+    <span class="font-bold text-[#0006ff]">Kancah</span> adalah agency kreatif yang menjembatani brand dengan tujuan besar mereka melalui pendekatan 
+    <span class="italic font-medium text-gray-800">kekancan (pertemanan) dan diskusi. </span> Kita adalah 
+    <span class="font-semibold text-gray-900 underline decoration-blue-500/30">partner mikir</span> yang siap meramu ide-ide liar menjadi eksekusi digital yang 
+    <span class="font-bold text-[#0006ff]">presisi</span>, 
+    <span class="font-bold text-[#0006ff]">fungsional</span>, dan 
+    <span class="font-bold text-[#0006ff]">future-proof</span>.
+</p>
+                        </div>
+                    </div>
+                    <span class="text-[14vw] lg:text-[10vw] font-black uppercase">SYSTEMS.</span>
                 </h1>
             </div>
-            <div class="lg:pl-10">
-                <p class="text-xl md:text-2xl font-light text-gray-600 leading-relaxed">
-                    Kancah lahir dari keresahan melihat brand yang "gitu-gitu aja". Kami di sini untuk mendobrak status quo, menyuntikkan nyawa ke dalam identitas visual, dan membuat audiens berhenti *scrolling*.
+
+            <div class="w-full bg-[#111111] rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-16 shadow-2xl text-white relative overflow-hidden border border-white/5">
+                <div class="absolute top-[-10%] right-[-10%] w-[400px] md:w-[800px] h-[400px] md:h-[800px] bg-kancah-blue/10 rounded-full blur-[120px] pointer-events-none"></div>
+                
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-5 flex flex-col justify-between py-2">
+            <div class="relative">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="w-8 h-[2px] bg-kancah-blue"></span>
+                    <span class="text-kancah-blue font-black tracking-[0.3em] uppercase text-[10px]">The Soul</span>
+                </div>
+                
+                <h2 class="text-3xl md:text-5xl font-black mb-6 leading-[1.1] tracking-tighter italic uppercase">
+                    BUKAN SEKADAR <br> 
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">TUKANG DESAIN.</span>
+                </h2>
+                
+                <p class="text-gray-400 text-base md:text-lg font-light leading-relaxed">
+                    Kancah itu tentang <span class="text-white italic">"Kekancan"</span>. Kami bukan vendor, tapi partner yang tumbuh bareng brand lo.
                 </p>
             </div>
-        </div>
-
-        <div class="bg-kancah-dark text-white rounded-[3rem] p-8 md:p-16 mb-24 relative overflow-hidden shadow-xl z-10">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-kancah-blue/20 rounded-full blur-[120px] -mr-20 -mt-20"></div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
-                <div class="relative rounded-2xl overflow-hidden aspect-square border border-white/10">
-                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700" alt="Meeting Room">
-                    <div class="absolute bottom-6 left-6 bg-black/50 backdrop-blur px-4 py-2 rounded-lg text-xs font-mono border border-white/20">
-                        EST. 2024 • YOGYAKARTA
+            <div class="flex gap-8 border-t border-white/10 pt-6 mt-10">
+                <div class="flex flex-col">
+                    <span class="text-2xl md:text-3xl font-bold text-white leading-none mb-1">50+</span>
+                    <span class="text-[9px] uppercase tracking-[0.2em] text-gray-500 font-bold">Projects Done</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-2xl md:text-3xl font-bold text-kancah-blue leading-none mb-1">100%</span>
+                    <span class="text-[9px] uppercase tracking-[0.2em] text-gray-500 font-bold">Passion</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="lg:col-span-7 grid grid-cols-2 gap-4">
+            
+            <div class="col-span-2 group relative bg-white/5 border border-white/10 rounded-[2rem] p-6 hover:border-kancah-blue/50 hover:ring-1 hover:ring-kancah-blue/50 transition-all duration-300 overflow-hidden">
+                <span class="absolute -top-4 -right-2 text-8xl font-black text-white/[0.03] italic leading-none pointer-events-none group-hover:text-kancah-blue/10 transition-colors">01</span>
+                <div class="relative z-10 flex items-center gap-5">
+                    <div class="shrink-0 w-14 h-14 md:w-16 md:h-16 aspect-square rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-kancah-blue transition-all">
+                        <i class="fa-solid fa-people-roof text-xl text-kancah-blue group-hover:text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base md:text-xl font-bold uppercase italic text-white tracking-tight">Konco, Bukan Bos.</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mt-1">Anti hierarki kaku. Duduk sama rendah.</p>
                     </div>
                 </div>
-                <div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6">Cerita dari Warkop.</h2>
-                    <p class="text-gray-400 leading-relaxed mb-6">
-                        Semuanya dimulai di sebuah kedai kopi kecil di Condongcatur. Tiga orang teman: seorang desainer idealis, seorang developer pragmatis, dan seorang marketing strategist yang ambisius.
-                    </p>
-                    <p class="text-gray-400 leading-relaxed mb-8">
-                        Kami sadar bahwa Yogyakarta punya segudang talenta kreatif, tapi seringkali terjebak dalam eksekusi yang monoton. Kami mendirikan Kancah dengan satu misi: <strong>Membawa standar global dengan jiwa lokal yang autentik.</strong>
-                    </p>
-                    <div class="flex gap-12">
-                        <div>
-                            <span class="block text-4xl md:text-5xl font-bold text-kancah-blue mb-1">50+</span>
-                            <span class="text-xs uppercase tracking-widest text-gray-500">Projects Done</span>
-                        </div>
-                        <div>
-                            <span class="block text-4xl md:text-5xl font-bold text-kancah-blue mb-1">15</span>
-                            <span class="text-xs uppercase tracking-widest text-gray-500">Creative Minds</span>
-                        </div>
+            </div>
+
+            <div class="group relative bg-white/5 border border-white/10 rounded-[2.2rem] p-6 hover:border-kancah-blue/50 hover:ring-1 hover:ring-kancah-blue/50 transition-all duration-300 overflow-hidden flex flex-col justify-between min-h-[160px]">
+                <span class="absolute -top-2 -right-2 text-7xl font-black text-white/[0.03] italic leading-none pointer-events-none group-hover:text-kancah-blue/10 transition-colors">02</span>
+                <div class="relative z-10 w-12 h-12 aspect-square rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-kancah-blue transition-all">
+                    <i class="fa-solid fa-comments text-lg text-kancah-blue group-hover:text-white"></i>
+                </div>
+                <div class="relative z-10">
+                    <h3 class="text-sm md:text-base font-bold uppercase text-white leading-tight">Rembugan</h3>
+                    <p class="text-gray-500 text-[10px] md:text-xs mt-1 leading-tight">Diskusi jujur dan kopi.</p>
+                </div>
+            </div>
+
+            <div class="group relative bg-white/5 border border-white/10 rounded-[2.2rem] p-6 hover:border-kancah-blue/50 hover:ring-1 hover:ring-kancah-blue/50 transition-all duration-300 overflow-hidden flex flex-col justify-between min-h-[160px]">
+                <span class="absolute -top-2 -right-2 text-7xl font-black text-white/[0.03] italic leading-none pointer-events-none group-hover:text-kancah-blue/10 transition-colors">03</span>
+                <div class="relative z-10 w-12 h-12 aspect-square rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-kancah-blue transition-all">
+                    <i class="fa-solid fa-infinity text-lg text-kancah-blue group-hover:text-white"></i>
+                </div>
+                <div class="relative z-10">
+                    <h3 class="text-sm md:text-base font-bold uppercase text-white leading-tight">Saklawase</h3>
+                    <p class="text-gray-500 text-[10px] md:text-xs mt-1 leading-tight">Networking selamanya.</p>
+                </div>
+            </div>
+
+            <div class="col-span-2 group relative bg-white/5 border border-white/10 rounded-[2rem] p-6 hover:border-kancah-blue/50 hover:ring-1 hover:ring-kancah-blue/50 transition-all duration-300 overflow-hidden">
+                <span class="absolute -top-4 -right-2 text-8xl font-black text-white/[0.03] italic leading-none pointer-events-none group-hover:text-kancah-blue/10 transition-colors">04</span>
+                <div class="relative z-10 flex items-center gap-5">
+                    <div class="shrink-0 w-14 h-14 md:w-16 md:h-16 aspect-square rounded-full bg-white flex items-center justify-center group-hover:bg-kancah-blue transition-all">
+                        <i class="fa-solid fa-rocket text-xl text-black group-hover:text-white"></i>
                     </div>
+                    <div>
+                        <h3 class="text-base md:text-xl font-bold uppercase italic text-white tracking-tight">Sat Set</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mt-1">Eksekusi cepat kualitas satu.</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+            </div>
+        </div>
+    </header>
+
+  <section class="py-16 lg:py-32 max-w-[1500px] mx-auto relative px-4 sm:px-6 overflow-hidden">
+    <div class="text-center mb-16 lg:mb-32">
+        <span class="text-kancah-blue font-black text-xs uppercase tracking-[0.5em] mb-4 block animate-pulse">look at</span>
+        <h2 class="text-5xl md:text-8xl font-black text-kancah-dark uppercase italic tracking-tighter">OUR JOURNEY</h2>
+    </div>
+
+    <div class="relative">
+        <div class="logic-pipe !bg-kancah-blue/100 !w-[2px]"></div> 
+        <div class="logic-pipe-fill !bg-kancah-blue !w-[2px] shadow-[0_0_20px_rgba(0,6,255,0.4)]"></div>
+
+        <div class="relative mb-16 lg:mb-24 lg:flex items-center w-full group">
+            <div onclick="toggleDot(this)" class="timeline-dot absolute left-[24px] lg:left-1/2 -translate-x-1/2 w-8 lg:w-10 h-8 lg:h-10 bg-white border-4 !border-kancah-blue rounded-full z-20 shadow-[0_0_15px_rgba(0,6,255,0.1)] group-hover:scale-110 transition-all cursor-pointer"></div>
+            
+            <div class="flex lg:w-1/2 justify-start lg:justify-end pl-14 lg:pl-0 pr-0 lg:pr-24 mb-2 lg:mb-0">
+                <span class="text-5xl md:text-7xl lg:text-[10vw] font-black text-kancah-blue/100 leading-none tracking-tighter uppercase italic  transition-all">2024</span>
+            </div>
+            
+            <div class="w-full lg:w-1/2 pl-14 lg:pl-24">
+                <div class="p-6 lg:p-10 bg-gray-50 rounded-[2rem] lg:rounded-[3rem] border border-gray-100 group-hover:bg-kancah-blue group-hover:border-kancah-blue transition-all duration-500 shadow-sm group-hover:shadow-2xl">
+                    <span class="text-kancah-blue group-hover:text-white/80 font-bold text-[10px] uppercase tracking-widest block mb-2 transition-colors">Incubation_Stage</span>
+                    
+                    <h4 class="text-xl lg:text-3xl font-black text-kancah-dark group-hover:text-white uppercase italic mb-2 transition-colors">Rembugan & Visioning</h4>
+                    
+                    <p class="text-gray-500 group-hover:text-white/90 text-sm lg:text-lg font-light leading-relaxed transition-colors">
+                        Menyatukan visi informatika dan desain menjadi fondasi Kancah yang solid di Yogyakarta.
+                    </p>
                 </div>
             </div>
         </div>
 
-        <div class="mb-24 relative z-10">
-            <div class="text-center mb-16">
-                <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest">Our DNA</span>
-                <h2 class="text-4xl md:text-5xl font-bold mt-2">YANG KAMI PEGANG TEGUH.</h2>
+        <div class="relative mb-16 lg:mb-24 lg:flex flex-row-reverse items-center w-full group">
+            <div onclick="toggleDot(this)" class="timeline-dot absolute left-[24px] lg:left-1/2 -translate-x-1/2 w-8 lg:w-10 h-8 lg:h-10 bg-white border-4 !border-kancah-blue rounded-full z-20 shadow-[0_0_15px_rgba(0,6,255,0.1)] group-hover:scale-110 transition-all cursor-pointer"></div>
+            
+            <div class="flex lg:w-1/2 justify-start pl-14 lg:pl-24 mb-2 lg:mb-0">
+                <span class="text-5xl md:text-7xl lg:text-[10vw] font-black text-kancah-blue/100 leading-none tracking-tighter uppercase italic transition-all">2025</span>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-                    <div class="w-16 h-16 rounded-full bg-kancah-light flex items-center justify-center text-2xl mb-6 shadow-sm text-kancah-blue group-hover:bg-kancah-blue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-bolt"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3">Brutally Honest</h3>
-                    <p class="text-gray-500 leading-relaxed">
-                        Kami lebih baik jujur kalau ide itu jelek, daripada membiarkan klien buang uang. Kami partner debatmu, bukan sekadar tukang "Yes Boss".
-                    </p>
-                </div>
-
-                <div class="p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-                    <div class="w-16 h-16 rounded-full bg-kancah-light flex items-center justify-center text-2xl mb-6 shadow-sm text-kancah-blue group-hover:bg-kancah-blue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-brain"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3">Data x Instinct</h3>
-                    <p class="text-gray-500 leading-relaxed">
-                        Kreativitas tanpa data itu seni. Kreativitas dengan data itu solusi. Kami menggabungkan riset pasar dengan intuisi visual yang tajam.
-                    </p>
-                </div>
-
-                <div class="p-10 rounded-[2rem] bg-white border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-                    <div class="w-16 h-16 rounded-full bg-kancah-light flex items-center justify-center text-2xl mb-6 shadow-sm text-kancah-blue group-hover:bg-kancah-blue group-hover:text-white transition-colors">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-3">People First</h3>
-                    <p class="text-gray-500 leading-relaxed">
-                        Teknologi boleh canggih, tapi yang menggerakkan brand adalah manusia. Kami mendesain untuk emosi dan pengalaman manusia.
+            
+            <div class="w-full lg:w-1/2 pr-0 lg:pr-24 pl-14 lg:pl-0">
+                <div class="p-6 lg:p-10 bg-gray-50 rounded-[2rem] lg:rounded-[3rem] border border-gray-100 group-hover:bg-kancah-blue group-hover:border-kancah-blue transition-all duration-500 shadow-sm group-hover:shadow-2xl">
+                    <span class="text-kancah-blue group-hover:text-white/80 font-bold text-[10px] uppercase tracking-widest block mb-2 transition-colors">Deployment_Year</span>
+                    <h4 class="text-xl lg:text-3xl font-black text-kancah-dark group-hover:text-white uppercase italic mb-2 transition-colors">Official Launch</h4>
+                    <p class="text-gray-500 group-hover:text-white/90 text-sm lg:text-lg font-light leading-relaxed transition-colors">
+                        Kancah resmi meluncur sebagai unit kreatif profesional untuk melayani brand visioner.
                     </p>
                 </div>
             </div>
         </div>
 
-        <section id="the-squad" class="pt-10 pb-12 relative z-10">
-            <div class="flex flex-col sm:flex-row justify-between items-end mb-12 border-b border-gray-200/50 pb-8 px-2">
-                <div>
-                     <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest block mb-2">The Squad</span>
-                    <h2 class="text-4xl sm:text-5xl font-bold tracking-tight">Meet the <span class="text-kancah-blue">Minds.</span></h2>
+        <div class="relative lg:flex items-center w-full group">
+            <div onclick="toggleDot(this)" class="timeline-dot absolute left-[24px] lg:left-1/2 -translate-x-1/2 w-8 lg:w-10 h-8 lg:h-10 bg-white border-4 !border-kancah-blue rounded-full z-20 shadow-[0_0_15px_rgba(0,6,255,0.1)] group-hover:scale-110 transition-all cursor-pointer"></div>
+            
+            <div class="flex lg:w-1/2 justify-start lg:justify-end pl-14 lg:pl-0 pr-0 lg:pr-24 mb-2 lg:mb-0">
+                <span class="text-5xl md:text-7xl lg:text-[10vw] font-black text-kancah-blue/100 leading-none tracking-tighter uppercase italic  transition-all">2026</span>
+            </div>
+            
+            <div class="w-full lg:w-1/2 pl-14 lg:pl-24">
+                <div class="p-6 lg:p-10 bg-gray-50 rounded-[2rem] lg:rounded-[3rem] border border-gray-100 group-hover:bg-kancah-blue group-hover:border-kancah-blue transition-all duration-500 shadow-sm group-hover:shadow-2xl">
+                    <span class="text-kancah-blue group-hover:text-white/80 font-bold text-[10px] uppercase tracking-widest block mb-2 transition-colors">Scale Up</span>
+                    <h4 class="text-xl lg:text-3xl font-black text-kancah-dark group-hover:text-white uppercase italic mb-2 transition-colors">The Future Ahead</h4>
+                    <p class="text-gray-500 group-hover:text-white/90 text-sm lg:text-lg font-light leading-relaxed transition-colors">
+                        Membangun ekosistem digital yang adaptif dan fungsional untuk masa depan.
+                    </p>
                 </div>
-                <a href="careers.html" class="hidden md:inline-flex px-6 py-3 rounded-full border border-kancah-blue/30 text-kancah-blue font-bold hover:bg-kancah-blue hover:text-white transition-all text-sm uppercase tracking-wider">
-                    Join Us
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section class="pb-24 px-4 sm:px-6 max-w-[1500px] mx-auto">
+       <div class="bg-kancah-dark rounded-[3rem] p-12 sm:p-24 text-center relative overflow-hidden group">
+             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-kancah-blue/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+            <div class="relative z-10">
+                <h2 class="text-4xl sm:text-7xl font-bold text-white mb-10 uppercase leading-[0.85] tracking-tighter">
+                    Let's Start <br> <span class="text-kancah-blue italic">Our Journey.</span>
+                </h2>
+                <a href="contact.html" class="inline-block bg-white text-kancah-dark px-12 py-5 rounded-full font-bold uppercase text-xs tracking-[0.2em] hover:bg-kancah-blue hover:text-white transition-all shadow-2xl">
+                    Start a Project
+                </a>
+            </div>
+        </div>
+    </section>
+
+   <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
+    
+    <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
+        <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+            <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
+            <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+        </div>
+    </div>
+
+    <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
+            
+            <div class="lg:col-span-5 flex flex-col justify-start items-start">
+                <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
+                    PUNYA IDE? <br> <span class="text-[#0006ff] italic">OBROLIN AJA.</span>
+                </h2>
+                
+                <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-[#111111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#0006ff] hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
+                    Ayo Diskusi
+                    <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
                 </a>
             </div>
 
-            <div class="relative w-full group">
-                
-                <button id="slideLeft" class="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 bg-white/20 backdrop-blur-lg border border-white/40 text-kancah-blue shadow-lg hover:bg-kancah-blue hover:text-white hover:shadow-[0_0_20px_rgba(0,6,255,0.5)] active:scale-95 cursor-pointer">
-                    <i class="fa-solid fa-chevron-left text-lg"></i>
-                </button>
-
-                <button id="slideRight" class="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 bg-white/20 backdrop-blur-lg border border-white/40 text-kancah-blue shadow-lg hover:bg-kancah-blue hover:text-white hover:shadow-[0_0_20px_rgba(0,6,255,0.5)] active:scale-95 cursor-pointer">
-                    <i class="fa-solid fa-chevron-right text-lg"></i>
-                </button>
-
-                <div id="infinite-slider" class="flex w-full gap-4 overflow-x-auto no-scrollbar py-6 px-4 smooth-scroll">
-                    
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/sandy.png" class="w-full h-full object-cover transition-all duration-700" alt="Sandy">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Sandy B.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Founder & CEO</p>
-                        </div>
-                    </div>
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/rian.png" class="w-full h-full object-cover transition-all duration-700" alt="Rian">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Rian H.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">CMO</p>
-                        </div>
-                    </div>
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/budi.png" class="w-full h-full object-cover transition-all duration-700" alt="Budi">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Budi S.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Head of Tech</p>
-                        </div>
-                    </div>
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/linda.png" class="w-full h-full object-cover transition-all duration-700" alt="Linda">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Linda K.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Manager</p>
-                        </div>
-                    </div>
-
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/sandy.png" class="w-full h-full object-cover transition-all duration-700" alt="Sandy">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Sandy B.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Founder & CEO</p>
-                        </div>
-                    </div>
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/rian.png" class="w-full h-full object-cover transition-all duration-700" alt="Rian">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Rian H.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">CMO</p>
-                        </div>
-                    </div>
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/budi.png" class="w-full h-full object-cover transition-all duration-700" alt="Budi">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Budi S.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Head of Tech</p>
-                        </div>
-                    </div>
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/linda.png" class="w-full h-full object-cover transition-all duration-700" alt="Linda">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Linda K.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Manager</p>
-                        </div>
-                    </div>
-
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/sandy.png" class="w-full h-full object-cover transition-all duration-700" alt="Sandy">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Sandy B.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Founder & CEO</p>
-                        </div>
-                    </div>
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/rian.png" class="w-full h-full object-cover transition-all duration-700" alt="Rian">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Rian H.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">CMO</p>
-                        </div>
-                    </div>
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/budi.png" class="w-full h-full object-cover transition-all duration-700" alt="Budi">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Budi S.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Head of Tech</p>
-                        </div>
-                    </div>
-                    <div class="team-card w-[200px] sm:w-[240px] md:w-[260px] shrink-0 relative overflow-hidden rounded-[2rem] aspect-[3/4] border border-kancah-blue/100 shadow-[0_0_15px_rgba(0,6,255,0.1)] hover:border-kancah-blue/60 transition-all duration-300 hover:-translate-y-1 bg-white">
-                        <img src="assets/team/linda.png" class="w-full h-full object-cover transition-all duration-700" alt="Linda">
-                        <div class="absolute bottom-0 w-full p-5 bg-black/60 backdrop-blur-md border-t border-white/20">
-                            <h3 class="text-xl font-bold text-white leading-none mb-1">Linda K.</h3>
-                            <p class="text-white/70 text-xs font-medium uppercase tracking-widest">Manager</p>
-                        </div>
-                    </div>
-
+            <div class="lg:col-span-4 flex flex-col gap-6">
+                <div>
+                    <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
+                    <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
+                        <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
+                    </address>
                 </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
-    
-        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
-            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-            </div>
-        </div>
-    
-        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
-                
-                <div class="lg:col-span-5 flex flex-col justify-start items-start">
-                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
-                        PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
-                    </h2>
-                    
-                    <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
-                        Ayo Diskusi
-                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                <div class="flex flex-col gap-2">
+                    <a href="mailto:hello@kancah.agency" class="text-sm font-bold text-white hover:text-[#0006ff] transition-colors flex items-center gap-2 w-max">
+                        <i class="fa-regular fa-envelope"></i> hello@kancah.agency
+                    </a>
+                    <a href="https://wa.me/628123456789" class="text-sm font-bold text-white hover:text-[#0006ff] transition-colors flex items-center gap-2 w-max">
+                        <i class="fa-brands fa-whatsapp"></i> +62 812-3456-7890
                     </a>
                 </div>
-    
-                <div class="lg:col-span-4 flex flex-col gap-6">
-                    <div>
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
-                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
-                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
-                        </address>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <a href="mailto:hello@kancah.agency" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
-                            <i class="fa-regular fa-envelope"></i> hello@kancah.agency
-                        </a>
-                        <a href="https://wa.me/628123456789" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
-                            <i class="fa-brands fa-whatsapp"></i> +62 812-3456-7890
-                        </a>
-                    </div>
-                </div>
-    
-                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
-                    
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="services.html" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
-                            <li><a href="works.html" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
-                            <li><a href="about.html" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
-                            <li><a href="careers.html" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
-                        </ul>
-                    </div>
-    
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Instagram</a></li>
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">LinkedIn</a></li>
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Behance</a></li>
-                        </ul>
-                    </div>
-                </div>
             </div>
-    
-            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
-                <p class="text-center md:text-left">&copy; 2025 PT. Kancah Media Sejahtera.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+
+            <div class="lg:col-span-3 grid grid-cols-2 gap-8">
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
+                    <ul class="flex flex-col gap-3 font-medium text-sm">
+                        <li><a href="services.html" class="text-white hover:text-[#0006ff] transition-colors">Services</a></li>
+                        <li><a href="works.html" class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
+                        <li><a href="about.html" class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
+                        <li><a href="careers.html" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
+                    <ul class="flex flex-col gap-3 font-medium text-sm">
+                        <li><a href="#" class="text-white hover:text-[#0006ff] transition-colors">Instagram</a></li>
+                        <li><a href="#" class="text-white hover:text-[#0006ff] transition-colors">LinkedIn</a></li>
+                        <li><a href="#" class="text-white hover:text-[#0006ff] transition-colors">Behance</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </footer>
+
+        <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
+            <p class="text-center md:text-left">&copy; 2026 PT. Kancah Media Sejahtera.</p>
+            <div class="flex gap-6">
+                <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
 
     <script>
-        // 1. NAV & SCROLL LOGIC (Smooth + Manual Offset)
-        const deskAgency = document.getElementById('desk-agency');
-        const deskTeam = document.getElementById('desk-team');
-        const mobAgency = document.getElementById('mob-agency');
-        const mobTeam = document.getElementById('mob-team');
-
-        function setNavState(active) {
-            [deskAgency, deskTeam, mobAgency, mobTeam].forEach(el => {
-                if(el) {
-                    el.classList.remove('text-kancah-blue', 'font-bold');
-                    el.classList.add('text-kancah-dark', 'font-medium', 'hover:text-kancah-blue');
+        async function updateWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+                const data = await res.json();
+                if (data && data.current_weather) {
+                    const temp = Math.round(data.current_weather.temperature) + "°C";
+                    document.getElementById('nav-temp').innerText = temp;
                 }
-            });
-
-            if (active === 'agency') {
-                [deskAgency, mobAgency].forEach(el => {
-                    if(el) {
-                        el.classList.remove('text-kancah-dark', 'font-medium', 'hover:text-kancah-blue');
-                        el.classList.add('text-kancah-blue', 'font-bold');
-                    }
-                });
-            } else if (active === 'team') {
-                [deskTeam, mobTeam].forEach(el => {
-                    if(el) {
-                        el.classList.remove('text-kancah-dark', 'font-medium', 'hover:text-kancah-blue');
-                        el.classList.add('text-kancah-blue', 'font-bold');
-                    }
-                });
-            }
+            } catch (e) { console.log("Radar Signal Lost"); }
         }
 
-        window.goToAgency = function() {
-            setTimeout(function() {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                setNavState('agency');
-            }, 10);
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-GB', { hour12: false });
+            document.getElementById('nav-time').innerText = time;
         }
 
-        window.goToTeam = function() {
-            const section = document.getElementById('the-squad');
-            if (section) {
-                setTimeout(function() {
-                    const offset = 50; 
-                    const elementTop = section.getBoundingClientRect().top + window.scrollY;
-                    const offsetPosition = elementTop - offset; 
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
-                    setNavState('team');
-                }, 10);
-            }
-        }
-
-        // 2. INFINITY SLIDER LOGIC (IMPROVED BOUNDARY CHECKS)
-        const slider = document.getElementById('infinite-slider');
-        const btnLeft = document.getElementById('slideLeft');
-        const btnRight = document.getElementById('slideRight');
-        
-        function getOneSetWidth() {
-            if(!slider) return 0;
-            return slider.scrollWidth / 3;
-        }
-
-        // Teleport Logic
-        if(slider) {
-            slider.addEventListener('scroll', () => {
-                const oneSetWidth = getOneSetWidth();
-                if(oneSetWidth <= 0) return;
-
-                // Loop Right -> Left (Reset if past set 2)
-                if (slider.scrollLeft >= oneSetWidth * 2) {
-                    slider.classList.remove('smooth-scroll');
-                    slider.classList.add('auto-scroll');
-                    slider.scrollLeft = slider.scrollLeft - oneSetWidth;
-                    setTimeout(() => {
-                        slider.classList.remove('auto-scroll');
-                        slider.classList.add('smooth-scroll');
-                    }, 0);
-                } 
-                // Loop Left -> Right (Reset if before set 1)
-                else if (slider.scrollLeft <= 10) { 
-                    slider.classList.remove('smooth-scroll');
-                    slider.classList.add('auto-scroll');
-                    slider.scrollLeft = slider.scrollLeft + oneSetWidth;
-                    setTimeout(() => {
-                        slider.classList.remove('auto-scroll');
-                        slider.classList.add('smooth-scroll');
-                    }, 0);
-                }
-            });
-        }
-
-        // Button Logic with "Pre-check"
-        if(btnRight) {
-            btnRight.addEventListener('click', () => {
-                const oneSetWidth = getOneSetWidth();
-                const scrollAmount = 280; // approximate scroll distance
-
-                // Pre-check right boundary
-                if (slider.scrollLeft + scrollAmount >= oneSetWidth * 2) {
-                    // Teleport left first
-                    slider.classList.remove('smooth-scroll');
-                    slider.classList.add('auto-scroll');
-                    slider.scrollLeft = slider.scrollLeft - oneSetWidth;
-                    
-                    setTimeout(() => {
-                        slider.classList.remove('auto-scroll');
-                        slider.classList.add('smooth-scroll');
-                        slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                    }, 20);
-                } else {
-                    slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-                }
-            });
-        }
-
-        if(btnLeft) {
-            btnLeft.addEventListener('click', () => {
-                const oneSetWidth = getOneSetWidth();
-                const scrollAmount = 280;
-
-                // Pre-check left boundary
-                if (slider.scrollLeft - scrollAmount <= 0) {
-                    // Teleport right first
-                    slider.classList.remove('smooth-scroll');
-                    slider.classList.add('auto-scroll');
-                    slider.scrollLeft = slider.scrollLeft + oneSetWidth;
-                    
-                    setTimeout(() => {
-                        slider.classList.remove('auto-scroll');
-                        slider.classList.add('smooth-scroll');
-                        slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-                    }, 20);
-                } else {
-                    slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-                }
-            });
-        }
-
-        // 3. INIT
-        window.addEventListener('load', function() {
-            // Set init scroll to middle set
-            if(slider) {
-                slider.scrollLeft = getOneSetWidth();
-            }
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.location.hash === '#the-squad') {
-                setTimeout(goToTeam, 300);
-            } else {
-                setNavState('agency');
-            }
-
-            const mobileBtn = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const menuIcon = document.getElementById('menu-icon');
-            let isMenuOpen = false;
-
-            window.toggleMenu = function() {
-                isMenuOpen = !isMenuOpen;
-                if (isMenuOpen) {
-                    mobileMenu.classList.remove('translate-x-full');
-                    document.body.classList.add('menu-open');
-                    menuIcon.classList.remove('fa-bars-staggered');
-                    menuIcon.classList.add('fa-xmark');
-                } else {
-                    mobileMenu.classList.add('translate-x-full');
-                    document.body.classList.remove('menu-open');
-                    menuIcon.classList.remove('fa-xmark');
-                    menuIcon.classList.add('fa-bars-staggered');
-                }
-            }
-
-            if (mobileBtn) {
-                mobileBtn.addEventListener('click', toggleMenu);
-            }
+        document.addEventListener('DOMContentLoaded', () => {
+            updateWeather(); updateClock(); setInterval(updateClock, 1000);
+            const btn = document.getElementById('mobile-menu-button');
+            const menu = document.getElementById('mobile-menu');
+            if(btn && menu) btn.onclick = () => menu.classList.toggle('translate-x-full');
         });
     </script>
 </body>
