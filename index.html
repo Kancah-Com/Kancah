@@ -31,7 +31,7 @@
             display: flex;
             width: max-content;
             /* SPEED ADJUSTED: 30s karena item lebih banyak (jalur lebih panjang) */
-            animation: scroll 30s linear infinite; 
+            animation: scroll 8s linear infinite; 
             will-change: transform; 
         }
 
@@ -431,13 +431,13 @@
 <section class="border-y border-gray-100 py-10 sm:py-12 bg-white overflow-hidden">
     <div class="max-w-[1400px] mx-auto px-6 mb-8 text-center"><span class="text-xs font-bold uppercase tracking-widest text-gray-400">Dipercaya Oleh Mereka</span></div>
     
-    <div class="marquee-container w-full relative overflow-hidden">
-        <div class="absolute top-0 bottom-0 left-0 w-20 z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
-        <div class="absolute top-0 bottom-0 right-0 w-20 z-10 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
-
-        <div class="marquee-track flex gap-8 sm:gap-16 px-4" id="partner-track">
-        </div>
+    <div class="marquee-container w-full relative overflow-hidden" 
+     style="-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); 
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+    
+    <div class="marquee-track flex gap-6 sm:gap-16 items-center px-4" id="partner-track">
     </div>
+</div>
 </section>
 
     <section class="py-16 sm:py-24 px-6 max-w-[1200px] mx-auto overflow-hidden"> 
@@ -616,10 +616,19 @@ const { data: partners } = await kancah
             if (!lErr && partners) {
                 const track = document.getElementById('partner-track');
                 if (track) {
-                    const logoHtml = partners.map(p => `
-                        <img src="${p.logo_url}" class="h-16 sm:h-24 w-auto object-contain grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all mx-4" alt="${p.name}">
-                    `).join('');
-                    track.innerHTML = logoHtml + logoHtml; // Infinite scroll effect
+
+const logoHtml = partners.map(p => `
+    <img src="${p.logo_url}" 
+         class="h-10 sm:h-20 w-auto object-contain flex-shrink-0 cursor-pointer
+                [filter:brightness(0)_saturate(100%)_invert(55%)] 
+                hover:[filter:brightness(0)_saturate(100%)_invert(9%)_sepia(100%)_saturate(7484%)_hue-rotate(244deg)_brightness(100%)_contrast(145%)]" 
+         alt="${p.name}">
+`).join('');
+
+track.innerHTML = logoHtml + logoHtml;
+        // Pastikan container track lo pakai gap kecil biar rapet di mobile
+        track.className = "marquee-track flex gap-4 sm:gap-12 items-center px-4";
+    
                 }
             }
         }
