@@ -14,10 +14,7 @@
                 extend: {
                     fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
                     colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } },
-                    screens: { 'xs': '475px' },
-                    backgroundImage: {
-                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
-                    }
+                    screens: { 'xs': '475px' }
                 }
             }
         }
@@ -35,100 +32,100 @@
         .menu-open { overflow: hidden; }
     </style>
 </head>
-<body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
+<body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 top-0 bg-white/90 backdrop-blur-xl border-b border-gray-100 transition-all duration-300" id="navbar">
-        <div class="max-w-[1400px] mx-auto px-6 h-16 sm:h-20 flex justify-between items-center relative z-50">
-            <a href="index.html" class="flex items-center z-50">
-                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-8 md:h-9 w-auto object-contain">
-            </a>
-
-            <div class="hidden lg:flex gap-8 xl:gap-12 text-sm font-medium uppercase tracking-wide" id="nav-links">
-                <a href="about.html" class="nav-link hover:text-kancah-blue transition-colors">Agency</a>
-                <a href="about.html#the-squad" class="nav-link hover:text-kancah-blue transition-colors">Team</a>
-                <a href="services.html" class="nav-link hover:text-kancah-blue transition-colors">Capabilities</a>
-                <a href="works.html" class="nav-link hover:text-kancah-blue transition-colors">Work</a>
-                <a href="careers.html" class="nav-link hover:text-kancah-blue transition-colors">Careers</a>
+    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
+            <div class="flex-none">
+                <a href="index.html">
+                    <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
+                </a>
             </div>
 
-            <a href="contact.html" class="hidden lg:flex items-center gap-2 text-sm font-bold border border-gray-200 px-5 py-2 rounded-full bg-kancah-dark text-white hover:bg-kancah-blue hover:border-kancah-blue transition-all group">
-                Let's Talk <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
-            </a>
-
-            <button class="lg:hidden text-2xl w-10 h-10 flex items-center justify-center z-50 relative" id="mobile-menu-button">
-                <i class="fa-solid fa-bars-staggered transition-all duration-300" id="menu-icon"></i>
-            </button>
-        </div>
-
-        <div id="mobile-menu" class="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center h-screen w-screen translate-x-full lg:hidden">
-            <div class="flex flex-col gap-8 text-center text-2xl font-bold uppercase tracking-wider">
-                <a href="about.html" class="mobile-link hover:text-kancah-blue">Agency</a>
-                <a href="about.html#the-squad" class="mobile-link hover:text-kancah-blue">Team</a>
-                <a href="services.html" class="mobile-link hover:text-kancah-blue">Capabilities</a>
-                <a href="works.html" class="mobile-link hover:text-kancah-blue">Work</a>
-                <a href="careers.html" class="mobile-link hover:text-kancah-blue">Careers</a>
+            <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
+                <a href="about.html" class="hover:text-[#0006ff] transition-colors">Agency</a>
+                <a href="services.html" class="hover:text-[#0006ff] transition-colors">Capabilities</a>
+                <a href="works.html" class="hover:text-[#0006ff] transition-colors">Work</a>
+                <a href="careers.html" class="hover:text-[#0006ff] transition-colors">Careers</a>
             </div>
-            <a href="contact.html" class="mt-12 px-8 py-3 bg-kancah-dark text-white rounded-full font-bold uppercase tracking-widest text-sm mobile-link">Let's Talk</a>
+
+            <div class="flex items-center gap-2 sm:gap-4 h-8"> 
+                <div id="weather-module-desktop" class="relative group hidden sm:block">
+                    <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-[#0006ff] rounded-full select-none transition-all duration-300">
+                        <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
+                            <span id="nav-time">00:00:00</span>
+                            <span class="text-[#0006ff] font-black">|</span>
+                            <span id="nav-temp">--°C</span>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 mt-1.5 leading-none">
+                            <div class="relative flex h-1 w-1">
+                                <span class="animate-ping absolute h-full w-full rounded-full bg-[#0006ff] opacity-40"></span>
+                                <span class="h-1 w-1 rounded-full bg-[#0006ff]"></span>
+                            </div>
+                            <span class="text-[#0006ff] font-black text-[8px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative sm:hidden">
+                    <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-[#0006ff] text-[#0006ff] text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">
+                        Kancah HQ, Yogyakarta
+                        <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-b-[#0006ff]"></div>
+                        <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-[5px] border-transparent border-b-white/80 mb-[-1px]"></div>
+                    </div>
+                    <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-[#0006ff] border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
+                        <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
+                            <span id="nav-time-mobile">00:00</span>
+                            <span class="text-[#0006ff] font-black">|</span>
+                            <span id="nav-temp-mobile">--°C</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="contact.html" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-[#0006ff] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
+                    Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
+                </a>
+
+                <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
+                    <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
-    <main class="pt-24 sm:pt-32 pb-16 relative"> 
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full transition-transform duration-500 lg:hidden">
+        <button class="absolute top-6 right-6 text-3xl" id="close-menu">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
+            <a href="about.html" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
+            <a href="services.html" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
+            <a href="works.html" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
+            <a href="careers.html" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
+            <a href="contact.html" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
+        </div>
+    </div>
+
+    <main class="pt-20 sm:pt-32 pb-16 relative"> 
         <section id="contact-main" class="relative z-10">
-            <div class="absolute top-0 right-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-kancah-blue/5 rounded-full blur-[100px] pointer-events-none translate-x-1/2 -translate-y-1/2"></div>
-    
             <div class="max-w-[1400px] mx-auto px-6 w-full">
-                <div class="mb-10 sm:mb-12 border-b border-gray-100 pb-8 flex flex-col md:flex-row justify-between items-end gap-6">
-                    <div>
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="w-2 h-2 bg-kancah-blue rounded-full animate-pulse"></span>
-                            <span class="text-xs font-bold tracking-[0.2em] uppercase text-gray-400">Signal Status: Online</span>
+                <div class="mb-8 sm:mb-20 border-b border-gray-100 pb-6 sm:pb-10 flex flex-col md:flex-row justify-between items-end gap-6">
+                    <div class="w-full md:w-auto">
+                        <div class="flex items-center gap-3 mb-2"> 
+                            <span class="text-kancah-blue font-bold text-[10px] sm:text-xs uppercase tracking-[0.3em] block">YUK, HUBUNGI KAMI</span>
                         </div>
-                        <h1 class="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tighter leading-none">
+                        <h1 class="text-[13vw] xs:text-[11vw] sm:text-7xl md:text-8xl font-bold tracking-tighter leading-[0.85] uppercase">
                             JANGAN <br> <span class="text-kancah-blue italic">SUNGKAN.</span>
                         </h1>
                     </div>
-                    <div class="text-left md:text-right max-w-sm">
-                        <p class="text-gray-500 text-base sm:text-lg leading-relaxed font-light">
+                    <div class="text-left md:text-right max-w-sm w-full">
+                        <p class="text-gray-500 text-sm sm:text-base md:text-lg leading-relaxed font-light">
                             Nggak harus langsung deal proyek kok. Curhat soal brand, tanya-tanya strategi, atau sekadar ngajak ngopi juga kita gas.
                         </p>
                     </div>
                 </div>
-    
+                
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
-                    <div class="lg:col-span-5 flex flex-col justify-start h-full order-2 lg:order-1 lg:sticky lg:top-32">
-                        <div class="space-y-8">
-                            <div class="group">
-                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Markas (The Base)</h3>
-                                <p class="text-xl sm:text-2xl font-medium leading-relaxed group-hover:text-kancah-blue transition-colors">
-                                    Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta.
-                                </p>
-                                <a href="https://maps.google.com" target="_blank" class="inline-block mt-2 text-sm font-bold border-b border-kancah-dark pb-0.5 hover:text-kancah-blue hover:border-kancah-blue transition-all">Lihat di Maps <i class="fa-solid fa-arrow-right -rotate-45 ml-1"></i></a>
-                            </div>
-    
-                            <div class="group">
-                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Jalur Cepat (Direct Line)</h3>
-                                <div class="flex flex-col gap-2">
-                                    <a href="https://wa.me/6281234567890" class="text-2xl sm:text-3xl font-bold hover:text-kancah-blue transition-colors flex items-center gap-3">
-                                        <i class="fa-brands fa-whatsapp text-xl"></i> 0812-3456-7890
-                                    </a>
-                                    <a href="mailto:hello@kancah.agency" class="text-xl sm:text-3xl font-bold hover:text-kancah-blue transition-colors flex items-center gap-3 break-all sm:break-normal">
-                                        <i class="fa-regular fa-envelope text-xl"></i> hello@kancah.agency
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                                <div class="flex items-start gap-4">
-                                    <i class="fa-solid fa-mug-hot text-kancah-blue text-2xl mt-1"></i>
-                                    <div>
-                                        <h4 class="font-bold text-lg mb-1">Kopi Gratis.</h4>
-                                        <p class="text-gray-500 text-sm font-light">Main ke kantor aja, baristanya anak desain sendiri (maaf kalau latte art-nya abstrak).</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
                     <div class="lg:col-span-7 order-1 lg:order-2">
                         <form id="contact-form" class="space-y-6 sm:space-y-8 bg-white">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
@@ -163,6 +160,40 @@
                                 </button>
                             </div>
                         </form>
+                    </div>
+
+                    <div class="lg:col-span-5 flex flex-col justify-start h-full order-2 lg:order-1 lg:sticky lg:top-32">
+                        <div class="space-y-8">
+                            <div class="group">
+                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Markas (The Base)</h3>
+                                <p class="text-xl sm:text-2xl font-medium leading-relaxed group-hover:text-kancah-blue transition-colors">
+                                    Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta.
+                                </p>
+                                <a href="https://maps.google.com" target="_blank" class="inline-block mt-2 text-sm font-bold border-b border-kancah-dark pb-0.5 hover:text-kancah-blue hover:border-kancah-blue transition-all">Lihat di Maps <i class="fa-solid fa-arrow-right -rotate-45 ml-1"></i></a>
+                            </div>
+    
+                            <div class="group">
+                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Jalur Cepat (Direct Line)</h3>
+                                <div class="flex flex-col gap-2">
+                                    <a href="https://wa.me/6281234567890" class="text-2xl sm:text-3xl font-bold hover:text-kancah-blue transition-colors flex items-center gap-3">
+                                        <i class="fa-brands fa-whatsapp text-xl"></i> 0812-3456-7890
+                                    </a>
+                                    <a href="mailto:hello@kancah.agency" class="text-xl sm:text-3xl font-bold hover:text-kancah-blue transition-colors flex items-center gap-3 break-all sm:break-normal">
+                                        <i class="fa-regular fa-envelope text-xl"></i> hello@kancah.agency
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="p-6 bg-kancah-blue rounded-2xl text-white shadow-lg shadow-kancah-blue/20">
+                                <div class="flex items-start gap-4">
+                                    <i class="fa-solid fa-mug-hot text-white text-2xl mt-1"></i>
+                                    <div>
+                                        <h4 class="font-bold text-lg mb-1">Kopi Gratis.</h4>
+                                        <p class="text-blue-100 text-sm font-light">Main ke kantor aja, baristanya anak desain sendiri (maaf kalau latte art-nya abstrak).</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -234,61 +265,89 @@
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Mobile Menu Logic
-        const mobileBtn = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        let isMenuOpen = false;
-
-        function toggleMenu() {
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
-                mobileMenu.classList.remove('translate-x-full');
-                document.body.classList.add('menu-open');
-                menuIcon.classList.remove('fa-bars-staggered');
-                menuIcon.classList.add('fa-xmark');
-            } else {
-                mobileMenu.classList.add('translate-x-full');
-                document.body.classList.remove('menu-open');
-                menuIcon.classList.remove('fa-xmark');
-                menuIcon.classList.add('fa-bars-staggered');
-            }
+        async function updateWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+                const data = await res.json();
+                if (data?.current_weather) {
+                    const t = Math.round(data.current_weather.temperature) + "°C";
+                    if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = t;
+                    if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = t;
+                }
+            } catch (e) {}
         }
 
-        if (mobileBtn) { mobileBtn.addEventListener('click', toggleMenu); }
+        function updateClock() {
+            const n = new Date();
+            const h = String(n.getHours()).padStart(2,'0'), m = String(n.getMinutes()).padStart(2,'0'), s = String(n.getSeconds()).padStart(2,'0');
+            if(document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
+            if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
+        }
 
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => { if(isMenuOpen) toggleMenu(); });
+        document.addEventListener('DOMContentLoaded', () => {
+            updateWeather(); updateClock(); setInterval(updateClock, 1000);
+            
+            const trigger = document.getElementById('weather-mobile-trigger');
+            const popup = document.getElementById('location-popup');
+
+            if (trigger && popup) {
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const isOpen = popup.classList.contains('opacity-100');
+                    if (isOpen) {
+                        popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+                        popup.classList.remove('opacity-100', 'scale-100');
+                    } else {
+                        popup.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
+                        popup.classList.add('opacity-100', 'scale-100');
+                        setTimeout(() => {
+                            popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+                            popup.classList.remove('opacity-100', 'scale-100');
+                        }, 3000);
+                    }
+                });
+                document.addEventListener('click', () => {
+                    popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+                    popup.classList.remove('opacity-100', 'scale-100');
+                });
+            }
+
+            const btn = document.getElementById('mobile-menu-button'), 
+                  menu = document.getElementById('mobile-menu'),
+                  close = document.getElementById('close-menu'),
+                  body = document.body;
+
+            const openMenu = () => {
+                menu.classList.replace('translate-x-full', 'translate-x-0');
+                body.style.overflow = 'hidden';
+            };
+            const closeMenu = () => {
+                menu.classList.replace('translate-x-0', 'translate-x-full');
+                body.style.overflow = '';
+            };
+
+            if(btn) btn.onclick = (e) => { e.stopPropagation(); openMenu(); };
+            if(close) close.onclick = (e) => { e.stopPropagation(); closeMenu(); };
+            document.querySelectorAll('.mobile-link').forEach(l => l.onclick = () => closeMenu());
+
+            // WHATSAPP FORM LOGIC
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('name').value;
+                const brand = document.getElementById('brand').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                const phoneNumber = "62895339328011"; 
+                const fullMessage = `Halo Kancah Agency! 👋%0A%0A` +
+                                    `*Nama:* ${name}%0A` +
+                                    `*Brand:* ${brand}%0A` +
+                                    `*Email:* ${email}%0A%0A` +
+                                    `*Pesan:*%0A${message}`;
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${fullMessage}`;
+                window.open(whatsappUrl, '_blank');
+            });
         });
-
-        // WHATSAPP FORM LOGIC
-        const contactForm = document.getElementById('contact-form');
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Ambil data
-            const name = document.getElementById('name').value;
-            const brand = document.getElementById('brand').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            // Nomor WA (Tanpa +, awali 62)
-            const phoneNumber = "62895339328011"; 
-
-            // Format Pesan
-            const fullMessage = `Halo Kancah Agency! 👋%0A%0A` +
-                                `*Nama:* ${name}%0A` +
-                                `*Brand:* ${brand}%0A` +
-                                `*Email:* ${email}%0A%0A` +
-                                `*Pesan:*%0A${message}`;
-
-            // Redirect
-            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${fullMessage}`;
-            window.open(whatsappUrl, '_blank');
-        });
-    });
     </script>
 </body>
 </html>

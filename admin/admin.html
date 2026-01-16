@@ -124,19 +124,39 @@
                 <div id="client-list-grid" class="grid grid-cols-2 md:grid-cols-5 gap-4"></div>
             </section>
 
-            <section id="tab-careers" class="tab-content hidden space-y-8">
-                <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm">
-                    <h2 class="text-xl font-bold italic uppercase mb-6">Manage Jobs</h2>
-                    <form id="careerForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <input type="text" id="job-title" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Job Title" required>
-                        <input type="text" id="job-location" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Location">
-                        <select id="job-type" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none"><option value="Full-Time">Full-Time</option><option value="Internship">Internship</option></select>
-                        <input type="text" id="job-link" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Apply Link">
-                        <button type="submit" id="btn-job-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px]">Save Job</button>
-                    </form>
-                </div>
-                <div id="career-list" class="space-y-3"></div>
-            </section>
+           <section id="tab-careers" class="tab-content hidden space-y-8">
+    <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm">
+        <h2 class="text-xl font-bold italic uppercase mb-6">Manage Jobs</h2>
+        <form id="careerForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <input type="text" id="job-title" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Job Title (e.g. Tukang Galon)" required>
+            <input type="text" id="job-location" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Location (e.g. Yogyakarta)">
+            
+            <select id="job-type" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none">
+                <option value="Full-Time">Full-Time</option>
+                <option value="Internship">Internship</option>
+            </select>
+            <input type="text" id="job-link" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Apply Link (Optional)">
+
+            <div class="md:col-span-2">
+                <label class="text-[9px] font-bold uppercase text-gray-400 ml-4 mb-2 block">Job Overview (Deskripsi Singkat)</label>
+                <textarea id="job-desc" class="w-full p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none resize-none" placeholder="Jelaskan misi posisi ini..."></textarea>
+            </div>
+
+            <div class="md:col-span-1">
+                <label class="text-[9px] font-bold uppercase text-gray-400 ml-4 mb-2 block">Tanggung Jawab (Gunakan ENTER untuk poin baru)</label>
+                <textarea id="job-res" class="w-full p-4 bg-slate-50 border rounded-2xl h-48 focus:outline-none resize-none" placeholder="Contoh:&#10;Angkat galon ke dispenser&#10;Cek stok air tiap pagi"></textarea>
+            </div>
+
+            <div class="md:col-span-1">
+                <label class="text-[9px] font-bold uppercase text-gray-400 ml-4 mb-2 block">Kualifikasi (Gunakan ENTER untuk poin baru)</label>
+                <textarea id="job-req" class="w-full p-4 bg-slate-50 border rounded-2xl h-48 focus:outline-none resize-none" placeholder="Contoh:&#10;Punya otot kawat tulang besi&#10;Domisili Yogyakarta"></textarea>
+            </div>
+
+            <button type="submit" id="btn-job-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all">Save Job Position</button>
+        </form>
+    </div>
+    <div id="career-list" class="space-y-3"></div>
+</section>
 
             <section id="tab-users" class="tab-content hidden space-y-8">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -318,30 +338,106 @@
         });
 
         // --- 3. CAREERS LOGIC ---
-        async function loadCareerList() {
-            const { data } = await kancah.from('careers').select('*').order('created_at', {ascending: false});
-            const list = document.getElementById('career-list');
-            if(data) list.innerHTML = data.map(j => `<div class="p-4 bg-white border border-slate-100 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-50" onclick="prepareEditJob('${j.id}')"><div><p class="font-bold text-slate-800">${j.title}</p><p class="text-[10px] text-slate-400 uppercase font-black">${j.type} • ${j.location}</p></div><button onclick="event.stopPropagation(); deleteJob('${j.id}')" class="text-red-300 hover:text-red-500"><i class="fa-solid fa-trash"></i></button></div>`).join('');
-        }
+      // --- 3. CAREERS LOGIC UPDATED ---
+// --- 3. CAREERS LOGIC ---
+async function loadCareerList() {
+    const { data } = await kancah.from('careers').select('*').order('created_at', {ascending: false});
+    const list = document.getElementById('career-list');
+    if(data) list.innerHTML = data.map(j => `
+        <div class="p-4 bg-white border border-slate-100 rounded-xl flex justify-between items-center cursor-pointer hover:bg-slate-50" onclick="prepareEditJob('${j.id}')">
+            <div>
+                <p class="font-bold text-slate-800">${j.title}</p>
+                <p class="text-[10px] text-slate-400 uppercase font-black">${j.type} • ${j.location || 'On Site'}</p>
+            </div>
+            <button onclick="event.stopPropagation(); deleteJob('${j.id}')" class="text-red-300 hover:text-red-500 p-2">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+        </div>`).join('');
+}
 
-        document.getElementById('careerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const payload = {
-                title: document.getElementById('job-title').value,
-                location: document.getElementById('job-location').value,
-                type: document.getElementById('job-type').value,
-                link: document.getElementById('job-link').value
-            };
-            if (window.currentEditJobId) {
-                await kancah.from('careers').update(payload).eq('id', window.currentEditJobId);
-                window.currentEditJobId = null;
-                showToast("JOB UPDATED");
-            } else {
-                await kancah.from('careers').insert([payload]);
-                showToast("JOB POSTED");
-            }
-            e.target.reset(); document.getElementById('btn-job-submit').innerText = 'Save Job'; loadCareerList();
-        });
+
+
+async function prepareEditJob(id) {
+    const { data: j, error } = await kancah.from('careers').select('*').eq('id', id).single();
+    if(error) { showToast("Gagal ambil data", true); return; }
+    
+    if(j) {
+        window.currentEditJobId = j.id;
+        document.getElementById('job-title').value = j.title || '';
+        document.getElementById('job-location').value = j.location || '';
+        document.getElementById('job-type').value = j.type || 'Full-Time';
+        document.getElementById('job-link').value = j.link || '';
+        document.getElementById('job-desc').value = j.description || '';
+        document.getElementById('job-res').value = j.responsibilities || '';
+        document.getElementById('job-req').value = j.requirements || '';
+        
+        document.getElementById('btn-job-submit').innerText = 'UPDATE JOB NOW';
+        showToast("DATA LOADED");
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+}
+
+
+async function prepareEditJob(id) {
+    const { data: j } = await kancah.from('careers').select('*').eq('id', id).single();
+    if(j) {
+        window.currentEditJobId = j.id;
+        document.getElementById('job-title').value = j.title || '';
+        document.getElementById('job-location').value = j.location || '';
+        document.getElementById('job-type').value = j.type || 'Full-Time';
+        document.getElementById('job-link').value = j.link || '';
+        document.getElementById('job-desc').value = j.description || ''; // Baru
+        document.getElementById('job-res').value = j.responsibilities || ''; // Baru
+        document.getElementById('job-req').value = j.requirements || ''; // Baru
+        
+        document.getElementById('btn-job-submit').innerText = 'UPDATE JOB NOW';
+        showToast("JOB DATA LOADED");
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+}
+
+   // --- HAPUS SEMUA EVENT LISTENER CAREERFORM YANG LAMA, GANTI DENGAN INI ---
+document.getElementById('careerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('btn-job-submit');
+    
+    // Inovasi UX: Disable tombol agar user tidak klik berkali-kali saat proses (cegah duplikat)
+    btn.disabled = true;
+    btn.innerText = 'SAVING...';
+    
+    const payload = {
+        title: document.getElementById('job-title').value,
+        location: document.getElementById('job-location').value,
+        type: document.getElementById('job-type').value,
+        link: document.getElementById('job-link').value,
+        description: document.getElementById('job-desc').value,
+        responsibilities: document.getElementById('job-res').value,
+        requirements: document.getElementById('job-req').value
+    };
+
+    try {
+        if (window.currentEditJobId) {
+            const { error } = await kancah.from('careers').update(payload).eq('id', window.currentEditJobId);
+            if(error) throw error;
+            window.currentEditJobId = null;
+            showToast("JOB UPDATED");
+        } else {
+            const { error } = await kancah.from('careers').insert([payload]);
+            if(error) throw error;
+            showToast("JOB POSTED");
+        }
+        
+        e.target.reset();
+        btn.innerText = 'Save Job Position';
+        loadCareerList();
+    } catch (err) {
+        showToast(err.message, true);
+        btn.innerText = 'Try Again';
+    } finally {
+        // Aktifkan kembali tombol setelah selesai
+        btn.disabled = false;
+    }
+});
 
         async function prepareEditJob(id) {
             const { data: j } = await kancah.from('careers').select('*').eq('id', id).single();
