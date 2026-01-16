@@ -627,28 +627,6 @@ const { data: partners } = await kancah
         // Jalankan Fetch Data
         loadFeaturedData();
 
-        // --- 2. MOBILE MENU LOGIC ---
-        const mobileBtn = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-        let isMenuOpen = false;
-
-        function toggleMenu() {
-            isMenuOpen = !isMenuOpen;
-            if (isMenuOpen) {
-                mobileMenu.classList.remove('translate-x-full');
-                document.body.classList.add('menu-open');
-                menuIcon.classList.remove('fa-bars-staggered');
-                menuIcon.classList.add('fa-xmark');
-            } else {
-                mobileMenu.classList.add('translate-x-full');
-                document.body.classList.remove('menu-open');
-                menuIcon.classList.remove('fa-xmark');
-                menuIcon.classList.add('fa-bars-staggered');
-            }
-        }
-
         if (mobileBtn) {
             mobileBtn.addEventListener('click', toggleMenu);
         }
