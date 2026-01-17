@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 • Halaman Tidak Ditemukan • Kancah</title>
+    <link rel="icon" type="image/png" href="./assets/logowh.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
+                    colors: { kancah: { blue: '#0006ff', dark: '#111111' } },
+                    backgroundImage: { 'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)" }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Ubuntu', sans-serif; }
+        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
+        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        #mobile-menu { transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        #siren-text { transition: all 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-white text-kancah-dark overflow-x-hidden selection:bg-kancah-blue selection:text-white bg-tech-pattern bg-[length:24px_24px]">
+
+    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
+            <div class="flex-none">
+                <a href="/">
+                    <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
+                </a>
+            </div>
+
+            <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
+                <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
+                <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
+                <a href="works" class="hover:text-kancah-blue transition-colors">Work</a>
+                <a href="careers" class="hover:text-kancah-blue transition-colors">Careers</a>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-4 h-8"> 
+                <div id="weather-module-desktop" class="relative group hidden sm:block">
+                    <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-kancah-blue rounded-full select-none transition-all duration-300">
+                        <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
+                            <span id="nav-time">00:00:00</span> <span class="text-kancah-blue font-black">|</span> <span id="nav-temp">--°C</span>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 mt-1.5 leading-none">
+                            <div class="relative flex h-1 w-1">
+                                <span class="animate-ping absolute h-full w-full rounded-full bg-kancah-blue opacity-40"></span>
+                                <span class="h-1 w-1 rounded-full bg-kancah-blue"></span>
+                            </div>
+                            <span class="text-kancah-blue font-black text-[8px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative sm:hidden">
+                    <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-kancah-blue text-kancah-blue text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">Kancah HQ, Yogyakarta</div>
+                    <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-kancah-blue border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
+                        <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
+                            <span id="nav-time-mobile">00:00</span> <span class="text-kancah-blue font-black">|</span> <span id="nav-temp-mobile">--°C</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-kancah-dark transition-all">Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i></a>
+                <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button"><i class="fa-solid fa-bars-staggered text-base leading-none"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full lg:hidden">
+        <button class="absolute top-6 right-6 text-3xl" id="close-menu"><i class="fa-solid fa-xmark"></i></button>
+        <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
+            <a href="about" class="mobile-link">Agency</a>
+            <a href="services" class="mobile-link">Capabilities</a>
+            <a href="works" class="mobile-link">Work</a>
+            <a href="careers" class="mobile-link">Careers</a>
+            <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
+        </div>
+    </div>
+
+    <main class="min-h-screen flex flex-col justify-center items-center px-6 pt-20">
+        <div class="text-center">
+            <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full border border-gray-100 mb-6 transition-all duration-500" id="siren-container">
+                <div class="flex gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_red]" id="light-left"></span>
+                    <span class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_blue]" id="light-right"></span>
+                </div>
+                <span id="siren-text" class="text-kancah-blue font-black text-[10px] uppercase tracking-[0.4em]">Error Code: 404</span>
+            </div>
+
+            <h1 class="text-[22vw] lg:text-[15vw] font-black leading-none tracking-tighter text-kancah-dark italic uppercase">Waduh.</h1>
+            
+            <div class="max-w-md mx-auto mt-6 space-y-8">
+                <p class="text-gray-500 text-base sm:text-lg font-light leading-relaxed px-4">
+                    Link yang kamu cari tidak ditemukan. <span class="italic text-kancah-blue font-medium underline underline-offset-4">Coba perhatikan</span> kembali link yang kamu ketik, mungkin ada kesalahan.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="/" class="w-full sm:w-auto bg-kancah-blue text-white px-10 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-kancah-dark transition-all shadow-xl shadow-kancah-blue/20">Balik ke Beranda</a>
+                    <a href="contact" class="w-full sm:w-auto border-2 border-kancah-dark text-kancah-dark px-10 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-kancah-dark hover:text-white transition-all">Hubungi Tim</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans">
+        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
+            <div class="footer-marquee-content gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • <span>Strategy</span> • <span>Branding</span>
+            </div>
+        </div>
+        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <div class="lg:col-span-5 flex flex-col justify-start items-start">
+                    <h2 class="text-4xl sm:text-5xl font-bold tracking-tighter leading-[0.9] text-white mb-8">PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span></h2>
+                    <a href="contact" class="bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all">Ayo Diskusi <i class="fa-solid fa-arrow-right -rotate-45 ml-1"></i></a>
+                </div>
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm"><p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p></address>
+                    <div class="flex flex-col gap-2"><a href="mailto:hello@kancah.agency" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors">hello@kancah.agency</a></div>
+                </div>
+                <div class="lg:col-span-3">
+                    <div class="flex flex-col gap-4 text-xs font-bold uppercase tracking-widest">
+                        <h4 class="text-gray-500">Navigation</h4>
+                        <ul class="flex flex-col gap-3 font-medium normal-case">
+                            <li><a href="services" class="text-white hover:text-kancah-blue">Services</a></li>
+                            <li><a href="works" class="text-white hover:text-kancah-blue">Work</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-8 pt-6 text-[10px] text-gray-500 font-bold tracking-widest uppercase"><p>&copy; 2026 PT. Kancah Media Sejahtera.</p></div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. SIREN EMERGENCY EFFECT
+        function initSirenEffect() {
+            const text = document.getElementById('siren-text'), container = document.getElementById('siren-container');
+            const lightL = document.getElementById('light-left'), lightR = document.getElementById('light-right');
+            let step = 0;
+            setInterval(() => {
+                if (step === 0) {
+                    text.style.color = '#0006ff';
+                    text.style.textShadow = '0 0 15px rgba(0, 6, 255, 0.6)';
+                    container.style.borderColor = 'rgba(0, 6, 255, 0.3)';
+                    lightL.style.opacity = '0.2'; lightR.style.opacity = '1';
+                    step = 1;
+                } else {
+                    text.style.color = '#ff0000';
+                    text.style.textShadow = '0 0 15px rgba(255, 0, 0, 0.6)';
+                    container.style.borderColor = 'rgba(255, 0, 0, 0.3)';
+                    lightL.style.opacity = '1'; lightR.style.opacity = '0.2';
+                    step = 0;
+                }
+            }, 450);
+        }
+
+        // 2. JAM DIGITAL
+        function updateClock() {
+            const n = new Date();
+            const h = String(n.getHours()).padStart(2,'0'), m = String(n.getMinutes()).padStart(2,'0'), s = String(n.getSeconds()).padStart(2,'0');
+            if(document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
+            if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
+        }
+
+        // 3. CUACA REAL-TIME
+        async function updateWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+                const data = await res.json();
+                if (data?.current_weather) {
+                    const t = Math.round(data.current_weather.temperature) + "°C";
+                    if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = t;
+                    if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = t;
+                }
+            } catch (e) {}
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initSirenEffect(); updateClock(); setInterval(updateClock, 1000); updateWeather();
+            
+            // Toggle Menu Mobile
+            const btn = document.getElementById('mobile-menu-button'), menu = document.getElementById('mobile-menu'), close = document.getElementById('close-menu');
+            if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
+            if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
+            
+            // Popup Lokasi Mobile
+            const trigger = document.getElementById('weather-mobile-trigger'), popup = document.getElementById('location-popup');
+            if (trigger && popup) {
+                trigger.onclick = (e) => {
+                    e.stopPropagation();
+                    popup.classList.toggle('opacity-100'); popup.classList.toggle('scale-100');
+                    setTimeout(() => { popup.classList.remove('opacity-100', 'scale-100'); }, 3000);
+                };
+            }
+        });
+    </script>
+</body>
+</html>
