@@ -36,12 +36,12 @@
     
     <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
-            <a href="index.html"><img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain"></a>
+            <a href="index"><img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain"></a>
             <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
-                <a href="about.html" class="hover:text-kancah-blue transition-colors">Agency</a>
-                <a href="services.html" class="hover:text-kancah-blue transition-colors">Capabilities</a>
-                <a href="works.html" class="hover:text-kancah-blue transition-colors">Work</a>
-                <a href="careers.html" class="font-black text-kancah-blue">Careers</a>
+                <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
+                <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
+                <a href="works" class="hover:text-kancah-blue transition-colors">Work</a>
+                <a href="careers" class="font-black text-kancah-blue">Careers</a>
             </div>
             <div class="flex items-center gap-2 sm:gap-4 h-8"> 
                 <div id="weather-module-desktop" class="relative group hidden sm:block">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="contact.html" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-[#0006ff] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i></a>
+                <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-[#0006ff] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i></a>
                 <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button"><i class="fa-solid fa-bars-staggered text-base leading-none"></i></button>
             </div>
         </div>
@@ -72,17 +72,17 @@
     <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full lg:hidden">
         <button class="absolute top-6 right-6 text-3xl" id="close-menu"><i class="fa-solid fa-xmark"></i></button>
         <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-            <a href="about.html" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
-            <a href="services.html" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
-            <a href="works.html" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
-            <a href="careers.html" class="mobile-link text-kancah-blue transition-colors">Careers</a>
-            <a href="contact.html" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
+            <a href="about" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
+            <a href="services" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
+            <a href="works" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
+            <a href="careers" class="mobile-link text-kancah-blue transition-colors">Careers</a>
+            <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
         </div>
     </div>
 
     <main class="pt-24 pb-16 px-6 max-w-[1300px] mx-auto min-h-screen">
         <div class="mb-6">
-            <a href="careers.html" class="inline-flex items-center text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-kancah-blue transition-colors group">
+            <a href="careers" class="inline-flex items-center text-[9px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-kancah-blue transition-colors group">
                 <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i> Kembali
             </a>
         </div>
@@ -262,7 +262,7 @@
         async function fetchJobDetail() {
             const params = new URLSearchParams(window.location.search);
             const jobId = params.get('id');
-            if (!jobId) { window.location.href = 'careers.html'; return; }
+            if (!jobId) { window.location.href = 'careers'; return; }
             try {
                 const { data: job, error } = await kancah.from('careers').select('*').eq('id', jobId).single();
                 if (error || !job) throw error;
