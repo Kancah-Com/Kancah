@@ -92,41 +92,66 @@
         </div>
     </div>
 
-    <main class="pt-24 sm:pt-32 pb-16 px-6 max-w-[1600px] mx-auto min-h-screen flex flex-col justify-center">
-        <div id="project-container" class="opacity-0 transition-opacity duration-700">
-            <div class="mb-8 lg:hidden">
-                <a href="works" class="inline-flex items-center gap-3 font-bold uppercase text-[10px] tracking-widest hover:text-kancah-blue transition-all group">
-                    <span class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center group-hover:border-kancah-blue transition-all">←</span>
-                    Back to Works
-                </a>
-            </div>
+   <main class="pt-[72px] lg:pt-[88px] pb-12 px-4 lg:px-10 max-w-[1440px] mx-auto min-h-screen">
+    <div id="project-container" class="opacity-0 transition-opacity duration-700 w-full">
+        
+        <div class="mb-3 lg:mb-5">
+            <a href="works" class="inline-flex items-center gap-2 font-bold uppercase text-[9px] tracking-widest hover:text-kancah-blue transition-all group text-gray-400">
+                <span class="w-7 h-7 rounded-full border border-gray-100 flex items-center justify-center group-hover:border-kancah-blue group-hover:text-kancah-blue transition-all text-[8px]">←</span>
+                Back
+            </a>
+        </div>
 
-            <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-                <div class="w-full lg:w-3/5">
-                    <div class="rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-2xl aspect-video lg:aspect-[4/3] xl:aspect-video bg-gray-100">
-                        <img id="p-image" src="" class="w-full h-full object-cover">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-start">
+            
+            <div class="w-full order-2 lg:order-1">
+                <div class="mb-4 lg:mb-6">
+                    <span id="p-category" class="text-kancah-blue font-black text-[9px] uppercase tracking-[0.3em] block mb-1">Category</span>
+                    <h1 id="p-title" class="text-4xl lg:text-7xl font-bold tracking-tighter leading-[1.05] uppercase italic text-kancah-dark">
+                        Loading...
+                    </h1>
+                </div>
+
+                <div class="space-y-6 py-6 border-t border-gray-100">
+                    <div class="space-y-1">
+                         <h4 class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.2em] italic flex items-center gap-2">
+                            <i class="fa-regular fa-circle-question text-sm"></i> The Challenge
+                        </h4>
+                        <p id="p-challenge" class="text-sm lg:text-base text-gray-600 leading-relaxed font-light pl-6 border-l border-gray-100">--</p>
+                    </div>
+
+                    <div class="space-y-1">
+                         <h4 class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.2em] italic flex items-center gap-2">
+                            <i class="fa-regular fa-lightbulb text-sm"></i> Strategic Idea
+                        </h4>
+                        <p id="p-strategy" class="text-sm lg:text-base text-gray-600 leading-relaxed font-light pl-6 border-l border-gray-100">--</p>
+                    </div>
+
+                    <div class="space-y-1">
+                         <h4 class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.2em] italic flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-sm"></i> Outcome
+                        </h4>
+                        <p id="p-outcome" class="text-sm lg:text-base text-gray-600 leading-relaxed font-light pl-6 border-l border-gray-100">--</p>
                     </div>
                 </div>
-                <div class="w-full lg:w-2/5 space-y-8">
-                    <div>
-                        <span id="p-category" class="text-kancah-blue font-bold text-[10px] uppercase tracking-[0.2em] block mb-2">Category</span>
-                        <h1 id="p-title" class="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold tracking-tighter leading-none uppercase mb-6 italic text-kancah-dark">Loading...</h1>
-                    </div>
-                    <div class="grid grid-cols-1 gap-6 border-t border-gray-100 pt-8">
-                        <div><h4 class="text-[9px] font-bold text-kancah-blue uppercase tracking-widest mb-2 italic">The Challenge</h4><p id="p-challenge" class="text-sm text-gray-600 leading-relaxed font-light">--</p></div>
-                        <div><h4 class="text-[9px] font-bold text-kancah-blue uppercase tracking-widest mb-2 italic">Strategic Idea</h4><p id="p-strategy" class="text-sm text-gray-600 leading-relaxed font-light">--</p></div>
-                        <div><h4 class="text-[9px] font-bold text-kancah-blue uppercase tracking-widest mb-2 italic">Outcome</h4><p id="p-outcome" class="text-sm text-gray-600 leading-relaxed font-light">--</p></div>
-                    </div>
-                    <div class="pt-6 hidden lg:block">
-                        <a href="works" class="inline-flex items-center gap-3 font-bold uppercase text-[10px] tracking-widest hover:text-kancah-blue transition-all group">
-                            <span class="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center group-hover:border-kancah-blue transition-all">←</span>
-                            Back to Works
-                        </a>
-                    </div>
+            </div>
+
+            <div class="w-full order-1 lg:order-2 lg:sticky lg:top-[88px]">
+                <div class="rounded-3xl lg:rounded-[2.5rem] overflow-hidden shadow-xl aspect-video bg-gray-100 border border-kancah-blue relative group">
+                    <img id="p-image" src="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                 </div>
             </div>
         </div>
-    </main>
+
+        <div class="mt-8 lg:mt-16 border-t border-gray-100 pt-6 flex flex-col items-center justify-center space-y-3">
+            <p class="text-[9px] font-black text-gray-300 uppercase tracking-[0.4em]">View More Projects</p>
+            <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-md">
+                <span class="relative z-10 font-black uppercase tracking-[0.2em] text-[10px]">See All Projects</span>
+            </a>
+        </div>
+
+    </div>
+</main>
 
     <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
     
