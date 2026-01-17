@@ -97,11 +97,11 @@
             <i class="fa-solid fa-xmark"></i>
         </button>
         <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-            <a href="about.html" class="mobile-link">Agency</a>
-            <a href="services.html" class="mobile-link">Capabilities</a>
-            <a href="works.html" class="mobile-link">Work</a>
-            <a href="careers.html" class="mobile-link text-kancah-blue">Careers</a>
-            <a href="contact.html" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
+            <a href="about" class="mobile-link">Agency</a>
+            <a href="services" class="mobile-link">Capabilities</a>
+            <a href="works" class="mobile-link">Work</a>
+            <a href="careers" class="mobile-link text-kancah-blue">Careers</a>
+            <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
         </div>
     </div>
 
@@ -138,7 +138,7 @@
                         PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
                     </h2>
                     
-                    <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
+                    <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
                         Ayo Diskusi
                         <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
                     </a>
@@ -166,10 +166,10 @@
                     <div class="flex flex-col gap-4">
                         <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
                         <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="services.html" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
-                            <li><a href="works.html" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
-                            <li><a href="about.html" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
-                            <li><a href="careers.html" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
+                            <li><a href="services" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
+                            <li><a href="works" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
+                            <li><a href="about" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
+                            <li><a href="careers" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
                         </ul>
                     </div>
     
@@ -216,12 +216,12 @@
                         <span class="px-3 py-1 bg-gray-50 text-gray-400 text-[8px] font-black uppercase tracking-widest rounded-full">${job.location || 'Yogyakarta'}</span>
                     </div>
                     <div class="flex-grow flex items-center min-h-[60px] lg:min-h-[110px] mb-6 lg:mb-12">
-                        <a href="detail-careers.html?id=${job.id}" class="block w-full">
+                        <a href="detail-careers?id=${job.id}" class="block w-full">
                             <h3 class="text-3xl lg:text-5xl font-bold tracking-tighter uppercase italic group-hover:text-kancah-blue transition-colors leading-[0.85]">${job.title}</h3>
                         </a>
                     </div>
                     <div class="flex justify-between items-center mt-auto border-t border-gray-100 pt-5 lg:pt-8">
-                        <a href="detail-careers.html?id=${job.id}" class="text-[9px] font-black uppercase tracking-[0.2em] flex items-center gap-2 group/btn">
+                        <a href="detail-careers?id=${job.id}" class="text-[9px] font-black uppercase tracking-[0.2em] flex items-center gap-2 group/btn">
                             View Position <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform"></i>
                         </a>
                         <span class="text-[8px] font-bold text-gray-300 uppercase tracking-widest whitespace-nowrap">2026 Slot</span>
