@@ -78,54 +78,52 @@
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
         
         <div class="flex-none">
-            <a href="index.html">
+            <a href="/">
                 <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
             </a>
         </div>
 
         <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
-            <a href="about.html" class="hover:text-[#0006ff] transition-colors">Agency</a>
-            <a href="services.html" class="hover:text-[#0006ff] font-black text-kancah-blue transition-colors">Capabilities</a>
-            <a href="works.html" class="hover:text-[#0006ff] transition-colors">Work</a>
-            <a href="careers.html" class="hover:text-[#0006ff] transition-colors">Careers</a>
+            <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
+            <a href="services" class="text-kancah-blue font-black transition-colors">Capabilities</a>
+            <a href="works" class="hover:text-kancah-blue transition-colors">Work</a>
+            <a href="careers" class="hover:text-kancah-blue transition-colors">Careers</a>
         </div>
 
         <div class="flex items-center gap-2 sm:gap-4 h-8"> 
             
             <div id="weather-module-desktop" class="relative group hidden sm:block">
-                <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-[#0006ff] rounded-full select-none transition-all duration-300">
+                <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-kancah-blue rounded-full select-none transition-all duration-300">
                     <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
                         <span id="nav-time">00:00:00</span>
-                        <span class="text-[#0006ff] font-black">|</span>
+                        <span class="text-kancah-blue font-black">|</span>
                         <span id="nav-temp">--°C</span>
                     </div>
                     <div class="flex items-center justify-center gap-2 mt-1.5 leading-none">
                         <div class="relative flex h-1 w-1">
-                            <span class="animate-ping absolute h-full w-full rounded-full bg-[#0006ff] opacity-40"></span>
-                            <span class="h-1 w-1 rounded-full bg-[#0006ff]"></span>
+                            <span class="animate-ping absolute h-full w-full rounded-full bg-kancah-blue opacity-40"></span>
+                            <span class="h-1 w-1 rounded-full bg-kancah-blue"></span>
                         </div>
-                        <span class="text-[#0006ff] font-black text-[8px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
+                        <span class="text-kancah-blue font-black text-[8px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
                     </div>
                 </div>
             </div>
 
             <div class="relative sm:hidden">
-                <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-[#0006ff] text-[#0006ff] text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">
+                <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-kancah-blue text-kancah-blue text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">
                     Kancah HQ, Yogyakarta
-                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-b-[#0006ff]"></div>
-                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-[5px] border-transparent border-b-white/80 mb-[-1px]"></div>
                 </div>
 
-                <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-[#0006ff] border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
+                <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-kancah-blue border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
                     <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
                         <span id="nav-time-mobile">00:00</span>
-                        <span class="text-[#0006ff] font-black">|</span>
+                        <span class="text-kancah-blue font-black">|</span>
                         <span id="nav-temp-mobile">--°C</span>
                     </div>
                 </div>
             </div>
 
-            <a href="contact.html" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-[#0006ff] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
+            <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
                 Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
             </a>
 
@@ -141,11 +139,11 @@
         <i class="fa-solid fa-xmark"></i>
     </button>
     <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-        <a href="about.html" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
-        <a href="services.html" class="mobile-link text-kancah-blue font-black transition-colors">Capabilities</a>
-        <a href="works.html" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
-        <a href="careers.html" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
-        <a href="contact.html" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
+        <a href="about" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
+        <a href="services" class="mobile-link text-kancah-blue font-black transition-colors">Capabilities</a>
+        <a href="works" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
+        <a href="careers" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
+        <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
     </div>
 </div>
 
@@ -337,7 +335,7 @@
                     PUNYA IDE? <br> <span class="text-[#0006ff] italic">OBROLIN AJA.</span>
                 </h2>
                 
-                <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-[#111111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#0006ff] hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
+                <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-[#111111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#0006ff] hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
                     Ayo Diskusi
                     <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
                 </a>
@@ -364,10 +362,10 @@
                 <div class="flex flex-col gap-4">
                     <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
                     <ul class="flex flex-col gap-3 font-medium text-sm">
-                        <li><a href="services.html" class="text-white hover:text-[#0006ff] transition-colors">Services</a></li>
-                        <li><a href="works.html" class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
-                        <li><a href="about.html" class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
-                        <li><a href="careers.html" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
+                        <li><a href="services" class="text-white hover:text-[#0006ff] transition-colors">Services</a></li>
+                        <li><a href="works" class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
+                        <li><a href="about" class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
+                        <li><a href="careers" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
                     </ul>
                 </div>
 
