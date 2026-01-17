@@ -36,7 +36,7 @@
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
         
         <div class="flex-none">
-            <a href="index.html">
+            <a href="index">
                 <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
             </a>
         </div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <a href="contact.html" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-[#0006ff] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
+            <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-[#0006ff] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
                 Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
             </a>
 
@@ -97,11 +97,11 @@
 <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full lg:hidden">
     <button class="absolute top-6 right-6 text-3xl" id="close-menu"><i class="fa-solid fa-xmark"></i></button>
     <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-        <a href="about.html" class="mobile-link">Agency</a>
-        <a href="services.html" class="mobile-link">Capabilities</a>
+        <a href="about" class="mobile-link">Agency</a>
+        <a href="services" class="mobile-link">Capabilities</a>
         <a href="works" class="mobile-link text-kancah-blue">Work</a>
-        <a href="careers.html" class="mobile-link">Careers</a>
-        <a href="contact.html" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk</a>
+        <a href="careers" class="mobile-link">Careers</a>
+        <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk</a>
     </div>
 </div>
 
@@ -144,7 +144,7 @@
                     PUNYA IDE? <br> <span class="text-[#0006ff] italic">OBROLIN AJA.</span>
                 </h2>
                 
-                <a href="contact.html" class="group inline-flex items-center justify-center gap-3 bg-white text-[#111111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#0006ff] hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
+                <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-[#111111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#0006ff] hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
                     Ayo Diskusi
                     <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
                 </a>
@@ -171,10 +171,10 @@
                 <div class="flex flex-col gap-4">
                     <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
                     <ul class="flex flex-col gap-3 font-medium text-sm">
-                        <li><a href="services.html" class="text-white hover:text-[#0006ff] transition-colors">Services</a></li>
-                        <li><a href="works.html" class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
-                        <li><a href="about.html" class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
-                        <li><a href="careers.html" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
+                        <li><a href="services" class="text-white hover:text-[#0006ff] transition-colors">Services</a></li>
+                        <li><a href="works" class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
+                        <li><a href="about" class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
+                        <li><a href="careers" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
                     </ul>
                 </div>
 
@@ -215,7 +215,7 @@
         if (error) { grid.innerHTML = `<p class="text-red-500">Error loading data.</p>`; return; }
 
         grid.innerHTML = projects.map(p => `
-            <div class="work-item group cursor-pointer" onclick="window.location.href='detail-project.html?id=${p.slug}'">
+            <div class="work-item group cursor-pointer" onclick="window.location.href='detail-project?id=${p.slug}'">
                 <div class="relative overflow-hidden rounded-[2.5rem] aspect-[4/3] mb-8 shadow-sm group-hover:shadow-2xl transition-all duration-700 group-hover:-translate-y-3 border border-gray-100">
                     <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out">
                     <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
