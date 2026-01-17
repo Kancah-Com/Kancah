@@ -102,40 +102,85 @@
 
             <section id="tab-portfolio" class="tab-content space-y-8">
     <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-        <h2 class="text-xl font-bold italic uppercase mb-6 text-slate-900">Manage Work</h2>
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-2 h-8 bg-[#0006ff] rounded-full"></div>
+            <h2 class="text-xl font-bold italic uppercase text-slate-900 tracking-tighter">Manage Portfolio</h2>
+        </div>
+        
         <form id="portfolioForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <input type="text" id="p-title" class="p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none" placeholder="Project Title" required>
-            <input type="text" id="p-slug" class="p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none" placeholder="Slug (e.g. kancah-rebrand)" required>
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Project Title</label>
+                <input type="text" id="p-title" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:border-[#0006ff] focus:outline-none transition-all" placeholder="Contoh: Kancah Rebranding" required>
+            </div>
             
-            <select id="p-category" class="p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none cursor-pointer">
-                <option value="" disabled selected>Select Category</option>
-                <option value="Brand Design">Brand Design</option>
-                <option value="Stationery Design">Stationery Design</option>
-                <option value="Collateral Design">Collateral Design</option>
-                <option value="Promotion Design">Promotion Design</option>
-                <option value="Web Development">Web Development</option>
-                <option value="Social Media Management">Social Media Management</option>
-                <option value="Audio Visual">Audio Visual</option>
-            </select>
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">URL Slug</label>
+                <input type="text" id="p-slug" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:border-[#0006ff] focus:outline-none transition-all" placeholder="kancah-rebrand" required>
+            </div>
             
-            <input type="file" id="p-image" accept="image/*" class="p-3 bg-slate-50 border border-dashed rounded-2xl text-xs">
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Category</label>
+                <select id="p-category" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:border-[#0006ff] focus:outline-none cursor-pointer appearance-none">
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Brand Design">Brand Design</option>
+                    <option value="Stationery Design">Stationery Design</option>
+                    <option value="Collateral Design">Collateral Design</option>
+                    <option value="Promotion Design">Promotion Design</option>
+                    <option value="Web Development">Web Development</option>
+                    <option value="Social Media Management">Social Media Management</option>
+                    <option value="Audio Visual">Audio Visual</option>
+                </select>
+            </div>
+            
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Thumbnail Image</label>
+                <input type="file" id="p-image" accept="image/*" class="w-full p-3 bg-slate-50 border border-slate-100 border-dashed rounded-2xl text-xs">
+            </div>
             
             <div class="md:col-span-2 flex items-center gap-3 p-4 bg-blue-50 border border-blue-100 rounded-2xl">
-                <input type="checkbox" id="p-highlight" class="w-5 h-5 accent-[#0006ff]">
-                <label for="p-highlight" class="text-xs font-bold text-[#0006ff] uppercase cursor-pointer">Tampilkan di Beranda (⭐)</label>
+                <input type="checkbox" id="p-highlight" class="w-5 h-5 accent-[#0006ff] cursor-pointer">
+                <label for="p-highlight" class="text-[10px] font-black text-[#0006ff] uppercase cursor-pointer tracking-widest">Tampilkan di Highlight Beranda (⭐)</label>
             </div>
 
-            <textarea id="p-challenge" class="md:col-span-2 p-4 bg-slate-50 border border-slate-100 rounded-2xl h-24 focus:outline-none" placeholder="The Challenge (Masalah yang dihadapi klien)"></textarea>
-            <textarea id="p-strategy" class="md:col-span-1 p-4 bg-slate-50 border border-slate-100 rounded-2xl h-32 focus:outline-none" placeholder="Strategic Idea (Solusi kreatif Kancah)"></textarea>
-            <textarea id="p-outcome" class="md:col-span-1 p-4 bg-slate-50 border border-slate-100 rounded-2xl h-32 focus:outline-none" placeholder="Outcome (Hasil akhir/dampaknya)"></textarea>
+            <div class="md:col-span-2 space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">The Challenge</label>
+                <textarea id="p-challenge" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl h-24 focus:border-[#0006ff] focus:outline-none transition-all" placeholder="Jelaskan masalah atau kebutuhan klien..."></textarea>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Strategic Idea</label>
+                <textarea id="p-strategy" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl h-32 focus:border-[#0006ff] focus:outline-none transition-all" placeholder="Solusi kreatif atau strategi yang Kancah berikan..."></textarea>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Outcome</label>
+                <textarea id="p-outcome" class="w-full p-4 bg-slate-50 border border-slate-100 rounded-2xl h-32 focus:border-[#0006ff] focus:outline-none transition-all" placeholder="Hasil akhir atau dampak positif bagi brand klien..."></textarea>
+            </div>
             
-            <button type="submit" id="btn-p-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all shadow-lg">Publish Work</button>
+            <button type="submit" id="btn-p-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] tracking-[0.2em] hover:bg-black transition-all shadow-lg active:scale-[0.98]">
+                Publish Project
+            </button>
         </form>
     </div>
+
     <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
-        <table class="w-full text-left text-sm">
-            <tbody id="project-list-table"></tbody>
-        </table>
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-sm font-black uppercase tracking-widest text-slate-400">Project List</h3>
+            <span class="text-[10px] font-bold text-slate-400" id="project-count">0 Projects</span>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead>
+                    <tr class="border-b border-slate-50">
+                        <th class="pb-4 font-black uppercase text-[10px] tracking-widest text-slate-400">Preview</th>
+                        <th class="pb-4 font-black uppercase text-[10px] tracking-widest text-slate-400">Project Info</th>
+                        <th class="pb-4 font-black uppercase text-[10px] tracking-widest text-slate-400 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="project-list-table" class="divide-y divide-slate-50">
+                    </tbody>
+            </table>
+        </div>
     </div>
 </section>
 
