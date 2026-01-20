@@ -403,11 +403,39 @@
             }
         }
 
+      // --- PORTFOLIO LOGIC WITH HIGHLIGHT LIMIT ---
         document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-p-submit');
-            btn.disabled = true; btn.innerText = 'PROCESSING...';
+            const isHighlightChecked = document.getElementById('p-highlight').checked;
+            
+            btn.disabled = true; 
+            btn.innerText = 'PROCESSING...';
+
             try {
+                // 1. LIMIT CHECK: Hanya jika user mencentang checkbox highlight
+                if (isHighlightChecked) {
+                    let query = kancah
+                        .from('projects')
+                        .select('id', { count: 'exact', head: true })
+                        .eq('is_highlight', true);
+
+                    // Jika sedang mode EDIT, jangan hitung project yang sedang diedit ini
+                    if (window.currentEditProjectId) {
+                        query = query.neq('id', window.currentEditProjectId);
+                    }
+
+                    const { count, error: countErr } = await query;
+
+                    if (count >= 2) {
+                        showToast("Konten yg dihighlight sudah 2 bang.", true);
+                        btn.disabled = false;
+                        btn.innerText = window.currentEditProjectId ? 'UPDATE WORK NOW' : 'Publish Work';
+                        return; // Berhenti di sini, tidak lanjut simpan
+                    }
+                }
+
+                // 2. IMAGE UPLOAD LOGIC
                 let publicUrl = null;
                 const fileInput = document.getElementById('p-image');
                 if (fileInput.files.length > 0) {
@@ -416,16 +444,20 @@
                     if (uploadError) throw uploadError;
                     publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
                 }
+
+                // 3. PREPARE DATA
                 const payload = {
                     title: document.getElementById('p-title').value,
                     slug: document.getElementById('p-slug').value,
                     category: document.getElementById('p-category').value,
-                    is_highlight: document.getElementById('p-highlight').checked,
+                    is_highlight: isHighlightChecked,
                     challenge: document.getElementById('p-challenge').value,
                     strategy: document.getElementById('p-strategy').value,
                     outcome: document.getElementById('p-outcome').value
                 };
                 if (publicUrl) payload.image_url = publicUrl;
+
+                // 4. INSERT ATAU UPDATE
                 if (window.currentEditProjectId) {
                     await kancah.from('projects').update(payload).eq('id', window.currentEditProjectId);
                     window.currentEditProjectId = null;
@@ -435,10 +467,18 @@
                     await kancah.from('projects').insert([payload]);
                     showToast("PROJECT PUBLISHED!");
                 }
-                e.target.reset(); document.getElementById('image-preview-container').classList.add('hidden');
-                loadProjectList(); btn.innerText = 'Publish Work';
-            } catch (err) { showToast(err.message, true); }
-            finally { btn.disabled = false; }
+
+                // 5. RESET FORM
+                e.target.reset(); 
+                document.getElementById('image-preview-container').classList.add('hidden');
+                loadProjectList(); 
+                btn.innerText = 'Publish Work';
+
+            } catch (err) { 
+                showToast(err.message, true); 
+            } finally { 
+                btn.disabled = false; 
+            }
         });
 
         // --- CLIENT LOGIC ---
