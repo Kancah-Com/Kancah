@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kancah • Admin</title>
+    <title>Kancah • Command Center</title>
     <link rel="icon" type="image/png" href="../assets/logowh.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -15,20 +15,38 @@
         .sidebar-link { color: #0f172a; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .sidebar-link:hover { color: #0006ff; background-color: #f0f4ff; }
         .sidebar-link.active { background-color: #0006ff !important; color: white !important; box-shadow: 0 10px 15px -3px rgba(0, 6, 255, 0.2); }
-        .ghost-class { background: #e0e7ff; border: 2px dashed #0006ff; opacity: 0.5; }
         .kancah-input:focus { border-color: #0006ff; outline: none; }
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
         .tab-content.hidden { display: none; }
         
-        /* Smooth Modal Animation */
         #confirm-modal.active { opacity: 1; pointer-events: auto; }
         #confirm-modal.active #confirm-box { transform: scale(1); }
+
+        #sidebar { transition: transform 0.3s ease-in-out; }
+
+        /* Animation for Image Modal */
+        @keyframes zoom {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .animate-zoom { animation: zoom 0.25s ease-out; }
     </style>
 </head>
 <body class="min-h-screen text-slate-900">
 
-    <div id="toast" class="fixed top-10 left-1/2 -translate-x-1/2 px-8 py-4 bg-black text-white rounded-full z-[110] text-[10px] font-bold uppercase tracking-[0.2em] shadow-2xl opacity-0 translate-y-[-20px] transition-all duration-500 pointer-events-none">Notification</div>
+    <div id="toast" class="fixed top-10 left-1/2 -translate-x-1/2 px-8 py-4 bg-black text-white rounded-full z-[110] text-[10px] font-bold uppercase tracking-[0.2em] shadow-2xl opacity-0 translate-y-[-20px] transition-all duration-500 pointer-events-none text-center min-w-[200px]">Notification</div>
+
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[55] hidden md:hidden transition-opacity"></div>
+
+    <div id="image-modal" onclick="closeImageModal()" class="fixed inset-0 z-[300] hidden opacity-0 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md transition-all duration-300 cursor-zoom-out">
+        <div class="relative max-w-4xl w-full flex items-center justify-center">
+            <img id="modal-img-display" src="" class="max-h-[85vh] w-auto rounded-2xl shadow-2xl border-4 border-white/10 object-contain animate-zoom">
+            <button class="absolute -top-12 right-0 text-white text-3xl hover:text-[#0006ff] transition-all">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+    </div>
 
     <div id="confirm-modal" class="fixed inset-0 z-[200] opacity-0 pointer-events-none flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm transition-all duration-300">
         <div id="confirm-box" class="bg-white max-w-sm w-full rounded-[2.5rem] p-10 text-center shadow-2xl scale-90 transition-all duration-300">
@@ -36,7 +54,7 @@
                 <i class="fa-solid fa-trash-can"></i>
             </div>
             <h3 id="confirm-title" class="text-xl font-extrabold uppercase italic tracking-tighter mb-2 text-slate-900">Yakin dihapus?</h3>
-            <p id="confirm-msg" class="text-gray-500 text-xs font-medium mb-8 leading-relaxed">Data yang dihapus tidak bisa dikembalikan lagi secara otomatis.</p>
+            <p id="confirm-msg" class="text-gray-500 text-xs font-medium mb-8 leading-relaxed">Data yang dihapus tidak bisa dikembalikan lagi.</p>
             <div class="flex flex-col gap-3">
                 <button id="confirm-yes" class="w-full bg-red-500 text-white py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-black transition-all">Hapus Sekarang</button>
                 <button id="confirm-no" class="w-full bg-slate-100 text-slate-400 py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-slate-200 transition-all">Batal</button>
@@ -45,20 +63,17 @@
     </div>
 
     <section id="login-section" class="hidden min-h-screen flex items-center justify-center p-6">
-        <div class="max-w-md w-full bg-white rounded-[2.5rem] p-10 shadow-2xl">
-            <div class="text-center mb-10">
-                <img src="../assets/kancah-logo.png" class="h-8 mx-auto mb-6" alt="Kancah Logo">
-                <h1 class="text-2xl font-bold uppercase tracking-tighter italic">Admin Portal</h1>
-                <p class="text-gray-400 text-[9px] font-bold uppercase tracking-[0.2em] mt-2">Private Access Only</p>
-            </div>
-            <form id="formMasuk" class="space-y-4">
+        <div class="max-w-md w-full bg-white rounded-[2.5rem] p-10 shadow-2xl text-center">
+            <img src="../assets/kancah-logo.png" class="h-8 mx-auto mb-6" alt="Kancah Logo">
+            <h1 class="text-2xl font-bold uppercase tracking-tighter italic">Admin Portal</h1>
+            <form id="formMasuk" class="space-y-4 mt-8 text-left">
                 <div>
                     <label class="text-[9px] font-bold uppercase text-gray-400 ml-4 mb-1 block">Email</label>
-                    <input type="email" id="inp-email" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl kancah-input transition-all" required>
+                    <input type="email" id="inp-email" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl kancah-input" required>
                 </div>
                 <div>
                     <label class="text-[9px] font-bold uppercase text-gray-400 ml-4 mb-1 block">Password</label>
-                    <input type="password" id="inp-pass" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl kancah-input transition-all" required>
+                    <input type="password" id="inp-pass" class="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl kancah-input" required>
                 </div>
                 <button type="submit" id="btnMasuk" class="w-full bg-[#0006ff] text-white py-4 rounded-full font-bold uppercase text-[11px] tracking-widest hover:bg-black transition-all">Skuyy Masuk</button>
             </form>
@@ -66,22 +81,27 @@
     </section>
 
     <div id="dashboard-section" class="hidden">
-        <aside class="fixed left-0 top-0 h-full w-64 bg-white border-r border-slate-200 p-6 z-50 hidden md:block">
-            <div class="mb-10 px-2">
-                <img src="../assets/kancah-logo.png" class="h-6 mb-2" alt="Kancah Logo">
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Administration</p>
+        <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 bg-white border-r border-slate-200 p-6 z-[60] -translate-x-full md:translate-x-0 md:block shadow-2xl md:shadow-none">
+            <div class="mb-10 px-2 flex justify-between items-center">
+                <div>
+                    <img src="../assets/kancah-logo.png" class="h-6 mb-2" alt="Kancah Logo">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Command Center</p>
+                </div>
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-400">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
             </div>
             <nav class="space-y-2">
-                <button onclick="showTab('portfolio')" id="btn-portfolio" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all">
+                <button onclick="showTab('portfolio')" id="btn-portfolio" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
                     <i class="fa-solid fa-briefcase w-5"></i> Portfolio
                 </button>
-                <button onclick="showTab('clients')" id="btn-clients" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all">
+                <button onclick="showTab('clients')" id="btn-clients" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
                     <i class="fa-solid fa-handshake w-5"></i> Clients
                 </button>
-                <button onclick="showTab('careers')" id="btn-careers" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all">
+                <button onclick="showTab('careers')" id="btn-careers" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
                     <i class="fa-solid fa-user-tie w-5"></i> Careers
                 </button>
-                <button onclick="showTab('users')" id="btn-users" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all" style="display: none;">
+                <button onclick="showTab('users')" id="btn-users" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left" style="display: none;">
                     <i class="fa-solid fa-users-gear w-5"></i> Admins
                 </button>
             </nav>
@@ -94,69 +114,78 @@
 
         <main class="md:ml-64 p-4 md:p-10 bg-[#f8fafc] min-h-screen">
             <header class="flex justify-between items-center mb-10">
-                <div>
-                    <h1 id="main-title" class="text-2xl font-extrabold text-slate-900 tracking-tight italic uppercase">Portfolio Console</h1>
-                    <p id="user-display-name" class="text-[10px] font-bold text-kancah-blue mt-1 uppercase tracking-widest">...</p>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleSidebar()" class="md:hidden w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm border border-slate-100 text-[#0006ff]">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                    <div>
+                        <h1 id="main-title" class="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight italic uppercase">Portfolio Console</h1>
+                        <p id="user-display-name" class="text-[9px] font-bold text-blue-600 mt-1 uppercase tracking-widest">...</p>
+                    </div>
                 </div>
             </header>
 
             <section id="tab-portfolio" class="tab-content space-y-8">
-    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-        <div class="flex items-center gap-3 mb-6">
-            <h2 class="text-xl font-bold italic uppercase text-slate-900 tracking-tighter">Manage Portfolio</h2>
-        </div>
-        
-        <form id="portfolioForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <input type="text" id="p-title" class="p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none" placeholder="Project Title" required>
-            <input type="text" id="p-slug" class="p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none" placeholder="Slug (e.g. kancah-rebrand)" required>
-            
-            <select id="p-category" class="p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none cursor-pointer">
-                <option value="" disabled selected>Select Category</option>
-                <option value="Brand Design">Brand Design</option>
-                <option value="Stationery Design">Stationery Design</option>
-                <option value="Collateral Design">Collateral Design</option>
-                <option value="Promotion Design">Promotion Design</option>
-                <option value="Web Development">Web Development</option>
-                <option value="Social Media Management">Social Media Management</option>
-                <option value="Audio Visual">Audio Visual</option>
-            </select>
-            
-            <input type="file" id="p-image" accept="image/*" class="p-3 bg-slate-50 border border-dashed rounded-2xl text-xs">
-            
-            <div class="md:col-span-2 flex items-center gap-3 p-4 bg-blue-50 border border-blue-100 rounded-2xl">
-                <input type="checkbox" id="p-highlight" class="w-5 h-5 accent-[#0006ff]">
-                <label for="p-highlight" class="text-xs font-bold text-[#0006ff] uppercase cursor-pointer">Tampilkan di Beranda (⭐)</label>
-            </div>
+                <div class="bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm">
+                    <h2 class="text-lg md:text-xl font-bold italic uppercase mb-6">Manage Portfolio</h2>
+                    <form id="portfolioForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+                        <input type="text" id="p-title" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Project Title" required>
+                        <input type="text" id="p-slug" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Slug (e.g. wedding-carousel)" required>
+                        <select id="p-category" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none cursor-pointer">
+                            <option value="" disabled selected>Select Category</option>
+                            <option value="Brand Design">Brand Design</option>
+                            <option value="Stationery Design">Stationery Design</option>
+                            <option value="Collateral Design">Collateral Design</option>
+                            <option value="Promotion Design">Promotion Design</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Social Media Management">Social Media Management</option>
+                            <option value="Audio Visual">Audio Visual</option>
+                        </select>
+                        <input type="file" id="p-image" accept="image/*" class="p-3 bg-slate-50 border border-dashed rounded-2xl text-[10px]">
+                        
+                        <div id="image-preview-container" class="hidden md:col-span-2 p-4 bg-slate-50 border rounded-2xl flex items-center gap-4">
+                            <img id="p-preview" 
+                                 src="" 
+                                 onclick="openImageModal(this.src)"
+                                 class="h-16 w-16 md:h-20 md:w-20 object-cover rounded-xl shadow-sm border-2 border-white cursor-pointer hover:scale-105 transition-transform"
+                                 title="Klik untuk memperbesar">
+                            <div class="flex flex-col">
+                                <div class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Gambar yang dipakai sekarang</div>
+                                <div class="text-[8px] text-blue-500 font-bold uppercase mt-1">Klik gambar untuk memperbesar</div>
+                            </div>
+                        </div>
 
-            <textarea id="p-challenge" class="md:col-span-2 p-4 bg-slate-50 border border-slate-100 rounded-2xl h-24 focus:outline-none" placeholder="The Challenge (Masalah klien)"></textarea>
-            <textarea id="p-strategy" class="md:col-span-1 p-4 bg-slate-50 border border-slate-100 rounded-2xl h-32 focus:outline-none" placeholder="Strategic Idea (Solusi kreatif)"></textarea>
-            <textarea id="p-outcome" class="md:col-span-1 p-4 bg-slate-50 border border-slate-100 rounded-2xl h-32 focus:outline-none" placeholder="Outcome (Hasil akhir)"></textarea>
-            
-            <button type="submit" id="btn-p-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all shadow-lg">Publish Work</button>
-        </form>
-    </div>
-    
-    <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
-        <table class="w-full text-left text-sm">
-            <tbody id="project-list-table"></tbody>
-        </table>
-    </div>
-</section>
+                        <div class="md:col-span-2 flex items-center gap-3 p-4 bg-blue-50 border border-blue-100 rounded-2xl">
+                            <input type="checkbox" id="p-highlight" class="w-5 h-5 accent-[#0006ff]">
+                            <label for="p-highlight" class="text-[10px] font-bold text-[#0006ff] uppercase cursor-pointer">Tampilkan di Beranda (⭐)</label>
+                        </div>
+
+                        <textarea id="p-challenge" class="md:col-span-2 p-4 bg-slate-50 border rounded-2xl h-24 focus:outline-none" placeholder="The Challenge"></textarea>
+                        <textarea id="p-strategy" class="p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Strategic Idea"></textarea>
+                        <textarea id="p-outcome" class="p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Outcome"></textarea>
+                        
+                        <button type="submit" id="btn-p-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all shadow-lg">Publish Work</button>
+                    </form>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm overflow-x-auto">
+                    <table class="w-full text-left text-sm min-w-[500px]"><tbody id="project-list-table"></tbody></table>
+                </div>
+            </section>
 
             <section id="tab-clients" class="tab-content hidden space-y-8">
-                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                    <h2 class="text-xl font-bold italic uppercase mb-6 text-slate-900">Client Logos</h2>
-                    <form id="clientForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <input type="text" id="c-name" class="p-4 bg-slate-50 border border-slate-100 rounded-2xl focus:outline-none" placeholder="Client Name" required>
-                        <input type="file" id="c-logo" accept="image/*" class="p-3 bg-slate-50 border border-dashed rounded-2xl text-xs" required>
+                <div class="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm text-center">
+                    <h2 class="text-xl font-bold italic uppercase mb-6">Client Logos</h2>
+                    <form id="clientForm" class="grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
+                        <input type="text" id="c-name" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Client Name" required>
+                        <input type="file" id="c-logo" accept="image/*" class="p-3 bg-slate-50 border border-dashed rounded-2xl text-[10px]" required>
                         <button type="submit" id="btn-c-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px]">Upload Logo</button>
                     </form>
                 </div>
-                <div id="client-list-grid" class="grid grid-cols-2 md:grid-cols-5 gap-4"></div>
+                <div id="client-list-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4"></div>
             </section>
 
             <section id="tab-careers" class="tab-content hidden space-y-8">
-                <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm">
+                <div class="bg-white p-6 md:p-8 rounded-[2.5rem] border shadow-sm">
                     <h2 class="text-xl font-bold italic uppercase mb-6">Manage Jobs</h2>
                     <form id="careerForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
                         <input type="text" id="job-title" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Job Title" required>
@@ -166,9 +195,9 @@
                             <option value="Internship">Internship</option>
                         </select>
                         <input type="text" id="job-link" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Apply Link">
-                        <textarea id="job-desc" class="md:col-span-2 p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Job Mission/Overview"></textarea>
-                        <textarea id="job-res" class="p-4 bg-slate-50 border rounded-2xl h-48 focus:outline-none" placeholder="Responsibilities (Enter per point)"></textarea>
-                        <textarea id="job-req" class="p-4 bg-slate-50 border rounded-2xl h-48 focus:outline-none" placeholder="Requirements (Enter per point)"></textarea>
+                        <textarea id="job-desc" class="md:col-span-2 p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Job Overview"></textarea>
+                        <textarea id="job-res" class="p-4 bg-slate-50 border rounded-2xl h-48 focus:outline-none" placeholder="Responsibilities (Enter per line)"></textarea>
+                        <textarea id="job-req" class="p-4 bg-slate-50 border rounded-2xl h-48 focus:outline-none" placeholder="Requirements (Enter per line)"></textarea>
                         <button type="submit" id="btn-job-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all">Save Position</button>
                     </form>
                 </div>
@@ -177,21 +206,46 @@
 
             <section id="tab-users" class="tab-content hidden space-y-8">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-1 bg-white p-8 rounded-[2.5rem] border shadow-sm h-fit">
-                        <h2 class="text-lg font-bold uppercase mb-6 italic">Add Admin</h2>
-                        <form id="registerForm" class="space-y-4">
-                            <input type="text" id="reg-fullname" placeholder="Full Name" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none" required>
-                            <input type="email" id="reg-email" placeholder="Email" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none">
-                            <input type="password" id="reg-password" placeholder="Password" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none">
-                            <select id="reg-role" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none">
-                                <option value="editor">Editor</option>
-                                <option value="super_admin">Super Admin</option>
-                            </select>
-                            <button type="submit" id="btn-reg-submit" class="w-full bg-[#0006ff] text-white py-4 rounded-2xl font-bold uppercase text-[10px]">Save Admin</button>
-                        </form>
+                    <div class="lg:col-span-1 space-y-6">
+                        <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm h-fit">
+                            <h2 id="admin-form-title" class="text-lg font-bold uppercase mb-6 italic text-slate-900">Add Admin</h2>
+                            <form id="registerForm" class="space-y-4">
+                                <div>
+                                    <label class="text-[9px] font-bold uppercase text-gray-400 ml-4 mb-1 block">Full Name</label>
+                                    <input type="text" id="reg-fullname" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none font-medium" required>
+                                </div>
+                                <div id="email-field-container">
+                                    <label class="text-[9px] font-bold uppercase text-gray-400 ml-4 mb-1 block">Email Address</label>
+                                    <input type="email" id="reg-email" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none font-medium" required>
+                                </div>
+                                <div id="password-field-container" class="relative">
+                                    <label class="text-[9px] font-bold uppercase text-gray-400 ml-4 mb-1 block">Password</label>
+                                    <input type="password" id="reg-password" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none font-medium pr-12">
+                                    <button type="button" onclick="togglePasswordVisibility()" class="absolute right-4 top-[34px] text-gray-400 hover:text-[#0006ff]">
+                                        <i id="password-icon" class="fa-solid fa-eye text-sm"></i>
+                                    </button>
+                                    <p id="pw-hint" class="hidden text-[8px] text-blue-500 ml-4 mt-1 font-bold italic uppercase">Isi jika ingin ganti password</p>
+                                </div>
+                                <div>
+                                    <label class="text-[9px] font-bold uppercase text-gray-400 ml-4 mb-1 block">Role Access</label>
+                                    <select id="reg-role" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none font-medium">
+                                        <option value="editor">Editor</option>
+                                        <option value="super_admin">Super Admin</option>
+                                    </select>
+                                </div>
+                                <button type="submit" id="btn-reg-submit" class="w-full bg-[#0006ff] text-white py-4 rounded-2xl font-bold uppercase text-[10px] tracking-widest hover:bg-black transition-all shadow-lg">Save Admin</button>
+                                <button type="button" id="btn-reg-cancel" onclick="resetAdminForm()" class="hidden w-full bg-slate-100 text-slate-400 py-3 rounded-2xl font-bold uppercase text-[9px] mt-2">Batal Edit</button>
+                            </form>
+                            <div class="mt-8 pt-6 border-t border-slate-50 text-center">
+                                <p class="text-[9px] text-slate-400 uppercase font-bold mb-3">Bermasalah dengan akses?</p>
+                                <button onclick="handleForgotPassword()" class="text-[10px] font-black text-[#0006ff] uppercase tracking-tighter italic hover:underline">
+                                    Kirim Link Reset Password
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="lg:col-span-2 bg-white p-8 rounded-[2.5rem] border shadow-sm overflow-hidden">
-                        <table class="w-full text-left text-sm">
+                    <div class="lg:col-span-2 bg-white p-6 md:p-8 rounded-[2.5rem] border shadow-sm overflow-x-auto text-sm">
+                        <table class="w-full text-left min-w-[500px]">
                             <tbody id="admin-list-table"></tbody>
                         </table>
                     </div>
@@ -210,6 +264,47 @@
         window.currentEditUserId = null;
         window.currentUserRole = null;
 
+        // --- SIDEBAR & MOBILE UI ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            if (isOpen) {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            } else {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            }
+        }
+
+        function showTab(name) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(`tab-${name}`).classList.remove('hidden');
+            document.getElementById(`btn-${name}`).classList.add('active');
+            document.getElementById('main-title').innerText = name.toUpperCase() + " Console";
+            if (window.innerWidth < 768) toggleSidebar();
+        }
+
+        // --- IMAGE PREVIEW MODAL ---
+        function openImageModal(src) {
+            if (!src) return;
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img-display');
+            modalImg.src = src;
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.add('opacity-100'), 10);
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('opacity-100');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        document.addEventListener('keydown', (e) => { if (e.key === "Escape") closeImageModal(); });
+
         // --- UI UTILS ---
         function showToast(msg, isErr = false) {
             const t = document.getElementById('toast');
@@ -218,32 +313,24 @@
             setTimeout(() => t.classList.remove('opacity-100', 'translate-y-0'), 3000);
         }
 
-        // --- NEW CUSTOM CONFIRM LOGIC ---
         function customConfirm(title, message) {
             return new Promise((resolve) => {
                 const modal = document.getElementById('confirm-modal');
                 const yesBtn = document.getElementById('confirm-yes');
                 const noBtn = document.getElementById('confirm-no');
-                
                 document.getElementById('confirm-title').innerText = title;
                 document.getElementById('confirm-msg').innerText = message;
-                
                 modal.classList.add('active');
-
                 const handleChoice = (choice) => {
                     modal.classList.remove('active');
-                    yesBtn.onclick = null;
-                    noBtn.onclick = null;
                     resolve(choice);
                 };
-
                 yesBtn.onclick = () => handleChoice(true);
                 noBtn.onclick = () => handleChoice(false);
-                modal.onclick = (e) => { if(e.target === modal) handleChoice(false); };
             });
         }
 
-        // --- AUTH CONTROL ---
+        // --- AUTH & SESSION ---
         async function checkSession() {
             const { data: { session } } = await kancah.auth.getSession();
             if (!session) {
@@ -258,10 +345,7 @@
                     document.getElementById('login-section').classList.add('hidden');
                     document.getElementById('dashboard-section').classList.remove('hidden');
                     document.body.style.backgroundColor = '#f8fafc';
-                    
-                    const btnUsers = document.getElementById('btn-users');
-                    btnUsers.style.display = (profile.role === 'super_admin') ? 'flex' : 'none';
-
+                    document.getElementById('btn-users').style.display = (profile.role === 'super_admin') ? 'flex' : 'none';
                     loadProjectList(); loadClientList(); loadCareerList();
                     if(profile.role === 'super_admin') loadAdminList();
                 }
@@ -281,143 +365,119 @@
             else { checkSession(); }
         });
 
-        async function handleLogout() {
-            await kancah.auth.signOut();
-            window.location.reload();
-        }
+        async function handleLogout() { await kancah.auth.signOut(); window.location.reload(); }
 
-        function showTab(name) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
-            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-            document.getElementById(`tab-${name}`).classList.remove('hidden');
-            document.getElementById(`btn-${name}`).classList.add('active');
-            document.getElementById('main-title').innerText = name.toUpperCase() + " Console";
-        }
-
-        // --- DATA LOADERS ---
+        // --- PORTFOLIO LOGIC ---
         async function loadProjectList() {
             const { data } = await kancah.from('projects').select('*').order('created_at', {ascending: false});
             const table = document.getElementById('project-list-table');
             if(data) table.innerHTML = data.map(p => `
-                <tr class="border-b border-slate-50 group hover:bg-slate-50 transition-all">
+                <tr class="border-b group hover:bg-slate-50 transition-all">
                     <td class="py-5 font-bold cursor-pointer text-slate-800" onclick="prepareEditProject('${p.id}')">
-                        ${p.title} ${p.is_highlight ? '<span class="text-blue-500 ml-1">★</span>' : ''}
+                        ${p.title} ${p.is_highlight ? '<span class="text-blue-500">★</span>' : ''}
                         <span class="text-[8px] text-slate-300 block uppercase tracking-widest mt-1">Edit Project</span>
                     </td>
                     <td class="text-right py-5 pr-4">
-                        <button onclick="deleteProject('${p.id}')" class="w-10 h-10 rounded-full text-red-300 hover:text-red-500 hover:bg-red-50 transition-all">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
+                        <button onclick="deleteProject('${p.id}')" class="text-red-300 hover:text-red-500 transition-all"><i class="fa-solid fa-trash-can"></i></button>
                     </td>
                 </tr>`).join('');
         }
 
-        async function loadClientList() {
-            const { data } = await kancah.from('partners').select('*').order('sort_order', {ascending: true});
-            const grid = document.getElementById('client-list-grid');
-            if(data && grid) {
-                grid.innerHTML = data.map(c => `
-                    <div class="relative bg-white p-6 border border-slate-100 rounded-[2rem] group flex items-center justify-center cursor-move shadow-sm transition-all" data-id="${c.id}">
-                        <img src="${c.logo_url}" class="h-8 object-contain grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all">
-                        <button onclick="deleteClient('${c.id}')" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7 text-[10px] opacity-0 group-hover:opacity-100 shadow-xl flex items-center justify-center border-4 border-white"><i class="fa-solid fa-x"></i></button>
-                    </div>`).join('');
-                Sortable.create(grid, {
-                    animation: 200, ghostClass: 'ghost-class',
-                    onEnd: async function() {
-                        const items = grid.querySelectorAll('[data-id]');
-                        for (let i = 0; i < items.length; i++) {
-                            await kancah.from('partners').update({ sort_order: i }).eq('id', items[i].getAttribute('data-id'));
-                        }
-                        showToast("ORDER SAVED");
-                    }
-                });
+        async function prepareEditProject(id) {
+            const { data: p } = await kancah.from('projects').select('*').eq('id', id).single();
+            if(p) {
+                window.currentEditProjectId = p.id;
+                document.getElementById('p-title').value = p.title || '';
+                document.getElementById('p-slug').value = p.slug || '';
+                document.getElementById('p-category').value = p.category || '';
+                document.getElementById('p-highlight').checked = p.is_highlight || false;
+                document.getElementById('p-challenge').value = p.challenge || '';
+                document.getElementById('p-strategy').value = p.strategy || '';
+                document.getElementById('p-outcome').value = p.outcome || '';
+                if (p.image_url) {
+                    document.getElementById('p-preview').src = p.image_url;
+                    document.getElementById('image-preview-container').classList.remove('hidden');
+                }
+                document.getElementById('btn-p-submit').innerText = 'UPDATE WORK NOW';
+                window.scrollTo({top: 0, behavior: 'smooth'});
             }
         }
 
+        document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-p-submit');
+            btn.disabled = true; btn.innerText = 'PROCESSING...';
+            try {
+                let publicUrl = null;
+                const fileInput = document.getElementById('p-image');
+                if (fileInput.files.length > 0) {
+                    const fileName = `works/${Date.now()}`;
+                    const { error: uploadError } = await kancah.storage.from('project-images').upload(fileName, fileInput.files[0]);
+                    if (uploadError) throw uploadError;
+                    publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
+                }
+                const payload = {
+                    title: document.getElementById('p-title').value,
+                    slug: document.getElementById('p-slug').value,
+                    category: document.getElementById('p-category').value,
+                    is_highlight: document.getElementById('p-highlight').checked,
+                    challenge: document.getElementById('p-challenge').value,
+                    strategy: document.getElementById('p-strategy').value,
+                    outcome: document.getElementById('p-outcome').value
+                };
+                if (publicUrl) payload.image_url = publicUrl;
+                if (window.currentEditProjectId) {
+                    await kancah.from('projects').update(payload).eq('id', window.currentEditProjectId);
+                    window.currentEditProjectId = null;
+                    showToast("PROJECT UPDATED!");
+                } else {
+                    if (!publicUrl) throw new Error("Harap unggah foto untuk project baru.");
+                    await kancah.from('projects').insert([payload]);
+                    showToast("PROJECT PUBLISHED!");
+                }
+                e.target.reset(); document.getElementById('image-preview-container').classList.add('hidden');
+                loadProjectList(); btn.innerText = 'Publish Work';
+            } catch (err) { showToast(err.message, true); }
+            finally { btn.disabled = false; }
+        });
+
+        // --- CLIENT LOGIC ---
+        async function loadClientList() {
+            const { data } = await kancah.from('partners').select('*').order('sort_order', {ascending: true});
+            const grid = document.getElementById('client-list-grid');
+            if(data) {
+                grid.innerHTML = data.map(c => `<div class="relative bg-white p-6 border rounded-[2rem] group flex items-center justify-center cursor-move shadow-sm" data-id="${c.id}"><img src="${c.logo_url}" class="h-8 object-contain opacity-40 group-hover:opacity-100 transition-all"><button onclick="deleteClient('${c.id}')" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7 text-[10px] opacity-0 group-hover:opacity-100 shadow-xl flex items-center justify-center border-4 border-white"><i class="fa-solid fa-x"></i></button></div>`).join('');
+                Sortable.create(grid, { animation: 200, onEnd: async function() {
+                    const items = grid.querySelectorAll('[data-id]');
+                    for (let i = 0; i < items.length; i++) await kancah.from('partners').update({ sort_order: i }).eq('id', items[i].getAttribute('data-id'));
+                    showToast("ORDER SAVED");
+                }});
+            }
+        }
+
+        document.getElementById('clientForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-c-submit'); btn.innerText = 'UPLOADING...';
+            try {
+                const file = document.getElementById('c-logo').files[0];
+                const fileName = `partners/${Date.now()}`;
+                await kancah.storage.from('project-images').upload(fileName, file);
+                const publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
+                await kancah.from('partners').insert([{ name: document.getElementById('c-name').value, logo_url: publicUrl }]);
+                showToast("LOGO ADDED"); e.target.reset(); loadClientList();
+            } catch (err) { showToast(err.message, true); }
+            finally { btn.innerText = 'Upload Logo'; }
+        });
+
+        // --- CAREERS LOGIC ---
         async function loadCareerList() {
             const { data } = await kancah.from('careers').select('*').order('created_at', {ascending: false});
             const list = document.getElementById('career-list');
-            if(data) list.innerHTML = data.map(j => `
-                <div class="p-5 bg-white border border-slate-100 rounded-2xl flex justify-between items-center cursor-pointer hover:border-blue-200 transition-all shadow-sm" onclick="prepareEditJob('${j.id}')">
-                    <div>
-                        <p class="font-bold text-slate-800">${j.title}</p>
-                        <p class="text-[9px] text-slate-400 uppercase font-black tracking-widest mt-1">${j.type} • ${j.location || 'Yogyakarta'}</p>
-                    </div>
-                    <button onclick="event.stopPropagation(); deleteJob('${j.id}')" class="w-10 h-10 rounded-full text-red-200 hover:text-red-500 hover:bg-red-50 transition-all">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </div>`).join('');
+            if(data) list.innerHTML = data.map(j => `<div class="p-5 bg-white border border-slate-100 rounded-2xl flex justify-between items-center cursor-pointer hover:border-blue-200 transition-all shadow-sm" onclick="prepareEditJob('${j.id}')"><div><p class="font-bold text-slate-800">${j.title}</p><p class="text-[9px] text-slate-400 uppercase font-black tracking-widest mt-1">${j.type} • ${j.location || 'Yogyakarta'}</p></div><button onclick="event.stopPropagation(); deleteJob('${j.id}')" class="text-red-300 hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button></div>`).join('');
         }
-
-        async function loadAdminList() {
-            const { data } = await kancah.from('profiles').select('*');
-            const table = document.getElementById('admin-list-table');
-            if(data) table.innerHTML = data.map(u => `
-                <tr class="border-b border-slate-50 group hover:bg-slate-50 transition-all">
-                    <td class="py-5 font-bold cursor-pointer text-slate-800" onclick="prepareEditUser('${u.id}')">
-                        ${u.full_name}
-                        <span class="text-[8px] text-slate-300 block mt-1 uppercase tracking-widest">Update Admin</span>
-                    </td>
-                    <td class="text-[10px] font-black uppercase text-slate-400 tracking-widest">${u.role}</td>
-                    <td class="text-right py-5 pr-4">
-                        <button onclick="deleteUser('${u.id}')" class="w-10 h-10 rounded-full text-red-200 hover:text-red-500 hover:bg-red-50 transition-all">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </td>
-                </tr>`).join('');
-        }
-
-        // --- SUBMIT HANDLERS ---
-    document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('btn-p-submit');
-    btn.disabled = true; btn.innerText = 'PROCESSING...';
-    
-    try {
-        let publicUrl = null;
-        const fileInput = document.getElementById('p-image');
-        if (fileInput.files.length > 0) {
-            const fileName = `works/${Date.now()}`;
-            await kancah.storage.from('project-images').upload(fileName, fileInput.files[0]);
-            publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
-        }
-
-        // --- UPDATE PAYLOAD DI SINI ---
-        const payload = {
-            title: document.getElementById('p-title').value,
-            slug: document.getElementById('p-slug').value,
-            category: document.getElementById('p-category').value,
-            is_highlight: document.getElementById('p-highlight').checked,
-            challenge: document.getElementById('p-challenge').value,
-            strategy: document.getElementById('p-strategy').value, // TAMBAHKAN INI
-            outcome: document.getElementById('p-outcome').value     // TAMBAHKAN INI
-        };
-        // ------------------------------
-
-        if (publicUrl) payload.image_url = publicUrl;
-        
-        if (window.currentEditProjectId) {
-            await kancah.from('projects').update(payload).eq('id', window.currentEditProjectId);
-            window.currentEditProjectId = null;
-        } else {
-            await kancah.from('projects').insert([payload]);
-        }
-        
-        showToast("SUCCESS!"); 
-        e.target.reset(); 
-        loadProjectList();
-        btn.innerText = 'Publish Work';
-    } catch (err) { 
-        showToast(err.message, true); 
-    } finally { 
-        btn.disabled = false; 
-    }
-});
 
         document.getElementById('careerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btn-job-submit');
-            btn.disabled = true; btn.innerText = 'SAVING...';
             const payload = {
                 title: document.getElementById('job-title').value,
                 location: document.getElementById('job-location').value,
@@ -427,35 +487,14 @@
                 responsibilities: document.getElementById('job-res').value,
                 requirements: document.getElementById('job-req').value
             };
-            try {
-                if (window.currentEditJobId) {
-                    await kancah.from('careers').update(payload).eq('id', window.currentEditJobId);
-                    window.currentEditJobId = null;
-                    showToast("UPDATED");
-                } else {
-                    await kancah.from('careers').insert([payload]);
-                    showToast("POSTED");
-                }
-                e.target.reset(); loadCareerList();
-                btn.innerText = 'Save Position';
-            } catch (err) { showToast(err.message, true); }
-            finally { btn.disabled = false; }
-        });
-
-        // --- EDIT PREPARATIONS ---
-        async function prepareEditProject(id) {
-            const { data: p } = await kancah.from('projects').select('*').eq('id', id).single();
-            if(p) {
-                window.currentEditProjectId = p.id;
-                document.getElementById('p-title').value = p.title;
-                document.getElementById('p-slug').value = p.slug;
-                document.getElementById('p-category').value = p.category;
-                document.getElementById('p-highlight').checked = p.is_highlight;
-                document.getElementById('p-challenge').value = p.challenge;
-                document.getElementById('btn-p-submit').innerText = 'UPDATE WORK NOW';
-                window.scrollTo({top: 0, behavior: 'smooth'});
+            if (window.currentEditJobId) {
+                await kancah.from('careers').update(payload).eq('id', window.currentEditJobId);
+                window.currentEditJobId = null; showToast("UPDATED");
+            } else {
+                await kancah.from('careers').insert([payload]); showToast("POSTED");
             }
-        }
+            e.target.reset(); loadCareerList(); document.getElementById('btn-job-submit').innerText = 'Save Position';
+        });
 
         async function prepareEditJob(id) {
             const { data: j } = await kancah.from('careers').select('*').eq('id', id).single();
@@ -465,31 +504,113 @@
                 document.getElementById('job-location').value = j.location;
                 document.getElementById('job-type').value = j.type;
                 document.getElementById('job-link').value = j.link;
-                document.getElementById('job-desc').value = j.description;
-                document.getElementById('job-res').value = j.responsibilities;
-                document.getElementById('job-req').value = j.requirements;
+                document.getElementById('job-desc').value = j.description || '';
+                document.getElementById('job-res').value = j.responsibilities || '';
+                document.getElementById('job-req').value = j.requirements || '';
                 document.getElementById('btn-job-submit').innerText = 'UPDATE JOB POSITION';
                 window.scrollTo({top: 0, behavior: 'smooth'});
             }
         }
 
-        // --- NEW ASYNC DELETE HANDLERS USING CUSTOM MODAL ---
-        async function deleteProject(id) { 
-            const ok = await customConfirm("Hapus Portfolio?", "Project ini akan hilang selamanya dari website.");
-            if(ok) { await kancah.from('projects').delete().eq('id', id); loadProjectList(); showToast("DELETED"); } 
+        // --- ADMINS (Super Admin) ---
+        async function loadAdminList() {
+            const { data } = await kancah.from('profiles').select('*').order('full_name');
+            const table = document.getElementById('admin-list-table');
+            if(data) {
+                table.innerHTML = data.map(u => `
+                    <tr class="border-b border-slate-50 group hover:bg-slate-50 transition-all cursor-pointer" onclick="prepareEditUser('${u.id}')">
+                        <td class="py-5 font-bold text-slate-800">
+                            ${u.full_name}
+                            <span class="text-[8px] text-slate-300 block mt-1 uppercase tracking-widest group-hover:text-[#0006ff]">Klik untuk Edit Profil</span>
+                        </td>
+                        <td class="text-[10px] font-black uppercase text-slate-400 tracking-widest">${u.role}</td>
+                        <td class="text-right py-5 pr-4">
+                            <button onclick="event.stopPropagation(); deleteUser('${u.id}')" class="w-10 h-10 rounded-full text-red-200 hover:text-red-500 hover:bg-red-50 transition-all">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>`).join('');
+            }
         }
-        async function deleteClient(id) { 
-            const ok = await customConfirm("Hapus Logo?", "Partner ini tidak akan muncul lagi di marquee.");
-            if(ok) { await kancah.from('partners').delete().eq('id', id); loadClientList(); showToast("REMOVED"); } 
+
+        async function prepareEditUser(id) {
+            const { data: u, error } = await kancah.from('profiles').select('id, full_name, role, email').eq('id', id).single();
+            if (error) return showToast("Gagal muat data admin", true);
+            if(u) {
+                window.currentEditUserId = u.id;
+                document.getElementById('admin-form-title').innerText = 'Edit Admin Profile';
+                document.getElementById('reg-fullname').value = u.full_name || '';
+                document.getElementById('reg-role').value = u.role || 'editor';
+                document.getElementById('reg-email').value = u.email || ''; 
+                document.getElementById('reg-password').value = '';
+                document.getElementById('pw-hint')?.classList.remove('hidden');
+                document.getElementById('btn-reg-cancel')?.classList.remove('hidden');
+                document.getElementById('btn-reg-submit').innerText = 'UPDATE PROFILE';
+                window.scrollTo({top: 0, behavior: 'smooth'});
+                showToast("Mode Edit: " + u.full_name);
+            }
         }
-        async function deleteJob(id) { 
-            const ok = await customConfirm("Hapus Lowongan?", "User tidak akan bisa lagi melamar posisi ini.");
-            if(ok) { await kancah.from('careers').delete().eq('id', id); loadCareerList(); showToast("CLOSED"); } 
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-reg-submit');
+            const fName = document.getElementById('reg-fullname').value;
+            const email = document.getElementById('reg-email').value;
+            const role = document.getElementById('reg-role').value;
+            const pass = document.getElementById('reg-password').value;
+            btn.disabled = true; btn.innerText = 'SAVING...';
+            try {
+                if (window.currentEditUserId) {
+                    const { error: upErr } = await kancah.from('profiles').update({ full_name: fName, email: email, role: role }).eq('id', window.currentEditUserId);
+                    if(upErr) throw upErr;
+                    showToast("DATA ADMIN BERHASIL DI-UPDATE");
+                } else {
+                    const { data, error: authErr } = await kancah.auth.signUp({ email, password: pass });
+                    if (authErr) throw authErr;
+                    if (data.user) {
+                        await kancah.from('profiles').insert([{ id: data.user.id, full_name: fName, email: email, role: role }]);
+                    }
+                    showToast("ADMIN BARU BERHASIL DIBUAT");
+                }
+                resetAdminForm(); loadAdminList();
+            } catch (err) { showToast(err.message, true); }
+            finally { btn.disabled = false; btn.innerText = 'Save Admin'; }
+        });
+
+        function resetAdminForm() {
+            window.currentEditUserId = null;
+            document.getElementById('registerForm').reset();
+            document.getElementById('admin-form-title').innerText = 'Add Admin';
+            document.getElementById('btn-reg-cancel').classList.add('hidden');
+            document.getElementById('pw-hint').classList.add('hidden');
+            document.getElementById('btn-reg-submit').innerText = 'Save Admin';
         }
-        async function deleteUser(id) { 
-            const ok = await customConfirm("Hapus Admin?", "Akses orang ini ke dashboard akan dicabut.");
-            if(ok) { await kancah.from('profiles').delete().eq('id', id); loadAdminList(); showToast("ADMIN REMOVED"); } 
+
+        async function handleForgotPassword() {
+            const email = document.getElementById('reg-email').value;
+            if(!email) return showToast("Isi email di form dulu!", true);
+            const { error } = await kancah.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+            if (error) showToast(error.message, true);
+            else showToast("Link reset dikirim ke email!");
         }
+
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('reg-password');
+            const passIcon = document.getElementById('password-icon');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                passIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                passIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // --- DELETE HANDLERS ---
+        async function deleteProject(id) { if(await customConfirm("Hapus Portfolio?", "Project ini akan hilang selamanya.")) { await kancah.from('projects').delete().eq('id', id); loadProjectList(); showToast("DELETED"); } }
+        async function deleteClient(id) { if(await customConfirm("Hapus Logo?", "Partner ini tidak akan muncul lagi.")) { await kancah.from('partners').delete().eq('id', id); loadClientList(); showToast("REMOVED"); } }
+        async function deleteJob(id) { if(await customConfirm("Hapus Lowongan?", "Loker ini akan ditutup.")) { await kancah.from('careers').delete().eq('id', id); loadCareerList(); showToast("CLOSED"); } }
+        async function deleteUser(id) { if(await customConfirm("Hapus Admin?", "Akses dashboard akan dicabut.")) { await kancah.from('profiles').delete().eq('id', id); loadAdminList(); showToast("ADMIN REMOVED"); } }
     </script>
 </body>
 </html>

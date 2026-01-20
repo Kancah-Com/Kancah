@@ -143,7 +143,7 @@
         <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
     </div>
 </div>
-    <header class="relative min-h-screen flex flex-col justify-center pt-24 lg:pt-28 pb-12 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden bg-white">
+    <header class="relative min-h-screen flex flex-col justify-center items-center sm:items-start pt-24 lg:pt-28 pb-12 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden bg-white text-center sm:text-left">
     
     <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]" 
          style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 30px 30px;">
@@ -151,45 +151,43 @@
 
     <div class="relative z-10 w-full flex flex-col gap-6 lg:gap-10">
         
-        <div class="flex flex-col gap-4 lg:gap-6">
-           <div class="flex items-center gap-3">
-    <div class="relative flex h-2 w-2 lg:h-2.5 lg:w-2.5 mr-1">
-        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0006ff] opacity-75"></span>
-        <span id="radar-dot" class="relative inline-flex rounded-full h-2 w-2 lg:h-2.5 lg:w-2.5 bg-[#0006ff]"></span>
-    </div>
-    <span class="text-[#0006ff] font-bold text-[10px] lg:text-xs uppercase tracking-[0.4em]">Creative Agency — 2026</span>
-</div>
+        <div class="flex flex-col gap-4 lg:gap-6 items-center sm:items-start">
+            <div class="flex items-center gap-3">
+                <div class="relative flex h-2 w-2 lg:h-2.5 lg:w-2.5 mr-1">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0006ff] opacity-75"></span>
+                    <span id="radar-dot" class="relative inline-flex rounded-full h-2 w-2 lg:h-2.5 lg:w-2.5 bg-[#0006ff]"></span>
+                </div>
+                <span class="text-[#0006ff] font-bold text-[10px] lg:text-xs uppercase tracking-[0.4em]">Creative Agency — 2026</span>
+            </div>
 
-            <h1 class="flex flex-col leading-[0.82] tracking-tighter text-[#111111]">
-                <span class="text-[15vw] lg:text-[11vw] font-black uppercase">FUTURE</span>
+            <h1 class="flex flex-col leading-[0.9] tracking-tighter text-[#111111]">
+                <span class="text-[18vw] sm:text-[15vw] lg:text-[11vw] font-black uppercase">FUTURE</span>
                 
                 <div class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-10">
-                    <span class="text-[15vw] lg:text-[11vw] font-black italic text-[#0006ff] uppercase">PROOF</span>
+                    <span class="text-[18vw] sm:text-[15vw] lg:text-[11vw] font-black italic text-[#0006ff] uppercase">PROOF</span>
                     
                     <p class="hidden lg:block text-gray-400 text-lg font-light leading-snug max-w-md normal-case tracking-normal pt-4">
                         Partner debat, teman mikir, dan eksekutor andalan untuk ide yang <span class="text-[#111111] font-medium italic">"nggak mungkin"</span>.
                     </p>
                 </div>
                 
-                <span class="text-[15vw] lg:text-[11vw] font-black uppercase">CREATIVE.</span>
+                <span class="text-[18vw] sm:text-[15vw] lg:text-[11vw] font-black uppercase">CREATIVE.</span>
             </h1>
 
-            <p class="lg:hidden text-gray-400 text-sm sm:text-base font-light leading-relaxed max-w-sm">
+            <p class="lg:hidden text-gray-400 text-base sm:text-lg font-light leading-relaxed max-w-sm mx-auto sm:mx-0">
                 Partner debat, teman mikir, dan eksekutor andalan untuk ide yang <span class="text-[#111111] font-medium italic">"nggak mungkin"</span>.
             </p>
 
-           <div class="flex flex-row gap-3 lg:gap-4 mt-2">
-    <a href="works" class="bg-[#0006ff] text-white px-7 lg:px-10 py-3 lg:py-4 rounded-full font-bold uppercase tracking-widest text-[9px] lg:text-[10px] hover:bg-[#111111] transition-all duration-300">
-        Explore Work
-    </a>
-    
-    <a href="contact" class="border-2 border-[#111111] px-7 lg:px-10 py-3 lg:py-4 rounded-full font-bold uppercase tracking-widest text-[9px] lg:text-[10px] hover:bg-[#111111] hover:text-white transition-all duration-300">
-        Let's Talk
-    </a>
-</div>
+            <div class="flex flex-row gap-3 lg:gap-4 mt-4 justify-center sm:justify-start">
+                <a href="works" class="bg-[#0006ff] text-white px-8 lg:px-10 py-4 lg:py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111111] transition-all duration-300 shadow-lg">
+                    Explore Work
+                </a>
+                <a href="contact" class="border-2 border-[#111111] px-8 lg:px-10 py-4 lg:py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111111] hover:text-white transition-all duration-300">
+                    Let's Talk
+                </a>
+            </div>
         </div>
-
-        
+    </div>
 </header>
 
 <script>
@@ -416,20 +414,27 @@
         </div>
     </section>
 
-    <section id="featured-works" class="py-16 sm:py-24 bg-white text-kancah-dark"> 
-    <div class="max-w-[1400px] mx-auto px-4 sm:px-6">
-        <div class="mb-10 sm:mb-16">
+<section id="featured-works" class="pt-4 pb-6 sm:pt-8 sm:pb-8 bg-gray-50 text-kancah-dark">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6">
+        
+        <div class="mb-10 sm:mb-14">
             <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest">Selected Works</span>
-            <h2 class="text-3xl sm:text-5xl md:text-7xl font-bold mt-2 sm:mt-4 tracking-tight">KARYA PILIHAN</h2>
-            <p class="text-gray-500 max-w-lg mt-4 font-light text-base sm:text-lg">Hanya dua yang terbaik dari yang terbaik. Silakan jelajahi koleksi lengkap kami.</p>
+            <h2 class="text-5xl sm:text-5xl md:text-7xl font-black mt-2 sm:mt-4 tracking-tighter uppercase leading-[0.85]">
+                KARYA <span class="text-kancah-blue italic opacity-90">PILIHAN</span>
+            </h2>
+            <p class="text-gray-500 max-w-lg mt-4 font-light text-base sm:text-lg leading-relaxed">
+                Berikut beberapa karya kami. Silahkan menikmati.
+            </p>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8" id="featured-grid"> 
-            <div class="col-span-full py-10 text-center text-gray-300 uppercase text-xs font-bold tracking-widest animate-pulse">Loading Masterpieces...</div>
-        </div>
-        
-        <div class="mt-10 sm:mt-16 text-center"> 
-            <a href="works" class="inline-block px-8 sm:px-12 py-4 border border-kancah-dark rounded-full font-bold hover:bg-kancah-dark hover:text-white transition-all text-xs sm:text-sm tracking-widest uppercase w-full sm:w-auto">Lihat Semua Proyek</a>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10" id="featured-grid"> 
+            </div>
+
+        <div class="mt-4  pt-4 flex flex-col items-center justify-center">
+            <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.4em] mb-2">View More Projects</p>
+            <a href="works" class="group relative inline-flex items-center justify-center px-14 py-4 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-lg">
+                <span class="relative z-10 font-black uppercase tracking-[0.2em] text-[11px]">See All Projects</span>
+            </a>
         </div>
     </div>
 </section>
@@ -545,442 +550,117 @@
 
    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // KONFIGURASI SUPABASE
-    const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
-    const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-    const kancah = supabase.createClient(SB_URL, SB_KEY);
+   // KONFIGURASI SUPABASE
+const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
+const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
+const kancah = supabase.createClient(SB_URL, SB_KEY);
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // --- 1. FUNCTION FETCH DATA DINAMIS ---
-        async function loadFeaturedData() {
-            // Ambil 2 Project Terbaru
-            const { data: projects, error: pErr } = await kancah
-                .from('projects')
-                .select('*')
-                .order('created_at', { ascending: false })
-                .limit(2);
+// 1. FUNGSI UTAMA LOAD PROJECT (LANDSCAPE 16:9 OVERLAY)
+async function loadFeaturedData() {
+    const grid = document.getElementById('featured-grid');
+    if (!grid) return;
 
-            if (!pErr && projects) {
-                const grid = document.getElementById('featured-grid');
-                if (grid) {
-                    grid.innerHTML = projects.map(p => `
-                        <a href="detail-project?id=${p.slug}" class="group relative overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] bg-kancah-dark text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                            <div class="aspect-[4/3] sm:aspect-[16/9] overflow-hidden relative">
-                                <img src="${p.image_url}" class="w-full h-full object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100" alt="${p.title}">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                            </div>
-                            <div class="p-6 sm:p-8 relative z-10 -mt-20">
-                                <span class="text-[10px] font-bold uppercase text-kancah-blue bg-white px-2 py-1 rounded mb-2 inline-block">${p.category}</span>
-                                <h3 class="text-2xl sm:text-3xl font-bold mb-2 uppercase italic">${p.title}</h3>
-                                <div class="mt-4 flex items-center gap-2 text-xs uppercase tracking-widest font-bold group-hover:text-kancah-blue transition-colors">
-                                    Lihat Detail <i class="fa-solid fa-arrow-right"></i>
-                                </div>
-                            </div>
-                        </a>
-                    `).join('');
-                }
-            }
-// --- 1. FETCH DATA DINAMIS (PROJECTS HIGHLIGHT) ---
-async function loadDynamicContent() {
-    // Ambil data dari tabel projects di mana is_highlight harus TRUE
-    const { data: projects, error: pErr } = await kancah
+    const { data: projects, error } = await kancah
         .from('projects')
         .select('*')
-        .eq('is_highlight', true) // Filter ini wajib ada
-        .order('created_at', { ascending: false }); // Ambil yang terbaru
-    const grid = document.getElementById('featured-grid');
-    if (grid) {
-        if (projects && projects.length > 0) {
-            grid.innerHTML = projects.map(p => `
-                <a href="detail-project?id=${p.slug}" class="group relative overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] bg-kancah-dark text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                    <div class="aspect-[4/3] sm:aspect-[16/9] overflow-hidden relative">
-                        <img src="${p.image_url}" class="w-full h-full object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100" alt="${p.title}">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                    </div>
-                    <div class="p-6 sm:p-8 relative z-10 -mt-20">
-                        <span class="text-[10px] font-bold uppercase text-kancah-blue bg-white px-2 py-1 rounded mb-2 inline-block">${p.category}</span>
-                        <h3 class="text-2xl sm:text-3xl font-bold mb-2 uppercase italic">${p.title}</h3>
-                        <div class="mt-4 flex items-center gap-2 text-xs uppercase tracking-widest font-bold group-hover:text-kancah-blue transition-colors">
-                            Lihat Detail <i class="fa-solid fa-arrow-right"></i>
-                        </div>
-                    </div>
-                </a>`).join('');
-        } else {
-            grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-400">Belum ada karya yang di-highlight.</div>`;
+        .eq('is_highlight', true) 
+        .order('created_at', { ascending: false })
+        .limit(2);
+
+    if (error || !projects) {
+        grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-400 font-bold uppercase tracking-widest text-[10px]">Gagal memuat karya.</div>`;
+        return;
+    }
+
+   grid.innerHTML = projects.map(p => `
+    <div class="group cursor-pointer" onclick="window.location.href='detail-project?id=${p.slug}'">
+        <div class="relative aspect-video overflow-hidden rounded-[2rem] mb-8 border border-gray-100 shadow-sm">
+            <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out" alt="${p.title}">
+            <div class="absolute top-6 left-6">
+                <span class="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest text-kancah-dark shadow-sm">
+                    ${p.category}
+                </span>
+            </div>
+        </div>
+
+        <div class="flex flex-row justify-between items-start border-b border-gray-100 pb-8 group-hover:border-kancah-blue transition-colors gap-8">
+            <div class="min-w-0 flex-1"> 
+                <h3 class="text-3xl sm:text-4xl md:text-5xl font-black text-kancah-dark italic uppercase tracking-tighter leading-tight mb-3 group-hover:text-kancah-blue transition-colors break-words">
+                    ${p.title}
+                </h3>
+                <p class="text-gray-400 font-bold text-[9px] uppercase tracking-[0.4em]">
+                    ${p.category}
+                </p>
+            </div>
+
+            <div class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-gray-200 flex items-center justify-center bg-white group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shrink-0 transform group-hover:rotate-45 shadow-sm mt-1">
+                <i class="fa-solid fa-arrow-right -rotate-45 text-xl"></i>
+            </div>
+        </div>
+    </div>
+`).join('');
+}
+// 2. FUNGSI LOGO PARTNER
+async function loadPartners() {
+    const { data: partners, error } = await kancah.from('partners').select('*').order('sort_order', { ascending: true });
+    if (!error && partners) {
+        const track = document.getElementById('partner-track');
+        if (track) {
+            const logoHtml = partners.map(p => `
+                <img src="${p.logo_url}" class="h-10 sm:h-20 w-auto object-contain flex-shrink-0 [filter:brightness(0)_saturate(100%)_invert(55%)] hover:[filter:brightness(0)_saturate(100%)_invert(9%)_sepia(100%)_saturate(7484%)_hue-rotate(244deg)_brightness(100%)_contrast(145%)]" alt="${p.name}">
+            `).join('');
+            track.innerHTML = logoHtml + logoHtml;
         }
     }
-    
-
-    // Di file index lo, bagian fetch partners:
-const { data: partners } = await kancah
-    .from('partners')
-    .select('*')
-    .order('sort_order', { ascending: true }); // WAJIB GANTI INI
 }
-            // Ambil Logo Partners
-            const { data: partners, error: lErr } = await kancah.from('partners').select('*');
-            if (!lErr && partners) {
-                const track = document.getElementById('partner-track');
-                if (track) {
 
-const logoHtml = partners.map(p => `
-    <img src="${p.logo_url}" 
-         class="h-10 sm:h-20 w-auto object-contain flex-shrink-0 cursor-pointer
-                [filter:brightness(0)_saturate(100%)_invert(55%)] 
-                hover:[filter:brightness(0)_saturate(100%)_invert(9%)_sepia(100%)_saturate(7484%)_hue-rotate(244deg)_brightness(100%)_contrast(145%)]" 
-         alt="${p.name}">
-`).join('');
+// 3. FUNGSI JAM & CUACA
+function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    if(document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
+    if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
+}
 
-track.innerHTML = logoHtml + logoHtml;
-        // Pastikan container track lo pakai gap kecil biar rapet di mobile
-        track.className = "marquee-track flex gap-4 sm:gap-12 items-center px-4";
-    
-                }
-            }
+async function updateWeather() {
+    try {
+        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+        const data = await res.json();
+        if (data && data.current_weather) {
+            const temp = Math.round(data.current_weather.temperature) + "°C";
+            if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = temp;
+            if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = temp;
         }
+    } catch (e) { console.error("Weather Offline"); }
+}
 
-        // Jalankan Fetch Data
-        loadFeaturedData();
+// 4. INIT SEMUA LOGIC
+document.addEventListener('DOMContentLoaded', () => {
+    loadFeaturedData();
+    loadPartners();
+    updateClock();
+    setInterval(updateClock, 1000);
+    updateWeather();
 
-        if (mobileBtn) {
-            mobileBtn.addEventListener('click', toggleMenu);
-        }
-
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if(isMenuOpen) toggleMenu();
-            });
-        });
-
-        // --- 3. FAQ LOGIC ---
-        const details = document.querySelectorAll("details");
-        details.forEach((targetDetail) => {
-            targetDetail.addEventListener("click", () => {
-                details.forEach((detail) => {
-                    if (detail !== targetDetail) {
-                        detail.removeAttribute("open");
-                    }
-                });
-            });
-        });
-
-        // --- 4. ACTIVE LINK LOGIC ---
-        const currentPath = window.location.pathname.split('/').pop().toLowerCase() || 'index'; 
-        const links = document.querySelectorAll('nav .nav-link');
-
-        links.forEach(link => {
-            const linkHref = link.getAttribute('href').split('/').pop().split('#')[0].toLowerCase() || 'index';
-            if (currentPath !== 'index' && currentPath !== '' && linkHref === currentPath) {
-                link.classList.add('text-kancah-blue', 'font-bold');
-            } else {
-                link.classList.add('text-kancah-dark', 'font-medium');
-            }
-        });
-    });
-    document.addEventListener('DOMContentLoaded', () => {
-    // 1. Logic Menu Mobile
-    const menuBtn = document.getElementById('mobile-menu-button');
+    // Mobile Menu Logic
     const btn = document.getElementById('mobile-menu-button');
     const menu = document.getElementById('mobile-menu');
-    const icon = document.getElementById('menu-icon');
-    const links = document.querySelectorAll('.mobile-link');
-    const closeBtn = document.getElementById('close-menu');
-
-    function toggleMenu() {
-        const isOpen = menu.classList.contains('translate-x-0');
-        if (isOpen) {
-            menu.classList.replace('translate-x-0', 'translate-x-full');
-            icon.classList.replace('fa-xmark', 'fa-bars-staggered');
-            document.body.style.overflow = ''; // unlock scroll
-        } else {
-            menu.classList.replace('translate-x-full', 'translate-x-0');
-            icon.classList.replace('fa-bars-staggered', 'fa-xmark');
-            document.body.style.overflow = 'hidden'; // lock scroll
-        }
-    }
-// Listener buat tombol hamburger
-    if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-
-    // TAMBAHKAN INI: Listener buat tombol X di dalem menu
-    if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
-
-    // Listener buat link-link menu (biar pas diklik, menu otomatis tutup)
-    const mobileLinks = document.querySelectorAll('.mobile-link');
-    mobileLinks.forEach(link => {
-        link.addEventListener('click', toggleMenu);
-    });
-
-    btn.addEventListener('click', toggleMenu);
-    links.forEach(link => link.addEventListener('click', toggleMenu));
-
-    // 2. Logic Weather Alert
-    function updateWeatherDisplay(temp) {
-        const tempEl = document.getElementById('nav-temp');
-        const statusEl = document.getElementById('nav-status-desktop');
-        const detailEl = document.getElementById('nav-status-detail');
-
-        tempEl.innerText = `${temp}°C`;
-
-        let message = "";
-        if (temp < 22) {
-            message = "Dingin amat, ngopi yuk";
-        } else if (temp >= 22 && temp <= 28) {
-            message = "Suhu yang pas buat kerja";
-        } else {
-            message = "Panas betull, yukk kejar deadline";
-        }
-
-        statusEl.innerText = message;
-        detailEl.innerText = message;
-    }
-
-  
-});
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Mobile Menu Logic
-    const menuBtn = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuIcon = document.getElementById('menu-icon');
-    const links = document.querySelectorAll('.mobile-link');
-
-    function toggleMenu() {
-        const isOpen = mobileMenu.classList.contains('translate-x-0');
-        if (isOpen) {
-            mobileMenu.classList.replace('translate-x-0', 'translate-x-full');
-            menuIcon.classList.replace('fa-xmark', 'fa-bars-staggered');
-            document.body.style.overflow = '';
-        } else {
-            mobileMenu.classList.replace('translate-x-full', 'translate-x-0');
-            menuIcon.classList.replace('fa-bars-staggered', 'fa-xmark');
-            document.body.style.overflow = 'hidden';
-        }
-    }
-
-    menuBtn.addEventListener('click', toggleMenu);
-    links.forEach(l => l.addEventListener('click', toggleMenu));
-
-    // 2. Clock Logic with Seconds
-    function updateClock() {
-        const now = new Date();
-        const h = String(now.getHours()).padStart(2, '0');
-        const m = String(now.getMinutes()).padStart(2, '0');
-        const s = String(now.getSeconds()).padStart(2, '0');
-        
-        // Update Desktop
-        const timeDesktop = document.getElementById('nav-time');
-        if(timeDesktop) timeDesktop.innerText = `${h}:${m}:${s}`;
-        
-        // Update Mobile (Lebih ringkas tanpa detik agar pas di box kecil)
-        const timeMobile = document.getElementById('nav-time-mobile');
-        if(timeMobile) timeMobile.innerText = `${h}:${m}`;
-    }
+    const close = document.getElementById('close-menu');
     
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // 3. Weather UI Logic
-    function updateWeatherUI(temp) {
-        const tempElement = document.getElementById('nav-temp');
-        const statusElement = document.getElementById('nav-status-desktop');
-        const detailElement = document.getElementById('nav-status-detail');
-
-        tempElement.innerText = `${temp}°C`;
-
-        let message = "";
-        if (temp < 22) {
-            message = "Dingin amat, ngopi yuk";
-        } else if (temp >= 22 && temp <= 28) {
-            message = "Suhu yang pas buat kerja";
-        } else {
-            message = "Panas betull, yukk kejar deadline";
-        }
-
-        statusElement.innerText = message;
-        detailElement.innerText = message;
-    }
+    if(btn) btn.addEventListener('click', () => {
+        menu.classList.remove('translate-x-full');
+        menu.classList.add('translate-x-0');
+        document.body.style.overflow = 'hidden';
+    });
+    
+    if(close) close.addEventListener('click', () => {
+        menu.classList.remove('translate-x-0');
+        menu.classList.add('translate-x-full');
+        document.body.style.overflow = '';
+    });
 });
-async function updateWeather() {
-        try {
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
-            const data = await res.json();
-            if (data && data.current_weather) {
-                const temp = Math.round(data.current_weather.temperature) + "°C";
-                
-                // Update Desktop & Mobile Temp
-                if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = temp;
-                if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = temp;
-            }
-        } catch (e) { console.error("Radar offline"); }
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-    const trigger = document.getElementById('weather-mobile-trigger');
-    const popup = document.getElementById('location-popup');
-
-    if (trigger && popup) {
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            // Toggle State
-            const isOpen = popup.classList.contains('opacity-100');
-            
-            if (isOpen) {
-                popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-                popup.classList.remove('opacity-100', 'scale-100');
-            } else {
-                popup.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
-                popup.classList.add('opacity-100', 'scale-100');
-                
-                // Auto-close setelah 3 detik
-                setTimeout(() => {
-                    popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-                    popup.classList.remove('opacity-100', 'scale-100');
-                }, 3000);
-            }
-        });
-
-        // Close saat klik di luar
-        document.addEventListener('click', () => {
-            popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-            popup.classList.remove('opacity-100', 'scale-100');
-        });
-    }
-});
-    document.addEventListener('DOMContentLoaded', () => {
-        updateClock();
-        setInterval(updateClock, 1000);
-        updateWeather();
-    });
-   // 1. Fungsi Utama Ambil Data Cuaca Real-time (Open-Meteo)
-    async function updateNavWeather() {
-        try {
-            // Mengambil data Yogyakarta (Kancah HQ)
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
-            const data = await res.json();
-            
-            if (data && data.current_weather) {
-                const temp = Math.round(data.current_weather.temperature);
-                
-                // Update UI menggunakan fungsi terpisah agar rapi
-                renderWeatherUI(temp);
-            }
-        } catch (e) { 
-            console.error("Radar Signal Lost:", e);
-            const statusEl = document.getElementById('nav-status-desktop');
-            if (statusEl) statusEl.innerText = "RADAR SIGNAL LOST";
-        }
-    }
-
-    // 2. Fungsi Render Teks Alert Berdasarkan Suhu
-    function renderWeatherUI(temp) {
-        const tempEl = document.getElementById('nav-temp');
-        const statusEl = document.getElementById('nav-status-desktop');
-        const detailEl = document.getElementById('nav-status-detail'); // Untuk tooltip hitam
-
-        // Set Angka Suhu
-        if (tempEl) tempEl.innerText = `${temp}°C`;
-
-        // Logika Pesan sesuai keinginanmu
-        let message = "";
-        if (temp < 22) {
-            message = "Dingin amat, ngopi yuk 🍵";
-        } else if (temp >= 22 && temp <= 28) {
-            message = "Suhu pas buat kerja 👍";
-        } else {
-            message = "Panas bet, kejar deadline 🔥";
-        }
-
-        // Update Teks di Navbar (Baris Bawah) dan Tooltip
-        if (statusEl) statusEl.innerText = message.toUpperCase();
-        if (detailEl) detailEl.innerText = message;
-    }
-
-    // 3. Fungsi Jam Digital (HH:mm:ss)
-    function updateClock() {
-        const timeEl = document.getElementById('nav-time');
-        if (!timeEl) return;
-        
-        const now = new Date();
-        const h = String(now.getHours()).padStart(2, '0');
-        const m = String(now.getMinutes()).padStart(2, '0');
-        const s = String(now.getSeconds()).padStart(2, '0');
-        
-        timeEl.innerText = `${h}:${m}:${s}`;
-    }
-
-    // 4. Inisialisasi Saat Halaman Dimuat
-    document.addEventListener('DOMContentLoaded', () => {
-        // Jalankan Jam & Update Tiap Detik
-        updateClock();
-        setInterval(updateClock, 1000);
-        
-        // Jalankan Update Cuaca
-        updateNavWeather();
-
-        // Menu Toggle Logic
-        const btn = document.getElementById('mobile-menu-button');
-        const menu = document.getElementById('mobile-menu');
-        const icon = document.getElementById('menu-icon');
-        const links = document.querySelectorAll('.mobile-link');
-        let isOpen = false;
-
-        function toggleMenu() {
-            isOpen = !isOpen;
-            menu.classList.toggle('translate-x-full', !isOpen);
-            icon.classList.toggle('fa-bars-staggered', !isOpen);
-            icon.classList.toggle('fa-xmark', isOpen);
-            document.body.style.overflow = isOpen ? 'hidden' : '';
-        }
-
-        if(btn) btn.addEventListener('click', toggleMenu);
-        links.forEach(link => link.addEventListener('click', () => {
-            if(isOpen) toggleMenu();
-        }));
-    });
-    document.addEventListener('DOMContentLoaded', () => {
-        const dot = document.getElementById('radar-dot');
-        
-        // Fungsi untuk simulasi aktifitas "Radar"
-        function animateRadar() {
-            // Memberikan efek kedip acak antara 0.1s - 0.5s
-            const randomTime = Math.random() * (500 - 100) + 100;
-            
-            dot.style.opacity = '0.5';
-            
-            setTimeout(() => {
-                dot.style.opacity = '1';
-                // Panggil kembali fungsi untuk loop tak terbatas
-                setTimeout(animateRadar, randomTime);
-            }, 50);
-        }
-
-        animateRadar();
-    });
-document.addEventListener('DOMContentLoaded', () => {
-        const menuBtn = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        const body = document.body;
-
-        if (menuBtn && mobileMenu) {
-            menuBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const isOpen = mobileMenu.classList.contains('translate-x-0');
-                
-                if (isOpen) {
-                    mobileMenu.classList.remove('translate-x-0');
-                    mobileMenu.classList.add('translate-x-full');
-                    menuIcon.classList.replace('fa-xmark', 'fa-bars-staggered');
-                    body.style.overflow = ''; // Aktifkan scroll
-                } else {
-                    mobileMenu.classList.remove('translate-x-full');
-                    mobileMenu.classList.add('translate-x-0');
-                    menuIcon.classList.replace('fa-bars-staggered', 'fa-xmark');
-                    body.style.overflow = 'hidden'; // Matikan scroll saat menu buka
-                }
-            });
-        }
-    });
 </script>
 </body>
 
