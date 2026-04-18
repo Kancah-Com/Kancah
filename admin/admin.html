@@ -126,51 +126,93 @@
             </header>
 
             <section id="tab-portfolio" class="tab-content space-y-8">
-                <div class="bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm">
-                    <h2 class="text-lg md:text-xl font-bold italic uppercase mb-6">Manage Portfolio</h2>
-                    <form id="portfolioForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
-                        <input type="text" id="p-title" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Project Title" required>
-                        <input type="text" id="p-slug" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Slug (e.g. wedding-carousel)" required>
-                        <select id="p-category" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none cursor-pointer">
-                            <option value="" disabled selected>Select Category</option>
-                            <option value="Brand Design">Brand Design</option>
-                            <option value="Stationery Design">Stationery Design</option>
-                            <option value="Collateral Design">Collateral Design</option>
-                            <option value="Promotion Design">Promotion Design</option>
-                            <option value="Web Development">Web Development</option>
-                            <option value="Social Media Management">Social Media Management</option>
-                            <option value="Audio Visual">Audio Visual</option>
-                        </select>
-                        <input type="file" id="p-image" accept="image/*" class="p-3 bg-slate-50 border border-dashed rounded-2xl text-[10px]">
-                        
-                        <div id="image-preview-container" class="hidden md:col-span-2 p-4 bg-slate-50 border rounded-2xl flex items-center gap-4">
-                            <img id="p-preview" 
-                                 src="" 
-                                 onclick="openImageModal(this.src)"
-                                 class="h-16 w-16 md:h-20 md:w-20 object-cover rounded-xl shadow-sm border-2 border-white cursor-pointer hover:scale-105 transition-transform"
-                                 title="Klik untuk memperbesar">
-                            <div class="flex flex-col">
-                                <div class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Gambar yang dipakai sekarang</div>
-                                <div class="text-[8px] text-blue-500 font-bold uppercase mt-1">Klik gambar untuk memperbesar</div>
-                            </div>
-                        </div>
+    <div class="bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm">
+        <h2 class="text-lg md:text-xl font-bold italic uppercase mb-6">Manage Portfolio</h2>
+        <form id="portfolioForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+            <input type="text" id="p-title" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Project Title" required>
+            <input type="text" id="p-slug" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Slug (e.g. wedding-carousel)" required>
+            
+            <select id="p-category" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none cursor-pointer" onchange="toggleWebUpload(this.value)">
+                <option value="" disabled selected>Select Category</option>
+                <option value="Brand Design">Brand Design</option>
+                <option value="Stationery Design">Stationery Design</option>
+                <option value="Collateral Design">Collateral Design</option>
+                <option value="Promotion Design">Promotion Design</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Social Media Management">Social Media Management</option>
+                <option value="Audio Visual">Audio Visual</option>
+            </select>
 
-                        <div class="md:col-span-2 flex items-center gap-3 p-4 bg-blue-50 border border-blue-100 rounded-2xl">
-                            <input type="checkbox" id="p-highlight" class="w-5 h-5 accent-[#0006ff]">
-                            <label for="p-highlight" class="text-[10px] font-bold text-[#0006ff] uppercase cursor-pointer">Tampilkan di Beranda (⭐)</label>
-                        </div>
+            <div class="flex flex-col gap-2">
+                <label class="text-[9px] font-bold text-slate-400 uppercase ml-2">Project Cover Image</label>
+                <input type="file" id="p-image" accept="image/*" class="p-3 bg-slate-50 border border-dashed rounded-2xl text-[10px]">
+            </div>
+            
+            <div id="web-upload-container" class="hidden md:col-span-2 space-y-3 p-5 bg-blue-50 border border-blue-100 rounded-[1.5rem] transition-all duration-300">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-blue-600 uppercase block">Website Demo File (.html)</label>
+                        <p class="text-[8px] text-blue-400">File ini yang akan muncul saat user klik "Live Preview"</p>
+                    </div>
+                </div>
+                <input type="file" id="p-html-file" accept=".html" class="w-full p-3 bg-white border border-blue-200 rounded-xl text-[10px] cursor-pointer">
+            </div>
 
-                        <textarea id="p-challenge" class="md:col-span-2 p-4 bg-slate-50 border rounded-2xl h-24 focus:outline-none" placeholder="The Challenge"></textarea>
-                        <textarea id="p-strategy" class="p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Strategic Idea"></textarea>
-                        <textarea id="p-outcome" class="p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Outcome"></textarea>
-                        
-                        <button type="submit" id="btn-p-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all shadow-lg">Publish Work</button>
-                    </form>
+            <div id="image-preview-container" class="hidden md:col-span-2 p-4 bg-slate-50 border rounded-2xl flex items-center gap-4">
+                <img id="p-preview" 
+                     src="" 
+                     onclick="openImageModal(this.src)"
+                     class="h-16 w-16 md:h-20 md:w-20 object-cover rounded-xl shadow-sm border-2 border-white cursor-pointer hover:scale-105 transition-transform"
+                     title="Klik untuk memperbesar">
+                <div class="flex flex-col">
+                    <div class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Gambar yang dipakai sekarang</div>
+                    <div class="text-[8px] text-blue-500 font-bold uppercase mt-1">Klik gambar untuk memperbesar</div>
                 </div>
-                <div class="bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm overflow-x-auto">
-                    <table class="w-full text-left text-sm min-w-[500px]"><tbody id="project-list-table"></tbody></table>
-                </div>
-            </section>
+            </div>
+
+            <div class="md:col-span-2 flex items-center gap-3 p-4 bg-blue-50 border border-blue-100 rounded-2xl">
+                <input type="checkbox" id="p-highlight" class="w-5 h-5 accent-[#0006ff]">
+                <label for="p-highlight" class="text-[10px] font-bold text-[#0006ff] uppercase cursor-pointer">Tampilkan di Beranda (⭐)</label>
+            </div>
+
+            <textarea id="p-challenge" class="md:col-span-2 p-4 bg-slate-50 border rounded-2xl h-24 focus:outline-none" placeholder="The Challenge"></textarea>
+            <textarea id="p-strategy" class="p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Strategic Idea"></textarea>
+            <textarea id="p-outcome" class="p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Outcome"></textarea>
+            
+            <button type="submit" id="btn-p-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all shadow-lg flex items-center justify-center gap-3">
+                <span id="btn-text">Publish Work</span>
+            </button>
+        </form>
+    </div>
+
+    <div class="bg-white p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] border border-slate-100 shadow-sm overflow-x-auto">
+        <div class="flex items-center justify-between mb-6 px-2">
+            <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 italic">Existing Projects</h3>
+            <span class="text-[9px] bg-slate-100 px-3 py-1 rounded-full font-bold text-slate-500 uppercase">Live Database</span>
+        </div>
+        <table class="w-full text-left text-sm min-w-[500px]">
+            <tbody id="project-list-table">
+                </tbody>
+        </table>
+    </div>
+</section>
+
+<script>
+    function toggleWebUpload(val) {
+        const container = document.getElementById('web-upload-container');
+        if (val === 'Web Development') {
+            container.classList.remove('hidden');
+            // Tambahkan animasi masuk
+            container.classList.add('animate-pulse');
+            setTimeout(() => container.classList.remove('animate-pulse'), 500);
+        } else {
+            container.classList.add('hidden');
+        }
+    }
+</script>
 
             <section id="tab-clients" class="tab-content hidden space-y-8">
                 <div class="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm text-center">

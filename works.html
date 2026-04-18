@@ -28,28 +28,33 @@
         .work-item.loaded { opacity: 1; transform: translateY(0); }
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        
+        /* CSS Tambahan untuk Iframe Wrapper agar smooth */
+        #iframe-wrapper.mobile-view {
+            width: 375px;
+            height: 667px;
+            margin-top: 2rem;
+            border: 12px solid #1f2937;
+            border-radius: 3rem;
+        }
     </style>
 </head>
 <body class="bg-white text-kancah-dark overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
 
 <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
-        
         <div class="flex-none">
             <a href="/">
                 <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
             </a>
         </div>
-
         <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
             <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
             <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
             <a href="works" class="text-kancah-blue font-black transition-colors">Work</a>
             <a href="careers" class="hover:text-kancah-blue transition-colors">Careers</a>
         </div>
-
         <div class="flex items-center gap-2 sm:gap-4 h-8"> 
-            
             <div id="weather-module-desktop" class="relative group hidden sm:block">
                 <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-kancah-blue rounded-full select-none transition-all duration-300">
                     <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
@@ -66,12 +71,10 @@
                     </div>
                 </div>
             </div>
-
             <div class="relative sm:hidden">
                 <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-kancah-blue text-kancah-blue text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">
                     Kancah HQ, Yogyakarta
                 </div>
-
                 <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-kancah-blue border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
                     <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
                         <span id="nav-time-mobile">00:00</span>
@@ -80,11 +83,9 @@
                     </div>
                 </div>
             </div>
-
             <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
                 Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
             </a>
-
             <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
                 <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
             </button>
@@ -103,11 +104,45 @@
     </div>
 </div>
 
+<div id="web-showcase" class="fixed inset-0 z-[200] bg-white hidden flex-col">
+    <div class="h-16 sm:h-20 border-b border-gray-100 flex items-center justify-between px-4 sm:px-8 bg-white/90 backdrop-blur-xl">
+        <div class="flex items-center gap-4">
+            <button onclick="closeShowcase()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="hidden sm:block">
+                <h4 id="showcase-title" class="font-bold text-sm uppercase italic leading-none">Project Demo</h4>
+                <p class="text-[9px] text-blue-500 font-bold uppercase tracking-widest mt-1">Live Experience Mode</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-1 sm:gap-2 bg-slate-100 p-1 rounded-2xl">
+            <button id="btn-desktop" onclick="resizeShowcase('desktop')" class="px-4 py-2 rounded-xl text-[10px] font-bold uppercase transition-all bg-white shadow-sm text-kancah-blue">
+                <i class="fa-solid fa-desktop mr-1 sm:mr-2"></i> Desktop
+            </button>
+            <button id="btn-mobile" onclick="resizeShowcase('mobile')" class="px-4 py-2 rounded-xl text-[10px] font-bold uppercase transition-all text-slate-500">
+                <i class="fa-solid fa-mobile-screen mr-1 sm:mr-2"></i> Mobile
+            </button>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="copyDemoLink()" class="hidden sm:flex w-10 h-10 items-center justify-center rounded-full border border-slate-200 hover:border-kancah-blue hover:text-kancah-blue transition-all">
+                <i class="fa-regular fa-copy text-xs"></i>
+            </button>
+            <a id="showcase-new-tab" href="#" target="_blank" class="bg-kancah-blue text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all">
+                Open <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[8px]"></i>
+            </a>
+        </div>
+    </div>
+    <div class="flex-1 bg-slate-100 p-4 sm:p-8 flex justify-center items-start overflow-hidden">
+        <div id="iframe-wrapper" class="w-full h-full bg-white shadow-2xl transition-all duration-500 rounded-xl overflow-hidden border border-slate-200">
+            <iframe id="showcase-iframe" src="" class="w-full h-full border-none"></iframe>
+        </div>
+    </div>
+</div>
+
 <main class="pt-28 pb-12 px-6 max-w-[1440px] mx-auto min-h-screen">
     <div class="mb-6">
         <span class="text-kancah-blue font-bold text-[10px] uppercase tracking-[0.3em] block mb-2">Portfolio 2024—2026</span>
         <h1 class="text-6xl sm:text-8xl md:text-9xl font-black tracking-tighter leading-[0.8] text-kancah-dark uppercase">SELECTED <br> <span class="text-kancah-blue italic">WORKS.</span></h1>
-        
         <div class="mt-8 flex flex-wrap gap-2 sm:gap-3" id="filterContainer">
             <button onclick="fetchAllWorks('all')" class="filter-btn active px-5 py-2 rounded-full border border-kancah-blue bg-kancah-blue text-white text-[9px] font-bold uppercase transition-all shadow-lg shadow-kancah-blue/20" data-filter="all">All</button>
             <button onclick="fetchAllWorks('Brand Design')" class="filter-btn px-5 py-2 rounded-full border border-gray-200 bg-white text-gray-500 text-[9px] font-bold uppercase transition-all hover:border-kancah-blue hover:text-kancah-blue" data-filter="Brand Design">Brand</button>
@@ -126,28 +161,23 @@
 </main>
 
 <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
-    
     <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
         <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
             <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
             <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
         </div>
     </div>
-
     <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
-            
             <div class="lg:col-span-5 flex flex-col justify-start items-start">
                 <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
                     PUNYA IDE? <br> <span class="text-[#0006ff] italic">OBROLIN AJA.</span>
                 </h2>
-                
                 <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-[#111111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#0006ff] hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
                     Ayo Diskusi
                     <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
                 </a>
             </div>
-
             <div class="lg:col-span-4 flex flex-col gap-6">
                 <div>
                     <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
@@ -164,7 +194,6 @@
                     </a>
                 </div>
             </div>
-
             <div class="lg:col-span-3 grid grid-cols-2 gap-8">
                 <div class="flex flex-col gap-4">
                     <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
@@ -175,7 +204,6 @@
                         <li><a href="careers" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
                     </ul>
                 </div>
-
                 <div class="flex flex-col gap-4">
                     <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
                     <ul class="flex flex-col gap-3 font-medium text-sm">
@@ -186,7 +214,6 @@
                 </div>
             </div>
         </div>
-
         <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
             <p class="text-center md:text-left">&copy; 2026 PT. Kancah Media Sejahtera.</p>
             <div class="flex gap-6">
@@ -202,6 +229,7 @@
     const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
     const kancah = supabase.createClient(SB_URL, SB_KEY);
 
+    // --- MODIFIKASI FUNGSI FETCH (Membedakan Klik Card) ---
     async function fetchAllWorks(filter = 'all') {
         const grid = document.getElementById('worksGrid');
         updateFilterButtons(filter);
@@ -212,33 +240,86 @@
         const { data: projects, error } = await query;
         if (error) { grid.innerHTML = `<p class="text-red-500">Error loading data.</p>`; return; }
 
-      grid.innerHTML = projects.map(p => `
-    <div class="work-item group cursor-pointer" onclick="window.location.href='detail-project?id=${p.slug}'">
-        <div class="relative overflow-hidden rounded-[2.5rem] aspect-video mb-6 shadow-sm group-hover:shadow-2xl transition-all duration-700 group-hover:-translate-y-2 border border-gray-100">
-            <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out">
-            <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
-            <div class="absolute top-6 left-6">
-                <span class="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest text-kancah-dark shadow-sm">
-                    ${p.category}
-                </span>
-            </div>
-        </div>
-        <div class="flex justify-between items-start border-b border-gray-100 pb-6 group-hover:border-kancah-blue transition-colors">
-            <div>
-                <h3 class="text-3xl sm:text-4xl font-bold mb-1 group-hover:text-kancah-blue transition-colors uppercase tracking-tighter leading-none italic">${p.title}</h3>
-                <p class="text-gray-400 font-bold text-[9px] uppercase tracking-[0.3em]">${p.category}</p>
-            </div>
-            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shrink-0 transform group-hover:rotate-45">
-                <i class="fa-solid fa-arrow-right -rotate-45 text-lg"></i>
-            </div>
-        </div>
-    </div>
-`).join('');
+        grid.innerHTML = projects.map(p => {
+            // Logic: Jika Kategori Web, panggil openShowcase, jika lain panggil window.location
+            const isWeb = p.category === 'Web Development';
+            const action = isWeb 
+                ? `openShowcase('${p.title}', '${p.demo_url}', '${p.slug}')` 
+                : `window.location.href='detail-project?id=${p.slug}'`;
+
+            return `
+            <div class="work-item group cursor-pointer" onclick="${action}">
+                <div class="relative overflow-hidden rounded-[2.5rem] aspect-video mb-6 shadow-sm group-hover:shadow-2xl transition-all duration-700 group-hover:-translate-y-2 border border-gray-100">
+                    <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out">
+                    <div class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors"></div>
+                    
+                    ${isWeb ? `
+                        <div class="absolute inset-0 bg-kancah-blue/20 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center backdrop-blur-[2px]">
+                            <span class="bg-white text-kancah-blue px-6 py-3 rounded-full font-black text-[10px] uppercase tracking-[0.2em] shadow-xl">Live Preview</span>
+                        </div>
+                    ` : ''}
+
+                    <div class="absolute top-6 left-6">
+                        <span class="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest text-kancah-dark shadow-sm">
+                            ${p.category}
+                        </span>
+                    </div>
+                </div>
+                <div class="flex justify-between items-start border-b border-gray-100 pb-6 group-hover:border-kancah-blue transition-colors">
+                    <div>
+                        <h3 class="text-3xl sm:text-4xl font-bold mb-1 group-hover:text-kancah-blue transition-colors uppercase tracking-tighter leading-none italic">${p.title}</h3>
+                        <p class="text-gray-400 font-bold text-[9px] uppercase tracking-[0.3em]">${p.category}</p>
+                    </div>
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full border border-gray-200 flex items-center justify-center group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shrink-0 transform group-hover:rotate-45">
+                        <i class="fa-solid fa-arrow-right -rotate-45 text-lg"></i>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
 
         setTimeout(() => document.querySelectorAll('.work-item').forEach(el => el.classList.add('loaded')), 100);
     }
 
-    // UPDATE: Tombol aktif sekarang berwarna Biru Kancah
+    // --- LOGIC BARU: SHOWCASE CONTROL ---
+    let currentDemoUrl = "";
+    function openShowcase(title, url, slug) {
+        currentDemoUrl = url;
+        document.getElementById('showcase-title').innerText = title;
+        document.getElementById('showcase-iframe').src = url;
+        document.getElementById('showcase-new-tab').href = `https://kampiun.online/demo/${slug}`;
+        
+        document.getElementById('web-showcase').classList.replace('hidden', 'flex');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeShowcase() {
+        document.getElementById('web-showcase').classList.replace('flex', 'hidden');
+        document.getElementById('showcase-iframe').src = "";
+        document.body.style.overflow = '';
+    }
+
+    function resizeShowcase(device) {
+        const wrapper = document.getElementById('iframe-wrapper');
+        const btnD = document.getElementById('btn-desktop');
+        const btnM = document.getElementById('btn-mobile');
+
+        if(device === 'mobile') {
+            wrapper.classList.add('mobile-view');
+            btnM.className = "px-4 py-2 rounded-xl text-[10px] font-bold uppercase bg-white shadow-sm text-kancah-blue";
+            btnD.className = "px-4 py-2 rounded-xl text-[10px] font-bold uppercase text-slate-500";
+        } else {
+            wrapper.classList.remove('mobile-view');
+            btnD.className = "px-4 py-2 rounded-xl text-[10px] font-bold uppercase bg-white shadow-sm text-kancah-blue";
+            btnM.className = "px-4 py-2 rounded-xl text-[10px] font-bold uppercase text-slate-500";
+        }
+    }
+
+    function copyDemoLink() {
+        navigator.clipboard.writeText(currentDemoUrl);
+        alert("Demo link copied!");
+    }
+
+    // --- FUNGSI BAWAAN LAMA (TIDAK DIUBAH) ---
     function updateFilterButtons(active) {
         document.querySelectorAll('.filter-btn').forEach(btn => {
             if (btn.dataset.filter === active) {
@@ -249,80 +330,55 @@
         });
     }
 
-   // 1. Perbaikan Fungsi Jam (Update Desktop & Mobile)
-function updateClock() {
-    const n = new Date();
-    const h = String(n.getHours()).padStart(2, '0');
-    const m = String(n.getMinutes()).padStart(2, '0');
-    const s = String(n.getSeconds()).padStart(2, '0');
-    
-    // Update Jam Desktop (Format HH:mm:ss)
-    const dtTime = document.getElementById('nav-time');
-    if(dtTime) dtTime.innerText = `${h}:${m}:${s}`;
-    
-    // Update Jam Mobile (Format HH:mm)
-    const mbTime = document.getElementById('nav-time-mobile');
-    if(mbTime) mbTime.innerText = `${h}:${m}`;
-}
-
-// 2. Perbaikan Fungsi Cuaca (Update Desktop & Mobile)
-async function updateWeather() {
-    try {
-        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
-        const data = await res.json();
-        if (data && data.current_weather) {
-            const tempValue = Math.round(data.current_weather.temperature) + "°C";
-            
-            // Update Temp Desktop
-            const dtTemp = document.getElementById('nav-temp');
-            if(dtTemp) dtTemp.innerText = tempValue;
-            
-            // Update Temp Mobile
-            const mbTemp = document.getElementById('nav-temp-mobile');
-            if(mbTemp) mbTemp.innerText = tempValue;
-        }
-    } catch (e) {
-        console.error("Weather update failed", e);
+    function updateClock() {
+        const n = new Date();
+        const h = String(n.getHours()).padStart(2, '0');
+        const m = String(n.getMinutes()).padStart(2, '0');
+        const s = String(n.getSeconds()).padStart(2, '0');
+        const dtTime = document.getElementById('nav-time');
+        if(dtTime) dtTime.innerText = `${h}:${m}:${s}`;
+        const mbTime = document.getElementById('nav-time-mobile');
+        if(mbTime) mbTime.innerText = `${h}:${m}`;
     }
-}
+
+    async function updateWeather() {
+        try {
+            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+            const data = await res.json();
+            if (data && data.current_weather) {
+                const tempValue = Math.round(data.current_weather.temperature) + "°C";
+                const dtTemp = document.getElementById('nav-temp');
+                if(dtTemp) dtTemp.innerText = tempValue;
+                const mbTemp = document.getElementById('nav-temp-mobile');
+                if(mbTemp) mbTemp.innerText = tempValue;
+            }
+        } catch (e) { console.error("Weather update failed", e); }
+    }
 
     document.addEventListener('DOMContentLoaded', () => {
         const trigger = document.getElementById('weather-mobile-trigger');
-const popup = document.getElementById('location-popup');
-
-if (trigger && popup) {
-    trigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // Toggle muncul/hilang
-        const isOpen = popup.classList.contains('opacity-100');
-        if (isOpen) {
-            popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-            popup.classList.remove('opacity-100', 'scale-100');
-        } else {
-            popup.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
-            popup.classList.add('opacity-100', 'scale-100');
-            // Auto-close setelah 3 detik
-            setTimeout(() => {
+        const popup = document.getElementById('location-popup');
+        if (trigger && popup) {
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                popup.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
+                popup.classList.add('opacity-100', 'scale-100');
+                setTimeout(() => {
+                    popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+                    popup.classList.remove('opacity-100', 'scale-100');
+                }, 3000);
+            });
+            document.addEventListener('click', () => {
                 popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
                 popup.classList.remove('opacity-100', 'scale-100');
-            }, 3000);
+            });
         }
-    });
-
-    // Close otomatis kalau klik di mana saja selain popup
-    document.addEventListener('click', () => {
-        popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-        popup.classList.remove('opacity-100', 'scale-100');
-    });
-}
         fetchAllWorks('all');
         updateClock(); setInterval(updateClock, 1000);
         updateWeather();
-
         const btn = document.getElementById('mobile-menu-button');
         const menu = document.getElementById('mobile-menu');
         const close = document.getElementById('close-menu');
-
         if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
         if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
     });
