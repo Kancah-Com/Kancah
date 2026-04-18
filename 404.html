@@ -3,72 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading... • Kancah</title>
+    <title>Memuat Project... • Kampiun</title>
     <link rel="icon" type="image/png" href="/assets/logowh.png">
+    
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
-        body { margin:0; background-color:#111111; color:white; display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; }
+        body { 
+            margin: 0; 
+            background-color: #0a0a0a; 
+            color: #ffffff; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+        }
+        .loader {
+            border: 3px solid #333;
+            border-top: 3px solid #ffffff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        h2 { font-weight: 400; font-size: 1.2rem; letter-spacing: 1px; }
+        #error-msg { display: none; text-align: center; color: #ff4444; }
+        a { color: #555; text-decoration: none; margin-top: 20px; font-size: 0.9rem; transition: 0.3s; }
+        a:hover { color: #fff; }
     </style>
 </head>
 <body>
 
-    <h2 id="loading-text">⏳ Sedang menyiapkan halaman...</h2>
+    <div id="loading-ui">
+        <div class="loader"></div>
+        <h2 id="status-text">Menyiapkan Preview...</h2>
+    </div>
+
+    <div id="error-msg">
+        <h2>❌ 404 - Project Tidak Ditemukan</h2>
+        <p>Halaman yang kamu cari mungkin sudah dihapus atau link-nya salah.</p>
+        <a href="/">← Kembali ke Beranda</a>
+    </div>
 
     <script>
-        // 1. Ambil nama slug dari URL bar (misal: kampiun.online/toko-baju -> path-nya "toko-baju")
-        const path = window.location.pathname.replace(/^\/|\/$/g, ''); // ilangin garis miring
-        const slug = path.split('/').pop(); // Ambil kata terakhir
+        // --- CONFIGURATION ---
+        const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
+        const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__'; // Gunakan Anon Key kamu
+        const kancah = supabase.createClient(SB_URL, SB_KEY);
 
-        if (!slug) {
-            document.getElementById('loading-text').innerText = "❌ 404 - Halaman Tidak Ditemukan.";
-        } else {
-            
-            // 2. Konek ke Supabase
-            const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
-            const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-            const kancah = supabase.createClient(SB_URL, SB_KEY);
+        async function initRouter() {
+            // 1. Ambil slug dari URL (misal: kampiun.online/web-kopi)
+            const path = window.location.pathname.replace(/^\/|\/$/g, '');
+            const slug = path.split('/').pop();
 
-            async function loadPage() {
-                try {
-                    // Cari project di tabel berdasarkan slug
-                    const { data, error } = await kancah.from('projects').select('demo_url, title').eq('slug', slug).single();
-                    
-                    // Kalau slug-nya ngawur / datanya nggak ada di database
-                    if (error || !data) {
-                        document.title = "404 Not Found";
-                        document.getElementById('loading-text').innerHTML = "❌ 404<br><span style='font-size:14px; color:#888;'>Halaman atau demo tidak ditemukan.</span>";
-                        return;
-                    }
-
-                    // Kalau datanya ADA, ganti title tab dan load web aslinya!
-                    document.title = `${data.title} - Live Preview`;
-                    
-                    const response = await fetch(data.demo_url);
-                    const htmlText = await response.text();
-
-                    // Suntik script penjinak (biar link di dalam demo gak bisa diklik)
-                    const scriptPenjinak = `
-                        <script>
-                            document.addEventListener('click', function(e) {
-                                const link = e.target.closest('a');
-                                if(link) e.preventDefault();
-                            });
-                        <\/script>
-                    `;
-
-                    // BOOM! Timpa seluruh halaman 404 ini dengan web aslinya
-                    document.open();
-                    document.write(htmlText + scriptPenjinak);
-                    document.close();
-
-                } catch (err) {
-                    console.error(err);
-                    document.getElementById('loading-text').innerText = "❌ Terjadi kesalahan sistem.";
-                }
+            if (!slug || slug === "" || slug === "index.html") {
+                showError();
+                return;
             }
 
-            loadPage();
+            try {
+                // 2. Cek database Supabase
+                const { data, error } = await kancah
+                    .from('projects')
+                    .select('demo_url, title')
+                    .eq('slug', slug)
+                    .single();
+
+                if (error || !data) {
+                    showError();
+                    return;
+                }
+
+                // 3. Update Title Tab
+                document.title = `${data.title} - Live Preview`;
+
+                // 4. Ambil Konten HTML dari link Supabase Storage
+                const response = await fetch(data.demo_url);
+                if (!response.ok) throw new Error("File tidak dapat diakses");
+                const htmlText = await response.text();
+
+                // 5. Suntik script pencegah pindah halaman (opsional)
+                const scriptPenjinak = `
+                    <script>
+                        document.addEventListener('click', function(e) {
+                            const link = e.target.closest('a');
+                            if(link) {
+                                // Jika link adalah internal (relative), kita matikan agar tidak error 404
+                                const href = link.getAttribute('href');
+                                if(href && !href.startsWith('http')) {
+                                    e.preventDefault();
+                                    console.log('Navigasi dibatasi pada mode preview.');
+                                }
+                            }
+                        });
+                    <\/script>
+                `;
+
+                // 6. RENDER KE HALAMAN
+                renderFullPage(htmlText + scriptPenjinak);
+
+            } catch (err) {
+                console.error("Routing Error:", err);
+                showError();
+            }
         }
+
+        function renderFullPage(content) {
+            // Hapus UI Loading
+            document.body.innerHTML = "";
+            
+            // Tulis konten baru
+            document.open();
+            document.write(content);
+            document.close();
+
+            // RE-EXECUTE SCRIPTS: Supaya JS di dalam file yang ditarik bisa jalan
+            setTimeout(() => {
+                const scripts = document.querySelectorAll("script");
+                scripts.forEach(oldScript => {
+                    if(oldScript.src) {
+                        const newScript = document.createElement("script");
+                        newScript.src = oldScript.src;
+                        document.head.appendChild(newScript);
+                    } else {
+                        const newScript = document.createElement("script");
+                        newScript.textContent = oldScript.textContent;
+                        document.head.appendChild(newScript);
+                    }
+                    oldScript.remove();
+                });
+            }, 100);
+        }
+
+        function showError() {
+            document.getElementById('loading-ui').style.display = 'none';
+            document.getElementById('error-msg').style.display = 'block';
+            document.title = "404 Not Found";
+        }
+
+        // Jalankan router
+        initRouter();
     </script>
 </body>
 </html>

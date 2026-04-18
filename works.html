@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
+    <style>#showcase-iframe {
+    width: 100%;
+    height: 100%; /* Pastikan ini 100% */
+    border: none;
+    background: white;
+    display: block; /* Biar gak ada gap di bawah */
+}
+
+#iframe-wrapper.mobile-view {
+    width: 100%;
+    max-width: 375px;
+    height: calc(100vh - 180px); /* Ini kuncinya! Biar gak kepotong navbar/button */
+    margin: 0 auto;
+    border: 12px solid #1f2937;
+    border-radius: 3rem;
+    overflow: hidden; /* Biar web di dalemnya gak luber dari border HP */
+}
+</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Works • Kancah</title>
@@ -295,13 +313,31 @@
 
         setTimeout(() => document.querySelectorAll('.work-item').forEach(el => el.classList.add('loaded')), 100);
     }
+function copyDemoLink() {
+    // Kita susun linknya: domain asli + slug
+    // Misal: https://kampiun.online/nama-project
+    const cleanUrl = window.location.origin + '/' + currentSlug; 
 
+    navigator.clipboard.writeText(cleanUrl).then(() => {
+        // Kasih notifikasi biar keren
+        const btn = document.getElementById('copy-btn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "✅ Tersalin!";
+        setTimeout(() => { btn.innerHTML = originalText; }, 2000);
+    }).catch(err => {
+        console.error('Gagal salin:', err);
+    });
+}
   // --- LOGIC BARU: SHOWCASE CONTROL ---
     // --- LOGIC BARU: SHOWCASE CONTROL (ULTIMATE VERSION) ---
+  // 1. Tambahkan variabel ini di paling atas (di luar fungsi)
     let currentDemoUrl = "";
-    
+    let currentSlug = ""; // <-- WAJIB ADA buat fungsi Salin Link
+
     async function openShowcase(title, url, slug) {
         currentDemoUrl = url;
+        currentSlug = slug; // <-- SIMPAN SLUGNYA DI SINI
+        
         document.getElementById('showcase-title').innerText = title;
         
         // Buka modalnya dulu
@@ -309,42 +345,36 @@
         document.body.style.overflow = 'hidden';
 
         const iframe = document.getElementById('showcase-iframe');
-        iframe.src = ""; // Pastikan src kosong biar gak nabrak
+        iframe.src = ""; 
         
-        // Tampilkan teks loading di dalam iframe
         iframe.srcdoc = "<div style='display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; color:#333;'><h2>⏳ Sedang memuat Live Demo...</h2></div>";
 
         try {
-            // Tarik mentahan kode HTML
             const response = await fetch(url);
             if (!response.ok) throw new Error("Gagal load demo dari server");
             const htmlText = await response.text();
             
-            // SUNTIKAN SAKTI 1: Tahan semua klik link (navbar dll) di dalam demo biar nggak lari ke web Kancah
             const scriptPenjinak = `
                 <script>
                     document.addEventListener('click', function(e) {
                         const link = e.target.closest('a');
                         if(link) {
-                            e.preventDefault(); // Tahan pergerakan mase!
+                            e.preventDefault();
                             console.log('Klik link ditahan mode preview.');
                         }
                     });
                 <\/script>
             `;
             
-            // Gabungin HTML asli dengan script penjinak
             const amanHtmlText = htmlText + scriptPenjinak;
-            
-            // Masukin HTML yang udah aman ke iframe
             iframe.srcdoc = amanHtmlText; 
 
-         // SUNTIKAN SAKTI 2: Arahkan langsung ke slug
+            // SUNTIKAN SAKTI 2: Arahkan langsung ke slug
             const newTabBtn = document.getElementById('showcase-new-tab');
             newTabBtn.onclick = null; 
             
-            // Langsung arahkan ke /slug 
-            newTabBtn.href = `/${slug}`;
+            // Pakai window.location.origin biar linknya otomatis jadi https://kampiun.online/slug
+            newTabBtn.href = window.location.origin + `/${slug}`;
             newTabBtn.target = "_blank";
             
         } catch (err) {
@@ -426,4 +456,5 @@
     });
 </script>
 </body>
+
 </html>
