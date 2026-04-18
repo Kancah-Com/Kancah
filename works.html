@@ -158,7 +158,12 @@
             </button>
         </div>
         <div class="flex items-center gap-2">
-            <button onclick="copyDemoLink()" class="hidden sm:flex w-10 h-10 items-center justify-center rounded-full border border-slate-200 hover:border-kancah-blue hover:text-kancah-blue transition-all">
+          <button 
+    id="copy-btn" 
+    onclick="copyDemoLink()" 
+    class="your-style-classes">
+    <span>Salin Link</span>
+</button>
                 <i class="fa-regular fa-copy text-xs"></i>
             </button>
             <a id="showcase-new-tab" href="#" target="_blank" class="bg-kancah-blue text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all">
@@ -314,19 +319,54 @@
         setTimeout(() => document.querySelectorAll('.work-item').forEach(el => el.classList.add('loaded')), 100);
     }
 function copyDemoLink() {
-    // Kita susun linknya: domain asli + slug
-    // Misal: https://kampiun.online/nama-project
+    if (!currentSlug) {
+        console.error("Slug tidak ditemukan!");
+        return;
+    }
+
+    // Susun URL-nya
     const cleanUrl = window.location.origin + '/' + currentSlug; 
 
-    navigator.clipboard.writeText(cleanUrl).then(() => {
-        // Kasih notifikasi biar keren
-        const btn = document.getElementById('copy-btn');
-        const originalText = btn.innerHTML;
+    // Cara modern
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(cleanUrl).then(() => {
+            updateCopyButton();
+        }).catch(err => {
+            console.error('Gagal salin:', err);
+            copyFallback(cleanUrl); // Pakai cadangan kalau gagal
+        });
+    } else {
+        copyFallback(cleanUrl); // Pakai cadangan untuk browser lama
+    }
+}
+
+// Fungsi bantu untuk animasi tombol
+function updateCopyButton() {
+    const btn = document.getElementById('copy-btn'); // PASTIKAN ID DI HTML SAMA
+    if (btn) {
+        const originalContent = btn.innerHTML;
         btn.innerHTML = "✅ Tersalin!";
-        setTimeout(() => { btn.innerHTML = originalText; }, 2000);
-    }).catch(err => {
-        console.error('Gagal salin:', err);
-    });
+        btn.classList.add('bg-green-600'); // Opsional: kasih warna hijau kalau pakai Tailwind
+        setTimeout(() => {
+            btn.innerHTML = originalContent;
+            btn.classList.remove('bg-green-600');
+        }, 2000);
+    }
+}
+
+// Fungsi cadangan (Fallback)
+function copyFallback(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        updateCopyButton();
+    } catch (err) {
+        console.error('Fallback gagal:', err);
+    }
+    document.body.removeChild(textArea);
 }
   // --- LOGIC BARU: SHOWCASE CONTROL ---
     // --- LOGIC BARU: SHOWCASE CONTROL (ULTIMATE VERSION) ---
