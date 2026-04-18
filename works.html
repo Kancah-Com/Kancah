@@ -29,14 +29,30 @@
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         
-        /* CSS Tambahan untuk Iframe Wrapper agar smooth */
+       /* CSS Tambahan untuk Iframe Wrapper agar smooth */
+        #iframe-wrapper {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         #iframe-wrapper.mobile-view {
-            width: 375px;
-            height: 667px;
-            margin-top: 2rem;
+            width: 100%;
+            max-width: 375px; /* Gak bakal bablas kalau di layar gede */
+            height: 100%;
+            max-height: 812px; /* Proporsi tinggi HP */
+            margin: 0 auto;
             border: 12px solid #1f2937;
             border-radius: 3rem;
         }
+
+        /* Kalau dibuka langsung dari HP beneran, bordernya kita tipisin/hilangin biar lega */
+        @media (max-width: 640px) {
+            #iframe-wrapper.mobile-view {
+                border: 4px solid #1f2937;
+                border-radius: 1.5rem;
+                max-width: 100%;
+                max-height: 90vh;
+            }
+        }
+        
     </style>
 </head>
 <body class="bg-white text-kancah-dark overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
@@ -280,43 +296,69 @@
         setTimeout(() => document.querySelectorAll('.work-item').forEach(el => el.classList.add('loaded')), 100);
     }
 
-    // --- LOGIC BARU: SHOWCASE CONTROL ---
+  // --- LOGIC BARU: SHOWCASE CONTROL ---
+    // --- LOGIC BARU: SHOWCASE CONTROL (ULTIMATE VERSION) ---
     let currentDemoUrl = "";
-    function openShowcase(title, url, slug) {
+    
+    async function openShowcase(title, url, slug) {
         currentDemoUrl = url;
         document.getElementById('showcase-title').innerText = title;
-        document.getElementById('showcase-iframe').src = url;
-        document.getElementById('showcase-new-tab').href = `https://kampiun.online/demo/${slug}`;
         
+        // Buka modalnya dulu
         document.getElementById('web-showcase').classList.replace('hidden', 'flex');
         document.body.style.overflow = 'hidden';
+
+        const iframe = document.getElementById('showcase-iframe');
+        iframe.src = ""; // Pastikan src kosong biar gak nabrak
+        
+        // Tampilkan teks loading di dalam iframe
+        iframe.srcdoc = "<div style='display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; color:#333;'><h2>⏳ Sedang memuat Live Demo...</h2></div>";
+
+        try {
+            // Tarik mentahan kode HTML
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Gagal load demo dari server");
+            const htmlText = await response.text();
+            
+            // SUNTIKAN SAKTI 1: Tahan semua klik link (navbar dll) di dalam demo biar nggak lari ke web Kancah
+            const scriptPenjinak = `
+                <script>
+                    document.addEventListener('click', function(e) {
+                        const link = e.target.closest('a');
+                        if(link) {
+                            e.preventDefault(); // Tahan pergerakan mase!
+                            console.log('Klik link ditahan mode preview.');
+                        }
+                    });
+                <\/script>
+            `;
+            
+            // Gabungin HTML asli dengan script penjinak
+            const amanHtmlText = htmlText + scriptPenjinak;
+            
+            // Masukin HTML yang udah aman ke iframe
+            iframe.srcdoc = amanHtmlText; 
+
+         // SUNTIKAN SAKTI 2: Arahkan langsung ke slug
+            const newTabBtn = document.getElementById('showcase-new-tab');
+            newTabBtn.onclick = null; 
+            
+            // Langsung arahkan ke /slug 
+            newTabBtn.href = `/${slug}`;
+            newTabBtn.target = "_blank";
+            
+        } catch (err) {
+            console.error("Error Demo:", err);
+            iframe.srcdoc = "<div style='display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; color:red;'><h2>❌ Gagal memuat demo.</h2></div>";
+        }
     }
 
     function closeShowcase() {
         document.getElementById('web-showcase').classList.replace('flex', 'hidden');
-        document.getElementById('showcase-iframe').src = "";
+        const iframe = document.getElementById('showcase-iframe');
+        iframe.src = "";
+        iframe.srcdoc = ""; // Wajib dikosongin juga srcdoc-nya pas ditutup
         document.body.style.overflow = '';
-    }
-
-    function resizeShowcase(device) {
-        const wrapper = document.getElementById('iframe-wrapper');
-        const btnD = document.getElementById('btn-desktop');
-        const btnM = document.getElementById('btn-mobile');
-
-        if(device === 'mobile') {
-            wrapper.classList.add('mobile-view');
-            btnM.className = "px-4 py-2 rounded-xl text-[10px] font-bold uppercase bg-white shadow-sm text-kancah-blue";
-            btnD.className = "px-4 py-2 rounded-xl text-[10px] font-bold uppercase text-slate-500";
-        } else {
-            wrapper.classList.remove('mobile-view');
-            btnD.className = "px-4 py-2 rounded-xl text-[10px] font-bold uppercase bg-white shadow-sm text-kancah-blue";
-            btnM.className = "px-4 py-2 rounded-xl text-[10px] font-bold uppercase text-slate-500";
-        }
-    }
-
-    function copyDemoLink() {
-        navigator.clipboard.writeText(currentDemoUrl);
-        alert("Demo link copied!");
     }
 
     // --- FUNGSI BAWAAN LAMA (TIDAK DIUBAH) ---

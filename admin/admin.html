@@ -478,7 +478,7 @@
             }
         }
 
-        // 2. IMAGE UPLOAD LOGIC
+        // 2. IMAGE UPLOAD LOGIC (COver Image)
         let publicUrl = null;
         const fileInput = document.getElementById('p-image');
         if (fileInput.files.length > 0) {
@@ -488,32 +488,46 @@
             publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
         }
 
-        // --- TAMBAHAN BARU: 2.5. HTML DEMO UPLOAD LOGIC ---
+        // ==========================================================
+        // TARUH DI SINI BROK! (Di bawah Image Upload, di atas Prepare Data)
+        // --- 2.5. HTML DEMO UPLOAD LOGIC ---
         let demoUrl = null;
         const categoryVal = document.getElementById('p-category').value;
         const slugVal = document.getElementById('p-slug').value;
         const htmlFileInput = document.getElementById('p-html-file');
         
+        console.log("Cek Kategori:", categoryVal);
+        console.log("Cek Input File HTML:", htmlFileInput);
+        console.log("Jumlah File HTML yg dipilih:", htmlFileInput ? htmlFileInput.files.length : 0);
+
         if (categoryVal === 'Web Development' && htmlFileInput && htmlFileInput.files.length > 0) {
+            console.log("Gas mulai upload HTML...");
             const htmlFileName = `demos/${Date.now()}_${slugVal}.html`;
             
             const { error: htmlUploadError } = await kancah.storage
                 .from('project-demos')
                 .upload(htmlFileName, htmlFileInput.files[0], {
-                    contentType: 'text/html', // Memaksa Supabase ngebaca ini sbg Web
+                    contentType: 'text/html',
                     upsert: true
                 });
 
-            if (htmlUploadError) throw htmlUploadError;
+            if (htmlUploadError) {
+                console.error("ERROR DARI SUPABASE:", htmlUploadError);
+                throw htmlUploadError;
+            }
+
             demoUrl = kancah.storage.from('project-demos').getPublicUrl(htmlFileName).data.publicUrl;
+            console.log("Sukses upload! Link demo:", demoUrl);
+        } else {
+            console.log("Syarat upload HTML tidak terpenuhi, di-skip.");
         }
-        // ----------------------------------------------------
+        // ==========================================================
 
         // 3. PREPARE DATA
         const payload = {
             title: document.getElementById('p-title').value,
-            slug: slugVal, // Udah ditarik di atas
-            category: categoryVal, // Udah ditarik di atas
+            slug: slugVal, 
+            category: categoryVal, 
             is_highlight: isHighlightChecked,
             challenge: document.getElementById('p-challenge').value,
             strategy: document.getElementById('p-strategy').value,
@@ -521,7 +535,7 @@
         };
         
         if (publicUrl) payload.image_url = publicUrl;
-        if (demoUrl) payload.demo_url = demoUrl; // Masukkan link demo HTML ke database
+        if (demoUrl) payload.demo_url = demoUrl; // <--- INI PENTING BIAR MASUK KE DATABASE
 
         // 4. INSERT / UPDATE
         if (window.currentEditProjectId) {
@@ -538,7 +552,7 @@
         e.target.reset(); 
         document.getElementById('image-preview-container').classList.add('hidden');
         
-        // Sembunyikan form input HTML lagi setelah reset
+        // Sembunyikan form input HTML lagi
         const webContainer = document.getElementById('web-upload-container');
         if(webContainer) webContainer.classList.add('hidden');
 
