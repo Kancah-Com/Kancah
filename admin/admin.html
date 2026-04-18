@@ -403,7 +403,15 @@
             }
         }
 
-      // --- PORTFOLIO LOGIC WITH HIGHLIGHT LIMIT ---
+        async function deleteProject(id) {
+            const confirm = await customConfirm("Hapus Project?", "Project yang dihapus tidak bisa dikembalikan.");
+            if(confirm) {
+                await kancah.from('projects').delete().eq('id', id);
+                showToast("PROJECT DIHAPUS!");
+                loadProjectList();
+            }
+        }
+
         document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-p-submit');
@@ -413,25 +421,17 @@
             btn.innerText = 'PROCESSING...';
 
             try {
-                // 1. LIMIT CHECK: Hanya jika user mencentang checkbox highlight
+                // 1. LIMIT CHECK
                 if (isHighlightChecked) {
-                    let query = kancah
-                        .from('projects')
-                        .select('id', { count: 'exact', head: true })
-                        .eq('is_highlight', true);
-
-                    // Jika sedang mode EDIT, jangan hitung project yang sedang diedit ini
-                    if (window.currentEditProjectId) {
-                        query = query.neq('id', window.currentEditProjectId);
-                    }
-
+                    let query = kancah.from('projects').select('id', { count: 'exact', head: true }).eq('is_highlight', true);
+                    if (window.currentEditProjectId) query = query.neq('id', window.currentEditProjectId);
+                    
                     const { count, error: countErr } = await query;
-
                     if (count >= 2) {
                         showToast("Konten yg dihighlight sudah 2 bang.", true);
                         btn.disabled = false;
                         btn.innerText = window.currentEditProjectId ? 'UPDATE WORK NOW' : 'Publish Work';
-                        return; // Berhenti di sini, tidak lanjut simpan
+                        return;
                     }
                 }
 
@@ -457,7 +457,7 @@
                 };
                 if (publicUrl) payload.image_url = publicUrl;
 
-                // 4. INSERT ATAU UPDATE
+                // 4. INSERT / UPDATE
                 if (window.currentEditProjectId) {
                     await kancah.from('projects').update(payload).eq('id', window.currentEditProjectId);
                     window.currentEditProjectId = null;
@@ -468,12 +468,11 @@
                     showToast("PROJECT PUBLISHED!");
                 }
 
-                // 5. RESET FORM
+                // 5. RESET
                 e.target.reset(); 
                 document.getElementById('image-preview-container').classList.add('hidden');
                 loadProjectList(); 
                 btn.innerText = 'Publish Work';
-
             } catch (err) { 
                 showToast(err.message, true); 
             } finally { 
@@ -486,38 +485,117 @@
             const { data } = await kancah.from('partners').select('*').order('sort_order', {ascending: true});
             const grid = document.getElementById('client-list-grid');
             if(data) {
-                grid.innerHTML = data.map(c => `<div class="relative bg-white p-6 border rounded-[2rem] group flex items-center justify-center cursor-move shadow-sm" data-id="${c.id}"><img src="${c.logo_url}" class="h-8 object-contain opacity-40 group-hover:opacity-100 transition-all"><button onclick="deleteClient('${c.id}')" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-7 h-7 text-[10px] opacity-0 group-hover:opacity-100 shadow-xl flex items-center justify-center border-4 border-white"><i class="fa-solid fa-x"></i></button></div>`).join('');
-                Sortable.create(grid, { animation: 200, onEnd: async function() {
-                    const items = grid.querySelectorAll('[data-id]');
-                    for (let i = 0; i < items.length; i++) await kancah.from('partners').update({ sort_order: i }).eq('id', items[i].getAttribute('data-id'));
-                    showToast("ORDER SAVED");
-                }});
+                grid.innerHTML = data.map(c => `
+                    <div data-id="${c.id}" class="bg-white p-4 rounded-2xl border shadow-sm flex flex-col items-center justify-between group relative">
+                        <img src="${c.logo_url}" class="h-12 w-auto object-contain mb-3 cursor-pointer" onclick="openImageModal(this.src)">
+                        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center">${c.name}</p>
+                        <button onclick="deleteClient('${c.id}')" class="absolute top-2 right-2 text-red-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `).join('');
+
+                // Drag & Drop Sorting using SortableJS
+                new Sortable(grid, {
+                    animation: 150,
+                    onEnd: async function (evt) {
+                        const items = Array.from(grid.children);
+                        const updates = items.map((item, index) => ({
+                            id: item.dataset.id,
+                            sort_order: index
+                        }));
+                        const { error } = await kancah.from('partners').upsert(updates);
+                        if(error) showToast("Gagal menyimpan urutan!", true);
+                        else showToast("URUTAN CLIENT DISIMPAN!");
+                    }
+                });
+            }
+        }
+
+        async function deleteClient(id) {
+            const confirm = await customConfirm("Hapus Client?", "Logo client akan hilang dari web.");
+            if(confirm) {
+                await kancah.from('partners').delete().eq('id', id);
+                showToast("CLIENT DIHAPUS!");
+                loadClientList();
             }
         }
 
         document.getElementById('clientForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btn-c-submit'); btn.innerText = 'UPLOADING...';
+            const btn = document.getElementById('btn-c-submit');
+            btn.disabled = true; btn.innerText = 'UPLOADING...';
             try {
-                const file = document.getElementById('c-logo').files[0];
-                const fileName = `partners/${Date.now()}`;
-                await kancah.storage.from('project-images').upload(fileName, file);
-                const publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
-                await kancah.from('partners').insert([{ name: document.getElementById('c-name').value, logo_url: publicUrl }]);
-                showToast("LOGO ADDED"); e.target.reset(); loadClientList();
-            } catch (err) { showToast(err.message, true); }
-            finally { btn.innerText = 'Upload Logo'; }
+                const fileInput = document.getElementById('c-logo');
+                const fileName = `clients/${Date.now()}`;
+                const { error: uploadError } = await kancah.storage.from('client-logos').upload(fileName, fileInput.files[0]);
+                if (uploadError) throw uploadError;
+                
+                const publicUrl = kancah.storage.from('client-logos').getPublicUrl(fileName).data.publicUrl;
+                await kancah.from('partners').insert([{
+                    name: document.getElementById('c-name').value,
+                    logo_url: publicUrl
+                }]);
+                
+                showToast("CLIENT BERHASIL DITAMBAH!");
+                e.target.reset();
+                loadClientList();
+            } catch(err) {
+                showToast(err.message, true);
+            } finally {
+                btn.disabled = false; btn.innerText = 'Upload Logo';
+            }
         });
 
         // --- CAREERS LOGIC ---
         async function loadCareerList() {
             const { data } = await kancah.from('careers').select('*').order('created_at', {ascending: false});
             const list = document.getElementById('career-list');
-            if(data) list.innerHTML = data.map(j => `<div class="p-5 bg-white border border-slate-100 rounded-2xl flex justify-between items-center cursor-pointer hover:border-blue-200 transition-all shadow-sm" onclick="prepareEditJob('${j.id}')"><div><p class="font-bold text-slate-800">${j.title}</p><p class="text-[9px] text-slate-400 uppercase font-black tracking-widest mt-1">${j.type} • ${j.location || 'Yogyakarta'}</p></div><button onclick="event.stopPropagation(); deleteJob('${j.id}')" class="text-red-300 hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button></div>`).join('');
+            if(data) {
+                list.innerHTML = data.map(j => `
+                    <div class="bg-white p-5 rounded-2xl border flex justify-between items-center group hover:bg-slate-50 transition-all">
+                        <div class="cursor-pointer" onclick="prepareEditCareer('${j.id}')">
+                            <h3 class="font-bold text-slate-800">${j.title} <span class="text-[9px] ml-2 px-2 py-1 bg-blue-100 text-[#0006ff] rounded-md uppercase">${j.type}</span></h3>
+                            <p class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-location-dot mr-1"></i> ${j.location || 'Remote'}</p>
+                        </div>
+                        <button onclick="deleteCareer('${j.id}')" class="text-red-300 hover:text-red-500 transition-all p-2">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        async function prepareEditCareer(id) {
+            const { data: j } = await kancah.from('careers').select('*').eq('id', id).single();
+            if(j) {
+                window.currentEditJobId = j.id;
+                document.getElementById('job-title').value = j.title || '';
+                document.getElementById('job-location').value = j.location || '';
+                document.getElementById('job-type').value = j.type || 'Full-Time';
+                document.getElementById('job-link').value = j.link || '';
+                document.getElementById('job-desc').value = j.description || '';
+                document.getElementById('job-res').value = j.responsibilities || '';
+                document.getElementById('job-req').value = j.requirements || '';
+                document.getElementById('btn-job-submit').innerText = 'UPDATE POSITION';
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }
+        }
+
+        async function deleteCareer(id) {
+            const confirm = await customConfirm("Hapus Lowongan?", "Data tidak bisa dikembalikan.");
+            if(confirm) {
+                await kancah.from('careers').delete().eq('id', id);
+                showToast("LOWONGAN DIHAPUS!");
+                loadCareerList();
+            }
         }
 
         document.getElementById('careerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const btn = document.getElementById('btn-job-submit');
+            btn.disabled = true; btn.innerText = 'SAVING...';
+            
             const payload = {
                 title: document.getElementById('job-title').value,
                 location: document.getElementById('job-location').value,
@@ -527,130 +605,142 @@
                 responsibilities: document.getElementById('job-res').value,
                 requirements: document.getElementById('job-req').value
             };
-            if (window.currentEditJobId) {
-                await kancah.from('careers').update(payload).eq('id', window.currentEditJobId);
-                window.currentEditJobId = null; showToast("UPDATED");
-            } else {
-                await kancah.from('careers').insert([payload]); showToast("POSTED");
+
+            try {
+                if(window.currentEditJobId) {
+                    await kancah.from('careers').update(payload).eq('id', window.currentEditJobId);
+                    showToast("POSITION UPDATED!");
+                    window.currentEditJobId = null;
+                } else {
+                    await kancah.from('careers').insert([payload]);
+                    showToast("POSITION SAVED!");
+                }
+                e.target.reset();
+                btn.innerText = 'Save Position';
+                loadCareerList();
+            } catch(err) {
+                showToast(err.message, true);
+                btn.innerText = window.currentEditJobId ? 'UPDATE POSITION' : 'Save Position';
+            } finally { 
+                btn.disabled = false; 
             }
-            e.target.reset(); loadCareerList(); document.getElementById('btn-job-submit').innerText = 'Save Position';
         });
 
-        async function prepareEditJob(id) {
-            const { data: j } = await kancah.from('careers').select('*').eq('id', id).single();
-            if(j) {
-                window.currentEditJobId = j.id;
-                document.getElementById('job-title').value = j.title;
-                document.getElementById('job-location').value = j.location;
-                document.getElementById('job-type').value = j.type;
-                document.getElementById('job-link').value = j.link;
-                document.getElementById('job-desc').value = j.description || '';
-                document.getElementById('job-res').value = j.responsibilities || '';
-                document.getElementById('job-req').value = j.requirements || '';
-                document.getElementById('btn-job-submit').innerText = 'UPDATE JOB POSITION';
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            }
-        }
-
-        // --- ADMINS (Super Admin) ---
+        // --- ADMIN / USERS LOGIC ---
         async function loadAdminList() {
-            const { data } = await kancah.from('profiles').select('*').order('full_name');
+            if (window.currentUserRole !== 'super_admin') return;
+            const { data } = await kancah.from('profiles').select('*').order('created_at', {ascending: false});
             const table = document.getElementById('admin-list-table');
             if(data) {
                 table.innerHTML = data.map(u => `
-                    <tr class="border-b border-slate-50 group hover:bg-slate-50 transition-all cursor-pointer" onclick="prepareEditUser('${u.id}')">
-                        <td class="py-5 font-bold text-slate-800">
-                            ${u.full_name}
-                            <span class="text-[8px] text-slate-300 block mt-1 uppercase tracking-widest group-hover:text-[#0006ff]">Klik untuk Edit Profil</span>
+                    <tr class="border-b group hover:bg-slate-50 transition-all">
+                        <td class="py-4">
+                            <p class="font-bold text-slate-800">${u.full_name}</p>
+                            <p class="text-[10px] text-slate-400 font-medium">${u.email}</p>
                         </td>
-                        <td class="text-[10px] font-black uppercase text-slate-400 tracking-widest">${u.role}</td>
-                        <td class="text-right py-5 pr-4">
-                            <button onclick="event.stopPropagation(); deleteUser('${u.id}')" class="w-10 h-10 rounded-full text-red-200 hover:text-red-500 hover:bg-red-50 transition-all">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                        <td class="py-4 text-center">
+                            <span class="text-[9px] px-3 py-1 font-bold uppercase rounded-full ${u.role === 'super_admin' ? 'bg-purple-100 text-purple-600' : 'bg-slate-100 text-slate-600'}">${u.role.replace('_', ' ')}</span>
                         </td>
-                    </tr>`).join('');
+                        <td class="py-4 text-right pr-4">
+                            <button onclick="prepareEditUser('${u.id}', '${u.full_name}', '${u.email}', '${u.role}')" class="text-blue-300 hover:text-blue-500 mr-3 transition-all"><i class="fa-solid fa-pen"></i></button>
+                            ${u.role !== 'super_admin' ? `<button onclick="deleteUser('${u.id}')" class="text-red-300 hover:text-red-500 transition-all"><i class="fa-solid fa-trash-can"></i></button>` : ''}
+                        </td>
+                    </tr>
+                `).join('');
             }
         }
 
-        async function prepareEditUser(id) {
-            const { data: u, error } = await kancah.from('profiles').select('id, full_name, role, email').eq('id', id).single();
-            if (error) return showToast("Gagal muat data admin", true);
-            if(u) {
-                window.currentEditUserId = u.id;
-                document.getElementById('admin-form-title').innerText = 'Edit Admin Profile';
-                document.getElementById('reg-fullname').value = u.full_name || '';
-                document.getElementById('reg-role').value = u.role || 'editor';
-                document.getElementById('reg-email').value = u.email || ''; 
-                document.getElementById('reg-password').value = '';
-                document.getElementById('pw-hint')?.classList.remove('hidden');
-                document.getElementById('btn-reg-cancel')?.classList.remove('hidden');
-                document.getElementById('btn-reg-submit').innerText = 'UPDATE PROFILE';
-                window.scrollTo({top: 0, behavior: 'smooth'});
-                showToast("Mode Edit: " + u.full_name);
+        function prepareEditUser(id, name, email, role) {
+            window.currentEditUserId = id;
+            document.getElementById('reg-fullname').value = name;
+            document.getElementById('reg-email').value = email;
+            document.getElementById('reg-email').disabled = true; 
+            document.getElementById('reg-email').classList.add('opacity-50', 'cursor-not-allowed');
+            document.getElementById('reg-role').value = role;
+            document.getElementById('pw-hint').classList.remove('hidden');
+            document.getElementById('admin-form-title').innerText = "Edit Admin";
+            document.getElementById('btn-reg-submit').innerText = "Update Admin";
+            document.getElementById('btn-reg-cancel').classList.remove('hidden');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function resetAdminForm() {
+            window.currentEditUserId = null;
+            document.getElementById('registerForm').reset();
+            document.getElementById('reg-email').disabled = false;
+            document.getElementById('reg-email').classList.remove('opacity-50', 'cursor-not-allowed');
+            document.getElementById('pw-hint').classList.add('hidden');
+            document.getElementById('admin-form-title').innerText = "Add Admin";
+            document.getElementById('btn-reg-submit').innerText = "Save Admin";
+            document.getElementById('btn-reg-cancel').classList.add('hidden');
+        }
+
+        async function deleteUser(id) {
+            const confirm = await customConfirm("Hapus Admin?", "Akses admin ini akan segera dihanguskan.");
+            if(confirm) {
+                await kancah.from('profiles').delete().eq('id', id);
+                showToast("PROFIL ADMIN DIHAPUS!");
+                loadAdminList();
             }
         }
 
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btn-reg-submit');
-            const fName = document.getElementById('reg-fullname').value;
+            btn.disabled = true; btn.innerText = 'PROCESSING...';
+            
+            const fullName = document.getElementById('reg-fullname').value;
             const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
             const role = document.getElementById('reg-role').value;
-            const pass = document.getElementById('reg-password').value;
-            btn.disabled = true; btn.innerText = 'SAVING...';
+
             try {
                 if (window.currentEditUserId) {
-                    const { error: upErr } = await kancah.from('profiles').update({ full_name: fName, email: email, role: role }).eq('id', window.currentEditUserId);
-                    if(upErr) throw upErr;
-                    showToast("DATA ADMIN BERHASIL DI-UPDATE");
-                } else {
-                    const { data, error: authErr } = await kancah.auth.signUp({ email, password: pass });
-                    if (authErr) throw authErr;
-                    if (data.user) {
-                        await kancah.from('profiles').insert([{ id: data.user.id, full_name: fName, email: email, role: role }]);
+                    await kancah.from('profiles').update({ full_name: fullName, role: role }).eq('id', window.currentEditUserId);
+                    if (password) {
+                        showToast("Profil diupdate. Note: Ganti password admin butuh akses auth backend khusus.", true);
+                    } else {
+                        showToast("ADMIN UPDATED!");
                     }
-                    showToast("ADMIN BARU BERHASIL DIBUAT");
+                } else {
+                    const { data, error } = await kancah.auth.signUp({
+                        email, password, options: { data: { full_name: fullName, role: role } }
+                    });
+                    if(error) throw error;
+                    showToast("ADMIN BARU DITAMBAHKAN!");
                 }
-                resetAdminForm(); loadAdminList();
-            } catch (err) { showToast(err.message, true); }
-            finally { btn.disabled = false; btn.innerText = 'Save Admin'; }
+                resetAdminForm();
+                loadAdminList();
+            } catch(err) {
+                showToast(err.message, true);
+            } finally {
+                btn.disabled = false; 
+                btn.innerText = window.currentEditUserId ? "Update Admin" : "Save Admin";
+            }
         });
 
-        function resetAdminForm() {
-            window.currentEditUserId = null;
-            document.getElementById('registerForm').reset();
-            document.getElementById('admin-form-title').innerText = 'Add Admin';
-            document.getElementById('btn-reg-cancel').classList.add('hidden');
-            document.getElementById('pw-hint').classList.add('hidden');
-            document.getElementById('btn-reg-submit').innerText = 'Save Admin';
-        }
-
-        async function handleForgotPassword() {
-            const email = document.getElementById('reg-email').value;
-            if(!email) return showToast("Isi email di form dulu!", true);
-            const { error } = await kancah.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
-            if (error) showToast(error.message, true);
-            else showToast("Link reset dikirim ke email!");
-        }
-
         function togglePasswordVisibility() {
-            const passInput = document.getElementById('reg-password');
-            const passIcon = document.getElementById('password-icon');
-            if (passInput.type === 'password') {
-                passInput.type = 'text';
-                passIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            const inp = document.getElementById('reg-password');
+            const icon = document.getElementById('password-icon');
+            if(inp.type === 'password') {
+                inp.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
             } else {
-                passInput.type = 'password';
-                passIcon.classList.replace('fa-eye-slash', 'fa-eye');
+                inp.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
             }
         }
 
-        // --- DELETE HANDLERS ---
-        async function deleteProject(id) { if(await customConfirm("Hapus Portfolio?", "Project ini akan hilang selamanya.")) { await kancah.from('projects').delete().eq('id', id); loadProjectList(); showToast("DELETED"); } }
-        async function deleteClient(id) { if(await customConfirm("Hapus Logo?", "Partner ini tidak akan muncul lagi.")) { await kancah.from('partners').delete().eq('id', id); loadClientList(); showToast("REMOVED"); } }
-        async function deleteJob(id) { if(await customConfirm("Hapus Lowongan?", "Loker ini akan ditutup.")) { await kancah.from('careers').delete().eq('id', id); loadCareerList(); showToast("CLOSED"); } }
-        async function deleteUser(id) { if(await customConfirm("Hapus Admin?", "Akses dashboard akan dicabut.")) { await kancah.from('profiles').delete().eq('id', id); loadAdminList(); showToast("ADMIN REMOVED"); } }
+        async function handleForgotPassword() {
+            const email = prompt("Masukkan email admin untuk mereset password:");
+            if(email) {
+                const { error } = await kancah.auth.resetPasswordForEmail(email);
+                if(error) showToast(error.message, true);
+                else showToast("LINK RESET DIKIRIM KE EMAIL!");
+            }
+        }
     </script>
 </body>
 </html>

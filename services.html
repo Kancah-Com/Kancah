@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Services • Kancah</title>
-     <link rel="icon" type="image/png" href="./assets/logowh.png">
+    <link rel="icon" type="image/png" href="./assets/logowh.png">
     <script src="https://cdn.tailwindcss.com"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
@@ -48,21 +48,21 @@
     
     <style>
         /* Animasi Running Text Footer */
-.footer-marquee-content { 
-    display: flex; 
-    width: max-content; 
-    animation: footer-marquee 20s linear infinite; 
-}
+        .footer-marquee-content { 
+            display: flex; 
+            width: max-content; 
+            animation: footer-marquee 20s linear infinite; 
+        }
 
-@keyframes footer-marquee { 
-    0% { transform: translateX(0); } 
-    100% { transform: translateX(-50%); } 
-}
+        @keyframes footer-marquee { 
+            0% { transform: translateX(0); } 
+            100% { transform: translateX(-50%); } 
+        }
 
-/* Memastikan teks tetap halus saat bergeser */
-.footer-marquee-content span {
-    white-space: nowrap;
-}
+        /* Memastikan teks tetap halus saat bergeser */
+        .footer-marquee-content span {
+            white-space: nowrap;
+        }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         body { font-family: 'Ubuntu', sans-serif; }
@@ -243,7 +243,7 @@
                 </div>
             </div>
 
-            <div id="webdev" class="group relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 bg-white/60 backdrop-blur-md border border-kancah-blue/20 shadow-[0_0_30px_-10px_rgba(0,6,255,0.1)] hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.3)] hover:border-kancah-blue/60 transition-all duration-500">
+            <div id="webdev" onclick="openWebShowcase('Demo Kampiun Online', 'https://kampiun.online')" class="cursor-pointer group relative overflow-hidden rounded-[2.5rem] p-8 sm:p-12 bg-white/60 backdrop-blur-md border border-kancah-blue/20 shadow-[0_0_30px_-10px_rgba(0,6,255,0.1)] hover:shadow-[0_20px_60px_-10px_rgba(0,6,255,0.3)] hover:border-kancah-blue/60 transition-all duration-500">
                 <span class="absolute top-[-2rem] right-0 text-[10rem] sm:text-[14rem] font-black text-kancah-blue/5 pointer-events-none leading-none z-0 group-hover:text-kancah-blue/10 transition-colors duration-500">05.</span>
                 
                 <div class="relative z-10">
@@ -261,6 +261,13 @@
                         <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> Web Development</li>
                         <li class="flex items-center gap-3"><span class="w-1.5 h-1.5 rounded-full bg-kancah-blue"></span> SEO Optimization</li>
                     </ul>
+                </div>
+
+                <div class="absolute inset-0 bg-kancah-blue/90 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all duration-300 z-20">
+                    <div class="text-center transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-white text-3xl mb-3"></i>
+                        <h3 class="text-white font-bold tracking-widest uppercase text-sm">Click to View Demo</h3>
+                    </div>
                 </div>
             </div>
 
@@ -314,7 +321,6 @@
             </div>
 
         </div>
-
 
     </main>
 
@@ -388,10 +394,54 @@
             </div>
         </div>
     </div>
-</footer>
+    </footer>
     
+    <div id="web-showcase" class="fixed inset-0 z-[200] bg-[#f4f4f5] hidden flex-col transition-opacity duration-300 opacity-0">
+        
+        <div class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-4 sm:px-6 shadow-sm">
+            
+            <div class="flex items-center gap-4">
+                <button onclick="closeShowcase()" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-kancah-dark hover:bg-red-500 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="hidden sm:block">
+                    <h3 id="showcase-title" class="font-bold text-sm text-kancah-dark">Project Title</h3>
+                    <p id="showcase-url-text" class="text-[10px] text-gray-500 font-mono">url.com</p>
+                </div>
+            </div>
+
+            <div class="flex items-center bg-gray-100 p-1 rounded-full border border-gray-200">
+                <button onclick="setDevice('desktop')" id="btn-desktop" class="w-10 h-8 flex items-center justify-center rounded-full bg-white shadow-sm text-kancah-blue transition-all">
+                    <i class="fa-solid fa-desktop text-sm"></i>
+                </button>
+                <button onclick="setDevice('mobile')" id="btn-mobile" class="w-10 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-kancah-dark transition-all">
+                    <i class="fa-solid fa-mobile-screen text-sm"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="copyDemoUrl()" class="w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 text-gray-600 hover:text-kancah-blue hover:border-kancah-blue transition-colors group relative" title="Copy Link">
+                    <i class="fa-regular fa-copy"></i>
+                    <span id="copy-tooltip" class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-[10px] bg-kancah-dark text-white px-2 py-1 rounded opacity-0 transition-opacity whitespace-nowrap">Copied!</span>
+                </button>
+                <a id="btn-open-tab" href="#" target="_blank" class="hidden sm:flex items-center gap-2 px-6 h-10 bg-kancah-blue text-white text-[11px] font-black uppercase tracking-widest rounded-full hover:bg-kancah-dark transition-colors">
+                    Open <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+                <a id="btn-open-tab-mobile" href="#" target="_blank" class="sm:hidden w-10 h-10 flex items-center justify-center bg-kancah-blue text-white rounded-full">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-[12px]"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="flex-1 w-full h-full flex justify-center items-start sm:items-center overflow-hidden bg-[radial-gradient(circle_at_2px_2px,rgba(0,6,255,0.05)_1px,transparent_0)] bg-[length:24px_24px] pt-4 sm:pt-0">
+            <div id="iframe-wrapper" class="w-full h-full transition-all duration-500 ease-in-out sm:p-4">
+                <iframe id="showcase-iframe" src="" class="w-full h-full bg-white shadow-2xl sm:rounded-xl border-none transition-all duration-500" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+
     <script>
-    // 1. Fungsi Jam Digital (HH:mm:ss)
+    // === 1. FITUR NAVIGATION (JAM & CUACA) ===
     function updateClock() {
         const now = new Date();
         const h = String(now.getHours()).padStart(2, '0');
@@ -402,7 +452,6 @@
         if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
     }
 
-    // 2. Fungsi Cuaca Real-time (Open-Meteo)
     async function updateWeather() {
         try {
             const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
@@ -414,87 +463,119 @@
             }
         } catch (e) { console.error("Weather signal lost"); }
     }
-document.addEventListener('DOMContentLoaded', () => {
-    const trigger = document.getElementById('weather-mobile-trigger');
-    const popup = document.getElementById('location-popup');
 
-    if (trigger && popup) {
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            // Toggle State
-            const isOpen = popup.classList.contains('opacity-100');
-            
-            if (isOpen) {
-                popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-                popup.classList.remove('opacity-100', 'scale-100');
-            } else {
-                popup.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
-                popup.classList.add('opacity-100', 'scale-100');
-                
-                // Auto-close setelah 3 detik
-                setTimeout(() => {
-                    popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-                    popup.classList.remove('opacity-100', 'scale-100');
-                }, 3000);
-            }
-        });
-
-        // Close saat klik di luar
-        document.addEventListener('click', () => {
-            popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-            popup.classList.remove('opacity-100', 'scale-100');
-        });
-    }
-});
+    // Initialize Navigation Logic
     document.addEventListener('DOMContentLoaded', () => {
-        // Jalankan Fitur UI
+        // Location Popup Mobile
+        const trigger = document.getElementById('weather-mobile-trigger');
+        const popup = document.getElementById('location-popup');
+
+        if (trigger && popup) {
+            trigger.addEventListener('click', () => {
+                popup.classList.toggle('opacity-0');
+                popup.classList.toggle('scale-90');
+                popup.classList.toggle('pointer-events-none');
+            });
+        }
+
+        // Mobile Menu Toggles
+        const mobileMenuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu');
+        
+        if (mobileMenuBtn && mobileMenu && closeMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('translate-x-full');
+                document.body.classList.add('menu-open');
+            });
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('translate-x-full');
+                document.body.classList.remove('menu-open');
+            });
+        }
+
+        // Jalankan Jam & Cuaca
         updateClock();
         setInterval(updateClock, 1000);
         updateWeather();
-
-        // 3. Logic Mobile Menu (Foolproof Version)
-        const menuBtn = document.getElementById('mobile-menu-button');
-        const closeBtn = document.getElementById('close-menu');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-        const body = document.body;
-
-        function toggleMenu() {
-            if (!mobileMenu) return;
-            const isOpen = mobileMenu.classList.contains('translate-x-0');
-            
-            if (isOpen) {
-                mobileMenu.classList.replace('translate-x-0', 'translate-x-full');
-                if (menuIcon) menuIcon.classList.replace('fa-xmark', 'fa-bars-staggered');
-                body.style.overflow = '';
-            } else {
-                mobileMenu.classList.replace('translate-x-full', 'translate-x-0');
-                if (menuIcon) menuIcon.classList.replace('fa-bars-staggered', 'fa-xmark');
-                body.style.overflow = 'hidden';
-            }
-        }
-
-        if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-        if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
-        
-        document.querySelectorAll('.mobile-link').forEach(link => {
-            link.addEventListener('click', () => { 
-                if(mobileMenu.classList.contains('translate-x-0')) toggleMenu(); 
-            });
-        });
-
-        // 4. Parallax Simple buat Service Cards (Optional - Biar makin hidup)
-        const cards = document.querySelectorAll('.group[id]');
-        window.addEventListener('scroll', () => {
-            const triggerBottom = window.innerHeight * 0.8;
-            cards.forEach(card => {
-                const cardTop = card.getBoundingClientRect().top;
-                if(cardTop < triggerBottom) {
-                    card.classList.add('opacity-100', 'translate-y-0');
-                }
-            });
-        });
+        setInterval(updateWeather, 1800000); // 30 Menit sekali
     });
-</script>
+
+    // === 2. FITUR WEB SHOWCASE VIEWER ===
+    let currentDemoUrl = "";
+
+    function openWebShowcase(title, url) {
+        const showcase = document.getElementById('web-showcase');
+        const iframe = document.getElementById('showcase-iframe');
+        const titleEl = document.getElementById('showcase-title');
+        const urlText = document.getElementById('showcase-url-text');
+        const btnOpenTab = document.getElementById('btn-open-tab');
+        const btnOpenTabMobile = document.getElementById('btn-open-tab-mobile');
+
+        // Set Data
+        currentDemoUrl = url;
+        iframe.src = url;
+        titleEl.innerText = title;
+        urlText.innerText = url.replace(/^https?:\/\//, ''); 
+        btnOpenTab.href = url;
+        btnOpenTabMobile.href = url;
+
+        // Tampilkan Overlay
+        showcase.classList.remove('hidden');
+        setTimeout(() => {
+            showcase.classList.remove('opacity-0');
+            showcase.classList.add('opacity-100');
+        }, 10);
+
+        // Kunci background scroll dan set ke layar desktop
+        setDevice('desktop');
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeShowcase() {
+        const showcase = document.getElementById('web-showcase');
+        const iframe = document.getElementById('showcase-iframe');
+        
+        showcase.classList.remove('opacity-100');
+        showcase.classList.add('opacity-0');
+        
+        setTimeout(() => {
+            showcase.classList.add('hidden');
+            iframe.src = ""; 
+            document.body.style.overflow = ''; 
+        }, 300);
+    }
+
+    function setDevice(device) {
+        const wrapper = document.getElementById('iframe-wrapper');
+        const iframe = document.getElementById('showcase-iframe');
+        const btnDesktop = document.getElementById('btn-desktop');
+        const btnMobile = document.getElementById('btn-mobile');
+
+        if (device === 'mobile') {
+            wrapper.className = 'w-[375px] h-[812px] max-h-[90vh] transition-all duration-500 ease-in-out mx-auto mt-4 sm:mt-0';
+            iframe.className = 'w-full h-full bg-white shadow-[0_0_50px_-12px_rgba(0,0,0,0.3)] rounded-[2.5rem] border-[12px] border-[#111111] transition-all duration-500';
+            
+            btnMobile.className = 'w-10 h-8 flex items-center justify-center rounded-full bg-white shadow-sm text-kancah-blue transition-all';
+            btnDesktop.className = 'w-10 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-kancah-dark transition-all';
+        } else {
+            wrapper.className = 'w-full h-full transition-all duration-500 ease-in-out sm:p-4';
+            iframe.className = 'w-full h-full bg-white shadow-2xl sm:rounded-xl border border-gray-200 transition-all duration-500';
+            
+            btnDesktop.className = 'w-10 h-8 flex items-center justify-center rounded-full bg-white shadow-sm text-kancah-blue transition-all';
+            btnMobile.className = 'w-10 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-kancah-dark transition-all';
+        }
+    }
+
+    function copyDemoUrl() {
+        if (!currentDemoUrl) return;
+        
+        navigator.clipboard.writeText(currentDemoUrl).then(() => {
+            const tooltip = document.getElementById('copy-tooltip');
+            tooltip.classList.remove('opacity-0');
+            setTimeout(() => { tooltip.classList.add('opacity-0'); }, 2000);
+        });
+    }
+    </script>
 </body>
 </html>
