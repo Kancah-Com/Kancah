@@ -220,7 +220,7 @@
 <main class="pt-28 pb-12 px-6 max-w-[1440px] mx-auto min-h-screen">
 
     <!-- Hero heading -->
-    <div class="mb-6">
+    <div class="mb-6 px-0">
         <span class="text-kancah-blue font-bold text-[10px] uppercase tracking-[0.3em] block mb-2">Portfolio 2024—2026</span>
         <h1 class="text-6xl sm:text-8xl md:text-9xl font-black tracking-tighter leading-[0.8] text-kancah-dark uppercase">
             SELECTED <br> <span class="text-kancah-blue italic">WORKS.</span>
@@ -240,10 +240,7 @@
     </div>
 
     <!-- Works Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6" id="worksGrid">
-        <div class="col-span-full py-20 text-center text-gray-300 uppercase tracking-[0.3em] font-bold animate-pulse text-xs">
-            Curating Masterpieces...
-        </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6" id="worksGrid">
     </div>
 
 </main>
@@ -354,10 +351,7 @@
         updateFilterButtons(filter);
 
         /* Loading state */
-        grid.innerHTML = `
-            <div class="col-span-full py-20 text-center text-gray-300 uppercase tracking-[0.3em] font-bold animate-pulse text-xs">
-                Curating Masterpieces...
-            </div>`;
+        grid.innerHTML = '';
 
         let query = kancah.from('projects').select('*').order('created_at', { ascending: false });
         if (filter !== 'all') query = query.eq('category', filter);
@@ -397,9 +391,9 @@
                         animation: workCardIn 0.55s cubic-bezier(.23,1,.32,1) ${delay}s forwards;">
 
                 <!-- Thumbnail -->
-                <div class="relative overflow-hidden aspect-[4/3] lg:aspect-video bg-kancah-light">
+                <div class="relative overflow-hidden aspect-[5/2] lg:aspect-[21/9] bg-kancah-light">
                     <img src="${p.image_url}" alt="${p.title}" loading="lazy"
-                         class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]">
+                         class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]">
 
                     <!-- Index badge -->
                     <span class="absolute top-3 left-3 text-[9px] font-bold uppercase tracking-widest
@@ -463,10 +457,7 @@
 
         const iframe = document.getElementById('showcase-iframe');
         iframe.src     = '';
-        iframe.srcdoc  = `<div style="display:flex;justify-content:center;align-items:center;
-                                      height:100vh;font-family:sans-serif;color:#333;">
-                              <h2>⏳ Sedang memuat Live Demo...</h2>
-                          </div>`;
+        iframe.srcdoc  = '';
 
         try {
             const response = await fetch(url);
