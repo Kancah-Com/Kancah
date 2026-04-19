@@ -195,15 +195,14 @@
 
         <!-- Filter buttons -->
         <div class="mt-8 flex flex-wrap gap-2 sm:gap-3" id="filterContainer">
-            <button onclick="fetchAllWorks('all')"                      class="filter-btn active" data-filter="all">All</button>
-            <button onclick="fetchAllWorks('Brand Design')"             class="filter-btn" data-filter="Brand Design">Brand</button>
-            <button onclick="fetchAllWorks('Stationery Design')"        class="filter-btn" data-filter="Stationery Design">Stationery</button>
-            <button onclick="fetchAllWorks('Collateral Design')"        class="filter-btn" data-filter="Collateral Design">Collateral</button>
-            <button onclick="fetchAllWorks('Promotion Design')"         class="filter-btn" data-filter="Promotion Design">Promotion</button>
-            <button onclick="fetchAllWorks('Web Development')"          class="filter-btn" data-filter="Web Development">Web</button>
-            <button onclick="fetchAllWorks('Social Media Management')"  class="filter-btn" data-filter="Social Media Management">Medsos</button>
-            <button onclick="fetchAllWorks('Audio Visual')"             class="filter-btn" data-filter="Audio Visual">AV</button>
+            <button onclick="fetchAllWorks('all')" class="filter-btn active" data-filter="all">All</button>
+            <button onclick="fetchAllWorks('Brand Design')" class="filter-btn" data-filter="Brand Design">Brand Design</button>
+            <button onclick="fetchAllWorks('Promotion Design')" class="filter-btn" data-filter="Promotion Design">Promotion Design</button>
+            <button onclick="fetchAllWorks('Social Media Management')" class="filter-btn" data-filter="Social Media Management">Social Media Management</button>
+            <button onclick="fetchAllWorks('Web Development')" class="filter-btn" data-filter="Web Development">Tech Development</button>
+            <button onclick="fetchAllWorks('Audio Visual')" class="filter-btn" data-filter="Audio Visual">Audio Visual</button>
         </div>
+
     </div>
 
     <!-- Works Grid -->
@@ -290,12 +289,16 @@
     /* ── Supabase ── */
     const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
     const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-    const kancah = supabase.createClient(SB_URL, SB_KEY);
+const kancah = supabase.createClient(SB_URL, SB_KEY);
+
+    /* ── Allowed Categories ── */
+    const ALLOWED_CATEGORIES = ['Brand Design', 'Stationery Design', 'Collateral Design', 'Promotion Design', 'Web Development', 'Social Media Management', 'Audio Visual'];
 
     /* ── State ── */
     let currentDemoUrl = '';
     let currentSlug    = '';
     let pendingPreviewData = { title: '', url: '', slug: '' };
+
 
     /* ════════════════════════════════════════
        FILTER BUTTONS
@@ -320,10 +323,19 @@
         /* Loading state */
         grid.innerHTML = '';
 
-        let query = kancah.from('projects').select('*').order('created_at', { ascending: false });
-        if (filter !== 'all') query = query.eq('category', filter);
+        const { data: allProjects, error } = await kancah.from('projects').select('*').order('created_at', { ascending: false });
 
-        const { data: projects, error } = await query;
+        if (error) {
+            console.error('Supabase error:', error);
+            grid.innerHTML = `<p class="col-span-full text-center py-20 text-gray-400 font-bold uppercase tracking-widest text-xs">Loading projects...</p>`;
+            return;
+        }
+
+        let projects = allProjects.filter(p => ALLOWED_CATEGORIES.includes(p.category));
+        if (filter !== 'all') {
+            projects = projects.filter(p => p.category === filter);
+        }
+
 
         if (error) {
             grid.innerHTML = `
