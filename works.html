@@ -1,50 +1,10 @@
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
-    <style>#showcase-iframe {
-    width: 100%;
-    height: 100%; /* Pastikan ini 100% */
-    border: none;
-    background: white;
-    display: block; /* Biar gak ada gap di bawah */
-}
-
-/* Container Utama */
-#iframe-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    transition: all 0.5s ease;
-}
-
-/* KETIKA MODE MOBILE AKTIF */
-#iframe-wrapper.mobile-view {
-    padding: 20px 0; /* Kasih jarak atas bawah */
-}
-
-#iframe-wrapper.mobile-view iframe {
-    /* Kita paksa ukurannya tetap besar tapi kita SCALE DOWN */
-    width: 375px !important; 
-    height: 1012px !important; /* Standar iPhone X */
-    border: 3px solid #1e293b !important; /* Warna slate-800 */
-    border-radius: 20px !important;
-    
-    /* TRICK NYA DI SINI: Kita scale down ke 0.8 atau 0.7 */
-    transform: scale(0.75); 
-    transform-origin: center center;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    
-    /* Tambahan biar responsif kalau layar laptopmu kecil */
-    max-height: 90vh; /* Agar gak mentok atas bawah */
-}
-</style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Works • Kancah</title>
-     <link rel="icon" type="image/png" href="./assets/logowh.png">
+    <link rel="icon" type="image/png" href="./assets/logowh.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
@@ -54,8 +14,17 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
-                    colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } },
-                    backgroundImage: { 'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)" }
+                    colors: {
+                        kancah: {
+                            blue: '#0006ff',
+                            dark: '#111111',
+                            gray: '#393939',
+                            light: '#f4f4f5'
+                        }
+                    },
+                    backgroundImage: {
+                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
+                    }
                 }
             }
         }
@@ -63,16 +32,53 @@
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         body { font-family: 'Ubuntu', sans-serif; }
-        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .work-item { transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); opacity: 0; transform: translateY(30px); }
-        .work-item.loaded { opacity: 1; transform: translateY(0); }
-        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
-        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        
-       /* CSS Tambahan untuk Iframe Wrapper agar smooth */
-        
 
-        /* Kalau dibuka langsung dari HP beneran, bordernya kita tipisin/hilangin biar lega */
+        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        @keyframes workCardIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer-marquee-content {
+            display: flex;
+            width: max-content;
+            animation: footer-marquee 20s linear infinite;
+        }
+        @keyframes footer-marquee {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* ── Showcase iframe ── */
+        #showcase-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+            display: block;
+        }
+        #iframe-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        #iframe-wrapper.mobile-view {
+            padding: 20px 0;
+        }
+        #iframe-wrapper.mobile-view iframe {
+            width: 375px !important;
+            height: 812px !important;
+            border: 3px solid #1e293b !important;
+            border-radius: 20px !important;
+            transform: scale(0.75);
+            transform-origin: center center;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            max-height: 90vh;
+        }
         @media (max-width: 640px) {
             #iframe-wrapper.mobile-view {
                 border: 4px solid #1f2937;
@@ -81,26 +87,31 @@
                 max-height: 90vh;
             }
         }
-        
     </style>
 </head>
 <body class="bg-white text-kancah-dark overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
 
+<!-- ════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════ -->
 <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
+
         <div class="flex-none">
-            <a href="/">
-                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
-            </a>
+            <a href="/"><img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain"></a>
         </div>
+
         <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
-            <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
+            <a href="about"    class="hover:text-kancah-blue transition-colors">Agency</a>
             <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
-            <a href="works" class="text-kancah-blue font-black transition-colors">Work</a>
-            <a href="careers" class="hover:text-kancah-blue transition-colors">Careers</a>
+            <a href="works"    class="text-kancah-blue font-black">Work</a>
+            <a href="careers"  class="hover:text-kancah-blue transition-colors">Careers</a>
         </div>
-        <div class="flex items-center gap-2 sm:gap-4 h-8"> 
-            <div id="weather-module-desktop" class="relative group hidden sm:block">
+
+        <div class="flex items-center gap-2 sm:gap-4 h-8">
+
+            <!-- Desktop weather -->
+            <div class="relative group hidden sm:block">
                 <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-kancah-blue rounded-full select-none transition-all duration-300">
                     <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
                         <span id="nav-time">00:00:00</span>
@@ -116,11 +127,13 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Mobile weather -->
             <div class="relative sm:hidden">
                 <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-kancah-blue text-kancah-blue text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">
                     Kancah HQ, Yogyakarta
                 </div>
-                <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-kancah-blue border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
+                <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-kancah-blue rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
                     <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
                         <span id="nav-time-mobile">00:00</span>
                         <span class="text-kancah-blue font-black">|</span>
@@ -128,9 +141,11 @@
                     </div>
                 </div>
             </div>
+
             <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
                 Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
             </a>
+
             <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
                 <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
             </button>
@@ -138,18 +153,26 @@
     </div>
 </nav>
 
+<!-- ════════════════════════════════════════
+     MOBILE MENU
+════════════════════════════════════════ -->
 <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full lg:hidden">
     <button class="absolute top-6 right-6 text-3xl" id="close-menu"><i class="fa-solid fa-xmark"></i></button>
     <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-        <a href="about" class="mobile-link">Agency</a>
+        <a href="about"    class="mobile-link">Agency</a>
         <a href="services" class="mobile-link">Capabilities</a>
-        <a href="works" class="mobile-link text-kancah-blue">Work</a>
-        <a href="careers" class="mobile-link">Careers</a>
-        <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk</a>
+        <a href="works"    class="mobile-link text-kancah-blue">Work</a>
+        <a href="careers"  class="mobile-link">Careers</a>
+        <a href="contact"  class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk</a>
     </div>
 </div>
 
+<!-- ════════════════════════════════════════
+     WEB SHOWCASE OVERLAY
+════════════════════════════════════════ -->
 <div id="web-showcase" class="fixed inset-0 z-[200] bg-white hidden flex-col">
+
+    <!-- Header -->
     <div class="h-16 sm:h-20 border-b border-gray-100 flex items-center justify-between px-4 sm:px-8 bg-white/90 backdrop-blur-xl">
         <div class="flex items-center gap-4">
             <button onclick="closeShowcase()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
@@ -157,22 +180,22 @@
             </button>
             <div class="hidden sm:block">
                 <h4 id="showcase-title" class="font-bold text-sm uppercase italic leading-none">Project Demo</h4>
-                <p class="text-[9px] text-blue-500 font-bold uppercase tracking-widest mt-1">Live Experience Mode</p>
+                <p class="text-[9px] text-kancah-blue font-bold uppercase tracking-widest mt-1">Live Experience Mode</p>
             </div>
         </div>
-        <div class="inline-flex items-center bg-slate-100 p-1 rounded-full border border-slate-200">
-    <button id="btn-desktop" onclick="resizeShowcase('desktop')" 
-        class="flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 text-[10px] font-bold uppercase tracking-wider bg-white shadow-sm text-blue-600 border border-transparent">
-        <i class="fa-solid fa-desktop"></i>
-        <span>Desktop</span>
-    </button>
 
-   <button id="btn-mobile" onclick="resizeShowcase('mobile')" 
-    class="flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 text-[10px] font-bold uppercase tracking-wider text-slate-500 border border-transparent">
-    <i class="fa-solid fa-mobile-screen"></i>
-    <span>Mobile</span>
-</button>
-</div>
+        <!-- Desktop / Mobile toggle -->
+        <div class="inline-flex items-center bg-slate-100 p-1 rounded-full border border-slate-200">
+            <button id="btn-desktop" onclick="resizeShowcase('desktop')"
+                class="flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 text-[10px] font-bold uppercase tracking-wider bg-white shadow-sm text-kancah-blue border border-transparent">
+                <i class="fa-solid fa-desktop"></i><span>Desktop</span>
+            </button>
+            <button id="btn-mobile" onclick="resizeShowcase('mobile')"
+                class="flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 text-[10px] font-bold uppercase tracking-wider text-slate-500 border border-transparent">
+                <i class="fa-solid fa-mobile-screen"></i><span>Mobile</span>
+            </button>
+        </div>
+
         <div class="flex items-center gap-2">
             <button onclick="copyDemoLink()" class="hidden sm:flex w-10 h-10 items-center justify-center rounded-full border border-slate-200 hover:border-kancah-blue hover:text-kancah-blue transition-all">
                 <i class="fa-regular fa-copy text-xs"></i>
@@ -182,45 +205,62 @@
             </a>
         </div>
     </div>
+
+    <!-- Iframe area -->
     <div class="flex-1 bg-slate-100 p-4 sm:p-8 flex justify-center items-start overflow-hidden">
         <div id="iframe-wrapper" class="w-full h-full bg-white shadow-2xl transition-all duration-500 rounded-xl overflow-hidden border border-slate-200">
-            <iframe id="showcase-iframe" src="" class="w-full h-full border-none"></iframe>
+            <iframe id="showcase-iframe" src=""></iframe>
         </div>
     </div>
 </div>
 
+<!-- ════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════ -->
 <main class="pt-28 pb-12 px-6 max-w-[1440px] mx-auto min-h-screen">
+
+    <!-- Hero heading -->
     <div class="mb-6">
         <span class="text-kancah-blue font-bold text-[10px] uppercase tracking-[0.3em] block mb-2">Portfolio 2024—2026</span>
-        <h1 class="text-6xl sm:text-8xl md:text-9xl font-black tracking-tighter leading-[0.8] text-kancah-dark uppercase">SELECTED <br> <span class="text-kancah-blue italic">WORKS.</span></h1>
+        <h1 class="text-6xl sm:text-8xl md:text-9xl font-black tracking-tighter leading-[0.8] text-kancah-dark uppercase">
+            SELECTED <br> <span class="text-kancah-blue italic">WORKS.</span>
+        </h1>
+
+        <!-- Filter buttons -->
         <div class="mt-8 flex flex-wrap gap-2 sm:gap-3" id="filterContainer">
-            <button onclick="fetchAllWorks('all')" class="filter-btn active px-5 py-2 rounded-full border border-kancah-blue bg-kancah-blue text-white text-[9px] font-bold uppercase transition-all shadow-lg shadow-kancah-blue/20" data-filter="all">All</button>
-            <button onclick="fetchAllWorks('Brand Design')" class="filter-btn px-5 py-2 rounded-full border border-gray-200 bg-white text-gray-500 text-[9px] font-bold uppercase transition-all hover:border-kancah-blue hover:text-kancah-blue" data-filter="Brand Design">Brand</button>
-            <button onclick="fetchAllWorks('Stationery Design')" class="filter-btn px-5 py-2 rounded-full border border-gray-200 bg-white text-gray-500 text-[9px] font-bold uppercase transition-all hover:border-kancah-blue hover:text-kancah-blue" data-filter="Stationery Design">Stationery</button>
-            <button onclick="fetchAllWorks('Collateral Design')" class="filter-btn px-5 py-2 rounded-full border border-gray-200 bg-white text-gray-500 text-[9px] font-bold uppercase transition-all hover:border-kancah-blue hover:text-kancah-blue" data-filter="Collateral Design">Collateral</button>
-            <button onclick="fetchAllWorks('Promotion Design')" class="filter-btn px-5 py-2 rounded-full border border-gray-200 bg-white text-gray-500 text-[9px] font-bold uppercase transition-all hover:border-kancah-blue hover:text-kancah-blue" data-filter="Promotion Design">Promotion</button>
-            <button onclick="fetchAllWorks('Web Development')" class="filter-btn px-5 py-2 rounded-full border border-gray-200 bg-white text-gray-500 text-[9px] font-bold uppercase transition-all hover:border-kancah-blue hover:text-kancah-blue" data-filter="Web Development">Web</button>
-            <button onclick="fetchAllWorks('Social Media Management')" class="filter-btn px-5 py-2 rounded-full border border-gray-200 bg-white text-gray-500 text-[9px] font-bold uppercase transition-all hover:border-kancah-blue hover:text-kancah-blue" data-filter="Social Media Management">Medsos</button>
-            <button onclick="fetchAllWorks('Audio Visual')" class="filter-btn px-5 py-2 rounded-full border border-gray-200 bg-white text-gray-500 text-[9px] font-bold uppercase transition-all hover:border-kancah-blue hover:text-kancah-blue" data-filter="Audio Visual">AV</button>
+            <button onclick="fetchAllWorks('all')"                      class="filter-btn active" data-filter="all">All</button>
+            <button onclick="fetchAllWorks('Brand Design')"             class="filter-btn" data-filter="Brand Design">Brand</button>
+            <button onclick="fetchAllWorks('Stationery Design')"        class="filter-btn" data-filter="Stationery Design">Stationery</button>
+            <button onclick="fetchAllWorks('Collateral Design')"        class="filter-btn" data-filter="Collateral Design">Collateral</button>
+            <button onclick="fetchAllWorks('Promotion Design')"         class="filter-btn" data-filter="Promotion Design">Promotion</button>
+            <button onclick="fetchAllWorks('Web Development')"          class="filter-btn" data-filter="Web Development">Web</button>
+            <button onclick="fetchAllWorks('Social Media Management')"  class="filter-btn" data-filter="Social Media Management">Medsos</button>
+            <button onclick="fetchAllWorks('Audio Visual')"             class="filter-btn" data-filter="Audio Visual">AV</button>
         </div>
     </div>
 
-   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6" id="worksGrid">
+    <!-- Works Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6" id="worksGrid">
         <div class="col-span-full py-20 text-center text-gray-300 uppercase tracking-[0.3em] font-bold animate-pulse text-xs">
             Curating Masterpieces...
         </div>
     </div>
+
 </main>
 
+<!-- ════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════ -->
 <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
     <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
         <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
-            <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
+            <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> •
             <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
         </div>
     </div>
     <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
+
             <div class="lg:col-span-5 flex flex-col justify-start items-start">
                 <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
                     PUNYA IDE? <br> <span class="text-[#0006ff] italic">OBROLIN AJA.</span>
@@ -230,6 +270,7 @@
                     <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
                 </a>
             </div>
+
             <div class="lg:col-span-4 flex flex-col gap-6">
                 <div>
                     <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
@@ -246,14 +287,15 @@
                     </a>
                 </div>
             </div>
+
             <div class="lg:col-span-3 grid grid-cols-2 gap-8">
                 <div class="flex flex-col gap-4">
                     <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
                     <ul class="flex flex-col gap-3 font-medium text-sm">
                         <li><a href="services" class="text-white hover:text-[#0006ff] transition-colors">Services</a></li>
-                        <li><a href="works" class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
-                        <li><a href="about" class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
-                        <li><a href="careers" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
+                        <li><a href="works"    class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
+                        <li><a href="about"    class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
+                        <li><a href="careers"  class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
                     </ul>
                 </div>
                 <div class="flex flex-col gap-4">
@@ -266,6 +308,7 @@
                 </div>
             </div>
         </div>
+
         <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
             <p class="text-center md:text-left">&copy; 2026 PT. Kancah Media Sejahtera.</p>
             <div class="flex gap-6">
@@ -276,269 +319,281 @@
     </div>
 </footer>
 
+<!-- ════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════ -->
 <script>
+    /* ── Supabase ── */
     const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
     const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
     const kancah = supabase.createClient(SB_URL, SB_KEY);
 
-    function resizeShowcase(mode) {
-    const wrapper = document.getElementById('iframe-wrapper');
-    const btnDesktop = document.getElementById('btn-desktop');
-    const btnMobile = document.getElementById('btn-mobile');
+    /* ── State ── */
+    let currentDemoUrl = '';
+    let currentSlug    = '';
+    let pendingPreviewData = { title: '', url: '', slug: '' };
 
-    if (!wrapper) return; // Guard clause biar gak error kalau id salah
-
-    if (mode === 'mobile') {
-        // Efek Visual Tombol
-        wrapper.classList.add('mobile-view');
-        
-        // Ganti style tombol Mobile jadi aktif
-        btnMobile.classList.add('bg-white', 'shadow-sm', 'text-blue-600');
-        btnMobile.classList.remove('text-slate-500');
-        
-        // Matikan style tombol Desktop
-        btnDesktop.classList.remove('bg-white', 'shadow-sm', 'text-blue-600');
-        btnDesktop.classList.add('text-slate-500');
-    } else {
-        // Balik ke Desktop
-        wrapper.classList.remove('mobile-view');
-        
-        btnDesktop.classList.add('bg-white', 'shadow-sm', 'text-blue-600');
-        btnDesktop.classList.remove('text-slate-500');
-        
-        btnMobile.classList.remove('bg-white', 'shadow-sm', 'text-blue-600');
-        btnMobile.classList.add('text-slate-500');
-    }
-}
-    // --- MODIFIKASI FUNGSI FETCH (Membedakan Klik Card) ---
-   // Tambahkan variabel ini di paling atas tag <script>
-let pendingPreviewData = { title: '', url: '', slug: '' };
-async function fetchAllWorks(filter = 'all') {
-    const grid = document.getElementById('worksGrid');
-    updateFilterButtons(filter);
-
-    let query = kancah.from('projects').select('*').order('created_at', { ascending: false });
-    if (filter !== 'all') query = query.eq('category', filter);
-
-    const { data: projects, error } = await query;
-    if (error) { grid.innerHTML = `<p class="text-red-500">Error.</p>`; return; }
-
-    grid.innerHTML = projects.map(p => {
-        const isWeb = p.category === 'Web Development';
-        const action = isWeb 
-            ? `openShowcase('${p.title}', '${p.demo_url}', '${p.slug}')` 
-            : `window.location.href='detail-project?id=${p.slug}'`;
-
-        return `
-        <div class="work-item group cursor-pointer bg-white border border-[#0006ff] transition-all duration-500 hover:shadow-[0_0_20px_rgba(0,6,255,0.15)] relative rounded-[20px] overflow-hidden flex flex-col" onclick="${action}">
-            
-            <div class="relative overflow-hidden aspect-[4/3]">
-                <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                ${isWeb ? `
-                    <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center z-20">
-                        <span class="bg-white text-[#0006ff] px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-widest shadow-xl transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                            Live Preview
-                        </span>
-                    </div>
-                ` : ''}
-            </div>
-
-            <div class="p-6 flex flex-col flex-grow">
-                <div class="flex mb-3">
-                    <span class="bg-[#0006ff] text-white px-3 py-1 font-bold text-[8px] uppercase tracking-widest rounded-full">
-                        ${p.category}
-                    </span>
-                </div>
-                
-                <h3 class="text-2xl font-black text-[#111111] group-hover:text-[#0006ff] transition-colors uppercase leading-[1.1] italic line-clamp-2">
-                    ${p.title}
-                </h3>
-            </div>
-        </div>`;
-    }).join('');
-
-    setTimeout(() => {
-        document.querySelectorAll('.work-item').forEach(el => el.classList.add('loaded'));
-    }, 100);
-}
-
-// FUNGSI BARU UNTUK BRIEF
-function openBrief(title, url, slug) {
-    pendingPreviewData = { title, url, slug };
-    const modal = document.getElementById('brief-modal');
-    const content = document.getElementById('brief-content');
-    modal.classList.remove('hidden');
-    setTimeout(() => {
-        content.classList.remove('scale-95', 'opacity-0');
-        content.classList.add('scale-100', 'opacity-100');
-    }, 10);
-    document.body.style.overflow = 'hidden';
-}
-
-function proceedToPreview() {
-    closeBrief();
-    openShowcase(pendingPreviewData.title, pendingPreviewData.url, pendingPreviewData.slug);
-}
-
-function closeBrief() {
-    const modal = document.getElementById('brief-modal');
-    modal.classList.add('hidden');
-    document.body.style.overflow = '';
-}
-function copyDemoLink() {
-    if (!currentSlug) {
-        console.error("Slug tidak ditemukan!");
-        return;
-    }
-
-    // Susun URL-nya
-    const cleanUrl = window.location.origin + '/' + currentSlug; 
-
-    // Cara modern
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(cleanUrl).then(() => {
-            updateCopyButton();
-        }).catch(err => {
-            console.error('Gagal salin:', err);
-            copyFallback(cleanUrl); // Pakai cadangan kalau gagal
+    /* ════════════════════════════════════════
+       FILTER BUTTONS
+    ════════════════════════════════════════ */
+    function updateFilterButtons(active) {
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            if (btn.dataset.filter === active) {
+                btn.className = 'filter-btn active px-5 py-2 rounded-full border border-kancah-blue bg-kancah-blue text-white text-[9px] font-bold uppercase tracking-widest transition-all shadow-lg shadow-kancah-blue/20';
+            } else {
+                btn.className = 'filter-btn px-5 py-2 rounded-full border border-gray-200 bg-white text-gray-500 text-[9px] font-bold uppercase tracking-widest transition-all hover:border-kancah-blue hover:text-kancah-blue';
+            }
         });
-    } else {
-        copyFallback(cleanUrl); // Pakai cadangan untuk browser lama
     }
-}
 
-// Fungsi bantu untuk animasi tombol
-function updateCopyButton() {
-    const btn = document.getElementById('copy-btn'); // PASTIKAN ID DI HTML SAMA
-    if (btn) {
-        const originalContent = btn.innerHTML;
-        btn.innerHTML = "✅ Tersalin!";
-        btn.classList.add('bg-green-600'); // Opsional: kasih warna hijau kalau pakai Tailwind
-        setTimeout(() => {
-            btn.innerHTML = originalContent;
-            btn.classList.remove('bg-green-600');
-        }, 2000);
+    /* ════════════════════════════════════════
+       FETCH & RENDER WORKS
+    ════════════════════════════════════════ */
+    async function fetchAllWorks(filter = 'all') {
+        const grid = document.getElementById('worksGrid');
+        updateFilterButtons(filter);
+
+        /* Loading state */
+        grid.innerHTML = `
+            <div class="col-span-full py-20 text-center text-gray-300 uppercase tracking-[0.3em] font-bold animate-pulse text-xs">
+                Curating Masterpieces...
+            </div>`;
+
+        let query = kancah.from('projects').select('*').order('created_at', { ascending: false });
+        if (filter !== 'all') query = query.eq('category', filter);
+
+        const { data: projects, error } = await query;
+
+        if (error) {
+            grid.innerHTML = `
+                <p class="col-span-full text-center text-red-400 font-bold uppercase tracking-widest text-xs py-20">
+                    Gagal memuat project.
+                </p>`;
+            return;
+        }
+
+        if (!projects.length) {
+            grid.innerHTML = `
+                <p class="col-span-full text-center text-gray-300 font-bold uppercase tracking-[0.3em] text-xs py-20">
+                    Belum ada project di kategori ini.
+                </p>`;
+            return;
+        }
+
+        grid.innerHTML = projects.map((p, i) => {
+            const isWeb   = p.category === 'Web Development';
+            const action  = isWeb
+                ? `openShowcase('${p.title}', '${p.demo_url}', '${p.slug}')`
+                : `window.location.href='detail-project?id=${p.slug}'`;
+            const idx     = String(i + 1).padStart(2, '0');
+            const delay   = (i * 0.06).toFixed(2);
+
+            return `
+            <div class="group cursor-pointer bg-white border border-gray-200 rounded-2xl overflow-hidden flex flex-col relative
+                        transition-all duration-500 hover:-translate-y-1
+                        hover:border-kancah-blue hover:shadow-[0_0_0_1px_#0006ff,0_12px_32px_rgba(0,6,255,0.1)]"
+                 onclick="${action}"
+                 style="opacity:0; transform:translateY(24px);
+                        animation: workCardIn 0.55s cubic-bezier(.23,1,.32,1) ${delay}s forwards;">
+
+                <!-- Thumbnail -->
+                <div class="relative overflow-hidden aspect-[4/3] lg:aspect-video bg-kancah-light">
+                    <img src="${p.image_url}" alt="${p.title}" loading="lazy"
+                         class="w-full h-full object-contain transition-transform duration-700 group-hover:scale-[1.02]">
+
+                    <!-- Index badge -->
+                    <span class="absolute top-3 left-3 text-[9px] font-bold uppercase tracking-widest
+                                 text-white bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                        ${idx}
+                    </span>
+
+                    <!-- Hover overlay -->
+                    <div class="absolute inset-0 bg-kancah-blue/0 group-hover:bg-kancah-blue/[0.07]
+                                transition-all duration-300 flex items-center justify-center">
+                        ${isWeb ? `
+                        <span class="text-[9px] font-bold uppercase tracking-widest
+                                     bg-kancah-blue text-white px-5 py-2.5 rounded-full
+                                     opacity-0 group-hover:opacity-100
+                                     translate-y-2 group-hover:translate-y-0
+                                     transition-all duration-300
+                                     shadow-lg shadow-kancah-blue/30">
+                            Live Preview
+                        </span>` : ''}
+                    </div>
+
+                    <!-- Arrow icon -->
+                    <div class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full border border-gray-200
+                                flex items-center justify-center
+                                opacity-0 scale-75
+                                group-hover:opacity-100 group-hover:scale-100 group-hover:border-kancah-blue
+                                transition-all duration-300">
+                        <svg viewBox="0 0 12 12" fill="none" stroke="#0006FF" stroke-width="1.8"
+                             style="width:11px;height:11px;">
+                            <path d="M2 10L10 2M10 2H4M10 2v6"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Meta -->
+                <div class="p-4 flex flex-col gap-1.5 flex-grow">
+                    <span class="text-[8px] font-bold uppercase tracking-[0.18em]
+                                 text-white bg-kancah-blue px-2.5 py-1 rounded-full w-fit">
+                        ${p.category.toUpperCase()}
+                    </span>
+                    <h3 class="text-[15px] font-bold uppercase tracking-wide
+                               text-kancah-dark group-hover:text-kancah-blue
+                               transition-colors leading-snug line-clamp-2">
+                        ${p.title.toUpperCase()}
+                    </h3>
+                </div>
+            </div>`;
+        }).join('');
     }
-}
 
-// Fungsi cadangan (Fallback)
-function copyFallback(text) {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    try {
-        document.execCommand('copy');
-        updateCopyButton();
-    } catch (err) {
-        console.error('Fallback gagal:', err);
-    }
-    document.body.removeChild(textArea);
-}
-  // --- LOGIC BARU: SHOWCASE CONTROL ---
-    // --- LOGIC BARU: SHOWCASE CONTROL (ULTIMATE VERSION) ---
-  // 1. Tambahkan variabel ini di paling atas (di luar fungsi)
-    let currentDemoUrl = "";
-    let currentSlug = ""; // <-- WAJIB ADA buat fungsi Salin Link
-
+    /* ════════════════════════════════════════
+       SHOWCASE
+    ════════════════════════════════════════ */
     async function openShowcase(title, url, slug) {
         currentDemoUrl = url;
-        currentSlug = slug; // <-- SIMPAN SLUGNYA DI SINI
-        
+        currentSlug    = slug;
+
         document.getElementById('showcase-title').innerText = title;
-        
-        // Buka modalnya dulu
         document.getElementById('web-showcase').classList.replace('hidden', 'flex');
         document.body.style.overflow = 'hidden';
 
         const iframe = document.getElementById('showcase-iframe');
-        iframe.src = ""; 
-        
-        iframe.srcdoc = "<div style='display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; color:#333;'><h2>⏳ Sedang memuat Live Demo...</h2></div>";
+        iframe.src     = '';
+        iframe.srcdoc  = `<div style="display:flex;justify-content:center;align-items:center;
+                                      height:100vh;font-family:sans-serif;color:#333;">
+                              <h2>⏳ Sedang memuat Live Demo...</h2>
+                          </div>`;
 
         try {
             const response = await fetch(url);
-            if (!response.ok) throw new Error("Gagal load demo dari server");
+            if (!response.ok) throw new Error('Gagal load demo');
             const htmlText = await response.text();
-            
+
             const scriptPenjinak = `
                 <script>
                     document.addEventListener('click', function(e) {
                         const link = e.target.closest('a');
-                        if(link) {
-                            e.preventDefault();
-                            console.log('Klik link ditahan mode preview.');
-                        }
+                        if (link) { e.preventDefault(); }
                     });
-                <\/script>
-            `;
-            
-            const amanHtmlText = htmlText + scriptPenjinak;
-            iframe.srcdoc = amanHtmlText; 
+                <\/script>`;
 
-            // SUNTIKAN SAKTI 2: Arahkan langsung ke slug
-            const newTabBtn = document.getElementById('showcase-new-tab');
-            newTabBtn.onclick = null; 
-            
-            // Pakai window.location.origin biar linknya otomatis jadi https://kampiun.online/slug
-            newTabBtn.href = window.location.origin + `/${slug}`;
-            newTabBtn.target = "_blank";
-            
+            iframe.srcdoc = htmlText + scriptPenjinak;
+
+            const newTabBtn   = document.getElementById('showcase-new-tab');
+            newTabBtn.onclick = null;
+            newTabBtn.href    = window.location.origin + '/' + slug;
+            newTabBtn.target  = '_blank';
+
         } catch (err) {
-            console.error("Error Demo:", err);
-            iframe.srcdoc = "<div style='display:flex; justify-content:center; align-items:center; height:100vh; font-family:sans-serif; color:red;'><h2>❌ Gagal memuat demo.</h2></div>";
+            console.error('Error Demo:', err);
+            iframe.srcdoc = `<div style="display:flex;justify-content:center;align-items:center;
+                                         height:100vh;font-family:sans-serif;color:red;">
+                                 <h2>❌ Gagal memuat demo.</h2>
+                             </div>`;
         }
     }
 
     function closeShowcase() {
         document.getElementById('web-showcase').classList.replace('flex', 'hidden');
-        const iframe = document.getElementById('showcase-iframe');
-        iframe.src = "";
-        iframe.srcdoc = ""; // Wajib dikosongin juga srcdoc-nya pas ditutup
+        const iframe  = document.getElementById('showcase-iframe');
+        iframe.src    = '';
+        iframe.srcdoc = '';
         document.body.style.overflow = '';
     }
 
-    // --- FUNGSI BAWAAN LAMA (TIDAK DIUBAH) ---
-    function updateFilterButtons(active) {
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            if (btn.dataset.filter === active) {
-                btn.className = "filter-btn active px-6 py-2.5 rounded-full border border-kancah-blue bg-kancah-blue text-white text-[10px] font-bold uppercase transition-all shadow-lg shadow-kancah-blue/20";
-            } else {
-                btn.className = "filter-btn px-6 py-2.5 rounded-full border border-gray-200 bg-white text-gray-500 text-[10px] font-bold uppercase transition-all hover:border-kancah-blue hover:text-kancah-blue";
-            }
-        });
+    function resizeShowcase(mode) {
+        const wrapper    = document.getElementById('iframe-wrapper');
+        const btnDesktop = document.getElementById('btn-desktop');
+        const btnMobile  = document.getElementById('btn-mobile');
+        if (!wrapper) return;
+
+        if (mode === 'mobile') {
+            wrapper.classList.add('mobile-view');
+            btnMobile.classList.add('bg-white', 'shadow-sm', 'text-kancah-blue');
+            btnMobile.classList.remove('text-slate-500');
+            btnDesktop.classList.remove('bg-white', 'shadow-sm', 'text-kancah-blue');
+            btnDesktop.classList.add('text-slate-500');
+        } else {
+            wrapper.classList.remove('mobile-view');
+            btnDesktop.classList.add('bg-white', 'shadow-sm', 'text-kancah-blue');
+            btnDesktop.classList.remove('text-slate-500');
+            btnMobile.classList.remove('bg-white', 'shadow-sm', 'text-kancah-blue');
+            btnMobile.classList.add('text-slate-500');
+        }
     }
 
+    /* ════════════════════════════════════════
+       COPY LINK
+    ════════════════════════════════════════ */
+    function copyDemoLink() {
+        if (!currentSlug) return;
+        const cleanUrl = window.location.origin + '/' + currentSlug;
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(cleanUrl).then(updateCopyButton).catch(() => copyFallback(cleanUrl));
+        } else {
+            copyFallback(cleanUrl);
+        }
+    }
+
+    function updateCopyButton() {
+        const btn = document.querySelector('[onclick="copyDemoLink()"] i');
+        if (!btn) return;
+        const orig = btn.className;
+        btn.className = 'fa-solid fa-check text-xs text-green-500';
+        setTimeout(() => { btn.className = orig; }, 2000);
+    }
+
+    function copyFallback(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); updateCopyButton(); } catch (e) { console.error(e); }
+        document.body.removeChild(ta);
+    }
+
+    /* ════════════════════════════════════════
+       CLOCK & WEATHER
+    ════════════════════════════════════════ */
     function updateClock() {
-        const n = new Date();
-        const h = String(n.getHours()).padStart(2, '0');
-        const m = String(n.getMinutes()).padStart(2, '0');
-        const s = String(n.getSeconds()).padStart(2, '0');
-        const dtTime = document.getElementById('nav-time');
-        if(dtTime) dtTime.innerText = `${h}:${m}:${s}`;
-        const mbTime = document.getElementById('nav-time-mobile');
-        if(mbTime) mbTime.innerText = `${h}:${m}`;
+        const n  = new Date();
+        const h  = String(n.getHours()).padStart(2, '0');
+        const m  = String(n.getMinutes()).padStart(2, '0');
+        const s  = String(n.getSeconds()).padStart(2, '0');
+        const dt = document.getElementById('nav-time');
+        const mb = document.getElementById('nav-time-mobile');
+        if (dt) dt.innerText = `${h}:${m}:${s}`;
+        if (mb) mb.innerText = `${h}:${m}`;
     }
 
     async function updateWeather() {
         try {
-            const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+            const res  = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
             const data = await res.json();
-            if (data && data.current_weather) {
-                const tempValue = Math.round(data.current_weather.temperature) + "°C";
-                const dtTemp = document.getElementById('nav-temp');
-                if(dtTemp) dtTemp.innerText = tempValue;
-                const mbTemp = document.getElementById('nav-temp-mobile');
-                if(mbTemp) mbTemp.innerText = tempValue;
+            if (data?.current_weather) {
+                const temp = Math.round(data.current_weather.temperature) + '°C';
+                const dt   = document.getElementById('nav-temp');
+                const mb   = document.getElementById('nav-temp-mobile');
+                if (dt) dt.innerText = temp;
+                if (mb) mb.innerText = temp;
             }
-        } catch (e) { console.error("Weather update failed", e); }
+        } catch (e) { console.error('Weather error', e); }
     }
 
+    /* ════════════════════════════════════════
+       INIT
+    ════════════════════════════════════════ */
     document.addEventListener('DOMContentLoaded', () => {
+
+        /* Mobile weather popup */
         const trigger = document.getElementById('weather-mobile-trigger');
-        const popup = document.getElementById('location-popup');
+        const popup   = document.getElementById('location-popup');
         if (trigger && popup) {
-            trigger.addEventListener('click', (e) => {
+            trigger.addEventListener('click', e => {
                 e.stopPropagation();
                 popup.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
                 popup.classList.add('opacity-100', 'scale-100');
@@ -552,17 +607,26 @@ function copyFallback(text) {
                 popup.classList.remove('opacity-100', 'scale-100');
             });
         }
-        fetchAllWorks('all');
-        updateClock(); setInterval(updateClock, 1000);
-        updateWeather();
-        const btn = document.getElementById('mobile-menu-button');
-        const menu = document.getElementById('mobile-menu');
+
+        /* Mobile nav */
+        const btn   = document.getElementById('mobile-menu-button');
+        const menu  = document.getElementById('mobile-menu');
         const close = document.getElementById('close-menu');
-        if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
-        if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
+        if (btn)   btn.onclick   = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
+        if (close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
+
+        /* Boot */
+        fetchAllWorks('all');
+        updateClock();
+        setInterval(updateClock, 1000);
+        updateWeather();
+
+        /* Inject keyframe */
+        const style = document.createElement('style');
+        style.textContent = `@keyframes workCardIn { to { opacity:1; transform:translateY(0); } }`;
+        document.head.appendChild(style);
     });
 </script>
 
 </body>
-
 </html>
