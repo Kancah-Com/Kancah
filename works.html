@@ -485,7 +485,7 @@
 
             const newTabBtn   = document.getElementById('showcase-new-tab');
             newTabBtn.onclick = null;
-            newTabBtn.href    = window.location.origin + '/' + slug;
+            newTabBtn.href    = new URL(`detail-project?id=${encodeURIComponent(slug)}`, window.location.origin).href;
             newTabBtn.target  = '_blank';
 
         } catch (err) {
@@ -531,7 +531,7 @@
     ════════════════════════════════════════ */
     function copyDemoLink() {
         if (!currentSlug) return;
-        const cleanUrl = window.location.origin + '/' + currentSlug;
+        const cleanUrl = new URL(`detail-project?id=${encodeURIComponent(currentSlug)}`, window.location.origin).href;
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(cleanUrl).then(updateCopyButton).catch(() => copyFallback(cleanUrl));
         } else {
