@@ -20,16 +20,6 @@
             height: 100vh; 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
         }
-        .loader {
-            border: 3px solid #333;
-            border-top: 3px solid #ffffff;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         h2 { font-weight: 400; font-size: 1.2rem; letter-spacing: 1px; }
         #error-msg { display: none; text-align: center; color: #ff4444; }
         a { color: #555; text-decoration: none; margin-top: 20px; font-size: 0.9rem; transition: 0.3s; }
@@ -37,11 +27,6 @@
     </style>
 </head>
 <body>
-
-    <div id="loading-ui">
-        <div class="loader"></div>
-        <h2 id="status-text">Menyiapkan Preview...</h2>
-    </div>
 
     <div id="error-msg">
         <h2>❌ 404 - Project Tidak Ditemukan</h2>
@@ -140,7 +125,6 @@
         }
 
         function showError() {
-            document.getElementById('loading-ui').style.display = 'none';
             document.getElementById('error-msg').style.display = 'block';
             document.title = "404 Not Found";
         }
