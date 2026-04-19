@@ -66,27 +66,6 @@
             overflow: hidden;
             transition: all 0.5s ease;
         }
-        #iframe-wrapper.mobile-view {
-            padding: 20px 0;
-        }
-        #iframe-wrapper.mobile-view iframe {
-            width: 375px !important;
-            height: 812px !important;
-            border: 3px solid #1e293b !important;
-            border-radius: 20px !important;
-            transform: scale(0.75);
-            transform-origin: center center;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            max-height: 90vh;
-        }
-        @media (max-width: 640px) {
-            #iframe-wrapper.mobile-view {
-                border: 4px solid #1f2937;
-                border-radius: 1.5rem;
-                max-width: 100%;
-                max-height: 90vh;
-            }
-        }
     </style>
 </head>
 <body class="bg-white text-kancah-dark overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
@@ -182,18 +161,6 @@
                 <h4 id="showcase-title" class="font-bold text-sm uppercase italic leading-none">Project Demo</h4>
                 <p class="text-[9px] text-kancah-blue font-bold uppercase tracking-widest mt-1">Live Experience Mode</p>
             </div>
-        </div>
-
-        <!-- Desktop / Mobile toggle -->
-        <div class="inline-flex items-center bg-slate-100 p-1 rounded-full border border-slate-200">
-            <button id="btn-desktop" onclick="resizeShowcase('desktop')"
-                class="flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 text-[10px] font-bold uppercase tracking-wider bg-white shadow-sm text-kancah-blue border border-transparent">
-                <i class="fa-solid fa-desktop"></i><span>Desktop</span>
-            </button>
-            <button id="btn-mobile" onclick="resizeShowcase('mobile')"
-                class="flex items-center gap-2 px-5 py-2 rounded-full transition-all duration-300 text-[10px] font-bold uppercase tracking-wider text-slate-500 border border-transparent">
-                <i class="fa-solid fa-mobile-screen"></i><span>Mobile</span>
-            </button>
         </div>
 
         <div class="flex items-center gap-2">
@@ -494,27 +461,6 @@
         iframe.src    = '';
         iframe.srcdoc = '';
         document.body.style.overflow = '';
-    }
-
-    function resizeShowcase(mode) {
-        const wrapper    = document.getElementById('iframe-wrapper');
-        const btnDesktop = document.getElementById('btn-desktop');
-        const btnMobile  = document.getElementById('btn-mobile');
-        if (!wrapper) return;
-
-        if (mode === 'mobile') {
-            wrapper.classList.add('mobile-view');
-            btnMobile.classList.add('bg-white', 'shadow-sm', 'text-kancah-blue');
-            btnMobile.classList.remove('text-slate-500');
-            btnDesktop.classList.remove('bg-white', 'shadow-sm', 'text-kancah-blue');
-            btnDesktop.classList.add('text-slate-500');
-        } else {
-            wrapper.classList.remove('mobile-view');
-            btnDesktop.classList.add('bg-white', 'shadow-sm', 'text-kancah-blue');
-            btnDesktop.classList.remove('text-slate-500');
-            btnMobile.classList.remove('bg-white', 'shadow-sm', 'text-kancah-blue');
-            btnMobile.classList.add('text-slate-500');
-        }
     }
 
     /* ════════════════════════════════════════
