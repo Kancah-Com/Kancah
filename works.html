@@ -485,7 +485,7 @@
 
             const newTabBtn   = document.getElementById('showcase-new-tab');
             newTabBtn.onclick = null;
-            newTabBtn.href    = window.location.origin + '/' + encodeURIComponent(slug);
+            newTabBtn.href    = window.location.origin + '/preview/' + encodeURIComponent(slug);
             newTabBtn.target  = '_blank';
 
         } catch (err) {
@@ -531,7 +531,7 @@
     ════════════════════════════════════════ */
     function copyDemoLink() {
         if (!currentSlug) return;
-        const cleanUrl = window.location.origin + '/' + encodeURIComponent(currentSlug);
+        const cleanUrl = window.location.origin + '/preview/' + encodeURIComponent(currentSlug);
         if (navigator.clipboard && window.isSecureContext) {
             navigator.clipboard.writeText(cleanUrl).then(updateCopyButton).catch(() => copyFallback(cleanUrl));
         } else {
