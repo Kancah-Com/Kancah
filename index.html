@@ -75,6 +75,28 @@
         details[open] summary ~ * { animation: sweep .3s ease-in-out; }
         @keyframes sweep { 0% {opacity: 0; transform: translateY(-10px)} 100% {opacity: 1; transform: translateY(0)} }
     </style>
+    <!-- FAQ Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Gimana caranya kalau mau mulai kerjasama dengan Kancah?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Gampang banget! Klik tombol 'Talk' di kanan atas atau langsung WA aja. Kita mulai dari ngobrol santai tentang brand kamu."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Apa sih yang jadi spesialisasi atau keunggulan utama Kancah?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Kancah fokus di lima layanan utama: Brand Design, Promotion Design, Tech Development, Social Media Management, dan Audio Visual. Kita mulai dari riset, terus bangun solusi yang simpel, mudah dipake, dan cocok banget buat bisnis kamu."
+        }
+      }]
+    }
+    </script>
 </head>
 <body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
 
