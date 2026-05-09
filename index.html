@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kancah • Creative & Digital Agency</title>
+   <!-- SEO Title & Meta Description -->
+    <title>Kancah Creative | Digital & Creative Agency Yogyakarta</title>
+    <meta name="description" content="Kancah Creative adalah partner digital dan creative agency di Yogyakarta. Kami ahli dalam Brand Design, Web Development, Social Media Management, dan Audio Visual.">
+    
+    <!-- Open Graph (Untuk share di Sosmed/WA) -->
+    <meta property="og:title" content="Kancah Creative | Future Proof Creative Agency">
+    <meta property="og:description" content="Teman debat dan eksekutor andalan buat ide-ide 'nggak mungkin' brand kamu. Mari ngobrol!">
+    <meta property="og:image" content="./assets/logowh.png"> <!-- Nanti ganti dengan URL banner web yang ukurannya lebih besar -->
+    <meta property="og:url" content="https://kancahcreative.com">
+    <meta property="og:type" content="website">
      <link rel="icon" type="image/png" href="./assets/logowh.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
@@ -160,7 +169,11 @@
                 <span class="text-[#0006ff] font-bold text-[10px] lg:text-xs uppercase tracking-[0.4em]">Creative Agency — 2026</span>
             </div>
 
-            <h1 class="flex flex-col leading-[0.85] tracking-tighter text-[#111111]">
+           <!-- H1 Khusus SEO (Disembunyikan dari layar tapi dibaca Google) -->
+            <h1 class="sr-only">Kancah Creative: Digital and Creative Agency di Yogyakarta</h1>
+
+            <!-- Elemen Visual (Ubah tag h1 sebelumnya jadi div) -->
+            <div aria-hidden="true" class="flex flex-col leading-[0.85] tracking-tighter text-[#111111]">
                 <span class="text-[18vw] sm:text-[15vw] lg:text-[9.5vw] font-black uppercase">FUTURE</span>
                 
                 <div class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-10">
@@ -172,8 +185,7 @@
                 </div>
                 
                 <span class="text-[18vw] sm:text-[15vw] lg:text-[9.5vw] font-black uppercase">CREATIVE.</span>
-            </h1>
-
+            </div>
             <p class="lg:hidden text-gray-400 text-base sm:text-lg font-light leading-relaxed max-w-sm mx-auto sm:mx-0">
                 Kita teman debat, partner mikir, dan eksekutor andalan buat ide-ide yang kelihatan "nggak mungkin" tapi sebenarnya bisa-bisa aja.
             </p>
