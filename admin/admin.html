@@ -1,6 +1,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -1221,7 +1222,7 @@
 
                 const orderCode = String(order.id).slice(0, 8).toUpperCase();
 
-                const text = `
+                const nota = `
 🧾 *NOTA PEMBELIAN KANCAH CREATIVE*
 
 Halo *${order.buyer_name}* 👋
@@ -1263,7 +1264,12 @@ Selamat menggunakan template portfolio kamu 🚀
 
                 if (error) throw error;
 
-                window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+                const waText = encodeURIComponent(nota);
+
+                window.open(
+                    `https://wa.me/${phone}?text=${waText}`,
+                    '_blank'
+                );
 
                 showToast('WHATSAPP DIBUKA!');
                 loadBazarOrders();
