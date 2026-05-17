@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -100,6 +102,10 @@
                 </button>
                 <button onclick="showTab('careers')" id="btn-careers" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
                     <i class="fa-solid fa-user-tie w-5"></i> Careers
+                </button>
+
+                <button onclick="showTab('bazar')" id="btn-bazar" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
+                    <i class="fa-solid fa-store w-5"></i> Bazar
                 </button>
                 <button onclick="showTab('users')" id="btn-users" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left" style="display: none;">
                     <i class="fa-solid fa-users-gear w-5"></i> Admins
@@ -247,6 +253,72 @@
                 <div id="career-list" class="space-y-3"></div>
             </section>
 
+
+            <section id="tab-bazar" class="tab-content hidden space-y-8">
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                    <div class="xl:col-span-2 bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                        <div class="flex items-center justify-between mb-6 gap-4">
+                            <div>
+                                <p class="text-[10px] font-black text-[#0006ff] uppercase tracking-[0.25em]">Kancah Bazar</p>
+                                <h2 class="text-xl md:text-2xl font-black italic uppercase tracking-tighter">Manage Web Portfolio</h2>
+                            </div>
+                            <button type="button" onclick="resetBazarForm()" class="px-4 py-3 bg-slate-100 text-slate-500 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-slate-200">Reset</button>
+                        </div>
+                        <form id="bazarForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <input type="text" id="bz-title" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Template Title" required>
+                            <input type="text" id="bz-slug" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Slug unik, contoh: cyber-dev" required>
+                            <input type="text" id="bz-category" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Kategori / Tema" value="Web Portfolio">
+                            <input type="hidden" id="bz-price" value="0">
+                            <div class="md:col-span-2 p-5 bg-blue-50 border border-blue-100 rounded-[1.5rem]">
+                                <label class="text-[10px] font-black text-[#0006ff] uppercase tracking-widest block mb-2">File index.html Template</label>
+                                <input type="file" id="bz-html" accept=".html,text/html" class="w-full p-3 bg-white border border-blue-100 rounded-xl text-[10px]">
+                                <p class="text-[9px] text-blue-400 mt-2 font-bold">Cukup upload file index.html. Preview di halaman bazar otomatis pakai iframe dari file ini. Harga tidak diatur per template, tapi lewat paket di bawah.</p>
+                            </div>
+                            <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="flex items-center gap-3 p-4 bg-blue-50 border border-blue-100 rounded-2xl cursor-pointer"><input type="checkbox" id="bz-active" class="w-5 h-5 accent-[#0006ff]" checked><span class="text-[10px] font-black text-[#0006ff] uppercase tracking-widest">Aktif dijual</span></label>
+                                <label class="flex items-center gap-3 p-4 bg-amber-50 border border-amber-100 rounded-2xl cursor-pointer"><input type="checkbox" id="bz-featured" class="w-5 h-5 accent-amber-500"><span class="text-[10px] font-black text-amber-600 uppercase tracking-widest">Featured</span></label>
+                            </div>
+                            <button type="submit" id="btn-bz-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all shadow-lg">Publish Bazar Item</button>
+                        </form>
+                    </div>
+                    <div class="bg-[#111] text-white p-6 md:p-8 rounded-[2.5rem] shadow-sm h-fit">
+                        <p class="text-[10px] font-black text-[#0006ff] uppercase tracking-[0.25em]">Orders</p>
+                        <h3 class="text-xl font-black italic uppercase tracking-tighter mb-5">Pesanan Masuk</h3>
+                        <div id="bazar-order-list" class="space-y-3 max-h-[560px] overflow-y-auto pr-1"></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-1 bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                        <div class="flex items-center justify-between mb-6 gap-4">
+                            <div>
+                                <p class="text-[10px] font-black text-[#0006ff] uppercase tracking-[0.25em]">Package Pricing</p>
+                                <h2 class="text-xl font-black italic uppercase tracking-tighter">Manage Paket</h2>
+                            </div>
+                            <button type="button" onclick="resetPackageForm()" class="px-4 py-3 bg-slate-100 text-slate-500 rounded-full text-[10px] font-black uppercase tracking-widest hover:bg-slate-200">Reset</button>
+                        </div>
+                        <form id="packageForm" class="space-y-4">
+                            <input type="text" id="pkg-name" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Nama paket, contoh: Starter" required>
+                            <input type="number" id="pkg-price" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Harga, contoh: 10000" required>
+                            <input type="number" id="pkg-limit" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Limit template, contoh: 25" required>
+                            <input type="text" id="pkg-badge" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Badge, contoh: Paling Laris">
+                            <input type="number" id="pkg-sort" class="w-full p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Urutan tampil" value="0">
+                            <label class="flex items-center gap-3 p-4 bg-blue-50 border border-blue-100 rounded-2xl cursor-pointer"><input type="checkbox" id="pkg-active" class="w-5 h-5 accent-[#0006ff]" checked><span class="text-[10px] font-black text-[#0006ff] uppercase tracking-widest">Paket Aktif</span></label>
+                            <button type="submit" id="btn-pkg-submit" class="w-full bg-[#0006ff] text-white py-4 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all shadow-lg">Save Paket</button>
+                        </form>
+                    </div>
+                    <div class="lg:col-span-2 bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm overflow-x-auto">
+                        <div class="flex items-center justify-between mb-6 px-2"><h3 class="text-sm font-black uppercase tracking-widest text-slate-400 italic">Daftar Paket</h3><span class="text-[9px] bg-slate-100 px-3 py-1 rounded-full font-bold text-slate-500 uppercase">Harga Jual</span></div>
+                        <table class="w-full text-left text-sm min-w-[620px]"><tbody id="package-list-table"></tbody></table>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm overflow-x-auto">
+                    <div class="flex items-center justify-between mb-6 px-2"><h3 class="text-sm font-black uppercase tracking-widest text-slate-400 italic">Template Bazar</h3><span class="text-[9px] bg-slate-100 px-3 py-1 rounded-full font-bold text-slate-500 uppercase">Supabase Database</span></div>
+                    <table class="w-full text-left text-sm min-w-[760px]"><tbody id="bazar-list-table"></tbody></table>
+                </div>
+            </section>
+
             <section id="tab-users" class="tab-content hidden space-y-8">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-1 space-y-6">
@@ -305,6 +377,7 @@
         window.currentEditProjectId = null;
         window.currentEditJobId = null;
         window.currentEditUserId = null;
+        window.currentEditBazarId = null;
         window.currentUserRole = null;
 
         // --- SIDEBAR & MOBILE UI ---
@@ -389,7 +462,7 @@
                     document.getElementById('dashboard-section').classList.remove('hidden');
                     document.body.style.backgroundColor = '#f8fafc';
                     document.getElementById('btn-users').style.display = (profile.role === 'super_admin') ? 'flex' : 'none';
-                    loadProjectList(); loadClientList(); loadCareerList();
+                    loadProjectList(); loadClientList(); loadCareerList(); loadBazarList(); loadBazarOrders(); loadPackageList();
                     if(profile.role === 'super_admin') loadAdminList();
                 }
             }
@@ -712,6 +785,531 @@
             }
         });
 
+
+        // --- BAZAR LOGIC ---
+        function formatRupiah(n) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(n || 0)); }
+
+        function resetBazarForm() {
+            window.currentEditBazarId = null;
+            const form = document.getElementById('bazarForm');
+            if (!form) return;
+            form.reset();
+            document.getElementById('bz-category').value = 'Web Portfolio';
+            document.getElementById('bz-price').value = 0;
+            document.getElementById('bz-active').checked = true;
+            document.getElementById('btn-bz-submit').innerText = 'Publish Bazar Item';
+        }
+
+        async function uploadBazarFile(bucket, folder, file, slug, contentType) {
+            if (!file) return null;
+            const safeSlug = (slug || 'template').toLowerCase().replace(/[^a-z0-9-]/g, '-');
+            const ext = file.name.split('.').pop();
+            const fileName = `${folder}/${Date.now()}_${safeSlug}.${ext}`;
+            const opts = contentType ? { contentType, upsert: true } : { upsert: true };
+            const { error } = await kancah.storage.from(bucket).upload(fileName, file, opts);
+            if (error) throw error;
+            return { publicUrl: kancah.storage.from(bucket).getPublicUrl(fileName).data.publicUrl, path: fileName };
+        }
+
+        async function loadBazarList() {
+            const table = document.getElementById('bazar-list-table');
+            if (!table) return;
+            const { data, error } = await kancah.from('bazar_products').select('*').order('created_at', { ascending: false });
+            if (error) { showToast(error.message, true); return; }
+            table.innerHTML = (data || []).map(item => `
+                <tr class="border-b group hover:bg-slate-50 transition-all">
+                    <td class="py-5 pr-4">
+                        <div class="flex items-center gap-4">
+                            <a href="${item.html_url || '#'}" target="_blank" class="w-24 h-16 bg-slate-100 rounded-xl overflow-hidden flex items-center justify-center text-slate-300 border border-slate-100">
+                                ${item.html_url ? `<iframe src="${item.html_url}" class="w-[200%] h-[200%] origin-top-left scale-50 pointer-events-none bg-white"></iframe>` : `<i class="fa-solid fa-code"></i>`}
+                            </a>
+                            <div onclick="prepareEditBazar('${item.id}')" class="cursor-pointer">
+                                <p class="font-black text-slate-800">${item.title}</p>
+                                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">${item.slug} • ${item.category || 'Web Portfolio'}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-5 font-black text-slate-400 text-[10px] uppercase tracking-widest">Auto Preview</td>
+                    <td class="py-5 text-center"><span class="text-[9px] px-3 py-1 rounded-full font-black uppercase ${item.is_active ? 'bg-green-100 text-green-600' : 'bg-slate-100 text-slate-400'}">${item.is_active ? 'Active' : 'Draft'}</span></td>
+                    <td class="py-5 text-right pr-4 whitespace-nowrap">
+                        ${item.html_url ? `<a href="${item.html_url}" target="_blank" class="text-blue-400 hover:text-[#0006ff] mr-3"><i class="fa-solid fa-eye"></i></a>` : ''}
+                        <button onclick="prepareEditBazar('${item.id}')" class="text-slate-300 hover:text-[#0006ff] mr-3"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteBazar('${item.id}')" class="text-red-300 hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button>
+                    </td>
+                </tr>`).join('') || `<tr><td class="py-10 text-center text-slate-400 font-bold uppercase text-xs">Belum ada item bazar</td></tr>`;
+        }
+
+        async function prepareEditBazar(id) {
+            const { data: item, error } = await kancah.from('bazar_products').select('*').eq('id', id).single();
+            if (error) { showToast(error.message, true); return; }
+            window.currentEditBazarId = item.id;
+            document.getElementById('bz-title').value = item.title || '';
+            document.getElementById('bz-slug').value = item.slug || '';
+            document.getElementById('bz-category').value = item.category || 'Web Portfolio';
+            document.getElementById('bz-price').value = item.price || 0;
+            document.getElementById('bz-active').checked = item.is_active !== false;
+            document.getElementById('bz-featured').checked = !!item.is_featured;
+            document.getElementById('btn-bz-submit').innerText = 'Update Bazar Item';
+            showTab('bazar'); window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function deleteBazar(id) {
+            const confirm = await customConfirm('Hapus Item Bazar?', 'Template akan hilang dari halaman bazar.');
+            if (!confirm) return;
+            const { error } = await kancah.from('bazar_products').delete().eq('id', id);
+            if (error) { showToast(error.message, true); return; }
+            showToast('ITEM BAZAR DIHAPUS!'); loadBazarList();
+        }
+
+        async function loadBazarOrders() {
+            const list = document.getElementById('bazar-order-list');
+            if (!list) return;
+
+            const { data, error } = await kancah
+                .from('bazar_orders')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(100);
+
+            if (error) {
+                list.innerHTML = `<p class="text-red-300 text-xs">${error.message}</p>`;
+                return;
+            }
+
+            const orders = data || [];
+            window.bazarOrdersCache = orders;
+
+            const filter = window.bazarOrderFilter || 'all';
+
+            const paidStatuses = ['paid', 'sent', 'completed'];
+            const sentStatuses = ['sent', 'completed'];
+            const activeOrders = orders.filter(o => o.status !== 'cancelled');
+            const sentOrders = orders.filter(o => sentStatuses.includes(o.status));
+            const notSentOrders = activeOrders.filter(o => !sentStatuses.includes(o.status));
+            const cashOrders = activeOrders.filter(o => String(o.payment_method || '').toLowerCase() === 'cash');
+            const qrisOrders = activeOrders.filter(o => String(o.payment_method || 'qris').toLowerCase() === 'qris');
+            const paidOrders = activeOrders.filter(o => paidStatuses.includes(o.status));
+            const totalRevenue = paidOrders.reduce((sum, o) => sum + Number(o.total || 0), 0);
+            const cashRevenue = cashOrders.filter(o => paidStatuses.includes(o.status)).reduce((sum, o) => sum + Number(o.total || 0), 0);
+            const qrisRevenue = qrisOrders.filter(o => paidStatuses.includes(o.status)).reduce((sum, o) => sum + Number(o.total || 0), 0);
+
+            let rows = orders;
+            if (filter === 'not_sent') rows = notSentOrders;
+            if (filter === 'sent') rows = sentOrders;
+            if (filter === 'cash') rows = cashOrders;
+            if (filter === 'qris') rows = qrisOrders;
+            if (filter === 'cancelled') rows = orders.filter(o => o.status === 'cancelled');
+
+            const filterButton = (key, label, count) => `
+                <button onclick="setBazarOrderFilter('${key}')"
+                    class="px-4 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest transition-all ${filter === key ? 'bg-[#0006ff] text-white shadow-lg shadow-blue-500/20' : 'bg-white/5 text-gray-400 hover:bg-white/10'}">
+                    ${label} <span class="ml-1 opacity-70">${count}</span>
+                </button>
+            `;
+
+            const summaryHtml = `
+                <div class="space-y-5 mb-6">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-white text-[#111] rounded-[1.5rem] p-4">
+                            <p class="text-[8px] font-black uppercase tracking-[0.22em] text-gray-400">Total Omzet</p>
+                            <p class="text-xl font-black text-[#0006ff] mt-1">${formatRupiah(totalRevenue)}</p>
+                        </div>
+                        <div class="bg-white/5 border border-white/10 rounded-[1.5rem] p-4">
+                            <p class="text-[8px] font-black uppercase tracking-[0.22em] text-gray-500">Order Aktif</p>
+                            <p class="text-xl font-black text-white mt-1">${activeOrders.length}</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-green-500/10 border border-green-500/20 rounded-[1.5rem] p-4">
+                            <p class="text-[8px] font-black uppercase tracking-[0.22em] text-green-300">Terkirim</p>
+                            <p class="text-xl font-black text-green-300 mt-1">${sentOrders.length}</p>
+                        </div>
+                        <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-[1.5rem] p-4">
+                            <p class="text-[8px] font-black uppercase tracking-[0.22em] text-yellow-300">Belum Kirim</p>
+                            <p class="text-xl font-black text-yellow-300 mt-1">${notSentOrders.length}</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 border border-white/10 rounded-[1.5rem] p-4">
+                        <div class="flex justify-between text-[10px] font-bold text-gray-400 mb-2">
+                            <span>Cash ${formatRupiah(cashRevenue)}</span>
+                            <span>QRIS ${formatRupiah(qrisRevenue)}</span>
+                        </div>
+                        <div class="h-3 bg-white/10 rounded-full overflow-hidden flex">
+                            <div class="bg-emerald-400 h-full" style="width:${totalRevenue ? Math.round((cashRevenue / totalRevenue) * 100) : 0}%"></div>
+                            <div class="bg-[#0006ff] h-full flex-1"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        ${filterButton('all', 'Semua', orders.length)}
+                        ${filterButton('not_sent', 'Belum Kirim', notSentOrders.length)}
+                        ${filterButton('sent', 'Terkirim', sentOrders.length)}
+                        ${filterButton('cash', 'Cash', cashOrders.length)}
+                        ${filterButton('qris', 'QRIS', qrisOrders.length)}
+                    </div>
+                </div>
+            `;
+
+            const cardsHtml = rows.map(o => {
+                const items = Array.isArray(o.items) ? o.items : [];
+                const method = String(o.payment_method || 'qris').toLowerCase();
+                const isPaid = paidStatuses.includes(o.status);
+                const isSent = sentStatuses.includes(o.status);
+                const isCancelled = o.status === 'cancelled';
+                const orderCode = String(o.id || '').slice(0, 8).toUpperCase();
+                const statusClass = isSent
+                    ? 'bg-green-500/20 text-green-300 border-green-500/20'
+                    : isPaid
+                        ? 'bg-blue-500/20 text-blue-300 border-blue-500/20'
+                        : isCancelled
+                            ? 'bg-red-500/20 text-red-300 border-red-500/20'
+                            : 'bg-yellow-500/20 text-yellow-300 border-yellow-500/20';
+                const statusLabel = isSent ? 'Terkirim' : isPaid ? 'Sudah Bayar' : isCancelled ? 'Dibatalkan' : 'Menunggu';
+
+                return `
+                    <article class="bg-white/5 border border-white/10 rounded-[1.5rem] p-4 hover:bg-white/10 transition-all">
+                        <div class="flex justify-between gap-3">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <p class="font-black text-sm leading-tight">${o.buyer_name || '-'}</p>
+                                    <span class="text-[8px] px-2 py-1 rounded-full border font-black uppercase tracking-widest ${statusClass}">${statusLabel}</span>
+                                </div>
+                                <p class="text-[10px] text-gray-400 mt-1">${o.buyer_email || '-'}</p>
+                                <p class="text-[10px] text-gray-500 mt-1"><i class="fa-brands fa-whatsapp mr-1"></i>${o.buyer_whatsapp || '-'}</p>
+                            </div>
+                            <div class="text-right shrink-0">
+                                <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Order</p>
+                                <p class="text-[10px] font-black text-gray-300">${orderCode}</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 grid grid-cols-2 gap-3">
+                            <div class="bg-black/20 rounded-2xl p-3">
+                                <p class="text-[8px] uppercase tracking-widest text-gray-500 font-black">Paket</p>
+                                <p class="text-sm font-black mt-1">${o.package_name || '-'}</p>
+                            </div>
+                            <div class="bg-black/20 rounded-2xl p-3">
+                                <p class="text-[8px] uppercase tracking-widest text-gray-500 font-black">Total</p>
+                                <p class="text-sm font-black text-[#7d82ff] mt-1">${formatRupiah(o.total)}</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 flex items-center gap-2">
+                            <button onclick="setBazarPaymentMethod('${o.id}','cash')" class="flex-1 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${method === 'cash' ? 'bg-emerald-500 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}">
+                                Cash
+                            </button>
+                            <button onclick="setBazarPaymentMethod('${o.id}','qris')" class="flex-1 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all ${method === 'qris' ? 'bg-[#0006ff] text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}">
+                                QRIS
+                            </button>
+                        </div>
+
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between text-[8px] font-black uppercase tracking-widest text-gray-500 mb-2">
+                                <span>Order</span>
+                                <span>Paid</span>
+                                <span>Sent</span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="h-2 rounded-full bg-[#0006ff]"></div>
+                                <div class="h-2 rounded-full ${isPaid || isSent ? 'bg-green-400' : 'bg-white/10'}"></div>
+                                <div class="h-2 rounded-full ${isSent ? 'bg-green-400' : 'bg-white/10'}"></div>
+                            </div>
+                        </div>
+
+                        <p class="text-[10px] text-gray-500 mt-4 line-clamp-2">${items.length ? items.map(i => i.title).join(', ') : 'Template otomatis sesuai paket'}</p>
+
+                        <div class="grid grid-cols-3 gap-2 mt-4">
+                            <button onclick="updateBazarOrder('${o.id}','paid')" class="bg-green-500 text-white py-3 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-green-600 transition-all">Paid</button>
+                            <button onclick="sendWhatsAppById('${o.id}')" class="bg-[#0006ff] text-white py-3 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-blue-800 transition-all">Send WA</button>
+                            <button onclick="updateBazarOrder('${o.id}','cancelled')" class="bg-red-500 text-white py-3 rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-red-600 transition-all">Cancel</button>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+            list.innerHTML = summaryHtml + (cardsHtml || `<p class="text-gray-500 text-xs font-bold uppercase tracking-widest text-center py-10">Belum ada order pada filter ini.</p>`);
+        }
+
+        function setBazarOrderFilter(filter) {
+            window.bazarOrderFilter = filter;
+            loadBazarOrders();
+        }
+
+        async function setBazarPaymentMethod(id, method) {
+            const { error } = await kancah
+                .from('bazar_orders')
+                .update({
+                    payment_method: method,
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', id);
+
+            if (error) {
+                showToast(error.message, true);
+                return;
+            }
+
+            showToast(`METODE ${method.toUpperCase()} DIPILIH!`);
+            loadBazarOrders();
+        }
+
+        function formatWA(phone) {
+            let p = String(phone || '').replace(/\D/g, '');
+
+            // 0812xxxx -> 62812xxxx
+            if (p.startsWith('08')) p = '62' + p.slice(1);
+
+            // 812xxxx -> 62812xxxx
+            if (p.startsWith('8')) p = '62' + p;
+
+            // 620812xxxx -> 62812xxxx
+            if (p.startsWith('620')) p = '62' + p.slice(3);
+
+            return p;
+        }
+
+        function getDriveLink(packageName) {
+            const name = String(packageName || '').toLowerCase();
+
+            if (name.includes('starter')) {
+                return 'https://drive.google.com/drive/folders/1F6yC7FOgivZJyRbGSqJ_8DkTRvXgg1i9?usp=drive_link';
+            }
+
+            if (name.includes('pro')) {
+                return 'https://drive.google.com/drive/folders/13SfbrwcxXU3zNIJ6jP3-QzqA169h9cRk?usp=drive_link';
+            }
+
+            if (name.includes('ultimate')) {
+                return 'https://drive.google.com/drive/folders/1EKLyLk981wybYrSrCIMTqircKMk-ETed?usp=drive_link';
+            }
+
+            return '';
+        }
+
+        async function sendWhatsAppById(orderId) {
+            const order = (window.bazarOrdersCache || []).find(o => String(o.id) === String(orderId));
+            if (!order) {
+                showToast('Order tidak ditemukan, refresh admin dulu.', true);
+                return;
+            }
+            await sendWhatsApp(order);
+        }
+
+        async function sendWhatsApp(order) {
+            try {
+                const phone = formatWA(order.buyer_whatsapp);
+                const driveLink = getDriveLink(order.package_name);
+                const method = String(order.payment_method || 'qris').toUpperCase();
+
+                if (!phone) {
+                    showToast('Nomor WhatsApp kosong / tidak valid.', true);
+                    return;
+                }
+
+                if (!driveLink) {
+                    showToast('Link Drive untuk paket ini belum tersedia.', true);
+                    return;
+                }
+
+                const orderCode = String(order.id).slice(0, 8).toUpperCase();
+
+                const text = `
+🧾 *NOTA PEMBELIAN KANCAH CREATIVE*
+
+Halo *${order.buyer_name}* 👋
+Terima kasih sudah membeli paket portfolio dari Kancah Creative.
+
+━━━━━━━━━━━━━━━━━━
+*DETAIL PESANAN*
+━━━━━━━━━━━━━━━━━━
+🆔 Order ID : ${orderCode}
+📦 Paket    : ${order.package_name}
+💰 Total    : Rp ${Number(order.total).toLocaleString('id-ID')}
+💳 Metode   : ${method}
+✅ Status   : Paid
+
+━━━━━━━━━━━━━━━━━━
+*LINK DOWNLOAD*
+━━━━━━━━━━━━━━━━━━
+📥 ${driveLink}
+
+━━━━━━━━━━━━━━━━━━
+*CATATAN*
+━━━━━━━━━━━━━━━━━━
+Link ini hanya untuk penggunaan pribadi.
+Mohon tidak disebarluaskan ya, maturtengkyu 🙏
+
+Selamat menggunakan template portfolio kamu 🚀
+
+*Kancah Creative*
+`.trim();
+
+                const { error } = await kancah
+                    .from('bazar_orders')
+                    .update({
+                        status: 'sent',
+                        payment_status: 'paid',
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', order.id);
+
+                if (error) throw error;
+
+                window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+
+                showToast('WHATSAPP DIBUKA!');
+                loadBazarOrders();
+            } catch (err) {
+                console.error(err);
+                showToast(err.message || 'Gagal membuka WhatsApp', true);
+            }
+        }
+
+        async function updateBazarOrder(id, status) {
+            const payload = { status, updated_at: new Date().toISOString() };
+
+            if (status === 'paid') payload.payment_status = 'paid';
+            if (status === 'cancelled') payload.payment_status = 'cancelled';
+
+            const { error } = await kancah
+                .from('bazar_orders')
+                .update(payload)
+                .eq('id', id);
+
+            if (error) {
+                showToast(error.message, true);
+                return;
+            }
+
+            showToast('STATUS ORDER DIUPDATE!');
+            loadBazarOrders();
+        }
+
+        const bazarFormEl = document.getElementById('bazarForm');
+        if (bazarFormEl) bazarFormEl.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-bz-submit');
+            btn.disabled = true; btn.innerText = 'PROCESSING...';
+            const slug = document.getElementById('bz-slug').value;
+            try {
+                const htmlFile = document.getElementById('bz-html').files[0];
+                const htmlUpload = htmlFile ? await uploadBazarFile('bazar-html', 'templates', htmlFile, slug, 'text/html') : null;
+                const payload = {
+                    title: document.getElementById('bz-title').value,
+                    slug,
+                    category: document.getElementById('bz-category').value || 'Web Portfolio',
+                    price: 0,
+                    description: '',
+                    tags: '',
+                    is_active: document.getElementById('bz-active').checked,
+                    is_featured: document.getElementById('bz-featured').checked,
+                    updated_at: new Date().toISOString()
+                };
+                if (htmlUpload) { payload.html_url = htmlUpload.publicUrl; payload.file_path = htmlUpload.path; }
+                payload.preview_url = null;
+                if (window.currentEditBazarId) {
+                    const { error } = await kancah.from('bazar_products').update(payload).eq('id', window.currentEditBazarId);
+                    if (error) throw error;
+                    showToast('BAZAR ITEM UPDATED!');
+                } else {
+                    if (!htmlUpload) throw new Error('Upload file HTML template dulu.');
+                    const { error } = await kancah.from('bazar_products').insert([payload]);
+                    if (error) throw error;
+                    showToast('BAZAR ITEM PUBLISHED!');
+                }
+                resetBazarForm(); loadBazarList();
+            } catch (err) { showToast(err.message, true); }
+            finally { btn.disabled = false; btn.innerText = window.currentEditBazarId ? 'Update Bazar Item' : 'Publish Bazar Item'; }
+        });
+
+
+
+        // --- BAZAR PACKAGE PRICING LOGIC ---
+        function resetPackageForm() {
+            window.currentEditPackageId = null;
+            const form = document.getElementById('packageForm');
+            if (!form) return;
+            form.reset();
+            document.getElementById('pkg-active').checked = true;
+            document.getElementById('pkg-sort').value = 0;
+            document.getElementById('btn-pkg-submit').innerText = 'Save Paket';
+        }
+
+        async function loadPackageList() {
+            const table = document.getElementById('package-list-table');
+            if (!table) return;
+            const { data, error } = await kancah.from('bazar_packages').select('*').order('sort_order', { ascending: true });
+            if (error) { table.innerHTML = `<tr><td class="py-6 text-red-400 font-bold">${error.message}</td></tr>`; return; }
+            table.innerHTML = (data || []).map(pkg => `
+                <tr class="border-b hover:bg-slate-50 transition-all">
+                    <td class="py-5 cursor-pointer" onclick="prepareEditPackage('${pkg.id}')">
+                        <p class="font-black text-slate-800">${pkg.name} <span class="text-[9px] text-[#0006ff] uppercase tracking-widest ml-2">${pkg.badge || ''}</span></p>
+                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Limit ${pkg.template_limit} template • Urutan ${pkg.sort_order || 0}</p>
+                    </td>
+                    <td class="py-5 font-black text-[#0006ff]">${formatRupiah(pkg.price)}</td>
+                    <td class="py-5 text-center"><span class="text-[9px] px-3 py-1 rounded-full font-black uppercase ${pkg.is_active ? 'bg-green-100 text-green-600' : 'bg-slate-100 text-slate-400'}">${pkg.is_active ? 'Active' : 'Draft'}</span></td>
+                    <td class="py-5 text-right whitespace-nowrap">
+                        <button onclick="prepareEditPackage('${pkg.id}')" class="text-slate-300 hover:text-[#0006ff] mr-3"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deletePackage('${pkg.id}')" class="text-red-300 hover:text-red-500"><i class="fa-solid fa-trash-can"></i></button>
+                    </td>
+                </tr>`).join('') || `<tr><td class="py-10 text-center text-slate-400 font-bold uppercase text-xs">Belum ada paket</td></tr>`;
+        }
+
+        async function prepareEditPackage(id) {
+            const { data: pkg, error } = await kancah.from('bazar_packages').select('*').eq('id', id).single();
+            if (error) { showToast(error.message, true); return; }
+            window.currentEditPackageId = pkg.id;
+            document.getElementById('pkg-name').value = pkg.name || '';
+            document.getElementById('pkg-price').value = pkg.price || 0;
+            document.getElementById('pkg-limit').value = pkg.template_limit || 0;
+            document.getElementById('pkg-badge').value = pkg.badge || '';
+            document.getElementById('pkg-sort').value = pkg.sort_order || 0;
+            document.getElementById('pkg-active').checked = pkg.is_active !== false;
+            document.getElementById('btn-pkg-submit').innerText = 'Update Paket';
+            showTab('bazar');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function deletePackage(id) {
+            const confirm = await customConfirm('Hapus Paket?', 'Paket pricing akan hilang dari halaman bazar.');
+            if (!confirm) return;
+            const { error } = await kancah.from('bazar_packages').delete().eq('id', id);
+            if (error) { showToast(error.message, true); return; }
+            showToast('PAKET DIHAPUS!'); loadPackageList();
+        }
+
+        const packageFormEl = document.getElementById('packageForm');
+        if (packageFormEl) packageFormEl.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-pkg-submit');
+            btn.disabled = true; btn.innerText = 'PROCESSING...';
+            const payload = {
+                name: document.getElementById('pkg-name').value,
+                price: Number(document.getElementById('pkg-price').value || 0),
+                template_limit: Number(document.getElementById('pkg-limit').value || 0),
+                badge: document.getElementById('pkg-badge').value,
+                sort_order: Number(document.getElementById('pkg-sort').value || 0),
+                is_active: document.getElementById('pkg-active').checked,
+                updated_at: new Date().toISOString()
+            };
+            try {
+                if (window.currentEditPackageId) {
+                    const { error } = await kancah.from('bazar_packages').update(payload).eq('id', window.currentEditPackageId);
+                    if (error) throw error;
+                    showToast('PAKET UPDATED!');
+                } else {
+                    const { error } = await kancah.from('bazar_packages').insert([payload]);
+                    if (error) throw error;
+                    showToast('PAKET DITAMBAHKAN!');
+                }
+                resetPackageForm(); loadPackageList();
+            } catch (err) { showToast(err.message, true); }
+            finally { btn.disabled = false; btn.innerText = window.currentEditPackageId ? 'Update Paket' : 'Save Paket'; }
+        });
+
+
         // --- ADMIN / USERS LOGIC ---
         async function loadAdminList() {
             if (window.currentUserRole !== 'super_admin') return;
@@ -752,6 +1350,7 @@
 
         function resetAdminForm() {
             window.currentEditUserId = null;
+        window.currentEditBazarId = null;
             document.getElementById('registerForm').reset();
             document.getElementById('reg-email').disabled = false;
             document.getElementById('reg-email').classList.remove('opacity-50', 'cursor-not-allowed');

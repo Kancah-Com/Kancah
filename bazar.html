@@ -1,0 +1,816 @@
+
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kancah | Paket Portfolio Siap Magang</title>
+  <meta name="description" content="Beli paket web portfolio mahasiswa IT. Template dipilih otomatis oleh Kancah Creative, checkout cepat via QRIS." />
+  <link rel="icon" type="image/png" href="./assets/logowh.png">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
+          colors: { kancah: { blue: '#0006ff', dark: '#111111', light: '#f4f4f5' } },
+          backgroundImage: {
+            'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .pay-radio:checked + .pay-card {
+  background: #0006ff;
+  border-color: #0006ff;
+  color: white;
+}
+
+.pay-radio:checked + .pay-card p,
+.pay-radio:checked + .pay-card i,
+.pay-radio:checked + .pay-card span {
+  color: white !important;
+}
+
+.pay-radio:checked + .pay-card .pay-desc {
+  color: rgba(255,255,255,.78) !important;
+}
+    body { font-family: 'Ubuntu', sans-serif; }
+    .footer-marquee-content { display:flex; width:max-content; animation:footer-marquee 20s linear infinite; }
+    @keyframes footer-marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    .card-hover { transition: all .35s cubic-bezier(.16,1,.3,1); }
+    .card-hover:hover { transform: translateY(-8px); }
+    .checkout-panel { transition: transform .35s cubic-bezier(.16,1,.3,1); }
+    .preview-frame { pointer-events:none; background:white; border:0; }
+    .line-clamp-1 { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  </style>
+</head>
+
+<body class="bg-white text-[#111] selection:bg-[#0006ff] selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
+
+  <div id="toast" class="fixed top-8 left-1/2 -translate-x-1/2 px-6 py-3 bg-[#111] text-white rounded-full z-[500] text-[10px] font-black uppercase tracking-[.2em] opacity-0 -translate-y-4 transition-all duration-300 text-center">
+    Notif
+  </div>
+
+  <nav class="fixed w-full z-[100] top-0 bg-white/85 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20">
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
+      <a href="/" class="flex items-center gap-3">
+        <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
+        <span class="hidden sm:block text-[10px] font-black uppercase tracking-[.25em] text-gray-400"></span>
+      </a>
+
+      <div class="hidden lg:flex gap-8 text-[11px] font-bold uppercase tracking-[0.2em]">
+        <a href="#packages" class="hover:text-[#0006ff]">Paket</a>
+        <a href="#preview" class="hover:text-[#0006ff]">Preview</a>
+        <a href="#how" class="hover:text-[#0006ff]">Cara Beli</a>
+      </div>
+
+      <a href="#packages" class="h-[42px] sm:h-[52px] px-5 sm:px-8 bg-[#0006ff] text-white rounded-full font-black text-[11px] uppercase tracking-[.2em] hover:bg-[#111] transition-all flex items-center">
+        Pilih Paket
+      </a>
+    </div>
+  </nav>
+
+  <header class="relative min-h-screen flex items-center pt-28 pb-20 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden">
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]" style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 30px 30px;"></div>
+
+    <div class="relative z-10 w-full">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="relative flex h-2.5 w-2.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0006ff] opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0006ff]"></span>
+        </span>
+        <span class="text-[#0006ff] font-bold text-xs uppercase tracking-[0.4em]">Bazar Kewirausahaan</span>
+      </div>
+
+      <h1 class="text-[16vw] sm:text-[12vw] lg:text-[8.5vw] font-black uppercase leading-[.84] tracking-tighter max-w-6xl">
+        PORTFOLIO<br>
+        <span class="text-[#0006ff] italic">SIAP</span><br>
+        MAGANG.
+      </h1>
+
+      <p class="text-gray-500 text-base sm:text-xl font-light leading-relaxed max-w-2xl mt-8">
+        Pilih paket sesuai kebutuhan, Setelah pembayaran, paket portfolio dikirim ke WhatsApp kamu.
+      </p>
+
+      <div class="flex flex-wrap gap-3 mt-8">
+        <a href="#packages" class="bg-[#0006ff] text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111] transition-all">
+          Pilih Paket Sekarang
+        </a>
+        <a href="#preview" class="border-2 border-[#111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111] hover:text-white transition-all">
+          Lihat Contoh Style
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section id="packages" class="py-20 bg-white text-[#111]">
+    <div class="max-w-[1400px] mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-10">
+        <div>
+          <span class="text-[#0006ff] font-bold text-xs uppercase tracking-widest">Pilih Paket</span>
+          <h2 class="text-4xl sm:text-6xl font-black uppercase tracking-tighter mt-3">
+            TINGGAL PILIH <span class="text-[#0006ff] italic">BUDGET</span>.
+          </h2>
+        </div>
+        <p class="text-gray-500 max-w-md">
+          Kami sediakan template terbaik sesuai paket. Cocok untuk magang, freelance, dan personal branding.
+        </p>
+      </div>
+
+      <div id="package-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+    </div>
+  </section>
+
+  <section id="preview" class="py-20 bg-[#111] text-white">
+    <div class="max-w-[1440px] mx-auto px-6">
+      <div class="flex flex-col lg:flex-row justify-between lg:items-end gap-6 mb-10">
+        <div>
+          <span class="text-[#7d82ff] font-bold text-xs uppercase tracking-widest">Preview Website</span>
+          <h2 class="text-4xl sm:text-6xl font-black uppercase tracking-tighter mt-3">
+            CONTOH STYLE.
+          </h2>
+          <p class="text-gray-400 mt-4 max-w-xl">
+            Ini hanya beberapa contoh style dari katalog. Paket lengkapnya akan dikurasi otomatis sesuai pilihanmu.
+          </p>
+        </div>
+        <a href="#packages" class="bg-white text-[#111] px-7 py-4 rounded-full font-black uppercase tracking-widest text-[10px] hover:bg-[#0006ff] hover:text-white transition-all">
+          Pilih Paket
+        </a>
+      </div>
+
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+      <div id="empty-state" class="hidden text-center py-20 text-gray-500 font-bold uppercase tracking-widest text-xs">
+        Belum ada template aktif.
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="py-20 bg-white text-[#111]">
+    <div class="max-w-[1200px] mx-auto px-6 grid md:grid-cols-3 gap-6">
+      <div class="p-8 rounded-[2rem] border border-gray-100 bg-gray-50">
+        <b class="text-[#0006ff] text-3xl">01</b>
+        <h3 class="font-black text-2xl mt-4">Pilih Paket</h3>
+        <p class="text-gray-500 mt-3">Starter, Pro, atau Ultimate sesuai kebutuhan dan budget.</p>
+      </div>
+
+      <div class="p-8 rounded-[2rem] border border-gray-100 bg-gray-50">
+        <b class="text-[#0006ff] text-3xl">02</b>
+        <h3 class="font-black text-2xl mt-4">Pilih Metode</h3>
+        <p class="text-gray-500 mt-3">Bisa bayar Cash di booth atau QRIS lewat layar checkout.</p>
+      </div>
+
+      <div class="p-8 rounded-[2rem] border border-gray-100 bg-gray-50">
+        <b class="text-[#0006ff] text-3xl">03</b>
+        <h3 class="font-black text-2xl mt-4">File Dikirim</h3>
+        <p class="text-gray-500 mt-3">Setelah pembayaran dikonfirmasi, admin kirim link paket via WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-[#111] text-white overflow-hidden border-t border-white/10 text-sm" id="contact">
+    <div class="w-full py-3 border-b border-white/10 bg-white/5">
+      <div class="footer-marquee-content gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+        <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> •
+        <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+      </div>
+    </div>
+
+    <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div class="lg:col-span-5">
+          <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] mb-5">
+            PUNYA IDE?<br><span class="text-[#0006ff] italic">OBROLIN AJA.</span>
+          </h2>
+          <a href="mailto:kancahcreative@gmail.com" class="inline-flex bg-[#0006ff] text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-white hover:text-[#111] transition-all">Ayo Ngobrol</a>
+        </div>
+
+        <div class="lg:col-span-3">
+          <h4 class="font-black uppercase tracking-widest text-xs text-gray-500 mb-4">Office</h4>
+          <p class="text-gray-300 leading-relaxed">Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
+          <p class="mt-4 text-gray-300">hello@kancah.agency<br>+62 812-3456-7890</p>
+        </div>
+
+        <div class="lg:col-span-2">
+          <h4 class="font-black uppercase tracking-widest text-xs text-gray-500 mb-4">Menu</h4>
+          <div class="flex flex-col gap-2 text-gray-300">
+            <a href="#packages">Paket</a>
+            <a href="#preview">Preview</a>
+            <a href="#how">Cara Beli</a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-2">
+          <h4 class="font-black uppercase tracking-widest text-xs text-gray-500 mb-4">Socials</h4>
+          <div class="flex flex-col gap-2 text-gray-300">
+            <a href="#">Instagram</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Behance</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row justify-between gap-4 text-gray-500 text-xs">
+        <p>© 2026 Kancah.</p>
+        <div class="flex gap-5">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CHECKOUT PANEL -->
+ <!-- CHECKOUT PANEL -->
+<div id="checkout-overlay" onclick="closeCheckout()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[190] hidden"></div>
+
+<aside 
+  id="checkout-panel" 
+  class="fixed left-1/2 top-1/2 w-[95%] max-w-[560px] max-h-[92vh] overflow-hidden bg-white z-[200] rounded-[2rem] shadow-2xl -translate-x-1/2 -translate-y-1/2 scale-95 opacity-0 pointer-events-none transition-all duration-300 flex flex-col"
+>
+  <div class="px-5 sm:px-6 py-5 border-b flex items-center justify-between shrink-0">
+    <div>
+      <p class="text-[10px] font-black text-[#0006ff] uppercase tracking-widest">Checkout</p>
+      <h3 class="text-2xl sm:text-3xl font-black uppercase italic leading-none mt-1">Paket Portfolio</h3>
+    </div>
+
+    <button onclick="closeCheckout()" class="w-12 h-12 rounded-full bg-gray-100 hover:bg-gray-200 transition-all">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <div class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4">
+    <div id="selected-package-box"></div>
+
+    <div id="benefit-box"></div>
+
+    <form id="checkoutForm" class="space-y-3">
+      <div class="bg-white border border-gray-100 shadow-sm rounded-[1.5rem] p-4">
+        <div class="flex justify-between items-center font-black text-lg mb-4">
+          <span>Total Bayar</span>
+          <span id="cart-total" class="text-[#0006ff]">Rp0</span>
+        </div>
+
+        <input id="buyerName" required class="w-full px-4 py-3 bg-gray-50 border rounded-2xl outline-none focus:border-[#0006ff] mb-3" placeholder="Nama kamu">
+        
+       <input id="buyerWa" required class="w-full px-4 py-3 bg-gray-50 border rounded-2xl outline-none focus:border-[#0006ff]" placeholder="No WhatsApp aktif">
+      </div>
+
+      <div class="bg-white border border-gray-100 shadow-sm rounded-[1.5rem] p-4">
+        <p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">Metode Pembayaran</p>
+
+      <div class="grid grid-cols-2 gap-3">
+  <label class="cursor-pointer">
+    <input 
+      type="radio" 
+      name="paymentMethod" 
+      value="cash"
+      class="hidden pay-radio"
+    >
+
+    <div class="pay-card p-4 rounded-2xl border-2 border-gray-100 bg-gray-50 transition-all h-full">
+      <div class="flex items-center gap-2 font-black">
+        <i class="fa-solid fa-money-bill-wave"></i>
+        <span>CASH</span>
+      </div>
+
+      <p class="pay-desc text-[11px] text-gray-500 mt-2 leading-relaxed">
+        Bayar langsung di booth.
+      </p>
+    </div>
+  </label>
+
+  <label class="cursor-pointer">
+    <input 
+      type="radio" 
+      name="paymentMethod" 
+      value="qris"
+      class="hidden pay-radio"
+      checked
+    >
+
+    <div class="pay-card p-4 rounded-2xl border-2 border-gray-100 bg-gray-50 transition-all h-full">
+      <div class="flex items-center gap-2 font-black">
+        <i class="fa-solid fa-qrcode"></i>
+        <span>QRIS</span>
+      </div>
+
+      <p class="pay-desc text-[11px] text-gray-500 mt-2 leading-relaxed">
+        Scan QR setelah order.
+      </p>
+    </div>
+  </label>
+</div>
+      </div>
+
+      <button class="w-full bg-[#0006ff] text-white py-4 rounded-full font-black uppercase tracking-[.2em] text-[11px] hover:bg-[#111] transition-all">
+        Konfirmasi Order
+      </button>
+
+      <p class="text-[10px] text-gray-400 text-center leading-relaxed px-4">
+        Cash untuk bayar langsung di booth. QRIS untuk scan setelah order.
+      </p>
+    </form>
+  </div>
+</aside>
+
+ <!-- QRIS MODAL -->
+<div id="qris-modal" class="fixed inset-0 z-[400] hidden bg-black/70 backdrop-blur-sm p-3 flex items-center justify-center">
+  <div class="bg-white w-full max-w-[390px] max-h-[94vh] overflow-y-auto rounded-[1.5rem] p-5 text-center shadow-2xl">
+    
+    <p class="text-[10px] font-black text-[#0006ff] uppercase tracking-[.22em]">
+      Pembayaran QRIS
+    </p>
+
+    <h3 class="text-xl sm:text-2xl font-black uppercase mt-1 leading-tight">
+      Scan QRIS
+    </h3>
+
+    <div class="my-4 p-3 bg-gray-50 rounded-[1.25rem]">
+      <img 
+        src="assets/qris.jpeg" 
+        alt="QRIS Kancah" 
+        class="w-full max-w-[260px] sm:max-w-[280px] mx-auto rounded-xl"
+      >
+    </div>
+
+    <div class="bg-gray-50 rounded-2xl p-4 text-left text-sm space-y-2 mb-4">
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-500">Order ID</span>
+        <b id="qris-order-id">-</b>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-500">Paket</span>
+        <b id="qris-package">-</b>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-500">Total</span>
+        <b id="qris-total" class="text-[#0006ff]">Rp0</b>
+      </div>
+      <div class="flex justify-between gap-4">
+        <span class="text-gray-500">Metode</span>
+        <b>QRIS</b>
+      </div>
+    </div>
+
+    <button onclick="markOrderAsPaid()" class="w-full bg-[#0006ff] text-white py-4 rounded-full font-black uppercase tracking-[.18em] text-[10px] hover:bg-[#111] transition-all">
+      Saya Sudah Bayar
+    </button>
+
+    <button onclick="closeQrisModal()" class="mt-2 w-full bg-gray-100 text-gray-500 py-3 rounded-full font-black uppercase tracking-[.18em] text-[10px]">
+      Tutup
+    </button>
+
+    <p class="text-[10px] text-gray-400 mt-3 leading-relaxed">
+      Setelah bayar, klik tombol di atas agar admin bisa cek pembayaranmu.
+    </p>
+  </div>
+</div>
+
+  <!-- THANK YOU MODAL -->
+  <div id="thanks-modal" class="fixed inset-0 z-[450] hidden bg-black/70 backdrop-blur-sm p-4 flex items-center justify-center">
+    <div class="bg-white w-full max-w-md rounded-[2rem] p-8 text-center shadow-2xl">
+      <div class="w-20 h-20 bg-green-500 text-white rounded-full flex items-center justify-center mx-auto mb-5">
+        <i class="fa-solid fa-check text-3xl"></i>
+      </div>
+
+      <p class="text-[10px] font-black text-green-600 uppercase tracking-[.25em]">Order Received</p>
+      <h3 class="text-3xl font-black uppercase mt-2">Terima Kasih!</h3>
+      <p class="text-gray-500 mt-4 leading-relaxed">
+        Terima kasih sudah membeli. Pesanan kamu sudah masuk ke admin. Setelah pembayaran dikonfirmasi, paket portfolio akan dikirim via WhatsApp.
+      </p>
+
+      <button onclick="closeThanksModal()" class="mt-7 w-full bg-[#111] text-white py-4 rounded-full font-black uppercase tracking-[.2em] text-[10px]">
+        Selesai
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
+    const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
+    const kancah = supabase.createClient(SB_URL, SB_KEY);
+
+    let products = [];
+    let packages = [];
+    let selectedPackage = null;
+    let latestOrderId = null;
+
+    const rupiah = n => new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0
+    }).format(Number(n || 0));
+
+    function toast(msg, err = false) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.background = err ? '#ef4444' : '#111';
+      t.classList.remove('opacity-0', '-translate-y-4');
+      setTimeout(() => t.classList.add('opacity-0', '-translate-y-4'), 2600);
+    }
+
+    function injectBaseTag(html, url) {
+      try {
+        const baseUrl = url.substring(0, url.lastIndexOf('/') + 1);
+        const baseTag = `<base href="${baseUrl}">`;
+
+        if (html.includes('<head>')) return html.replace('<head>', `<head>${baseTag}`);
+        if (html.includes('<head ')) return html.replace(/<head([^>]*)>/i, `<head$1>${baseTag}`);
+
+        return baseTag + html;
+      } catch (e) {
+        return html;
+      }
+    }
+
+    async function init() {
+      const [p1, p2] = await Promise.all([
+        kancah.from('bazar_products').select('*').eq('is_active', true).order('created_at', { ascending: false }),
+        kancah.from('bazar_packages').select('*').eq('is_active', true).order('sort_order', { ascending: true })
+      ]);
+
+      if (p1.error) toast(p1.error.message, true);
+      else products = p1.data || [];
+
+      if (p2.error) toast(p2.error.message, true);
+      else packages = p2.data || [];
+
+      if (!packages.length) {
+        packages = [
+          { id: 'starter', name: 'Starter', price: 10000, template_limit: 25, badge: 'Mulai Hemat' },
+          { id: 'pro', name: 'Pro', price: 20000, template_limit: 50, badge: 'Paling Laris' },
+          { id: 'ultimate', name: 'Ultimate', price: 35000, template_limit: 100, badge: 'Best Value' }
+        ];
+      }
+
+      selectedPackage = packages[1] || packages[0];
+
+      renderPackages();
+      renderProducts();
+      updateCheckout();
+    }
+
+    function autoTemplates() {
+      if (!selectedPackage) return [];
+      const limit = Number(selectedPackage.template_limit || 0);
+
+      return products.slice(0, limit).map(p => ({
+        id: p.id,
+        title: p.title,
+        html_url: p.html_url,
+        file_path: p.file_path || null
+      }));
+    }
+
+    function renderPackages() {
+      const wrap = document.getElementById('package-grid');
+
+      wrap.innerHTML = packages.map((pkg, index) => {
+        const isPopular = /pro/i.test(pkg.name) || index === 1;
+
+        return `
+          <article class="relative rounded-[2rem] border-2 ${isPopular ? 'border-[#0006ff] bg-[#0006ff] text-white scale-[1.02]' : 'border-gray-100 bg-gray-50 text-[#111]'} p-8 shadow-sm card-hover">
+            ${isPopular ? `<div class="absolute -top-4 left-8 bg-[#111] text-white px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest">Paling Laris</div>` : ''}
+
+            <span class="inline-flex px-3 py-1 rounded-full ${isPopular ? 'bg-white text-[#0006ff]' : 'bg-[#0006ff] text-white'} text-[9px] font-black uppercase tracking-widest">
+              ${pkg.badge || 'Package'}
+            </span>
+
+            <h3 class="text-4xl font-black uppercase tracking-tight mt-6">${pkg.name}</h3>
+            <p class="text-5xl font-black mt-5">${rupiah(pkg.price)}</p>
+
+            <p class="${isPopular ? 'text-white/75' : 'text-gray-500'} mt-4 leading-relaxed">
+              Dapat <b>${pkg.template_limit}</b> template portfolio pilihan Kancah.
+            </p>
+
+            <div class="mt-7 space-y-3 text-sm font-bold">
+              <div class="flex items-center gap-3"><i class="fa-solid fa-check ${isPopular ? 'text-white' : 'text-[#0006ff]'}"></i> Template siap edit</div>
+              <div class="flex items-center gap-3"><i class="fa-solid fa-check ${isPopular ? 'text-white' : 'text-[#0006ff]'}"></i> Cocok buat magang</div>
+              <div class="flex items-center gap-3"><i class="fa-solid fa-check ${isPopular ? 'text-white' : 'text-[#0006ff]'}"></i> Source code full</div>
+            </div>
+
+            <button onclick="selectPackageAndCheckout('${pkg.id}')" class="mt-8 w-full py-4 rounded-full font-black uppercase tracking-[.18em] text-[10px] transition-all ${isPopular ? 'bg-white text-[#0006ff] hover:bg-[#111] hover:text-white' : 'bg-[#111] text-white hover:bg-[#0006ff]'}">
+              Beli ${pkg.name}
+            </button>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function selectPackageAndCheckout(id) {
+      selectedPackage = packages.find(p => String(p.id) === String(id));
+      updateCheckout();
+      openCheckout();
+    }
+
+    function renderProducts() {
+      const rows = products.slice(0, 12);
+      const grid = document.getElementById('product-grid');
+
+      document.getElementById('empty-state').classList.toggle('hidden', rows.length > 0);
+
+      grid.innerHTML = rows.map(p => `
+        <article class="card-hover bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden group">
+          <button type="button" data-id="${p.id}" class="open-template block w-full aspect-[4/3] bg-white relative overflow-hidden cursor-pointer text-left">
+            ${
+              p.html_url
+              ? `
+                <iframe
+                  id="preview-${p.id}"
+                  class="preview-frame w-[200%] h-[200%] origin-top-left scale-50 border-0 pointer-events-none bg-white"
+                  loading="lazy">
+                </iframe>
+              `
+              : `
+                <div class="w-full h-full flex items-center justify-center text-[#0006ff] text-5xl bg-white/5">
+                  <i class="fa-solid fa-code"></i>
+                </div>
+              `
+            }
+
+            <div class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+            <span class="absolute top-4 left-4 bg-[#0006ff] text-white text-[9px] font-black uppercase tracking-widest rounded-full px-3 py-1">
+              Preview
+            </span>
+
+            <span class="absolute bottom-4 right-4 w-11 h-11 rounded-full bg-white text-[#111] flex items-center justify-center shadow-xl opacity-0 group-hover:opacity-100 transition-all">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </span>
+          </button>
+
+          <div class="p-6">
+            <h3 class="font-black text-xl tracking-tight line-clamp-1">${p.title}</h3>
+            <p class="text-[10px] text-gray-400 uppercase tracking-widest mt-2">
+              Contoh style paket
+            </p>
+          </div>
+        </article>
+      `).join('');
+
+      document.querySelectorAll('.open-template').forEach(btn => {
+        btn.addEventListener('click', () => openHtmlPreview(btn.dataset.id));
+      });
+
+      setTimeout(() => loadIframePreviews(rows), 150);
+    }
+
+    async function loadIframePreviews(rows) {
+      for (const p of rows) {
+        const frame = document.getElementById(`preview-${p.id}`);
+        if (!frame || !p.html_url) continue;
+
+        try {
+          frame.srcdoc = `
+            <div style="font-family:Arial,sans-serif;height:100vh;display:flex;align-items:center;justify-content:center;background:#fff;color:#0006ff;font-weight:900;letter-spacing:.12em">
+              LOADING PREVIEW...
+            </div>
+          `;
+
+          const res = await fetch(p.html_url, { cache: 'no-store' });
+          const html = await res.text();
+          frame.srcdoc = injectBaseTag(html, p.html_url);
+        } catch (err) {
+          frame.srcdoc = `
+            <div style="font-family:Arial,sans-serif;height:100vh;display:flex;align-items:center;justify-content:center;background:#fff;color:#ef4444;font-weight:900;letter-spacing:.12em">
+              PREVIEW ERROR
+            </div>
+          `;
+        }
+      }
+    }
+
+    async function openHtmlPreview(id) {
+      const item = products.find(p => String(p.id) === String(id));
+      if (!item || !item.html_url) return;
+
+      try {
+        const res = await fetch(item.html_url, { cache: 'no-store' });
+        const html = await res.text();
+        const finalHtml = injectBaseTag(html, item.html_url);
+        const win = window.open('', '_blank');
+
+        if (!win) {
+          toast('Popup diblokir browser', true);
+          return;
+        }
+
+        win.document.open();
+        win.document.write(finalHtml);
+        win.document.close();
+      } catch (err) {
+        toast('Gagal membuka template', true);
+      }
+    }
+
+   function updateCheckout() {
+  document.getElementById('cart-total').textContent = rupiah(selectedPackage ? selectedPackage.price : 0);
+
+  document.getElementById('selected-package-box').innerHTML = selectedPackage
+    ? `
+      <div class="rounded-[1.5rem] bg-[#0006ff] text-white p-5 shadow-xl">
+        <div class="flex justify-between gap-4">
+          <div>
+            <p class="text-[10px] uppercase tracking-[.24em] text-white/60 font-black">Pesanan</p>
+            <h4 class="text-2xl font-black uppercase mt-1">${selectedPackage.name}</h4>
+          </div>
+          <div class="text-right">
+            <p class="text-[10px] uppercase tracking-[.2em] text-white/60 font-black">Harga</p>
+            <p class="text-xl font-black mt-1">${rupiah(selectedPackage.price)}</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mt-4">
+          <div class="bg-white/15 rounded-2xl p-3">
+            <p class="text-[9px] uppercase tracking-widest text-white/60">Jumlah</p>
+            <b>${selectedPackage.template_limit} Template</b>
+          </div>
+          <div class="bg-white/15 rounded-2xl p-3">
+            <p class="text-[9px] uppercase tracking-widest text-white/60">Pengiriman</p>
+            <b>WhatsApp</b>
+          </div>
+        </div>
+      </div>
+    `
+    : `<div class="p-4 rounded-2xl bg-gray-50 text-gray-400 text-xs font-bold uppercase">Belum pilih paket</div>`;
+
+  document.getElementById('benefit-box').innerHTML = `
+  <div class="rounded-[1.5rem] bg-gray-50 border p-4">
+    <p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">
+      Yang Kamu Dapat
+    </p>
+
+    <div class="space-y-3">
+      <div class="flex items-start gap-3">
+        <i class="fa-solid fa-check text-[#0006ff] mt-1"></i>
+        <div>
+          <p class="font-black text-sm">Template siap edit</p>
+          <p class="text-[11px] text-gray-500 mt-1">Tinggal ubah nama, foto, skill, dan project.</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3">
+        <i class="fa-solid fa-check text-[#0006ff] mt-1"></i>
+        <div>
+          <p class="font-black text-sm">Cocok buat magang</p>
+          <p class="text-[11px] text-gray-500 mt-1">Bisa dipakai untuk portfolio internship, freelance, atau personal branding.</p>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3">
+        <i class="fa-solid fa-check text-[#0006ff] mt-1"></i>
+        <div>
+          <p class="font-black text-sm">Source code full</p>
+          <p class="text-[11px] text-gray-500 mt-1">File HTML lengkap, bisa diedit sendiri dan dikembangkan lagi.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+}
+    function openCheckout() {
+  if (!selectedPackage) selectedPackage = packages[0];
+
+  document.getElementById('checkout-overlay').classList.remove('hidden');
+
+  const panel = document.getElementById('checkout-panel');
+
+  panel.classList.remove(
+    'opacity-0',
+    'scale-95',
+    'pointer-events-none'
+  );
+
+  panel.classList.add(
+    'opacity-100',
+    'scale-100'
+  );
+
+  updateCheckout();
+}
+
+    function closeCheckout() {
+  document.getElementById('checkout-overlay').classList.add('hidden');
+
+  const panel = document.getElementById('checkout-panel');
+
+  panel.classList.remove(
+    'opacity-100',
+    'scale-100'
+  );
+
+  panel.classList.add(
+    'opacity-0',
+    'scale-95',
+    'pointer-events-none'
+  );
+}
+
+    function openQrisModal(orderId) {
+      latestOrderId = orderId;
+
+      document.getElementById('qris-order-id').textContent = String(orderId).slice(0, 8).toUpperCase();
+      document.getElementById('qris-package').textContent = selectedPackage ? selectedPackage.name : '-';
+      document.getElementById('qris-total').textContent = rupiah(selectedPackage ? selectedPackage.price : 0);
+
+      document.getElementById('qris-modal').classList.remove('hidden');
+    }
+
+    function closeQrisModal() {
+      document.getElementById('qris-modal').classList.add('hidden');
+    }
+
+    function closeThanksModal() {
+      document.getElementById('thanks-modal').classList.add('hidden');
+    }
+
+    async function markOrderAsPaid() {
+      if (!latestOrderId) return;
+
+      const { error } = await kancah
+        .from('bazar_orders')
+        .update({
+          status: 'waiting_confirmation',
+          payment_status: 'customer_claimed_paid',
+          payment_method: 'qris'
+        })
+        .eq('id', latestOrderId);
+
+      if (error) {
+        toast(error.message, true);
+        return;
+      }
+
+      closeQrisModal();
+      document.getElementById('thanks-modal').classList.remove('hidden');
+      toast('Terima kasih sudah membeli!');
+    }
+
+    document.getElementById('checkoutForm').addEventListener('submit', async e => {
+      e.preventDefault();
+
+      if (!selectedPackage) {
+        toast('Pilih paket dulu', true);
+        return;
+      }
+
+      const items = autoTemplates();
+
+      if (!items.length) {
+        toast('Belum ada template aktif', true);
+        return;
+      }
+
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value || 'qris';
+
+      const payload = {
+        buyer_name: buyerName.value,
+        buyer_whatsapp: buyerWa.value,
+        package_id: selectedPackage.id,
+        package_name: selectedPackage.name,
+        total: selectedPackage.price,
+        items,
+        status: paymentMethod === 'cash' ? 'waiting_confirmation' : 'pending_payment',
+        payment_status: paymentMethod === 'cash' ? 'cash_pending' : 'unpaid',
+        payment_method: paymentMethod,
+        note: `Auto selected ${items.length} templates from active catalog`
+      };
+
+      const { data, error } = await kancah
+        .from('bazar_orders')
+        .insert([payload])
+        .select('id')
+        .single();
+
+      if (error) {
+        toast(error.message, true);
+        return;
+      }
+
+      e.target.reset();
+      closeCheckout();
+
+      if (paymentMethod === 'cash') {
+        latestOrderId = data.id;
+        toast('Order cash dibuat! Silakan bayar di booth.');
+        document.getElementById('thanks-modal').classList.remove('hidden');
+      } else {
+        toast('Order dibuat! Silakan bayar QRIS.');
+        openQrisModal(data.id);
+      }
+    });
+
+    init();
+  </script>
+</body>
+</html>
