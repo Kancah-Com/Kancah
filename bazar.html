@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
@@ -52,6 +53,40 @@
     .checkout-panel { transition: transform .35s cubic-bezier(.16,1,.3,1); }
     .preview-frame { pointer-events:none; background:white; border:0; }
     .line-clamp-1 { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .preview-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+    .preview-scroll::-webkit-scrollbar { display: none; }
+    @media (min-width: 1024px) {
+      #preview-slider-viewport { overflow: hidden; }
+      #product-grid { transition: transform .55s cubic-bezier(.16,1,.3,1); will-change: transform; }
+      #product-grid.no-transition { transition: none !important; }
+      .preview-slider-card { flex: 0 0 370px; }
+    }
+    @media (min-width: 1280px) {
+      .preview-slider-card { flex-basis: 390px; }
+    }
+    .preview-nav-wrap {
+      display: none;
+      align-items: center;
+      gap: 12px;
+    }
+    @media (min-width: 1024px) {
+      .preview-nav-wrap { display: flex; }
+    }
+    .preview-control {
+      width: 52px;
+      height: 52px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: #0006ff;
+      border: 1px solid rgba(255,255,255,.20);
+      box-shadow: 0 14px 35px rgba(0,6,255,.32);
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .preview-control:hover { transform: translateY(-3px); box-shadow: 0 20px 45px rgba(0,6,255,.45); background:#151aff; }
+    .preview-control:active { transform: translateY(0) scale(.94); }
   </style>
 </head>
 
@@ -61,7 +96,7 @@
     Notif
   </div>
 
-  <nav class="fixed w-full z-[100] top-0 bg-white/85 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20">
+  <nav class="fixed w-full z-[1000] top-0 bg-white/85 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 pointer-events-auto">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
       <a href="/" class="flex items-center gap-3">
         <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
@@ -131,11 +166,11 @@
     </div>
   </section>
 
-  <section id="preview" class="py-20 bg-[#111] text-white">
+  <section id="preview" class="relative z-0 py-20 bg-[#111] text-white">
     <div class="max-w-[1440px] mx-auto px-6">
       <div class="flex flex-col lg:flex-row justify-between lg:items-end gap-6 mb-10">
         <div>
-          <span class="text-[#7d82ff] font-bold text-xs uppercase tracking-widest">Preview Website</span>
+          <span class="text-[#0006ff] font-bold text-xs uppercase tracking-widest">Preview Website</span>
           <h2 class="text-4xl sm:text-6xl font-black uppercase tracking-tighter mt-3">
             CONTOH STYLE.
           </h2>
@@ -143,12 +178,20 @@
             Ini hanya beberapa contoh style dari katalog. Paket lengkapnya akan dikurasi otomatis sesuai pilihanmu.
           </p>
         </div>
-        <a href="#packages" class="bg-white text-[#111] px-7 py-4 rounded-full font-black uppercase tracking-widest text-[10px] hover:bg-[#0006ff] hover:text-white transition-all">
-          Pilih Paket
-        </a>
+        <div class="preview-nav-wrap">
+          <button type="button" onclick="slidePreview('left')" aria-label="Geser preview ke kiri" class="preview-control">
+            <i class="fa-solid fa-arrow-left text-lg"></i>
+          </button>
+          <button type="button" onclick="slidePreview('right')" aria-label="Geser preview ke kanan" class="preview-control">
+            <i class="fa-solid fa-arrow-right text-lg"></i>
+          </button>
+        </div>
       </div>
 
-      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+      <div id="preview-slider-viewport" class="relative z-0">
+        <div id="product-grid" class="relative z-0 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-nowrap gap-6 lg:pb-6 preview-scroll"></div>
+      </div>
+
       <div id="empty-state" class="hidden text-center py-20 text-gray-500 font-bold uppercase tracking-widest text-xs">
         Belum ada template aktif.
       </div>
@@ -404,6 +447,7 @@
     let packages = [];
     let selectedPackage = null;
     let latestOrderId = null;
+    let previewIndex = 0;
 
     const rupiah = n => new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -472,22 +516,149 @@
       }));
     }
 
+    function isDesktopPreview() {
+      return window.matchMedia('(min-width: 1024px)').matches;
+    }
+
+    function getPreviewCards() {
+      const grid = document.getElementById('product-grid');
+      if (!grid) return null;
+
+      const cards = [...grid.querySelectorAll('.preview-slider-card')];
+      const realCards = [...grid.querySelectorAll('[data-real="true"]')];
+      const total = realCards.length;
+
+      if (!cards.length || !total) return null;
+      return { grid, cards, realCards, total };
+    }
+
+    function getPreviewStep(cards) {
+      if (!cards || !cards.length) return 0;
+      const first = cards[0];
+      const rect = first.getBoundingClientRect();
+      const styles = window.getComputedStyle(document.getElementById('product-grid'));
+      const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+      return rect.width + gap;
+    }
+
+    function setPreviewTransform(animated = true) {
+      const sets = getPreviewCards();
+      if (!sets || !isDesktopPreview()) return;
+
+      const { grid, cards } = sets;
+      const step = getPreviewStep(cards);
+
+      if (!animated) grid.classList.add('no-transition');
+      grid.style.transform = `translateX(-${previewIndex * step}px)`;
+
+      if (!animated) {
+        grid.offsetHeight;
+        grid.classList.remove('no-transition');
+      }
+    }
+
+    function getPreviewCloneCount(total) {
+      if (!isDesktopPreview()) return 0;
+      const viewport = document.getElementById('preview-slider-viewport');
+      const firstCard = document.querySelector('#product-grid .preview-slider-card');
+      if (!viewport || !firstCard || !total) return 1;
+
+      const step = getPreviewStep([firstCard]) || 1;
+      const visibleCount = Math.ceil(viewport.getBoundingClientRect().width / step);
+      return Math.min(total, Math.max(1, visibleCount + 1));
+    }
+
+    function setupInfinitePreview() {
+      const grid = document.getElementById('product-grid');
+
+      if (!isDesktopPreview()) {
+        if (grid) grid.style.transform = '';
+        return;
+      }
+
+      requestAnimationFrame(() => {
+        const sets = getPreviewCards();
+        if (!sets) return;
+        const cloneCount = Number(grid.dataset.cloneCount || 1);
+        previewIndex = cloneCount;
+        setPreviewTransform(false);
+      });
+    }
+
+    function slidePreview(direction) {
+      const sets = getPreviewCards();
+      if (!sets) return;
+
+      if (!isDesktopPreview()) return;
+
+      const { grid, total } = sets;
+      if (grid.isSliding === 'true') return;
+      grid.isSliding = 'true';
+
+      if (direction === 'right') {
+        previewIndex += 1;
+        setPreviewTransform(true);
+      } else {
+        previewIndex -= 1;
+        setPreviewTransform(true);
+      }
+
+      window.clearTimeout(grid.previewLoopTimer);
+      grid.previewLoopTimer = window.setTimeout(() => {
+        const cloneCount = Number(grid.dataset.cloneCount || 1);
+        const firstRealIndex = cloneCount;
+        const lastRealIndex = cloneCount + total - 1;
+
+        if (previewIndex > lastRealIndex) {
+          previewIndex = firstRealIndex;
+          setPreviewTransform(false);
+        }
+
+        if (previewIndex < firstRealIndex) {
+          previewIndex = lastRealIndex;
+          setPreviewTransform(false);
+        }
+
+        grid.isSliding = 'false';
+      }, 570);
+    }
+
+    window.addEventListener('resize', () => {
+      setupInfinitePreview();
+    });
+
     function renderPackages() {
       const wrap = document.getElementById('package-grid');
 
       wrap.innerHTML = packages.map((pkg, index) => {
         const isPopular = /pro/i.test(pkg.name) || index === 1;
+        const packageName = String(pkg.name || '').toLowerCase();
+        const normalPrice = packageName.includes('starter')
+          ? 25000
+          : packageName.includes('pro')
+            ? 50000
+            : packageName.includes('ultimate')
+              ? 750000
+              : Number(pkg.normal_price || pkg.original_price || (Number(pkg.price || 0) * 4));
 
         return `
           <article class="relative rounded-[2rem] border-2 ${isPopular ? 'border-[#0006ff] bg-[#0006ff] text-white scale-[1.02]' : 'border-gray-100 bg-gray-50 text-[#111]'} p-8 shadow-sm card-hover">
             ${isPopular ? `<div class="absolute -top-4 left-8 bg-[#111] text-white px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest">Paling Laris</div>` : ''}
 
-            <span class="inline-flex px-3 py-1 rounded-full ${isPopular ? 'bg-white text-[#0006ff]' : 'bg-[#0006ff] text-white'} text-[9px] font-black uppercase tracking-widest">
-              ${pkg.badge || 'Package'}
-            </span>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="inline-flex px-3 py-1 rounded-full ${isPopular ? 'bg-white text-[#0006ff]' : 'bg-[#0006ff] text-white'} text-[9px] font-black uppercase tracking-widest">
+                ${pkg.badge || 'Package'}
+              </span>
+              <span class="inline-flex px-3 py-1 rounded-full ${isPopular ? 'bg-white/15 text-white' : 'bg-[#111] text-white'} text-[9px] font-black uppercase tracking-widest">
+                Harga Khusus Bazar
+              </span>
+            </div>
 
             <h3 class="text-4xl font-black uppercase tracking-tight mt-6">${pkg.name}</h3>
-            <p class="text-5xl font-black mt-5">${rupiah(pkg.price)}</p>
+            <div class="mt-5">
+              <p class="text-sm sm:text-base font-black ${isPopular ? 'text-white/50' : 'text-gray-400'} line-through decoration-2">${rupiah(normalPrice)}</p>
+              <p class="text-5xl font-black mt-1">${rupiah(pkg.price)}</p>
+            </div>
 
             <p class="${isPopular ? 'text-white/75' : 'text-gray-500'} mt-4 leading-relaxed">
               Dapat <b>${pkg.template_limit}</b> template portfolio pilihan Kancah.
@@ -513,20 +684,20 @@
       openCheckout();
     }
 
-    function renderProducts() {
-      const rows = products.slice(0, 12);
-      const grid = document.getElementById('product-grid');
+    function productCardTemplate(p, setName, index) {
+      const iframeId = `preview-${setName}-${index}-${p.id}`;
+      const isClone = setName !== 'main';
+      const cloneClass = isClone ? 'hidden lg:block' : '';
 
-      document.getElementById('empty-state').classList.toggle('hidden', rows.length > 0);
-
-      grid.innerHTML = rows.map(p => `
-        <article class="card-hover bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden group">
+      return `
+        <article data-set="${setName}" data-real="${!isClone}" class="${cloneClass} preview-slider-card card-hover bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden group lg:shrink-0">
           <button type="button" data-id="${p.id}" class="open-template block w-full aspect-[4/3] bg-white relative overflow-hidden cursor-pointer text-left">
             ${
               p.html_url
               ? `
                 <iframe
-                  id="preview-${p.id}"
+                  id="${iframeId}"
+                  data-preview-url="${p.html_url}"
                   class="preview-frame w-[200%] h-[200%] origin-top-left scale-50 border-0 pointer-events-none bg-white"
                   loading="lazy">
                 </iframe>
@@ -556,19 +727,43 @@
             </p>
           </div>
         </article>
-      `).join('');
+      `;
+    }
+
+    function renderProducts() {
+      const rows = products.slice(0, 12);
+      const grid = document.getElementById('product-grid');
+
+      document.getElementById('empty-state').classList.toggle('hidden', rows.length > 0);
+
+      const cloneCount = rows.length ? Math.min(rows.length, 5) : 0;
+      grid.dataset.cloneCount = String(cloneCount);
+
+      const beforeRows = cloneCount ? rows.slice(-cloneCount) : [];
+      const afterRows = cloneCount ? rows.slice(0, cloneCount) : [];
+
+      const beforeSet = beforeRows.map((p, i) => productCardTemplate(p, 'before', i)).join('');
+      const mainSet = rows.map((p, i) => productCardTemplate(p, 'main', i)).join('');
+      const afterSet = afterRows.map((p, i) => productCardTemplate(p, 'after', i)).join('');
+
+      grid.innerHTML = beforeSet + mainSet + afterSet;
 
       document.querySelectorAll('.open-template').forEach(btn => {
         btn.addEventListener('click', () => openHtmlPreview(btn.dataset.id));
       });
 
-      setTimeout(() => loadIframePreviews(rows), 150);
+      setTimeout(() => {
+        loadIframePreviews();
+        setupInfinitePreview();
+      }, 150);
     }
 
-    async function loadIframePreviews(rows) {
-      for (const p of rows) {
-        const frame = document.getElementById(`preview-${p.id}`);
-        if (!frame || !p.html_url) continue;
+    async function loadIframePreviews() {
+      const frames = document.querySelectorAll('iframe[data-preview-url]');
+
+      for (const frame of frames) {
+        const url = frame.dataset.previewUrl;
+        if (!url) continue;
 
         try {
           frame.srcdoc = `
@@ -577,9 +772,9 @@
             </div>
           `;
 
-          const res = await fetch(p.html_url, { cache: 'no-store' });
+          const res = await fetch(url, { cache: 'no-store' });
           const html = await res.text();
-          frame.srcdoc = injectBaseTag(html, p.html_url);
+          frame.srcdoc = injectBaseTag(html, url);
         } catch (err) {
           frame.srcdoc = `
             <div style="font-family:Arial,sans-serif;height:100vh;display:flex;align-items:center;justify-content:center;background:#fff;color:#ef4444;font-weight:900;letter-spacing:.12em">
@@ -808,6 +1003,17 @@
         toast('Order dibuat! Silakan bayar QRIS.');
         openQrisModal(data.id);
       }
+    });
+
+    window.addEventListener('resize', setupInfinitePreview);
+
+    document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
     });
 
     init();
