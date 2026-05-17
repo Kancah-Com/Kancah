@@ -1205,79 +1205,90 @@
         }
 
         async function sendWhatsApp(order) {
-            try {
-                const phone = formatWA(order.buyer_whatsapp);
-                const driveLink = getDriveLink(order.package_name);
-                const method = String(order.payment_method || 'qris').toUpperCase();
+  try {
+    const phone = formatWA(order.buyer_whatsapp);
+    const driveLink = getDriveLink(order.package_name);
+    const method = String(order.payment_method || 'qris').toUpperCase();
 
-                if (!phone) {
-                    showToast('Nomor WhatsApp kosong / tidak valid.', true);
-                    return;
-                }
+    if (!phone) {
+      showToast('Nomor WhatsApp kosong / tidak valid.', true);
+      return;
+    }
 
-                if (!driveLink) {
-                    showToast('Link Drive untuk paket ini belum tersedia.', true);
-                    return;
-                }
+    if (!driveLink) {
+      showToast('Link Drive untuk paket ini belum tersedia.', true);
+      return;
+    }
 
-                const orderCode = String(order.id).slice(0, 8).toUpperCase();
+    const orderCode = String(order.id).slice(0, 8).toUpperCase();
 
-                const nota = `
-🧾 *NOTA PEMBELIAN KANCAH CREATIVE*
+    const E = {
+      nota: '\u{1F9FE}',
+      wave: '\u{1F44B}',
+      id: '\u{1F194}',
+      box: '\u{1F4E6}',
+      money: '\u{1F4B0}',
+      card: '\u{1F4B3}',
+      check: '\u{2705}',
+      download: '\u{1F4E5}',
+      pray: '\u{1F64F}',
+      rocket: '\u{1F680}'
+    };
 
-Halo *${order.buyer_name}* 👋
-Terima kasih sudah membeli paket portfolio dari Kancah Creative.
+    const nota = [
+      `${E.nota} *NOTA PEMBELIAN KANCAH CREATIVE*`,
+      ``,
+      `Halo *${order.buyer_name}* ${E.wave}`,
+      `Terima kasih sudah membeli paket portfolio dari Kancah Creative.`,
+      ``,
+      `━━━━━━━━━━━━━━━━━━`,
+      `*DETAIL PESANAN*`,
+      `━━━━━━━━━━━━━━━━━━`,
+      `${E.id} Order ID : ${orderCode}`,
+      `${E.box} Paket    : ${order.package_name}`,
+      `${E.money} Total    : Rp ${Number(order.total).toLocaleString('id-ID')}`,
+      `${E.card} Metode   : ${method}`,
+      `${E.check} Status   : Paid`,
+      ``,
+      `━━━━━━━━━━━━━━━━━━`,
+      `*LINK DOWNLOAD*`,
+      `━━━━━━━━━━━━━━━━━━`,
+      `${E.download} ${driveLink}`,
+      ``,
+      `━━━━━━━━━━━━━━━━━━`,
+      `*CATATAN*`,
+      `━━━━━━━━━━━━━━━━━━`,
+      `Link ini hanya untuk penggunaan pribadi.`,
+      `Mohon tidak disebarluaskan ya, maturtengkyu ${E.pray}`,
+      ``,
+      `Selamat menggunakan template portfolio kamu ${E.rocket}`,
+      ``,
+      `*Kancah Creative*`
+    ].join('\n');
 
-━━━━━━━━━━━━━━━━━━
-*DETAIL PESANAN*
-━━━━━━━━━━━━━━━━━━
-🆔 Order ID : ${orderCode}
-📦 Paket    : ${order.package_name}
-💰 Total    : Rp ${Number(order.total).toLocaleString('id-ID')}
-💳 Metode   : ${method}
-✅ Status   : Paid
+    const { error } = await kancah
+      .from('bazar_orders')
+      .update({
+        status: 'sent',
+        payment_status: 'paid',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', order.id);
 
-━━━━━━━━━━━━━━━━━━
-*LINK DOWNLOAD*
-━━━━━━━━━━━━━━━━━━
-📥 ${driveLink}
+    if (error) throw error;
 
-━━━━━━━━━━━━━━━━━━
-*CATATAN*
-━━━━━━━━━━━━━━━━━━
-Link ini hanya untuk penggunaan pribadi.
-Mohon tidak disebarluaskan ya, maturtengkyu 🙏
+    window.open(
+      `https://wa.me/${phone}?text=${encodeURIComponent(nota)}`,
+      '_blank'
+    );
 
-Selamat menggunakan template portfolio kamu 🚀
-
-*Kancah Creative*
-`.trim();
-
-                const { error } = await kancah
-                    .from('bazar_orders')
-                    .update({
-                        status: 'sent',
-                        payment_status: 'paid',
-                        updated_at: new Date().toISOString()
-                    })
-                    .eq('id', order.id);
-
-                if (error) throw error;
-
-                const waText = encodeURIComponent(nota);
-
-                window.open(
-                    `https://wa.me/${phone}?text=${waText}`,
-                    '_blank'
-                );
-
-                showToast('WHATSAPP DIBUKA!');
-                loadBazarOrders();
-            } catch (err) {
-                console.error(err);
-                showToast(err.message || 'Gagal membuka WhatsApp', true);
-            }
-        }
+    showToast('WHATSAPP DIBUKA!');
+    loadBazarOrders();
+  } catch (err) {
+    console.error(err);
+    showToast(err.message || 'Gagal membuka WhatsApp', true);
+  }
+}
 
         async function updateBazarOrder(id, status) {
             const payload = { status, updated_at: new Date().toISOString() };
