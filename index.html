@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
@@ -109,12 +110,29 @@
             </a>
         </div>
 
-        <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
-            <a href="about" class="hover:text-[#0006ff] transition-colors">Agency</a>
-            <a href="services" class="hover:text-[#0006ff] transition-colors">Capabilities</a>
-            <a href="works" class="hover:text-[#0006ff] transition-colors">Work</a>
-            <a href="careers" class="hover:text-[#0006ff] transition-colors">Careers</a>
-        </div>
+      <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
+    
+    <a href="about" class="hover:text-[#0006ff] transition-colors">
+        Agency
+    </a>
+
+    <a href="services" class="hover:text-[#0006ff] transition-colors">
+        Capabilities
+    </a>
+
+    <a href="works" class="hover:text-[#0006ff] transition-colors">
+        Work
+    </a>
+
+    <a href="pricelist" class="hover:text-[#0006ff] transition-colors">
+        Pricelist
+    </a>
+
+    <a href="careers" class="hover:text-[#0006ff] transition-colors">
+        Careers
+    </a>
+
+</div>
 
         <div class="flex items-center gap-2 sm:gap-4 h-8"> 
             
@@ -170,6 +188,7 @@
         <a href="about" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
         <a href="services" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
         <a href="works" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
+        <a href="pricelist" class="mobile-link hover:text-kancah-blue transition-colors">Pricelist</a>
         <a href="careers" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
         <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
     </div>
@@ -208,7 +227,7 @@
                 
                 <span class="text-[18vw] sm:text-[15vw] lg:text-[9.5vw] font-black uppercase">CREATIVE.</span>
             </div>
-            <p class="lg:hidden text-gray-400 text-base sm:text-lg font-light leading-relaxed max-w-sm mx-auto sm:mx-0">
+            <p class="lg:hidden text-gray-400 text-sm sm:text-base font-light leading-relaxed max-w-sm mx-auto sm:mx-0">
                 Kita teman debat, partner mikir, dan eksekutor andalan buat ide-ide yang kelihatan "nggak mungkin" tapi sebenarnya bisa-bisa aja.
             </p>
 
@@ -257,7 +276,7 @@
         <div class="max-w-[1400px] mx-auto px-6 relative z-10">
             <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 border-b border-white/10 pb-8"> 
                 <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter">CAPABILITIES</h2>
-                <p class="text-gray-400 max-w-sm mt-6 lg:mt-0 font-light text-base sm:text-lg">Layanan utama yang bantu brandmu maju terus.</p>
+                <p class="text-gray-400 max-w-sm mt-6 lg:mt-0 font-light text-sm sm:text-base">Layanan utama yang bantu brandmu maju terus.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -427,26 +446,48 @@
         </div>
     </section>
 
-<section id="featured-works" class="pt-4 pb-6 sm:pt-8 sm:pb-8 bg-gray-50 text-kancah-dark">
+<section id="featured-works" class="py-20 sm:py-28 bg-gray-50 text-kancah-dark overflow-hidden">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6">
         
-        <div class="mb-10 sm:mb-14 text-center md:text-left">
-            <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest">Selected Works</span>
-            <h2 class="text-4xl sm:text-5xl md:text-6xl font-black mt-2 sm:mt-4 tracking-tighter uppercase leading-[0.85]">
-                KARYA <span class="text-kancah-blue italic opacity-90">PILIHAN</span>
-            </h2>
-            <p class="text-gray-500 max-w-lg mt-4 font-light text-base sm:text-lg leading-relaxed">
-                Ini beberapa karya pilihan kita. Silakan dinikmati.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10" id="featured-grid"> 
+        <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12 sm:mb-16">
+            <div class="text-center lg:text-left">
+                <span class="inline-flex items-center gap-2 text-kancah-blue font-black text-[10px] uppercase tracking-[0.35em]">
+                    <span class="w-2 h-2 rounded-full bg-kancah-blue"></span>
+                    Selected Works
+                </span>
+                <h2 class="text-5xl sm:text-6xl md:text-7xl font-black mt-4 tracking-tighter uppercase leading-[0.85]">
+                    KARYA <span class="text-kancah-blue italic opacity-90">PILIHAN</span>
+                </h2>
             </div>
 
-        <div class="mt-4  pt-4 flex flex-col items-center justify-center">
-            <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.4em] mb-2">View More Projects</p>
-            <a href="works" class="group relative inline-flex items-center justify-center px-14 py-4 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-lg">
-                <span class="relative z-10 font-black uppercase tracking-[0.2em] text-[11px]">See All Projects</span>
+            <div class="max-w-md text-center lg:text-left">
+                <p class="text-gray-500 font-light text-sm sm:text-base leading-relaxed">
+                    Pilihan project yang nunjukin cara Kancah ngeracik ide, visual, strategi, dan eksekusi digital jadi satu karya yang utuh.
+                </p>
+                <div class="mt-5 flex flex-wrap justify-center lg:justify-start gap-2" id="featured-filter">
+                    <button type="button" onclick="loadFeaturedData('all')" data-featured-filter="all" class="featured-filter-btn px-4 py-2 rounded-full bg-kancah-blue border border-kancah-blue text-[9px] font-black uppercase tracking-widest text-white transition-all shadow-lg shadow-kancah-blue/20">All</button>
+                    <button type="button" onclick="loadFeaturedData('Brand Design')" data-featured-filter="Brand Design" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">Brand Design</button>
+                    <button type="button" onclick="loadFeaturedData('Promotion Design')" data-featured-filter="Promotion Design" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">Promotion Design</button>
+                    <button type="button" onclick="loadFeaturedData('Web Development')" data-featured-filter="Web Development" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">Tech Development</button>
+                    <button type="button" onclick="loadFeaturedData('Social Media Management')" data-featured-filter="Social Media Management" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">SMM</button>
+                    <button type="button" onclick="loadFeaturedData('Audio Visual')" data-featured-filter="Audio Visual" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">Audio Visual</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="featured-grid">
+            <div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">
+                Memuat karya pilihan...
+            </div>
+        </div>
+
+        <div class="mt-12 sm:mt-16 flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-gray-200 pt-8">
+            <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.35em] text-center sm:text-left">
+                Masih banyak cerita visual lainnya di halaman portfolio.
+            </p>
+            <a href="works" class="group inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-lg">
+                <span class="font-black uppercase tracking-[0.2em] text-[11px]">See All Projects</span>
+                <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
             </a>
         </div>
     </div>
@@ -509,6 +550,11 @@
                         Ayo Ngobrol
                         <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
                     </a>
+
+                    <a href="pricelist" class="mt-4 group inline-flex items-center justify-center gap-3 border border-white/15 text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-white hover:text-kancah-dark transition-all duration-300">
+                        Pricelist
+                        <i class="fa-solid fa-receipt text-[11px]"></i>
+                    </a>
                 </div>
     
                 <div class="lg:col-span-4 flex flex-col gap-6">
@@ -535,6 +581,7 @@
                         <ul class="flex flex-col gap-3 font-medium text-sm">
                             <li><a href="services" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
                             <li><a href="works" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
+                            <li><a href="pricelist" class="text-white hover:text-kancah-blue transition-colors">Pricelist</a></li>
                             <li><a href="about" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
                             <li><a href="careers" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
                         </ul>
@@ -568,50 +615,134 @@ const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
 const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
 const kancah = supabase.createClient(SB_URL, SB_KEY);
 
-// 1. FUNGSI UTAMA LOAD PROJECT (LANDSCAPE 16:9 OVERLAY)
-async function loadFeaturedData() {
+// 1. FUNGSI UTAMA LOAD PROJECT (FILTER BUTTON + AUTO ISI)
+function setFeaturedFilterActive(activeFilter = 'all') {
+    document.querySelectorAll('.featured-filter-btn').forEach(btn => {
+        const isActive = btn.dataset.featuredFilter === activeFilter;
+        btn.className = isActive
+            ? 'featured-filter-btn px-4 py-2 rounded-full bg-kancah-blue border border-kancah-blue text-[9px] font-black uppercase tracking-widest text-white transition-all shadow-lg shadow-kancah-blue/20'
+            : 'featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue';
+    });
+}
+
+async function loadFeaturedData(filter = 'all') {
     const grid = document.getElementById('featured-grid');
     if (!grid) return;
 
-    const { data: projects, error } = await kancah
-        .from('projects')
-        .select('*')
-        .eq('is_highlight', true) 
-        .order('created_at', { ascending: false })
-        .limit(2);
+    const TARGET_LIMIT = 9;
+    setFeaturedFilterActive(filter);
 
-    if (error || !projects) {
-        grid.innerHTML = `<div class="col-span-full text-center py-10 text-gray-400 font-bold uppercase tracking-widest text-[10px]">Gagal memuat karya.</div>`;
-        return;
+    grid.innerHTML = `
+        <div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">
+            Memuat karya pilihan...
+        </div>`;
+
+    try {
+        const applyFilter = (query) => {
+            if (filter !== 'all') query = query.eq('category', filter);
+            return query;
+        };
+
+        // Ambil highlight sesuai filter dulu.
+        let highlightQuery = kancah
+            .from('projects')
+            .select('*')
+            .eq('is_highlight', true)
+            .order('created_at', { ascending: false })
+            .limit(TARGET_LIMIT);
+
+        const { data: highlighted, error: highlightError } = await applyFilter(highlightQuery);
+        if (highlightError) throw highlightError;
+
+        let projects = highlighted || [];
+
+        // Kalau highlight kurang, tambahkan project terbaru lain sesuai filter.
+        if (projects.length < TARGET_LIMIT) {
+            const usedIds = projects.map(p => p.id).filter(Boolean);
+
+            let moreQuery = kancah
+                .from('projects')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(TARGET_LIMIT - projects.length);
+
+            moreQuery = applyFilter(moreQuery);
+
+            if (usedIds.length > 0) {
+                moreQuery = moreQuery.not('id', 'in', `(${usedIds.join(',')})`);
+            }
+
+            const { data: moreProjects, error: moreError } = await moreQuery;
+            if (moreError) throw moreError;
+
+            projects = [...projects, ...(moreProjects || [])].slice(0, TARGET_LIMIT);
+        }
+
+        if (!projects || projects.length === 0) {
+            grid.innerHTML = `<div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">Belum ada karya di kategori ini.</div>`;
+            return;
+        }
+
+        grid.innerHTML = projects.map((p, index) => {
+            const number = String(index + 1).padStart(2, '0');
+            const title = p.title || 'Untitled Project';
+            const category = p.category || 'Creative Work';
+            const image = p.image_url || 'assets/logowh.png';
+            const slug = p.slug || '';
+
+            return `
+                <article class="group cursor-pointer" onclick="window.location.href='detail-project?id=${slug}'">
+                    <div class="relative transition-all duration-500 group-hover:-translate-y-1">
+
+                        <!-- IMAGE CARD: cover tetap bersih, tanpa judul nutupin gambar -->
+                        <div class="relative overflow-hidden rounded-[1.75rem] border border-gray-200 bg-kancah-light shadow-sm transition-all duration-500 group-hover:border-kancah-blue group-hover:shadow-[0_18px_45px_rgba(0,6,255,0.13)]">
+                            <div class="relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[16/9] overflow-hidden">
+                                <img src="${image}" class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.025]" alt="${title}" loading="lazy">
+
+                                <!-- Gradasi tipis hanya untuk badge & arrow, bukan untuk judul -->
+                                <div class="absolute inset-x-0 top-0 h-[34%] bg-gradient-to-b from-black/45 to-transparent pointer-events-none"></div>
+                                <div class="absolute inset-x-0 bottom-0 h-[34%] bg-gradient-to-t from-black/35 to-transparent pointer-events-none"></div>
+
+                                <div class="absolute top-4 left-4 right-4 flex items-center justify-between gap-3">
+                                    <span class="inline-flex max-w-[70%] items-center rounded-full bg-white/95 backdrop-blur-md px-3.5 py-1.5 text-[7px] sm:text-[8px] font-black uppercase tracking-[0.16em] text-kancah-dark shadow-sm truncate">
+                                        ${category}
+                                    </span>
+                                    <span class="text-white/90 text-[10px] font-black tracking-[0.28em] drop-shadow-sm">
+                                        ${number}
+                                    </span>
+                                </div>
+
+                                <div class="absolute right-4 bottom-4 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-white text-kancah-dark flex items-center justify-center shadow-lg border border-white/70 transition-all duration-500 group-hover:bg-kancah-blue group-hover:text-white group-hover:rotate-45">
+                                    <i class="fa-solid fa-arrow-right -rotate-45 text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TEXT DI BAWAH CARD: ringkas, kelihatan, tapi tidak bikin area putih terlalu lebar -->
+                        <div class="px-1.5 pt-4">
+                            <div class="flex items-start justify-between gap-4 border-b border-gray-200 pb-4 transition-colors duration-300 group-hover:border-kancah-blue">
+                                <div class="min-w-0 flex-1">
+                                    <h3 class="text-[15px] sm:text-[16px] font-black uppercase tracking-tight leading-tight text-kancah-dark group-hover:text-kancah-blue transition-colors"
+                                        style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
+                                        ${title}
+                                    </h3>
+                                    <p class="mt-2 text-[8px] font-black uppercase tracking-[0.22em] text-gray-400">
+                                        View Case Study
+                                    </p>
+                                </div>
+                                <span class="mt-0.5 shrink-0 text-[9px] font-black tracking-[0.22em] text-gray-300 group-hover:text-kancah-blue transition-colors">
+                                    ${number}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }).join('');
+    } catch (error) {
+        console.error('Featured works error:', error);
+        grid.innerHTML = `<div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">Gagal memuat karya.</div>`;
     }
-
-   grid.innerHTML = projects.map(p => `
-    <div class="group cursor-pointer" onclick="window.location.href='detail-project?id=${p.slug}'">
-        <div class="relative aspect-video overflow-hidden rounded-[2rem] mb-8 border border-gray-100 shadow-sm">
-            <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out" alt="${p.title}">
-            <div class="absolute top-6 left-6">
-                <span class="bg-white/95 backdrop-blur-md px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest text-kancah-dark shadow-sm">
-                    ${p.category}
-                </span>
-            </div>
-        </div>
-
-        <div class="flex flex-row justify-between items-start border-b border-gray-100 pb-8 group-hover:border-kancah-blue transition-colors gap-8">
-            <div class="min-w-0 flex-1"> 
-                <h3 class="text-3xl sm:text-4xl md:text-5xl font-black text-kancah-dark italic uppercase tracking-tighter leading-tight mb-3 group-hover:text-kancah-blue transition-colors break-words">
-                    ${p.title}
-                </h3>
-                <p class="text-gray-400 font-bold text-[9px] uppercase tracking-[0.4em]">
-                    ${p.category}
-                </p>
-            </div>
-
-            <div class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-gray-200 flex items-center justify-center bg-white group-hover:bg-kancah-blue group-hover:text-white group-hover:border-kancah-blue transition-all duration-500 shrink-0 transform group-hover:rotate-45 shadow-sm mt-1">
-                <i class="fa-solid fa-arrow-right -rotate-45 text-xl"></i>
-            </div>
-        </div>
-    </div>
-`).join('');
 }
 // 2. FUNGSI LOGO PARTNER
 async function loadPartners() {
