@@ -51,23 +51,49 @@
 
 <body class="bg-white text-[#111] selection:bg-[#0006ff] selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
 
-  <nav class="fixed w-full z-[1000] top-0 bg-white/85 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 pointer-events-auto">
-    <div class="max-w-[1500px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
-      <a href="/" class="flex items-center gap-3">
+<nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
+
+    <div class="flex-none">
+      <a href="/">
         <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
       </a>
-
-      <div class="hidden lg:flex gap-8 text-[11px] font-bold uppercase tracking-[0.2em]">
-        <a href="#pricelist" class="hover:text-[#0006ff]">Pricelist</a>
-        <a href="#compare" class="hover:text-[#0006ff]">Tier</a>
-        <a href="#contact" class="hover:text-[#0006ff]">Contact</a>
-      </div>
-
-      <a href="#pricelist" class="h-[42px] sm:h-[52px] px-5 sm:px-8 bg-[#0006ff] text-white rounded-full font-black text-[11px] uppercase tracking-[.2em] hover:bg-[#111] transition-all flex items-center">
-        Lihat Harga
-      </a>
     </div>
-  </nav>
+
+    <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
+      <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
+      <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
+      <a href="works" class="hover:text-kancah-blue transition-colors">Work</a>
+      <a href="pricelist" class="text-kancah-blue font-black transition-colors">Pricelist</a>
+      <a href="careers" class="hover:text-kancah-blue transition-colors">Careers</a>
+    </div>
+
+    <div class="flex items-center gap-2 sm:gap-4 h-8">
+      <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
+        Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
+      </a>
+
+      <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
+        <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full transition-transform duration-500 lg:hidden">
+  <button class="absolute top-6 right-6 text-3xl" id="close-menu">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+
+  <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
+    <a href="about" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
+    <a href="services" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
+    <a href="works" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
+    <a href="pricelist" class="mobile-link text-kancah-blue font-black transition-colors">Pricelist</a>
+    <a href="careers" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
+    <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
+  </div>
+</div>
 
   <header class="relative min-h-screen flex items-center pt-28 pb-20 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden">
     <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]" style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 30px 30px;"></div>
@@ -446,6 +472,23 @@
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
+    const mobileMenuBtn = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+const closeMenuBtn = document.getElementById('close-menu');
+
+if (mobileMenuBtn && mobileMenu && closeMenuBtn) {
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.remove('translate-x-full');
+    mobileMenu.classList.add('translate-x-0');
+    document.body.classList.add('menu-open');
+  });
+
+  closeMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.remove('translate-x-0');
+    mobileMenu.classList.add('translate-x-full');
+    document.body.classList.remove('menu-open');
+  });
+}
   </script>
 </body>
 </html>
