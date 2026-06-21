@@ -35,6 +35,11 @@
         }
     </script>
     <style>
+        .cta-glow {
+  background:
+    radial-gradient(circle at 85% 20%, rgba(255,255,255,.28), transparent 30%),
+    linear-gradient(135deg, #0006ff 0%, #111 62%, #000 100%);
+}
         .no-scrollbar::-webkit-scrollbar { display: none; }
         body { font-family: 'Ubuntu', sans-serif; }
         
@@ -241,7 +246,7 @@
         <span class="text-[18vw] sm:text-[15vw] lg:text-[9.5vw] font-black italic text-[#0006ff] uppercase">PROOF</span>
 
         <p class="hidden lg:block text-gray-400 text-base xl:text-lg font-light leading-snug max-w-xs xl:max-w-md normal-case tracking-normal pt-4">
-            Kita teman debat, partner mikir, dan eksekutor andalan buat ide-ide yang kelihatan "nggak mungkin" tapi sebenarnya bisa-bisa aja.
+           We help brands communicate better, grow faster, and create lasting impressions through design, technology, and creativity.
         </p>
     </div>
 
@@ -417,7 +422,7 @@
 
     <details class="group cursor-pointer">
         <summary class="flex justify-between items-center gap-6 font-bold text-lg py-5 select-none hover:text-kancah-blue transition-colors">
-            <span>Apa sih itu Kancah?</span>
+            <span>Apa itu Kancah?</span>
 
             <span class="text-kancah-blue transition-transform duration-300 group-open:rotate-180">
                 <i class="fa-solid fa-chevron-down"></i>
@@ -572,7 +577,36 @@
     </div>
 </div>
 </section>
+ <section class="py-14 bg-white text-[#111] overflow-hidden">
+    <div class="max-w-[1500px] mx-auto px-4 sm:px-6">
+      <div class="cta-glow rounded-[2rem] text-white p-6 sm:p-8 lg:p-8 flex flex-col lg:flex-row justify-between gap-7 items-start lg:items-center overflow-hidden relative shadow-2xl shadow-[#0006ff]/20">
+        <div class="absolute right-0 top-0 w-[420px] h-full opacity-20 pointer-events-none">
+          <div class="absolute right-10 top-8 w-44 h-44 rounded-full border border-white/30"></div>
+          <div class="absolute right-28 bottom-8 w-24 h-24 rounded-full border border-white/20"></div>
+          <div class="absolute right-0 bottom-0 w-72 h-72 bg-white/10 blur-3xl rounded-full"></div>
+        </div>
 
+        <div class="relative z-10 max-w-2xl">
+          <span class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[.3em] text-white/60">
+            <i class="fa-regular fa-comments"></i> Let's Talk !
+          </span>
+          <h2 class="text-4xl sm:text-5xl font-black uppercase tracking-tighter mt-3 leading-[.9]">
+            Siap Mengembangkan<br><span class="italic">Brand Kamu?</span>
+          </h2>
+          <p class="text-white/75 mt-4 leading-relaxed max-w-2xl">
+            Setiap brand punya tantangan yang berbeda. Diskusikan kebutuhanmu bersama tim Kancah Creative dan dapatkan solusi yang sesuai dengan tujuan bisnis.
+          </p>
+        </div>
+
+        <a href="contact" class="group relative z-10 bg-white text-[#0006ff] px-6 py-3 rounded-full font-black uppercase tracking-[.2em] text-[10px] hover:bg-[#111] hover:text-white transition-all flex items-center gap-3 shadow-xl">
+          Jadwalkan Konsultasi Gratis
+          <span class="w-7 h-7 rounded-full bg-[#0006ff] text-white group-hover:bg-white group-hover:text-[#111] flex items-center justify-center transition-all">
+            <i class="fa-solid fa-arrow-right arrow-move text-[10px]"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
     <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
     
         <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
