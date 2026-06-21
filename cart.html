@@ -124,17 +124,17 @@
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0006ff] opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0006ff]"></span>
         </span>
-        <span class="text-[#0006ff] font-bold text-xs uppercase tracking-[0.4em]">Bazar Kewirausahaan</span>
+        <span class="text-[#0006ff] font-bold text-xs uppercase tracking-[0.4em]">PRODUK DIGITAL KAMI</span>
       </div>
 
       <h1 class="text-[16vw] sm:text-[12vw] lg:text-[8.5vw] font-black uppercase leading-[.84] tracking-tighter max-w-6xl">
-        PORTFOLIO<br>
-        <span class="text-[#0006ff] italic">SIAP</span><br>
-        MAGANG.
+        TEMPLATE<br>
+        <span class="text-[#0006ff] italic">PORTFOLIO</span><br>
+        SIAP KERJA
       </h1>
 
       <p class="text-gray-500 text-base sm:text-xl font-light leading-relaxed max-w-2xl mt-8">
-        Pilih paket sesuai kebutuhan, Setelah pembayaran, paket portfolio dikirim ke WhatsApp kamu.
+        Pilih paket sesuai kebutuhan, Setelah pembayaran, paket portfolio akan dikirim ke WhatsApp kamu. Pastikan nomor WA kamu tidak typo.
       </p>
 
       <div class="flex flex-wrap gap-3 mt-8">
@@ -154,11 +154,11 @@
         <div>
           <span class="text-[#0006ff] font-bold text-xs uppercase tracking-widest">Pilih Paket</span>
           <h2 class="text-4xl sm:text-6xl font-black uppercase tracking-tighter mt-3">
-            TINGGAL PILIH <span class="text-[#0006ff] italic">BUDGET</span>.
+            SESUAIKAN <span class="text-[#0006ff] italic">BUDGET</span>.
           </h2>
         </div>
         <p class="text-gray-500 max-w-md">
-          Kami sediakan template terbaik sesuai paket. Cocok untuk magang, freelance, dan personal branding.
+          Kami sediakan template terbaik sesuai paket. Cocok untuk mendaftar full time, magang, freelance, dan personal branding.
         </p>
       </div>
 
@@ -308,60 +308,35 @@
        <input id="buyerWa" required class="w-full px-4 py-3 bg-gray-50 border rounded-2xl outline-none focus:border-[#0006ff]" placeholder="No WhatsApp aktif">
       </div>
 
-      <div class="bg-white border border-gray-100 shadow-sm rounded-[1.5rem] p-4">
-        <p class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">Metode Pembayaran</p>
-
-      <div class="grid grid-cols-2 gap-3">
-  <label class="cursor-pointer">
-    <input 
-      type="radio" 
-      name="paymentMethod" 
-      value="cash"
-      class="hidden pay-radio"
-    >
-
-    <div class="pay-card p-4 rounded-2xl border-2 border-gray-100 bg-gray-50 transition-all h-full">
-      <div class="flex items-center gap-2 font-black">
-        <i class="fa-solid fa-money-bill-wave"></i>
-        <span>CASH</span>
-      </div>
-
-      <p class="pay-desc text-[11px] text-gray-500 mt-2 leading-relaxed">
-        Bayar langsung di booth.
-      </p>
-    </div>
-  </label>
-
-  <label class="cursor-pointer">
-    <input 
-      type="radio" 
-      name="paymentMethod" 
+     <div class="grid grid-cols-1">
+  <label class="cursor-pointer block">
+    <input
+      type="radio"
+      name="paymentMethod"
       value="qris"
       class="hidden pay-radio"
       checked
     >
 
-    <div class="pay-card p-4 rounded-2xl border-2 border-gray-100 bg-gray-50 transition-all h-full">
-      <div class="flex items-center gap-2 font-black">
-        <i class="fa-solid fa-qrcode"></i>
-        <span>QRIS</span>
-      </div>
+    <div class="pay-card p-5 rounded-2xl border-2 border-gray-100 bg-gray-50 transition-all w-full">
+      <div class="flex flex-col items-center text-center">
+        <div class="flex items-center gap-2 font-black text-xl">
+          <i class="fa-solid fa-qrcode"></i>
+          <span>QRIS</span>
+        </div>
 
-      <p class="pay-desc text-[11px] text-gray-500 mt-2 leading-relaxed">
-        Scan QR setelah order.
-      </p>
+        <p class="pay-desc text-sm text-gray-500 mt-3">
+          Scan QR setelah order.
+        </p>
+      </div>
     </div>
   </label>
 </div>
-      </div>
-
       <button class="w-full bg-[#0006ff] text-white py-4 rounded-full font-black uppercase tracking-[.2em] text-[11px] hover:bg-[#111] transition-all">
         Konfirmasi Order
       </button>
 
-      <p class="text-[10px] text-gray-400 text-center leading-relaxed px-4">
-        Cash untuk bayar langsung di booth. QRIS untuk scan setelah order.
-      </p>
+     
     </form>
   </div>
 </aside>
@@ -638,7 +613,7 @@
           : packageName.includes('pro')
             ? 50000
             : packageName.includes('ultimate')
-              ? 75000
+              ? 85000
               : Number(pkg.normal_price || pkg.original_price || (Number(pkg.price || 0) * 4));
 
         return `
@@ -649,9 +624,7 @@
               <span class="inline-flex px-3 py-1 rounded-full ${isPopular ? 'bg-white text-[#0006ff]' : 'bg-[#0006ff] text-white'} text-[9px] font-black uppercase tracking-widest">
                 ${pkg.badge || 'Package'}
               </span>
-              <span class="inline-flex px-3 py-1 rounded-full ${isPopular ? 'bg-white/15 text-white' : 'bg-[#111] text-white'} text-[9px] font-black uppercase tracking-widest">
-                Harga Khusus Bazar
-              </span>
+            
             </div>
 
             <h3 class="text-4xl font-black uppercase tracking-tight mt-6">${pkg.name}</h3>
@@ -850,15 +823,15 @@
         <i class="fa-solid fa-check text-[#0006ff] mt-1"></i>
         <div>
           <p class="font-black text-sm">Template siap edit</p>
-          <p class="text-[11px] text-gray-500 mt-1">Tinggal ubah nama, foto, skill, dan project.</p>
+          <p class="text-[11px] text-gray-500 mt-1">Tinggal ubah nama, biodata, foto, skill, dan project.</p>
         </div>
       </div>
 
       <div class="flex items-start gap-3">
         <i class="fa-solid fa-check text-[#0006ff] mt-1"></i>
         <div>
-          <p class="font-black text-sm">Cocok buat magang</p>
-          <p class="text-[11px] text-gray-500 mt-1">Bisa dipakai untuk portfolio internship, freelance, atau personal branding.</p>
+          <p class="font-black text-sm">Cocok untuk mendaftar kerja</p>
+          <p class="text-[11px] text-gray-500 mt-1">Bisa dipakai untuk portfolio full time, internship, freelance, atau personal branding.</p>
         </div>
       </div>
 
@@ -997,7 +970,7 @@
 
       if (paymentMethod === 'cash') {
         latestOrderId = data.id;
-        toast('Order cash dibuat! Silakan bayar di booth.');
+        toast('');
         document.getElementById('thanks-modal').classList.remove('hidden');
       } else {
         toast('Order dibuat! Silakan bayar QRIS.');
