@@ -114,6 +114,10 @@
                     </h1>
                 </div>
 
+                <p id="p-description" class="hidden text-sm lg:text-base text-gray-500 leading-relaxed font-light mb-6 max-w-xl"></p>
+
+                <div id="p-tags" class="flex flex-wrap gap-2 mb-8"></div>
+
                 <div class="space-y-6 py-6 border-t border-gray-100">
                     <div class="space-y-1">
                          <h4 class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.2em] italic flex items-center gap-2">
@@ -140,16 +144,32 @@
 
             <div class="w-full order-1 lg:order-2 lg:sticky lg:top-[88px]">
                 <div class="rounded-3xl lg:rounded-[2.5rem] overflow-hidden shadow-xl aspect-video bg-gray-100 border border-kancah-blue relative group">
-                    <img id="p-image" src="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <img id="p-image" src="" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                 </div>
             </div>
         </div>
 
-        <div class="mt-8 lg:mt-16 border-t border-gray-100 pt-6 flex flex-col items-center justify-center space-y-3">
-            <p class="text-[9px] font-black text-gray-300 uppercase tracking-[0.4em]">View More Projects</p>
-            <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-md">
-                <span class="relative z-10 font-black uppercase tracking-[0.2em] text-[10px]">See All Projects</span>
+        <!-- Flexible gallery: populated from project.gallery, mixes full-width and side-by-side images -->
+        <div id="p-gallery" class="mt-12 lg:mt-20 flex flex-col gap-4 lg:gap-6"></div>
+
+        <div class="mt-8 lg:mt-16 border-t border-gray-100 pt-8 flex flex-col items-center justify-center space-y-6">
+
+            <a id="next-project-link" href="#" class="hidden group w-full max-w-2xl mx-auto items-center justify-between p-6 lg:p-8 rounded-3xl border border-gray-100 hover:border-kancah-blue transition-all">
+                <div>
+                    <span class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.3em] block mb-1">Next Project</span>
+                    <span id="next-project-title" class="text-xl lg:text-3xl font-bold italic uppercase tracking-tight text-kancah-dark"></span>
+                </div>
+                <span class="w-10 h-10 rounded-full bg-kancah-dark text-white flex items-center justify-center group-hover:bg-kancah-blue transition-all shrink-0">
+                    <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
+                </span>
             </a>
+
+            <div class="flex flex-col items-center space-y-3">
+                <p class="text-[9px] font-black text-gray-300 uppercase tracking-[0.4em]">View More Projects</p>
+                <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-md">
+                    <span class="relative z-10 font-black uppercase tracking-[0.2em] text-[10px]">See All Projects</span>
+                </a>
+            </div>
         </div>
 
     </div>
@@ -233,20 +253,110 @@
         const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
         const kancah = supabase.createClient(SB_URL, SB_KEY);
 
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.innerText = str == null ? '' : String(str);
+            return div.innerHTML;
+        }
+
         async function getProjectDetail() {
             const urlParams = new URLSearchParams(window.location.search);
             const slug = urlParams.get('id');
             if (!slug) { window.location.href = 'works'; return; }
             const { data: project, error } = await kancah.from('projects').select('*').eq('slug', slug).single();
             if (error || !project) { console.error("Gagal ambil data:", error); return; }
+
             document.getElementById('page-title').innerText = `${project.title} • Kancah`;
             document.getElementById('p-title').innerText = project.title;
             document.getElementById('p-category').innerText = project.category;
             document.getElementById('p-image').src = project.image_url;
+            document.getElementById('p-image').alt = project.title || '';
             document.getElementById('p-challenge').innerText = project.challenge || "--";
             document.getElementById('p-strategy').innerText = project.strategy || "--";
             document.getElementById('p-outcome').innerText = project.outcome || "--";
+
+            // Optional lead paragraph — only shows if the row has one filled in
+            const descEl = document.getElementById('p-description');
+            if (project.description) {
+                descEl.innerText = project.description;
+                descEl.classList.remove('hidden');
+            }
+
+            renderTags(project);
+            renderGallery(project.gallery);
+            loadNextProject(slug);
+
             document.getElementById('project-container').classList.remove('opacity-0');
+        }
+
+        // Renders "Project Year XXXX" + any service tags, e.g. ["Brand Identity", "Brand Guidelines"]
+        function renderTags(project) {
+            const wrap = document.getElementById('p-tags');
+            let html = '';
+            if (project.year) {
+                html += `<span class="px-4 py-1.5 rounded-full bg-[#0006ff]/10 text-[#0006ff] text-[9px] font-black uppercase tracking-[0.2em]">Project Year ${escapeHtml(project.year)}</span>`;
+            }
+            if (Array.isArray(project.tags)) {
+                project.tags.forEach(tag => {
+                    html += `<span class="px-4 py-1.5 rounded-full border border-gray-200 text-[9px] font-black uppercase tracking-[0.2em] text-gray-500">${escapeHtml(tag)}</span>`;
+                });
+            }
+            wrap.innerHTML = html;
+        }
+
+        // project.gallery is a JSON array like:
+        // [{ "url": "...", "layout": "full" }, { "url": "...", "layout": "half" }, { "url": "...", "layout": "half" }]
+        // Consecutive "half" images pair up side-by-side automatically; "full" always takes its own row.
+        function renderGallery(gallery) {
+            const container = document.getElementById('p-gallery');
+            container.innerHTML = '';
+            if (!Array.isArray(gallery) || gallery.length === 0) return;
+
+            let i = 0;
+            while (i < gallery.length) {
+                const current = gallery[i];
+                const next = gallery[i + 1];
+
+                if (current.layout === 'half' && next && next.layout === 'half') {
+                    const row = document.createElement('div');
+                    row.className = 'grid grid-cols-2 gap-4 lg:gap-6';
+                    row.innerHTML = `
+                        <div class="rounded-2xl lg:rounded-3xl overflow-hidden bg-gray-100">
+                            <img src="${current.url}" alt="" class="w-full h-auto object-cover" loading="lazy">
+                        </div>
+                        <div class="rounded-2xl lg:rounded-3xl overflow-hidden bg-gray-100">
+                            <img src="${next.url}" alt="" class="w-full h-auto object-cover" loading="lazy">
+                        </div>
+                    `;
+                    container.appendChild(row);
+                    i += 2;
+                } else {
+                    const full = document.createElement('div');
+                    full.className = 'rounded-2xl lg:rounded-3xl overflow-hidden bg-gray-100';
+                    full.innerHTML = `<img src="${current.url}" alt="" class="w-full h-auto object-cover" loading="lazy">`;
+                    container.appendChild(full);
+                    i += 1;
+                }
+            }
+        }
+
+        // Pulls the next project in id order (wraps back to the first one at the end)
+        async function loadNextProject(currentSlug) {
+            const { data: list, error } = await kancah.from('projects').select('slug, title').order('id', { ascending: true });
+            if (error || !list || list.length < 2) return;
+
+            const idx = list.findIndex(p => p.slug === currentSlug);
+            if (idx === -1) return;
+
+            const next = list[(idx + 1) % list.length];
+            const link = document.getElementById('next-project-link');
+            const title = document.getElementById('next-project-title');
+            if (link && next) {
+                link.href = `${window.location.pathname}?id=${next.slug}`;
+                title.innerText = next.title;
+                link.classList.remove('hidden');
+                link.classList.add('flex');
+            }
         }
 
         function updateClock() {
