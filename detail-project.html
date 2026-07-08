@@ -28,7 +28,6 @@
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- FREEFORM PROJECT CONTENT (Quill output) --- */
-        /* NOTE: border-radius on inserted images removed per request — images now render square/flush */
         #p-content img { max-width: 100%; height: auto; }
         #p-content p { margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; }
         #p-content h1, #p-content h2, #p-content h3 {
@@ -47,6 +46,36 @@
         #p-content .ql-align-center { text-align: center; }
         #p-content .ql-align-right { text-align: right; }
         #p-content .ql-align-justify { text-align: justify; }
+
+        /* --- YOUTUBE FACADE (Tampilan Thumbnail) --- */
+        #p-content .kf-yt-facade {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            cursor: pointer;
+            background: #111;
+            margin: 1.5rem 0;
+            border-radius: 0.75rem;
+        }
+        #p-content .kf-yt-facade img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            transition: transform .4s ease, filter .4s ease;
+        }
+        #p-content .kf-yt-facade:hover img { transform: scale(1.03); filter: brightness(0.85); }
+        #p-content .kf-yt-facade .kf-yt-play {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+        }
+        #p-content .kf-yt-facade .kf-yt-play span {
+            width: 68px; height: 68px; border-radius: 9999px;
+            background: rgba(0,6,255,0.9); color: #fff;
+            display: flex; align-items: center; justify-content: center; font-size: 22px;
+            transition: transform .25s ease, background .25s ease;
+        }
+        #p-content .kf-yt-facade:hover .kf-yt-play span { transform: scale(1.1); background: #0006ff; }
+        #p-content iframe.ql-video, #p-content .kf-yt-frame {
+            width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; margin: 1.5rem 0; display: block; border-radius: 0.75rem;
+        }
     </style>
 </head>
 <body class="bg-white text-kancah-dark overflow-x-hidden selection:bg-kancah-blue selection:text-white">
@@ -119,16 +148,11 @@
 
     <main class="pb-12">
 
-        <!-- ================= HERO (Waykambas-style: image flush to navbar -> editorial title block) ================= -->
         <section id="hero-cover" class="relative w-full">
-
-            <!-- Cover image wrap: height is set via JS to exactly fill one screen (viewport - navbar) -->
-            <!-- object-cover so the image fills the frame completely — no letterbox/black bars on the sides -->
             <div id="hero-image-wrap" class="relative w-full bg-kancah-dark overflow-hidden flex items-center justify-center">
                 <img id="p-image" src="" alt="" class="w-full h-full object-cover">
             </div>
 
-            <!-- Editorial title block: title/description left, meta (year + tags as plain list) right -->
             <div class="max-w-[1100px] mx-auto px-4 sm:px-6">
                 <div class="pt-8 lg:pt-10 pb-6 lg:pb-8 border-b border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
                     <div class="lg:col-span-8">
@@ -146,14 +170,11 @@
             </div>
         </section>
 
-        <!-- ================= FREEFORM CONTENT (admin-authored, like a Word doc) ================= -->
         <div class="max-w-[1100px] mx-auto px-4 sm:px-6">
             <article id="p-content" class="pt-6"></article>
         </div>
 
         <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-6 lg:mt-8 border-t border-gray-100 pt-6 flex flex-col items-center justify-center gap-4">
-
-            <!-- Prev / Next portfolio nav — minimal, tight spacing, no extra lead copy -->
             <nav class="flex items-center gap-3 flex-wrap justify-center">
                 <a id="prev-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue transition-colors">
                     <span aria-hidden="true">←</span><span id="prev-project-title"></span>
@@ -268,7 +289,6 @@
             document.getElementById('p-image').src = project.image_url;
             document.getElementById('p-image').alt = project.title || '';
 
-            // Optional lead paragraph — only shows if the row has one filled in
             const descEl = document.getElementById('p-description');
             if (project.description) {
                 descEl.innerText = project.description;
@@ -280,8 +300,6 @@
             loadAdjacentProjects(slug);
         }
 
-        // Renders "Project Year XXXX" + any service tags as a plain vertical meta list
-        // (Waykambas-style: no pill badges, just clean stacked text)
         function renderTags(project) {
             const wrap = document.getElementById('p-tags');
             let html = '';
@@ -296,19 +314,47 @@
             wrap.innerHTML = html;
         }
 
-        // project.content_html is rich HTML authored in the admin's Word-like editor
-        // (free mix of text + images, any order, with bold/italic/underline/fonts).
-        // Falls back to the old fixed Challenge/Strategy/Outcome fields for projects
-        // that were created before this editor existed.
+        // Fungsi convert iframe menjadi thumbnail facade
+        function activateYouTubeEmbeds() {
+            const container = document.getElementById('p-content');
+            if (!container) return;
+            const iframes = container.querySelectorAll('iframe[src*="youtube.com/embed/"]');
+            
+            iframes.forEach(iframe => {
+                const match = (iframe.getAttribute('src') || '').match(/embed\/([\w-]{11})/);
+                if (!match) return;
+                const videoId = match[1];
+
+                const facade = document.createElement('div');
+                facade.className = 'kf-yt-facade';
+                // Fallback maxresdefault, jika tidak tersedia, browser biasanya akan mengabaikannya atau kamu dapat menambahkan error handling img.
+                facade.innerHTML = `
+                    <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'" alt="YouTube video thumbnail" loading="lazy">
+                    <div class="kf-yt-play"><span><i class="fa-solid fa-play"></i></span></div>
+                `;
+                
+                facade.addEventListener('click', () => {
+                    const frame = document.createElement('iframe');
+                    frame.className = 'kf-yt-frame';
+                    frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                    frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                    frame.setAttribute('allowfullscreen', '');
+                    facade.replaceWith(frame);
+                }, { once: true });
+
+                iframe.replaceWith(facade);
+            });
+        }
+
         function renderFreeformContent(project) {
             const container = document.getElementById('p-content');
 
             if (project.content_html && project.content_html.trim() !== '') {
                 container.innerHTML = project.content_html;
+                activateYouTubeEmbeds(); // Memanggil render embed
                 return;
             }
 
-            // Legacy fallback (old projects saved before the rich editor)
             let legacy = '';
             if (project.challenge) legacy += `<h3>The Challenge</h3><p>${escapeHtml(project.challenge)}</p>`;
             if (project.strategy) legacy += `<h3>Strategic Idea</h3><p>${escapeHtml(project.strategy)}</p>`;
@@ -317,10 +363,9 @@
                 project.gallery.forEach(g => { legacy += `<p><img src="${g.url}" alt=""></p>`; });
             }
             container.innerHTML = legacy;
+            activateYouTubeEmbeds(); // Memanggil render embed
         }
 
-        // Pulls both the previous and next project in id order (wraps around at each end)
-        // Renders as a minimal "← Prev | Next →" nav, like Wkb's portfolio nav.
         async function loadAdjacentProjects(currentSlug) {
             const { data: list, error } = await kancah.from('projects').select('slug, title').order('id', { ascending: true });
             if (error || !list || list.length < 2) return;
@@ -360,7 +405,6 @@
             const navH = nav ? nav.offsetHeight : 0;
             if (spacer) spacer.style.height = navH + 'px';
 
-            // Cover image fills exactly one screen: viewport height minus the navbar height
             const heroWrap = document.getElementById('hero-image-wrap');
             if (heroWrap) heroWrap.style.height = (window.innerHeight - navH) + 'px';
         }
@@ -389,7 +433,7 @@
             syncNavSpacer();
             window.addEventListener('resize', syncNavSpacer);
             window.addEventListener('load', syncNavSpacer);
-            setTimeout(syncNavSpacer, 300); // safety re-check after web font swaps in
+            setTimeout(syncNavSpacer, 300);
             const btn = document.getElementById('mobile-menu-button'), menu = document.getElementById('mobile-menu'), close = document.getElementById('close-menu');
             if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
             if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
