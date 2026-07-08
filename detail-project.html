@@ -34,6 +34,7 @@
         #p-content h1, #p-content h2, #p-content h3 {
             font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem;
         }
+        #p-content > *:first-child { margin-top: 0 !important; }
         #p-content h1 { font-size: 2.5rem; }
         #p-content h2 { font-size: 2rem; }
         #p-content h3 { font-size: 1.5rem; }
@@ -129,7 +130,7 @@
 
             <!-- Editorial title block: title/description left, meta (year + tags as plain list) right -->
             <div class="max-w-[1100px] mx-auto px-4 sm:px-6">
-                <div class="py-10 lg:py-14 border-b border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+                <div class="pt-8 lg:pt-10 pb-6 lg:pb-8 border-b border-gray-100 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
                     <div class="lg:col-span-8">
                         <span id="p-category" class="text-kancah-blue font-black text-[10px] uppercase tracking-[0.3em] block mb-3">Category</span>
                         <h1 id="p-title" class="text-4xl lg:text-6xl font-bold tracking-tighter leading-[1.05] uppercase italic text-kancah-dark mb-6">
@@ -147,7 +148,7 @@
 
         <!-- ================= FREEFORM CONTENT (admin-authored, like a Word doc) ================= -->
         <div class="max-w-[1100px] mx-auto px-4 sm:px-6">
-            <article id="p-content" class="pt-10 lg:pt-14"></article>
+            <article id="p-content" class="pt-6"></article>
         </div>
 
         <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-6 lg:mt-8 border-t border-gray-100 pt-6 flex flex-col items-center justify-center gap-4">
