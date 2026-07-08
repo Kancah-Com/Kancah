@@ -82,7 +82,7 @@
         .theme-toggle:hover { transform: translateY(-2px); }
 
         /* --- CUSTOM FREE IMAGE FORMATTER (ganti blot-formatter2) ---
-           Resize bebas (gepeng, gak dikunci rasio) + drag geser posisi bebas. */
+           Resize sudut = rasio terkunci (proporsional), resize tengah/tepi = bebas (bisa gepeng) + drag geser posisi bebas. */
         #p-content-editor .ql-editor img { cursor: grab; }
         #p-content-editor .ql-editor img.kf-dragging { cursor: grabbing; }
         .kf-img-overlay {
@@ -529,9 +529,10 @@
 
         // ===================================================================
         // CUSTOM FREE IMAGE FORMATTER (ganti blot-formatter2)
-        // Resize independen width/height (bisa gepeng) + drag geser posisi bebas.
-        // Semua disimpan sebagai inline style di <img>, jadi ikut kesave ke
-        // content_html dan tampil sama persis di halaman project publik.
+        // Resize sudut (nw/ne/sw/se) = rasio terkunci (proporsional, gak bisa gepeng).
+        // Resize tengah/tepi (n/s/e/w) = bebas, satu sisi aja yang berubah, bisa gepeng.
+        // Plus drag geser posisi bebas. Semua disimpan sebagai inline style di <img>,
+        // jadi ikut kesave ke content_html dan tampil sama persis di halaman project publik.
         // ===================================================================
         (function setupFreeImageFormatter() {
             const editorRoot = document.querySelector('#p-content-editor .ql-editor');
@@ -613,13 +614,22 @@
                 positionOverlay();
             }
 
-            // --- RESIZE: bebas, width & height independen, gak dikunci rasio ---
+            // --- RESIZE: sudut (nw/ne/sw/se) = rasio terkunci, tengah/tepi (n/s/e/w) = bebas (bisa gepeng) ---
             let resizeState = null;
             function onHandleMouseDown(e) {
                 e.preventDefault(); e.stopPropagation();
                 if (!selectedImg) return;
                 const rect = selectedImg.getBoundingClientRect();
-                resizeState = { pos: e.currentTarget.dataset.pos, startX: e.clientX, startY: e.clientY, startW: rect.width, startH: rect.height };
+                const pos = e.currentTarget.dataset.pos;
+                resizeState = {
+                    pos,
+                    isCorner: pos.length === 2, // nw, ne, sw, se = handle sudut
+                    startX: e.clientX,
+                    startY: e.clientY,
+                    startW: rect.width,
+                    startH: rect.height,
+                    aspectRatio: rect.width / rect.height
+                };
                 document.addEventListener('mousemove', onResizeMove);
                 document.addEventListener('mouseup', onResizeUp);
             }
@@ -629,12 +639,32 @@
                 const dy = e.clientY - resizeState.startY;
                 const pos = resizeState.pos;
                 let newW = resizeState.startW, newH = resizeState.startH;
-                if (pos.includes('e')) newW = resizeState.startW + dx;
-                if (pos.includes('w')) newW = resizeState.startW - dx;
-                if (pos.includes('s')) newH = resizeState.startH + dy;
-                if (pos.includes('n')) newH = resizeState.startH - dy;
-                selectedImg.style.width = `${Math.max(20, newW)}px`;
-                selectedImg.style.height = `${Math.max(20, newH)}px`;
+
+                if (resizeState.isCorner) {
+                    // Handle sudut: kunci rasio, pakai delta yang paling dominan biar drag ke arah manapun tetap smooth
+                    const signX = pos.includes('e') ? 1 : -1;
+                    const signY = pos.includes('s') ? 1 : -1;
+                    const deltaW = dx * signX;
+                    const deltaH = dy * signY;
+                    const minStart = Math.min(resizeState.startW, resizeState.startH);
+                    let scale = Math.abs(deltaW) > Math.abs(deltaH)
+                        ? (resizeState.startW + deltaW) / resizeState.startW
+                        : (resizeState.startH + deltaH) / resizeState.startH;
+                    scale = Math.max(scale, 20 / minStart); // cegah kebalik/negatif atau kekecilan
+                    newW = resizeState.startW * scale;
+                    newH = resizeState.startH * scale;
+                } else {
+                    // Handle tengah/tepi: bebas, cuma satu sisi berubah, boleh gepeng
+                    if (pos.includes('e')) newW = resizeState.startW + dx;
+                    if (pos.includes('w')) newW = resizeState.startW - dx;
+                    if (pos.includes('s')) newH = resizeState.startH + dy;
+                    if (pos.includes('n')) newH = resizeState.startH - dy;
+                    newW = Math.max(20, newW);
+                    newH = Math.max(20, newH);
+                }
+
+                selectedImg.style.width = `${newW}px`;
+                selectedImg.style.height = `${newH}px`;
                 positionOverlay();
             }
             function onResizeUp() {
