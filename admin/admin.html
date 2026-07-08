@@ -12,9 +12,6 @@
     <!-- Quill: Word-like rich text editor for freeform portfolio content (text + images anywhere, bold/italic/underline/fonts) -->
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
-    <!-- Blot Formatter 2: lets images be dragged/resized/stretched via corner handles, like in Word -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@enzedonline/quill-blot-formatter2@3.1.1/dist/css/quill-blot-formatter2.css">
-    <script src="https://cdn.jsdelivr.net/npm/@enzedonline/quill-blot-formatter2@3.1.1/dist/index.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #111; margin: 0; padding: 0; transition: background-color 0.5s ease; }
@@ -83,6 +80,53 @@
         html.dark .shadow-2xl { box-shadow:0 30px 80px rgba(0,0,0,.55) !important; }
         .theme-toggle { transition: all .25s cubic-bezier(.16,1,.3,1); }
         .theme-toggle:hover { transform: translateY(-2px); }
+
+        /* --- CUSTOM FREE IMAGE FORMATTER (ganti blot-formatter2) ---
+           Resize bebas (gepeng, gak dikunci rasio) + drag geser posisi bebas. */
+        #p-content-editor .ql-editor img { cursor: grab; }
+        #p-content-editor .ql-editor img.kf-dragging { cursor: grabbing; }
+        .kf-img-overlay {
+            position: absolute;
+            border: 2px solid #0006ff;
+            box-sizing: border-box;
+            pointer-events: none;
+            z-index: 9998;
+            display: none;
+        }
+        .kf-img-handle {
+            position: absolute;
+            width: 14px; height: 14px;
+            background: #0006ff;
+            border: 2px solid white;
+            border-radius: 4px;
+            pointer-events: all;
+            box-shadow: 0 2px 6px rgba(0,0,0,.25);
+        }
+        .kf-handle-nw { top: -8px; left: -8px; cursor: nwse-resize; }
+        .kf-handle-ne { top: -8px; right: -8px; cursor: nesw-resize; }
+        .kf-handle-sw { bottom: -8px; left: -8px; cursor: nesw-resize; }
+        .kf-handle-se { bottom: -8px; right: -8px; cursor: nwse-resize; }
+        .kf-handle-n { top: -8px; left: 50%; margin-left: -7px; cursor: ns-resize; }
+        .kf-handle-s { bottom: -8px; left: 50%; margin-left: -7px; cursor: ns-resize; }
+        .kf-handle-e { top: 50%; right: -8px; margin-top: -7px; cursor: ew-resize; }
+        .kf-handle-w { top: 50%; left: -8px; margin-top: -7px; cursor: ew-resize; }
+        .kf-img-toolbar {
+            position: absolute;
+            display: none;
+            gap: 4px;
+            background: #111;
+            padding: 5px 6px;
+            border-radius: 10px;
+            z-index: 9999;
+            box-shadow: 0 8px 20px rgba(0,0,0,.3);
+        }
+        .kf-img-toolbar button {
+            width: 26px; height: 26px;
+            display: flex; align-items: center; justify-content: center;
+            background: transparent; color: #cbd5e1; border: none; border-radius: 6px;
+            cursor: pointer; font-size: 11px;
+        }
+        .kf-img-toolbar button:hover { background: #0006ff; color: white; }
 
     </style>
 </head>
@@ -469,29 +513,174 @@
             ['clean']
         ];
 
-        // Register the resize/drag/stretch module for images before creating the editor
-        Quill.register('modules/blotFormatter2', QuillBlotFormatter2.default);
-
         const quill = new Quill('#p-content-editor', {
             theme: 'snow',
             modules: {
                 toolbar: {
                     container: quillToolbarOptions,
                     handlers: { image: quillImageHandler }
-                },
-                blotFormatter2: {
-                    // autoHeight:false lets the resize handle set an explicit px height
-                    // instead of forcing height:auto -> width & height jadi independen,
-                    // jadi gambar bisa di-stretch bebas (gepeng) sesuai drag-nya.
-                    image: { allowAlignActions: true, allowCompressor: false, autoHeight: false },
-                    resize: { allowResizeModeChange: true }
                 }
             },
-            placeholder: 'Tulis cerita project di sini... bisa taruh gambar di tengah, samping, atau di mana aja, kayak nulis di Word. Klik gambar buat resize/drag.'
+            placeholder: 'Tulis cerita project di sini... bisa taruh gambar di tengah, samping, atau di mana aja, kayak nulis di Word. Klik gambar buat resize/geser.'
         });
 
         // Move Quill's auto-generated toolbar into our styled wrapper
         document.getElementById('p-content-toolbar').appendChild(document.querySelector('.ql-toolbar'));
+
+        // ===================================================================
+        // CUSTOM FREE IMAGE FORMATTER (ganti blot-formatter2)
+        // Resize independen width/height (bisa gepeng) + drag geser posisi bebas.
+        // Semua disimpan sebagai inline style di <img>, jadi ikut kesave ke
+        // content_html dan tampil sama persis di halaman project publik.
+        // ===================================================================
+        (function setupFreeImageFormatter() {
+            const editorRoot = document.querySelector('#p-content-editor .ql-editor');
+            let selectedImg = null;
+            let overlayEl, toolbarEl;
+            const handlePositions = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
+
+            function buildOverlay() {
+                overlayEl = document.createElement('div');
+                overlayEl.className = 'kf-img-overlay';
+                handlePositions.forEach(pos => {
+                    const h = document.createElement('div');
+                    h.className = `kf-img-handle kf-handle-${pos}`;
+                    h.dataset.pos = pos;
+                    h.addEventListener('mousedown', onHandleMouseDown);
+                    overlayEl.appendChild(h);
+                });
+                document.body.appendChild(overlayEl);
+
+                toolbarEl = document.createElement('div');
+                toolbarEl.className = 'kf-img-toolbar';
+                toolbarEl.innerHTML = `
+                    <button type="button" data-align="left" title="Rata kiri"><i class="fa-solid fa-align-left"></i></button>
+                    <button type="button" data-align="center" title="Rata tengah"><i class="fa-solid fa-align-center"></i></button>
+                    <button type="button" data-align="right" title="Rata kanan"><i class="fa-solid fa-align-right"></i></button>
+                    <button type="button" data-align="reset" title="Reset ukuran & posisi"><i class="fa-solid fa-arrows-rotate"></i></button>
+                    <button type="button" data-action="delete" title="Hapus gambar"><i class="fa-solid fa-trash-can"></i></button>
+                `;
+                document.body.appendChild(toolbarEl);
+
+                toolbarEl.querySelectorAll('button[data-align]').forEach(btn => {
+                    btn.addEventListener('mousedown', (e) => e.preventDefault());
+                    btn.addEventListener('click', () => applyAlign(btn.dataset.align));
+                });
+                toolbarEl.querySelector('button[data-action="delete"]').addEventListener('click', () => {
+                    if (selectedImg) { selectedImg.remove(); deselectImage(); }
+                });
+            }
+
+            function positionOverlay() {
+                if (!selectedImg) return;
+                const rect = selectedImg.getBoundingClientRect();
+                overlayEl.style.top = `${rect.top + window.scrollY}px`;
+                overlayEl.style.left = `${rect.left + window.scrollX}px`;
+                overlayEl.style.width = `${rect.width}px`;
+                overlayEl.style.height = `${rect.height}px`;
+                overlayEl.style.display = 'block';
+
+                toolbarEl.style.top = `${rect.top + window.scrollY - 42}px`;
+                toolbarEl.style.left = `${rect.left + window.scrollX}px`;
+                toolbarEl.style.display = 'flex';
+            }
+
+            function selectImage(img) {
+                selectedImg = img;
+                if (!overlayEl) buildOverlay();
+                positionOverlay();
+            }
+
+            function deselectImage() {
+                selectedImg = null;
+                if (overlayEl) overlayEl.style.display = 'none';
+                if (toolbarEl) toolbarEl.style.display = 'none';
+            }
+
+            function applyAlign(type) {
+                if (!selectedImg) return;
+                selectedImg.style.position = 'relative';
+                if (type === 'reset') {
+                    selectedImg.removeAttribute('style');
+                } else {
+                    selectedImg.style.left = '0px';
+                    selectedImg.style.top = '0px';
+                    selectedImg.style.display = 'block';
+                    if (type === 'left') { selectedImg.style.marginLeft = '0'; selectedImg.style.marginRight = 'auto'; }
+                    if (type === 'center') { selectedImg.style.marginLeft = 'auto'; selectedImg.style.marginRight = 'auto'; }
+                    if (type === 'right') { selectedImg.style.marginLeft = 'auto'; selectedImg.style.marginRight = '0'; }
+                }
+                positionOverlay();
+            }
+
+            // --- RESIZE: bebas, width & height independen, gak dikunci rasio ---
+            let resizeState = null;
+            function onHandleMouseDown(e) {
+                e.preventDefault(); e.stopPropagation();
+                if (!selectedImg) return;
+                const rect = selectedImg.getBoundingClientRect();
+                resizeState = { pos: e.currentTarget.dataset.pos, startX: e.clientX, startY: e.clientY, startW: rect.width, startH: rect.height };
+                document.addEventListener('mousemove', onResizeMove);
+                document.addEventListener('mouseup', onResizeUp);
+            }
+            function onResizeMove(e) {
+                if (!resizeState || !selectedImg) return;
+                const dx = e.clientX - resizeState.startX;
+                const dy = e.clientY - resizeState.startY;
+                const pos = resizeState.pos;
+                let newW = resizeState.startW, newH = resizeState.startH;
+                if (pos.includes('e')) newW = resizeState.startW + dx;
+                if (pos.includes('w')) newW = resizeState.startW - dx;
+                if (pos.includes('s')) newH = resizeState.startH + dy;
+                if (pos.includes('n')) newH = resizeState.startH - dy;
+                selectedImg.style.width = `${Math.max(20, newW)}px`;
+                selectedImg.style.height = `${Math.max(20, newH)}px`;
+                positionOverlay();
+            }
+            function onResizeUp() {
+                resizeState = null;
+                document.removeEventListener('mousemove', onResizeMove);
+                document.removeEventListener('mouseup', onResizeUp);
+            }
+
+            // --- DRAG: geser gambar ke mana aja (offset relatif dari posisi normalnya) ---
+            let dragState = null;
+            editorRoot.addEventListener('mousedown', (e) => {
+                const img = e.target.closest('img');
+                if (!img || !editorRoot.contains(img)) return;
+                e.preventDefault();
+                if (img !== selectedImg) selectImage(img);
+                img.style.position = 'relative';
+                img.classList.add('kf-dragging');
+                dragState = { img, startX: e.clientX, startY: e.clientY, startLeft: parseFloat(img.style.left) || 0, startTop: parseFloat(img.style.top) || 0, moved: false };
+                document.addEventListener('mousemove', onDragMove);
+                document.addEventListener('mouseup', onDragUp);
+            });
+            function onDragMove(e) {
+                if (!dragState) return;
+                const dx = e.clientX - dragState.startX;
+                const dy = e.clientY - dragState.startY;
+                if (!dragState.moved && Math.abs(dx) < 3 && Math.abs(dy) < 3) return;
+                dragState.moved = true;
+                dragState.img.style.left = `${dragState.startLeft + dx}px`;
+                dragState.img.style.top = `${dragState.startTop + dy}px`;
+                positionOverlay();
+            }
+            function onDragUp() {
+                if (dragState) dragState.img.classList.remove('kf-dragging');
+                dragState = null;
+                document.removeEventListener('mousemove', onDragMove);
+                document.removeEventListener('mouseup', onDragUp);
+            }
+
+            document.addEventListener('mousedown', (e) => {
+                if (selectedImg && !e.target.closest('img') && !e.target.closest('.kf-img-overlay') && !e.target.closest('.kf-img-toolbar')) {
+                    deselectImage();
+                }
+            });
+            window.addEventListener('scroll', () => { if (selectedImg) positionOverlay(); });
+            window.addEventListener('resize', () => { if (selectedImg) positionOverlay(); });
+        })();
 
         function quillImageHandler() {
             const input = document.createElement('input');
