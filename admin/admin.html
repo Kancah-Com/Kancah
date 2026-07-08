@@ -41,6 +41,14 @@
         #p-content-toolbar.ql-toolbar { border-radius: 1rem 1rem 0 0; background: #f8fafc; }
         .ql-container.ql-snow, .ql-toolbar.ql-snow { border-color: #e2e8f0 !important; }
 
+        /* --- MATCH EDITOR WIDTH KE HALAMAN DETAIL PUBLIK (max-w-[1100px] px-6 = ~1052px konten) ---
+           Ini kuncinya kenapa dulu tampilan admin & detail beda: gambar disimpan pakai koordinat
+           px absolut. Kalau lebar editor beda sama lebar #p-content di halaman publik, px yang sama
+           bakal jatuh di posisi/skala visual yang beda. Dengan nge-lock lebar editor sama persis
+           dengan lebar container publik, apa yang keliatan di admin = 1:1 sama persis di halaman detail. */
+        #p-content-editor-wrap { max-width: 1052px; margin: 0 auto; }
+        #p-content-editor .ql-editor { padding: 20px 24px; }
+
         /* --- LIGHT / DARK MODE --- */
         html { color-scheme: light; }
         html.dark { color-scheme: dark; }
@@ -127,6 +135,17 @@
             cursor: pointer; font-size: 11px;
         }
         .kf-img-toolbar button:hover { background: #0006ff; color: white; }
+
+        /* --- SMART ALIGNMENT GUIDES (ala Canva) --- muncul pas drag & nge-snap ke tepi/tengah gambar lain */
+        .kf-guide-line {
+            position: fixed;
+            background: #ff3366;
+            z-index: 9997;
+            pointer-events: none;
+            display: none;
+        }
+        .kf-guide-line.kf-guide-v { width: 1px; }
+        .kf-guide-line.kf-guide-h { height: 1px; }
 
     </style>
 </head>
@@ -673,7 +692,94 @@
                 document.removeEventListener('mouseup', onResizeUp);
             }
 
+            // --- SMART GUIDES: pool garis bantu yang dipakai ulang tiap drag ---
+            const SNAP_THRESHOLD = 6; // px, seberapa deket baru dianggap "nempel"
+            let guideLines = [];
+            function ensureGuideLines() {
+                if (guideLines.length) return guideLines;
+                for (let i = 0; i < 8; i++) {
+                    const el = document.createElement('div');
+                    el.className = 'kf-guide-line';
+                    document.body.appendChild(el);
+                    guideLines.push(el);
+                }
+                return guideLines;
+            }
+            function hideGuideLines() { guideLines.forEach(g => g.style.display = 'none'); }
+            function showVGuide(el, xPix, top, bottom) {
+                el.className = 'kf-guide-line kf-guide-v';
+                el.style.left = `${xPix}px`;
+                el.style.top = `${top}px`;
+                el.style.height = `${Math.max(1, bottom - top)}px`;
+                el.style.display = 'block';
+            }
+            function showHGuide(el, yPix, left, right) {
+                el.className = 'kf-guide-line kf-guide-h';
+                el.style.top = `${yPix}px`;
+                el.style.left = `${left}px`;
+                el.style.width = `${Math.max(1, right - left)}px`;
+                el.style.display = 'block';
+            }
+
+            // Cocokin tepi kiri/tengah/kanan & atas/tengah/bawah gambar yang lagi digeser
+            // dengan gambar lain di editor (dan tepi/tengah kolom editor), kayak smart guides Canva.
+            function computeAlignmentSnap(img) {
+                hideGuideLines();
+                const rect = img.getBoundingClientRect();
+                const editorRect = editorRoot.getBoundingClientRect();
+                const others = Array.from(editorRoot.querySelectorAll('img')).filter(el => el !== img);
+
+                const targetsX = [];
+                const targetsY = [];
+                others.forEach(other => {
+                    const r = other.getBoundingClientRect();
+                    const spanTop = Math.min(rect.top, r.top) - 24, spanBottom = Math.max(rect.bottom, r.bottom) + 24;
+                    const spanLeft = Math.min(rect.left, r.left) - 24, spanRight = Math.max(rect.right, r.right) + 24;
+                    targetsX.push({ value: r.left, top: spanTop, bottom: spanBottom });
+                    targetsX.push({ value: r.left + r.width / 2, top: spanTop, bottom: spanBottom });
+                    targetsX.push({ value: r.right, top: spanTop, bottom: spanBottom });
+                    targetsY.push({ value: r.top, left: spanLeft, right: spanRight });
+                    targetsY.push({ value: r.top + r.height / 2, left: spanLeft, right: spanRight });
+                    targetsY.push({ value: r.bottom, left: spanLeft, right: spanRight });
+                });
+                // Tepi & tengah kolom editor, biar bisa nge-center-in ke halaman juga
+                targetsX.push({ value: editorRect.left, top: editorRect.top, bottom: editorRect.bottom });
+                targetsX.push({ value: editorRect.left + editorRect.width / 2, top: editorRect.top, bottom: editorRect.bottom });
+                targetsX.push({ value: editorRect.right, top: editorRect.top, bottom: editorRect.bottom });
+
+                const mySidesX = [rect.left, rect.left + rect.width / 2, rect.right];
+                const mySidesY = [rect.top, rect.top + rect.height / 2, rect.bottom];
+
+                const lines = ensureGuideLines();
+                let vUsed = 0, hUsed = 4; // guideLines[0..3] = vertical, [4..7] = horizontal
+                let snappedX = null, snappedY = null;
+
+                xLoop:
+                for (const my of mySidesX) {
+                    for (const t of targetsX) {
+                        if (Math.abs(t.value - my) <= SNAP_THRESHOLD) {
+                            snappedX = t.value - my;
+                            if (vUsed < 4) showVGuide(lines[vUsed++], t.value, t.top, t.bottom);
+                            break xLoop;
+                        }
+                    }
+                }
+                yLoop:
+                for (const my of mySidesY) {
+                    for (const t of targetsY) {
+                        if (Math.abs(t.value - my) <= SNAP_THRESHOLD) {
+                            snappedY = t.value - my;
+                            if (hUsed < 8) showHGuide(lines[hUsed++], t.value, t.left, t.right);
+                            break yLoop;
+                        }
+                    }
+                }
+                return { snappedX, snappedY };
+            }
+
             // --- DRAG: geser gambar ke mana aja (offset relatif dari posisi normalnya) ---
+            // SHIFT = kunci ke satu sumbu (horizontal ATAU vertical) biar gesernya lurus kayak di Word/PPT.
+            // Otomatis juga nge-snap/nempel ke tepi & tengah gambar lain kayak smart guides di Canva.
             let dragState = null;
             editorRoot.addEventListener('mousedown', (e) => {
                 const img = e.target.closest('img');
@@ -682,23 +788,52 @@
                 if (img !== selectedImg) selectImage(img);
                 img.style.position = 'relative';
                 img.classList.add('kf-dragging');
-                dragState = { img, startX: e.clientX, startY: e.clientY, startLeft: parseFloat(img.style.left) || 0, startTop: parseFloat(img.style.top) || 0, moved: false };
+                dragState = {
+                    img,
+                    startX: e.clientX,
+                    startY: e.clientY,
+                    startLeft: parseFloat(img.style.left) || 0,
+                    startTop: parseFloat(img.style.top) || 0,
+                    moved: false,
+                    axisLock: null
+                };
+                ensureGuideLines();
                 document.addEventListener('mousemove', onDragMove);
                 document.addEventListener('mouseup', onDragUp);
             });
             function onDragMove(e) {
                 if (!dragState) return;
-                const dx = e.clientX - dragState.startX;
-                const dy = e.clientY - dragState.startY;
+                let dx = e.clientX - dragState.startX;
+                let dy = e.clientY - dragState.startY;
                 if (!dragState.moved && Math.abs(dx) < 3 && Math.abs(dy) < 3) return;
                 dragState.moved = true;
-                dragState.img.style.left = `${dragState.startLeft + dx}px`;
-                dragState.img.style.top = `${dragState.startTop + dy}px`;
+
+                // Tahan Shift = kunci sumbu (horizontal atau vertical), ditentukan sekali di awal drag
+                if (e.shiftKey) {
+                    if (!dragState.axisLock) dragState.axisLock = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+                    if (dragState.axisLock === 'x') dy = 0; else dx = 0;
+                } else {
+                    dragState.axisLock = null;
+                }
+
+                let newLeft = dragState.startLeft + dx;
+                let newTop = dragState.startTop + dy;
+                dragState.img.style.left = `${newLeft}px`;
+                dragState.img.style.top = `${newTop}px`;
+
+                // Smart snap ke gambar lain (skip snap-X kalau lagi dikunci vertical, dan sebaliknya)
+                const snap = computeAlignmentSnap(dragState.img);
+                if (snap.snappedX !== null && dragState.axisLock !== 'y') newLeft += snap.snappedX;
+                if (snap.snappedY !== null && dragState.axisLock !== 'x') newTop += snap.snappedY;
+                dragState.img.style.left = `${newLeft}px`;
+                dragState.img.style.top = `${newTop}px`;
+
                 positionOverlay();
             }
             function onDragUp() {
                 if (dragState) dragState.img.classList.remove('kf-dragging');
                 dragState = null;
+                hideGuideLines();
                 document.removeEventListener('mousemove', onDragMove);
                 document.removeEventListener('mouseup', onDragUp);
             }
