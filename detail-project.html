@@ -121,10 +121,10 @@
         <!-- ================= HERO (Waykambas-style: image flush to navbar -> editorial title block) ================= -->
         <section id="hero-cover" class="relative w-full">
 
-            <!-- Cover image wrap: height is set via JS to exactly fill one screen (viewport - navbar), no leftover whitespace -->
-            <!-- object-contain so the WHOLE image always shows — no cropping on tall/portrait uploads -->
+            <!-- Cover image wrap: height is set via JS to exactly fill one screen (viewport - navbar) -->
+            <!-- object-cover so the image fills the frame completely — no letterbox/black bars on the sides -->
             <div id="hero-image-wrap" class="relative w-full bg-kancah-dark overflow-hidden flex items-center justify-center">
-                <img id="p-image" src="" alt="" class="w-full h-full object-contain">
+                <img id="p-image" src="" alt="" class="w-full h-full object-cover">
             </div>
 
             <!-- Editorial title block: title/description left, meta (year + tags as plain list) right -->
