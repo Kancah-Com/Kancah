@@ -12,6 +12,9 @@
     <!-- Quill: Word-like rich text editor for freeform portfolio content (text + images anywhere, bold/italic/underline/fonts) -->
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <!-- Blot Formatter 2: lets images be dragged/resized/stretched via corner handles, like in Word -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@enzedonline/quill-blot-formatter2@3.0/dist/css/quill-blot-formatter2.css">
+    <script src="https://cdn.jsdelivr.net/npm/@enzedonline/quill-blot-formatter2@3.0/dist/index.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #111; margin: 0; padding: 0; transition: background-color 0.5s ease; }
@@ -466,15 +469,22 @@
             ['clean']
         ];
 
+        // Register the resize/drag/stretch module for images before creating the editor
+        Quill.register('modules/blotFormatter2', QuillBlotFormatter2.default);
+
         const quill = new Quill('#p-content-editor', {
             theme: 'snow',
             modules: {
                 toolbar: {
                     container: quillToolbarOptions,
                     handlers: { image: quillImageHandler }
+                },
+                blotFormatter2: {
+                    image: { allowAlignActions: true, allowCompressor: false },
+                    resize: { allowResizeModeChange: true }
                 }
             },
-            placeholder: 'Tulis cerita project di sini... bisa taruh gambar di tengah, samping, atau di mana aja, kayak nulis di Word.'
+            placeholder: 'Tulis cerita project di sini... bisa taruh gambar di tengah, samping, atau di mana aja, kayak nulis di Word. Klik gambar buat resize/drag.'
         });
 
         // Move Quill's auto-generated toolbar into our styled wrapper
