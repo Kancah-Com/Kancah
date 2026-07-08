@@ -26,6 +26,25 @@
         #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- FREEFORM PROJECT CONTENT (Quill output) --- */
+        #p-content img { max-width: 100%; height: auto; border-radius: 1.5rem; }
+        #p-content p { margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; }
+        #p-content h1, #p-content h2, #p-content h3 {
+            font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem;
+        }
+        #p-content h1 { font-size: 2.5rem; }
+        #p-content h2 { font-size: 2rem; }
+        #p-content h3 { font-size: 1.5rem; }
+        #p-content ul, #p-content ol { margin: 0 0 1.25rem 1.5rem; color: #4b5563; font-weight: 300; }
+        #p-content a { color: #0006ff; text-decoration: underline; }
+        #p-content blockquote {
+            border-left: 3px solid #0006ff; padding-left: 1.25rem; margin: 1.5rem 0;
+            font-style: italic; color: #374151;
+        }
+        #p-content .ql-align-center { text-align: center; }
+        #p-content .ql-align-right { text-align: right; }
+        #p-content .ql-align-justify { text-align: justify; }
     </style>
 </head>
 <body class="bg-white text-kancah-dark overflow-x-hidden selection:bg-kancah-blue selection:text-white">
@@ -94,65 +113,40 @@
         </div>
     </div>
 
-   <main class="pt-[72px] lg:pt-[88px] pb-12 px-4 lg:px-10 max-w-[1440px] mx-auto min-h-screen">
-    <div id="project-container" class="opacity-0 transition-opacity duration-700 w-full">
-        
-        <div class="mb-3 lg:mb-5">
-            <a href="works" class="inline-flex items-center gap-2 font-bold uppercase text-[9px] tracking-widest hover:text-kancah-blue transition-all group text-gray-400">
-                <span class="w-7 h-7 rounded-full border border-gray-100 flex items-center justify-center group-hover:border-kancah-blue group-hover:text-kancah-blue transition-all text-[8px]">←</span>
-                Back
-            </a>
-        </div>
+    <main class="pb-12">
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-start">
-            
-            <div class="w-full order-2 lg:order-1">
-                <div class="mb-4 lg:mb-6">
-                    <span id="p-category" class="text-kancah-blue font-black text-[9px] uppercase tracking-[0.3em] block mb-1">Category</span>
-                    <h1 id="p-title" class="text-4xl lg:text-7xl font-bold tracking-tighter leading-[1.05] uppercase italic text-kancah-dark">
+        <!-- ================= HERO COVER (Waykambas-style, full-bleed) ================= -->
+        <section id="hero-cover" class="relative w-full pt-16 sm:pt-20">
+            <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-kancah-dark overflow-hidden">
+                <img id="p-image" src="" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0"></div>
+            </div>
+
+            <div class="max-w-[1100px] mx-auto px-4 sm:px-6 -mt-1">
+                <div class="py-8 lg:py-12 border-b border-gray-100">
+                    <a href="works" class="inline-flex items-center gap-2 font-bold uppercase text-[9px] tracking-widest hover:text-kancah-blue transition-all group text-gray-400 mb-6">
+                        <span class="w-7 h-7 rounded-full border border-gray-100 flex items-center justify-center group-hover:border-kancah-blue group-hover:text-kancah-blue transition-all text-[8px]">←</span>
+                        Back
+                    </a>
+
+                    <span id="p-category" class="text-kancah-blue font-black text-[10px] uppercase tracking-[0.3em] block mb-2">Category</span>
+                    <h1 id="p-title" class="text-4xl lg:text-7xl font-bold tracking-tighter leading-[1.05] uppercase italic text-kancah-dark mb-4">
                         Loading...
                     </h1>
-                </div>
 
-                <p id="p-description" class="hidden text-sm lg:text-base text-gray-500 leading-relaxed font-light mb-6 max-w-xl"></p>
+                    <p id="p-description" class="hidden text-sm lg:text-lg text-gray-500 leading-relaxed font-light mb-6 max-w-2xl"></p>
 
-                <div id="p-tags" class="flex flex-wrap gap-2 mb-8"></div>
-
-                <div class="space-y-6 py-6 border-t border-gray-100">
-                    <div class="space-y-1">
-                         <h4 class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.2em] italic flex items-center gap-2">
-                            <i class="fa-regular fa-circle-question text-sm"></i> The Challenge
-                        </h4>
-                        <p id="p-challenge" class="text-sm lg:text-base text-gray-600 leading-relaxed font-light pl-6 border-l border-gray-100">--</p>
-                    </div>
-
-                    <div class="space-y-1">
-                         <h4 class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.2em] italic flex items-center gap-2">
-                            <i class="fa-regular fa-lightbulb text-sm"></i> Strategic Idea
-                        </h4>
-                        <p id="p-strategy" class="text-sm lg:text-base text-gray-600 leading-relaxed font-light pl-6 border-l border-gray-100">--</p>
-                    </div>
-
-                    <div class="space-y-1">
-                         <h4 class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.2em] italic flex items-center gap-2">
-                            <i class="fa-solid fa-chart-line text-sm"></i> Outcome
-                        </h4>
-                        <p id="p-outcome" class="text-sm lg:text-base text-gray-600 leading-relaxed font-light pl-6 border-l border-gray-100">--</p>
-                    </div>
+                    <div id="p-tags" class="flex flex-wrap gap-2"></div>
                 </div>
             </div>
+        </section>
 
-            <div class="w-full order-1 lg:order-2 lg:sticky lg:top-[88px]">
-                <div class="rounded-3xl lg:rounded-[2.5rem] overflow-hidden shadow-xl aspect-video bg-gray-100 border border-kancah-blue relative group">
-                    <img id="p-image" src="" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                </div>
-            </div>
+        <!-- ================= FREEFORM CONTENT (admin-authored, like a Word doc) ================= -->
+        <div class="max-w-[1100px] mx-auto px-4 sm:px-6">
+            <article id="p-content" class="pt-10 lg:pt-14"></article>
         </div>
 
-        <!-- Flexible gallery: populated from project.gallery, mixes full-width and side-by-side images -->
-        <div id="p-gallery" class="mt-12 lg:mt-20 flex flex-col gap-4 lg:gap-6"></div>
-
-        <div class="mt-8 lg:mt-16 border-t border-gray-100 pt-8 flex flex-col items-center justify-center space-y-6">
+        <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-8 lg:mt-16 border-t border-gray-100 pt-8 flex flex-col items-center justify-center space-y-6">
 
             <a id="next-project-link" href="#" class="hidden group w-full max-w-2xl mx-auto items-center justify-between p-6 lg:p-8 rounded-3xl border border-gray-100 hover:border-kancah-blue transition-all">
                 <div>
@@ -172,8 +166,7 @@
             </div>
         </div>
 
-    </div>
-</main>
+    </main>
 
     <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
     
@@ -271,9 +264,6 @@
             document.getElementById('p-category').innerText = project.category;
             document.getElementById('p-image').src = project.image_url;
             document.getElementById('p-image').alt = project.title || '';
-            document.getElementById('p-challenge').innerText = project.challenge || "--";
-            document.getElementById('p-strategy').innerText = project.strategy || "--";
-            document.getElementById('p-outcome').innerText = project.outcome || "--";
 
             // Optional lead paragraph — only shows if the row has one filled in
             const descEl = document.getElementById('p-description');
@@ -283,10 +273,8 @@
             }
 
             renderTags(project);
-            renderGallery(project.gallery);
+            renderFreeformContent(project);
             loadNextProject(slug);
-
-            document.getElementById('project-container').classList.remove('opacity-0');
         }
 
         // Renders "Project Year XXXX" + any service tags, e.g. ["Brand Identity", "Brand Guidelines"]
@@ -304,40 +292,27 @@
             wrap.innerHTML = html;
         }
 
-        // project.gallery is a JSON array like:
-        // [{ "url": "...", "layout": "full" }, { "url": "...", "layout": "half" }, { "url": "...", "layout": "half" }]
-        // Consecutive "half" images pair up side-by-side automatically; "full" always takes its own row.
-        function renderGallery(gallery) {
-            const container = document.getElementById('p-gallery');
-            container.innerHTML = '';
-            if (!Array.isArray(gallery) || gallery.length === 0) return;
+        // project.content_html is rich HTML authored in the admin's Word-like editor
+        // (free mix of text + images, any order, with bold/italic/underline/fonts).
+        // Falls back to the old fixed Challenge/Strategy/Outcome fields for projects
+        // that were created before this editor existed.
+        function renderFreeformContent(project) {
+            const container = document.getElementById('p-content');
 
-            let i = 0;
-            while (i < gallery.length) {
-                const current = gallery[i];
-                const next = gallery[i + 1];
-
-                if (current.layout === 'half' && next && next.layout === 'half') {
-                    const row = document.createElement('div');
-                    row.className = 'grid grid-cols-2 gap-4 lg:gap-6';
-                    row.innerHTML = `
-                        <div class="rounded-2xl lg:rounded-3xl overflow-hidden bg-gray-100">
-                            <img src="${current.url}" alt="" class="w-full h-auto object-cover" loading="lazy">
-                        </div>
-                        <div class="rounded-2xl lg:rounded-3xl overflow-hidden bg-gray-100">
-                            <img src="${next.url}" alt="" class="w-full h-auto object-cover" loading="lazy">
-                        </div>
-                    `;
-                    container.appendChild(row);
-                    i += 2;
-                } else {
-                    const full = document.createElement('div');
-                    full.className = 'rounded-2xl lg:rounded-3xl overflow-hidden bg-gray-100';
-                    full.innerHTML = `<img src="${current.url}" alt="" class="w-full h-auto object-cover" loading="lazy">`;
-                    container.appendChild(full);
-                    i += 1;
-                }
+            if (project.content_html && project.content_html.trim() !== '') {
+                container.innerHTML = project.content_html;
+                return;
             }
+
+            // Legacy fallback (old projects saved before the rich editor)
+            let legacy = '';
+            if (project.challenge) legacy += `<h3>The Challenge</h3><p>${escapeHtml(project.challenge)}</p>`;
+            if (project.strategy) legacy += `<h3>Strategic Idea</h3><p>${escapeHtml(project.strategy)}</p>`;
+            if (project.outcome) legacy += `<h3>Outcome</h3><p>${escapeHtml(project.outcome)}</p>`;
+            if (Array.isArray(project.gallery)) {
+                project.gallery.forEach(g => { legacy += `<p><img src="${g.url}" alt=""></p>`; });
+            }
+            container.innerHTML = legacy;
         }
 
         // Pulls the next project in id order (wraps back to the first one at the end)
