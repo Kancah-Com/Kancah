@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #111; margin: 0; padding: 0; transition: background-color 0.5s ease; }
         .sidebar-link { color: #0f172a; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .sidebar-link:hover { color: #0006ff; background-color: #f0f4ff; }
@@ -48,6 +49,36 @@
            dengan lebar container publik, apa yang keliatan di admin = 1:1 sama persis di halaman detail. */
         #p-content-editor-wrap { max-width: 1052px; margin: 0 auto; }
         #p-content-editor .ql-editor { padding: 20px 24px; }
+
+        /* --- SAMAIN TYPOGRAPHY EDITOR DENGAN #p-content DI HALAMAN DETAIL PUBLIK ---
+           Font/line-height/margin paragraf beda = teks bisa wrap beda baris = gambar yang
+           di-drag nempel di tengah teks bisa geser posisi meski lebar container udah sama.
+           Jadi area nulis di sini di-styling identik sama artikel di halaman publik. */
+        #p-content-editor .ql-editor {
+            font-family: 'Ubuntu', sans-serif;
+            font-size: 16px;
+        }
+        #p-content-editor .ql-editor > *:first-child { margin-top: 0 !important; }
+        #p-content-editor .ql-editor p {
+            margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300;
+        }
+        #p-content-editor .ql-editor h1,
+        #p-content-editor .ql-editor h2,
+        #p-content-editor .ql-editor h3 {
+            font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem;
+        }
+        #p-content-editor .ql-editor h1 { font-size: 2.5rem; }
+        #p-content-editor .ql-editor h2 { font-size: 2rem; }
+        #p-content-editor .ql-editor h3 { font-size: 1.5rem; }
+        #p-content-editor .ql-editor ul,
+        #p-content-editor .ql-editor ol {
+            margin: 0 0 1.25rem 1.5rem; color: #4b5563; font-weight: 300;
+        }
+        #p-content-editor .ql-editor a { color: #0006ff; text-decoration: underline; }
+        #p-content-editor .ql-editor blockquote {
+            border-left: 3px solid #0006ff; padding-left: 1.25rem; margin: 1.5rem 0;
+            font-style: italic; color: #374151;
+        }
 
         /* --- LIGHT / DARK MODE --- */
         html { color-scheme: light; }
