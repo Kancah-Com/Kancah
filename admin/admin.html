@@ -9,7 +9,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Quill: Word-like rich text editor for freeform portfolio content (text + images anywhere, bold/italic/underline/fonts) -->
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <style>
@@ -42,22 +41,9 @@
         #p-content-toolbar.ql-toolbar { border-radius: 1rem 1rem 0 0; background: #f8fafc; }
         .ql-container.ql-snow, .ql-toolbar.ql-snow { border-color: #e2e8f0 !important; }
 
-        /* --- MATCH EDITOR WIDTH KE HALAMAN DETAIL PUBLIK (max-w-[1100px] px-6 = ~1052px konten) ---
-           FIX: sebelumnya wrap ini di-set max-width: 1052px, TAPI ql-editor di dalamnya masih
-           punya padding 20px 24px sendiri (lihat rule di bawah). Itu bikin kanvas tulis ASLI
-           (tempat gambar di-resize/drag) jadi cuma ~1000px, bukan 1052px seperti halaman publik.
-           Makanya gambar yang di-resize "pas mepet kanan" di admin, di publik nyisa gap kosong
-           di kanan karena container publiknya emang lebih lebar (1052px).
-           FIX-nya: lebarin wrap ini sejumlah padding ql-editor (24px kiri + 24px kanan = 48px),
-           jadi 1052 + 48 = 1100px. Dengan ini, kanvas tulis efektif balik jadi 1052px persis
-           sama seperti #p-content di halaman detail publik. */
         #p-content-editor-wrap { max-width: 1100px; margin: 0 auto; }
         #p-content-editor .ql-editor { padding: 20px 24px; }
 
-        /* --- SAMAIN TYPOGRAPHY EDITOR DENGAN #p-content DI HALAMAN DETAIL PUBLIK ---
-           Font/line-height/margin paragraf beda = teks bisa wrap beda baris = gambar yang
-           di-drag nempel di tengah teks bisa geser posisi meski lebar container udah sama.
-           Jadi area nulis di sini di-styling identik sama artikel di halaman publik. */
         #p-content-editor .ql-editor {
             font-family: 'Ubuntu', sans-serif;
             font-size: 16px;
@@ -82,6 +68,16 @@
         #p-content-editor .ql-editor blockquote {
             border-left: 3px solid #0006ff; padding-left: 1.25rem; margin: 1.5rem 0;
             font-style: italic; color: #374151;
+        }
+        
+        /* --- YOUTUBE EMBED EDITOR --- */
+        #p-content-editor .ql-editor iframe.ql-video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            height: auto;
+            border-radius: 0.75rem;
+            margin: 1rem 0;
+            border: 2px solid transparent;
         }
 
         /* --- LIGHT / DARK MODE --- */
@@ -124,8 +120,7 @@
         .theme-toggle { transition: all .25s cubic-bezier(.16,1,.3,1); }
         .theme-toggle:hover { transform: translateY(-2px); }
 
-        /* --- CUSTOM FREE IMAGE FORMATTER (ganti blot-formatter2) ---
-           Resize sudut = rasio terkunci (proporsional), resize tengah/tepi = bebas (bisa gepeng) + drag geser posisi bebas. */
+        /* --- CUSTOM FREE IMAGE FORMATTER --- */
         #p-content-editor .ql-editor img { cursor: grab; }
         #p-content-editor .ql-editor img.kf-dragging { cursor: grabbing; }
         .kf-img-overlay {
@@ -171,7 +166,7 @@
         }
         .kf-img-toolbar button:hover { background: #0006ff; color: white; }
 
-        /* --- SMART ALIGNMENT GUIDES (ala Canva) --- muncul pas drag & nge-snap ke tepi/tengah gambar lain */
+        /* --- SMART ALIGNMENT GUIDES --- */
         .kf-guide-line {
             position: fixed;
             background: #ff3366;
@@ -314,17 +309,16 @@
 
             <textarea id="p-description" class="p-4 bg-slate-50 border rounded-2xl h-[52px] focus:outline-none" placeholder="Lead description (intro singkat di bawah judul, opsional)"></textarea>
 
-            <!-- ===================== FREEFORM RICH TEXT EDITOR (Word-like) ===================== -->
             <div class="md:col-span-2 space-y-2">
                 <div class="flex items-center justify-between">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-2">Project Story (Bebas: teks & gambar dimana aja)</label>
-                    <span class="text-[8px] text-blue-400 font-bold uppercase mr-2">Bold / Italic / Underline / Font / Insert Image</span>
+                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-2">Project Story (Bebas: teks, gambar & video YouTube)</label>
+                    <span class="text-[8px] text-blue-400 font-bold uppercase mr-2">Bold / Italic / Underline / Font / Insert Image / Video</span>
                 </div>
                 <div id="p-content-editor-wrap" class="border border-slate-200 rounded-2xl overflow-hidden">
                     <div id="p-content-toolbar"></div>
                     <div id="p-content-editor"></div>
                 </div>
-                <p class="text-[8px] text-slate-400 ml-2">Ini yang tampil di badan halaman detail — susun sendiri urutan Challenge / Strategic Idea / Outcome / gambar, bebas kayak nulis di Word.</p>
+                <p class="text-[8px] text-slate-400 ml-2">Ini yang tampil di badan halaman detail — susun sendiri urutan teks, gambar, dan video YouTube dengan klik icon video di atas.</p>
             </div>
 
             <div id="web-upload-container" class="hidden md:col-span-2 space-y-3 p-5 bg-blue-50 border border-blue-100 rounded-[1.5rem] transition-all duration-300">
@@ -380,7 +374,6 @@
         const container = document.getElementById('web-upload-container');
         if (val === 'Web Development') {
             container.classList.remove('hidden');
-            // Tambahkan animasi masuk
             container.classList.add('animate-pulse');
             setTimeout(() => container.classList.remove('animate-pulse'), 500);
         } else {
@@ -555,7 +548,7 @@
         window.currentEditBazarId = null;
         window.currentUserRole = null;
 
-        // --- QUILL RICH TEXT EDITOR (Word-like: bold/italic/underline/font, image anywhere) ---
+        // --- QUILL RICH TEXT EDITOR (Word-like: bold/italic/underline/font, image/video anywhere) ---
         const quillToolbarOptions = [
             [{ 'header': [1, 2, 3, false] }],
             [{ 'font': [] }],
@@ -563,7 +556,7 @@
             [{ 'color': [] }, { 'background': [] }],
             [{ 'align': [] }],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['blockquote', 'link', 'image'],
+            ['blockquote', 'link', 'image', 'video'],
             ['clean']
         ];
 
@@ -572,14 +565,47 @@
             modules: {
                 toolbar: {
                     container: quillToolbarOptions,
-                    handlers: { image: quillImageHandler }
+                    handlers: { 
+                        image: quillImageHandler,
+                        video: quillVideoHandler
+                    }
                 }
             },
-            placeholder: 'Tulis cerita project di sini... bisa taruh gambar di tengah, samping, atau di mana aja, kayak nulis di Word. Klik gambar buat resize/geser.'
+            placeholder: 'Tulis cerita project di sini... bisa taruh gambar atau embed YouTube di mana aja, kayak nulis di Word. Klik gambar buat resize/geser.'
         });
 
         // Move Quill's auto-generated toolbar into our styled wrapper
         document.getElementById('p-content-toolbar').appendChild(document.querySelector('.ql-toolbar'));
+
+        // YouTube ID Extractor
+        function extractYouTubeId(url) {
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=)([\w-]{11})/,
+                /(?:youtu\.be\/)([\w-]{11})/,
+                /(?:youtube\.com\/embed\/)([\w-]{11})/,
+                /(?:youtube\.com\/shorts\/)([\w-]{11})/
+            ];
+            for (const p of patterns) {
+                const m = url.match(p);
+                if (m) return m[1];
+            }
+            return null;
+        }
+
+        // Quill Video Embed Handler
+        function quillVideoHandler() {
+            const url = prompt('Tempel link YouTube-nya (contoh: https://www.youtube.com/watch?v=xxxx atau https://youtu.be/xxxx)');
+            if (!url) return;
+            const videoId = extractYouTubeId(url.trim());
+            if (!videoId) {
+                showToast('Link YouTube-nya kayaknya gak valid deh', true);
+                return;
+            }
+            const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            const range = quill.getSelection(true) || { index: quill.getLength() };
+            quill.insertEmbed(range.index, 'video', embedUrl, 'user');
+            quill.setSelection(range.index + 1);
+        }
 
         // ===================================================================
         // CUSTOM FREE IMAGE FORMATTER (ganti blot-formatter2)
@@ -1097,112 +1123,107 @@
         }
 
         document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('btn-p-submit');
-    const isHighlightChecked = document.getElementById('p-highlight').checked;
-    
-    btn.disabled = true; 
-    btn.innerText = 'PROCESSING...';
-
-    try {
-        // 1. LIMIT CHECK
-        if (isHighlightChecked) {
-            let query = kancah.from('projects').select('id', { count: 'exact', head: true }).eq('is_highlight', true);
-            if (window.currentEditProjectId) query = query.neq('id', window.currentEditProjectId);
+            e.preventDefault();
+            const btn = document.getElementById('btn-p-submit');
+            const isHighlightChecked = document.getElementById('p-highlight').checked;
             
-            const { count, error: countErr } = await query;
-            if (count >= 2) {
-                showToast("Konten yg dihighlight sudah 2 bang.", true);
-                btn.disabled = false;
-                btn.innerText = window.currentEditProjectId ? 'UPDATE WORK NOW' : 'Publish Work';
-                return;
+            btn.disabled = true; 
+            btn.innerText = 'PROCESSING...';
+
+            try {
+                // 1. LIMIT CHECK
+                if (isHighlightChecked) {
+                    let query = kancah.from('projects').select('id', { count: 'exact', head: true }).eq('is_highlight', true);
+                    if (window.currentEditProjectId) query = query.neq('id', window.currentEditProjectId);
+                    
+                    const { count, error: countErr } = await query;
+                    if (count >= 2) {
+                        showToast("Konten yg dihighlight sudah 2 bang.", true);
+                        btn.disabled = false;
+                        btn.innerText = window.currentEditProjectId ? 'UPDATE WORK NOW' : 'Publish Work';
+                        return;
+                    }
+                }
+
+                // 2. IMAGE UPLOAD LOGIC (COver Image)
+                let publicUrl = null;
+                const fileInput = document.getElementById('p-image');
+                if (fileInput.files.length > 0) {
+                    const fileName = `works/${Date.now()}`;
+                    const { error: uploadError } = await kancah.storage.from('project-images').upload(fileName, fileInput.files[0]);
+                    if (uploadError) throw uploadError;
+                    publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
+                }
+
+                // --- 2.5. HTML DEMO UPLOAD LOGIC ---
+                let demoUrl = null;
+                const categoryVal = document.getElementById('p-category').value;
+                const slugVal = document.getElementById('p-slug').value;
+                const htmlFileInput = document.getElementById('p-html-file');
+                
+                if (categoryVal === 'Web Development' && htmlFileInput && htmlFileInput.files.length > 0) {
+                    const htmlFileName = `demos/${Date.now()}_${slugVal}.html`;
+                    
+                    const { error: htmlUploadError } = await kancah.storage
+                        .from('project-demos')
+                        .upload(htmlFileName, htmlFileInput.files[0], {
+                            contentType: 'text/html',
+                            upsert: true
+                        });
+
+                    if (htmlUploadError) throw htmlUploadError;
+
+                    demoUrl = kancah.storage.from('project-demos').getPublicUrl(htmlFileName).data.publicUrl;
+                }
+
+                // 3. PREPARE DATA
+                const yearVal = document.getElementById('p-year').value;
+                const tagsVal = document.getElementById('p-tags').value;
+                const descVal = document.getElementById('p-description').value;
+
+                const payload = {
+                    title: document.getElementById('p-title').value,
+                    slug: slugVal, 
+                    category: categoryVal, 
+                    is_highlight: isHighlightChecked,
+                    year: yearVal ? Number(yearVal) : null,
+                    tags: tagsVal ? tagsVal.split(',').map(t => t.trim()).filter(Boolean) : [],
+                    description: descVal || null,
+                    content_html: quill.root.innerHTML
+                };
+                
+                if (publicUrl) payload.image_url = publicUrl;
+                if (demoUrl) payload.demo_url = demoUrl; 
+
+                // 4. INSERT / UPDATE
+                if (window.currentEditProjectId) {
+                    await kancah.from('projects').update(payload).eq('id', window.currentEditProjectId);
+                    window.currentEditProjectId = null;
+                    showToast("PROJECT UPDATED!");
+                } else {
+                    if (!publicUrl) throw new Error("Harap unggah foto untuk project baru.");
+                    await kancah.from('projects').insert([payload]);
+                    showToast("PROJECT PUBLISHED!");
+                }
+
+                // 5. RESET
+                e.target.reset(); 
+                document.getElementById('image-preview-container').classList.add('hidden');
+                quill.root.innerHTML = '';
+                
+                // Sembunyikan form input HTML lagi
+                const webContainer = document.getElementById('web-upload-container');
+                if(webContainer) webContainer.classList.add('hidden');
+
+                loadProjectList(); 
+                btn.innerText = 'Publish Work';
+                
+            } catch (err) { 
+                showToast(err.message, true); 
+            } finally { 
+                btn.disabled = false; 
             }
-        }
-
-        // 2. IMAGE UPLOAD LOGIC (COver Image)
-        let publicUrl = null;
-        const fileInput = document.getElementById('p-image');
-        if (fileInput.files.length > 0) {
-            const fileName = `works/${Date.now()}`;
-            const { error: uploadError } = await kancah.storage.from('project-images').upload(fileName, fileInput.files[0]);
-            if (uploadError) throw uploadError;
-            publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
-        }
-
-        // ==========================================================
-        // TARUH DI SINI BROK! (Di bawah Image Upload, di atas Prepare Data)
-        // --- 2.5. HTML DEMO UPLOAD LOGIC ---
-        let demoUrl = null;
-        const categoryVal = document.getElementById('p-category').value;
-        const slugVal = document.getElementById('p-slug').value;
-        const htmlFileInput = document.getElementById('p-html-file');
-        
-        if (categoryVal === 'Web Development' && htmlFileInput && htmlFileInput.files.length > 0) {
-            const htmlFileName = `demos/${Date.now()}_${slugVal}.html`;
-            
-            const { error: htmlUploadError } = await kancah.storage
-                .from('project-demos')
-                .upload(htmlFileName, htmlFileInput.files[0], {
-                    contentType: 'text/html',
-                    upsert: true
-                });
-
-            if (htmlUploadError) throw htmlUploadError;
-
-            demoUrl = kancah.storage.from('project-demos').getPublicUrl(htmlFileName).data.publicUrl;
-        }
-        // ==========================================================
-
-        // 3. PREPARE DATA
-        const yearVal = document.getElementById('p-year').value;
-        const tagsVal = document.getElementById('p-tags').value;
-        const descVal = document.getElementById('p-description').value;
-
-        const payload = {
-            title: document.getElementById('p-title').value,
-            slug: slugVal, 
-            category: categoryVal, 
-            is_highlight: isHighlightChecked,
-            year: yearVal ? Number(yearVal) : null,
-            tags: tagsVal ? tagsVal.split(',').map(t => t.trim()).filter(Boolean) : [],
-            description: descVal || null,
-            // Freeform rich content authored in the Word-like editor above.
-            // Requires a `content_html` (type: text) column on the `projects` table in Supabase.
-            content_html: quill.root.innerHTML
-        };
-        
-        if (publicUrl) payload.image_url = publicUrl;
-        if (demoUrl) payload.demo_url = demoUrl; // <--- INI PENTING BIAR MASUK KE DATABASE
-
-        // 4. INSERT / UPDATE
-        if (window.currentEditProjectId) {
-            await kancah.from('projects').update(payload).eq('id', window.currentEditProjectId);
-            window.currentEditProjectId = null;
-            showToast("PROJECT UPDATED!");
-        } else {
-            if (!publicUrl) throw new Error("Harap unggah foto untuk project baru.");
-            await kancah.from('projects').insert([payload]);
-            showToast("PROJECT PUBLISHED!");
-        }
-
-        // 5. RESET
-        e.target.reset(); 
-        document.getElementById('image-preview-container').classList.add('hidden');
-        quill.root.innerHTML = '';
-        
-        // Sembunyikan form input HTML lagi
-        const webContainer = document.getElementById('web-upload-container');
-        if(webContainer) webContainer.classList.add('hidden');
-
-        loadProjectList(); 
-        btn.innerText = 'Publish Work';
-        
-    } catch (err) { 
-        showToast(err.message, true); 
-    } finally { 
-        btn.disabled = false; 
-    }
-});
+        });
 
         // --- CLIENT LOGIC ---
         async function loadClientList() {
@@ -1349,7 +1370,6 @@
                 btn.disabled = false; 
             }
         });
-
 
         // --- BAZAR LOGIC ---
         function formatRupiah(n) { return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(n || 0)); }
@@ -1647,34 +1667,23 @@
 
         function formatWA(phone) {
             let p = String(phone || '').replace(/\D/g, '');
-
-            // 0812xxxx -> 62812xxxx
             if (p.startsWith('08')) p = '62' + p.slice(1);
-
-            // 812xxxx -> 62812xxxx
             if (p.startsWith('8')) p = '62' + p;
-
-            // 620812xxxx -> 62812xxxx
             if (p.startsWith('620')) p = '62' + p.slice(3);
-
             return p;
         }
 
         function getDriveLink(packageName) {
             const name = String(packageName || '').toLowerCase();
-
             if (name.includes('starter')) {
                 return 'https://drive.google.com/drive/folders/1F6yC7FOgivZJyRbGSqJ_8DkTRvXgg1i9?usp=drive_link';
             }
-
             if (name.includes('pro')) {
                 return 'https://drive.google.com/drive/folders/13SfbrwcxXU3zNIJ6jP3-QzqA169h9cRk?usp=drive_link';
             }
-
             if (name.includes('ultimate')) {
                 return 'https://drive.google.com/drive/folders/1EKLyLk981wybYrSrCIMTqircKMk-ETed?usp=drive_link';
             }
-
             return '';
         }
 
@@ -1688,94 +1697,82 @@
         }
 
         async function sendWhatsApp(order) {
-  try {
-    const phone = formatWA(order.buyer_whatsapp);
-    const driveLink = getDriveLink(order.package_name);
-    const method = String(order.payment_method || 'qris').toUpperCase();
+            try {
+                const phone = formatWA(order.buyer_whatsapp);
+                const driveLink = getDriveLink(order.package_name);
+                const method = String(order.payment_method || 'qris').toUpperCase();
 
-    if (!phone) {
-      showToast('Nomor WhatsApp kosong / tidak valid.', true);
-      return;
-    }
+                if (!phone) {
+                showToast('Nomor WhatsApp kosong / tidak valid.', true);
+                return;
+                }
 
-    if (!driveLink) {
-      showToast('Link Drive untuk paket ini belum tersedia.', true);
-      return;
-    }
+                if (!driveLink) {
+                showToast('Link Drive untuk paket ini belum tersedia.', true);
+                return;
+                }
 
-    const orderCode = String(order.id).slice(0, 8).toUpperCase();
+                const orderCode = String(order.id).slice(0, 8).toUpperCase();
 
-    const E = {
-      nota: '\u{1F9FE}',
-      wave: '\u{1F44B}',
-      id: '\u{1F194}',
-      box: '\u{1F4E6}',
-      money: '\u{1F4B0}',
-      card: '\u{1F4B3}',
-      check: '\u{2705}',
-      download: '\u{1F4E5}',
-      pray: '\u{1F64F}',
-      rocket: '\u{1F680}'
-    };
+                const E = {
+                nota: '\u{1F9FE}', wave: '\u{1F44B}', id: '\u{1F194}', box: '\u{1F4E6}',
+                money: '\u{1F4B0}', card: '\u{1F4B3}', check: '\u{2705}', download: '\u{1F4E5}',
+                pray: '\u{1F64F}', rocket: '\u{1F680}'
+                };
 
-    const nota = [
-      `${E.nota} *NOTA PEMBELIAN KANCAH CREATIVE*`,
-      ``,
-      `Halo *${order.buyer_name}* ${E.wave}`,
-      `Terima kasih sudah membeli paket portfolio dari Kancah Creative.`,
-      ``,
-      `━━━━━━━━━━━━━━━━━━`,
-      `*DETAIL PESANAN*`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `${E.id} Order ID : ${orderCode}`,
-      `${E.box} Paket    : ${order.package_name}`,
-      `${E.money} Total    : Rp ${Number(order.total).toLocaleString('id-ID')}`,
-      `${E.card} Metode   : ${method}`,
-      `${E.check} Status   : Paid`,
-      ``,
-      `━━━━━━━━━━━━━━━━━━`,
-      `*LINK DOWNLOAD*`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `${E.download} ${driveLink}`,
-      ``,
-      `━━━━━━━━━━━━━━━━━━`,
-      `*CATATAN*`,
-      `━━━━━━━━━━━━━━━━━━`,
-      `Link ini hanya untuk penggunaan pribadi.`,
-      `Mohon tidak disebarluaskan ya, maturtengkyu ${E.pray}`,
-      ``,
-      `Selamat menggunakan template portfolio kamu ${E.rocket}`,
-      ``,
-      `*Kancah Creative*`
-    ].join('\n');
+                const nota = [
+                `${E.nota} *NOTA PEMBELIAN KANCAH CREATIVE*`,
+                ``,
+                `Halo *${order.buyer_name}* ${E.wave}`,
+                `Terima kasih sudah membeli paket portfolio dari Kancah Creative.`,
+                ``,
+                `━━━━━━━━━━━━━━━━━━`,
+                `*DETAIL PESANAN*`,
+                `━━━━━━━━━━━━━━━━━━`,
+                `${E.id} Order ID : ${orderCode}`,
+                `${E.box} Paket    : ${order.package_name}`,
+                `${E.money} Total    : Rp ${Number(order.total).toLocaleString('id-ID')}`,
+                `${E.card} Metode   : ${method}`,
+                `${E.check} Status   : Paid`,
+                ``,
+                `━━━━━━━━━━━━━━━━━━`,
+                `*LINK DOWNLOAD*`,
+                `━━━━━━━━━━━━━━━━━━`,
+                `${E.download} ${driveLink}`,
+                ``,
+                `━━━━━━━━━━━━━━━━━━`,
+                `*CATATAN*`,
+                `━━━━━━━━━━━━━━━━━━`,
+                `Link ini hanya untuk penggunaan pribadi.`,
+                `Mohon tidak disebarluaskan ya, maturtengkyu ${E.pray}`,
+                ``,
+                `Selamat menggunakan template portfolio kamu ${E.rocket}`,
+                ``,
+                `*Kancah Creative*`
+                ].join('\n');
 
-    const { error } = await kancah
-      .from('bazar_orders')
-      .update({
-        status: 'sent',
-        payment_status: 'paid',
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', order.id);
+                const { error } = await kancah
+                .from('bazar_orders')
+                .update({
+                status: 'sent',
+                payment_status: 'paid',
+                updated_at: new Date().toISOString()
+                })
+                .eq('id', order.id);
 
-    if (error) throw error;
+                if (error) throw error;
 
-    window.open(
-      `https://wa.me/${phone}?text=${encodeURIComponent(nota)}`,
-      '_blank'
-    );
-
-    showToast('WHATSAPP DIBUKA!');
-    loadBazarOrders();
-  } catch (err) {
-    console.error(err);
-    showToast(err.message || 'Gagal membuka WhatsApp', true);
-  }
-}
+                window.open(`https://wa.me/${phone}?text=${encodeURIComponent(nota)}`, '_blank');
+                showToast('WHATSAPP DIBUKA!');
+                loadBazarOrders();
+            } catch (err) {
+                console.error(err);
+                showToast(err.message || 'Gagal membuka WhatsApp', true);
+            }
+        }
 
         async function updateBazarOrder(id, status) {
             const payload = { status, updated_at: new Date().toISOString() };
-
             if (status === 'paid') payload.payment_status = 'paid';
             if (status === 'cancelled') payload.payment_status = 'cancelled';
 
@@ -1788,7 +1785,6 @@
                 showToast(error.message, true);
                 return;
             }
-
             showToast('STATUS ORDER DIUPDATE!');
             loadBazarOrders();
         }
@@ -1829,8 +1825,6 @@
             } catch (err) { showToast(err.message, true); }
             finally { btn.disabled = false; btn.innerText = window.currentEditBazarId ? 'Update Bazar Item' : 'Publish Bazar Item'; }
         });
-
-
 
         // --- BAZAR PACKAGE PRICING LOGIC ---
         function resetPackageForm() {
@@ -1915,7 +1909,6 @@
             finally { btn.disabled = false; btn.innerText = window.currentEditPackageId ? 'Update Paket' : 'Save Paket'; }
         });
 
-
         // --- ADMIN / USERS LOGIC ---
         async function loadAdminList() {
             if (window.currentUserRole !== 'super_admin') return;
@@ -1956,7 +1949,7 @@
 
         function resetAdminForm() {
             window.currentEditUserId = null;
-        window.currentEditBazarId = null;
+            window.currentEditBazarId = null;
             document.getElementById('registerForm').reset();
             document.getElementById('reg-email').disabled = false;
             document.getElementById('reg-email').classList.remove('opacity-50', 'cursor-not-allowed');
