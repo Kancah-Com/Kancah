@@ -43,11 +43,15 @@
         .ql-container.ql-snow, .ql-toolbar.ql-snow { border-color: #e2e8f0 !important; }
 
         /* --- MATCH EDITOR WIDTH KE HALAMAN DETAIL PUBLIK (max-w-[1100px] px-6 = ~1052px konten) ---
-           Ini kuncinya kenapa dulu tampilan admin & detail beda: gambar disimpan pakai koordinat
-           px absolut. Kalau lebar editor beda sama lebar #p-content di halaman publik, px yang sama
-           bakal jatuh di posisi/skala visual yang beda. Dengan nge-lock lebar editor sama persis
-           dengan lebar container publik, apa yang keliatan di admin = 1:1 sama persis di halaman detail. */
-        #p-content-editor-wrap { max-width: 1052px; margin: 0 auto; }
+           FIX: sebelumnya wrap ini di-set max-width: 1052px, TAPI ql-editor di dalamnya masih
+           punya padding 20px 24px sendiri (lihat rule di bawah). Itu bikin kanvas tulis ASLI
+           (tempat gambar di-resize/drag) jadi cuma ~1000px, bukan 1052px seperti halaman publik.
+           Makanya gambar yang di-resize "pas mepet kanan" di admin, di publik nyisa gap kosong
+           di kanan karena container publiknya emang lebih lebar (1052px).
+           FIX-nya: lebarin wrap ini sejumlah padding ql-editor (24px kiri + 24px kanan = 48px),
+           jadi 1052 + 48 = 1100px. Dengan ini, kanvas tulis efektif balik jadi 1052px persis
+           sama seperti #p-content di halaman detail publik. */
+        #p-content-editor-wrap { max-width: 1100px; margin: 0 auto; }
         #p-content-editor .ql-editor { padding: 20px 24px; }
 
         /* --- SAMAIN TYPOGRAPHY EDITOR DENGAN #p-content DI HALAMAN DETAIL PUBLIK ---
