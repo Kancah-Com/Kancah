@@ -9,6 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Quill: Word-like rich text editor for freeform portfolio content (text + images anywhere, bold/italic/underline/fonts) -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #111; margin: 0; padding: 0; transition: background-color 0.5s ease; }
@@ -32,6 +35,11 @@
         }
         .animate-zoom { animation: zoom 0.25s ease-out; }
 
+        /* --- Quill editor styling (Word-like) --- */
+        #p-content-editor { background: white; border-radius: 0 0 1rem 1rem; }
+        #p-content-editor .ql-editor { min-height: 320px; font-size: 15px; line-height: 1.7; }
+        #p-content-toolbar.ql-toolbar { border-radius: 1rem 1rem 0 0; background: #f8fafc; }
+        .ql-container.ql-snow, .ql-toolbar.ql-snow { border-color: #e2e8f0 !important; }
 
         /* --- LIGHT / DARK MODE --- */
         html { color-scheme: light; }
@@ -198,24 +206,24 @@
             <input type="text" id="p-tags" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Tags, pisah koma (Brand Identity, Brand Guidelines)">
 
             <div class="flex flex-col gap-2">
-                <label class="text-[9px] font-bold text-slate-400 uppercase ml-2">Project Cover Image</label>
+                <label class="text-[9px] font-bold text-slate-400 uppercase ml-2">Project Cover Image (Hero)</label>
                 <input type="file" id="p-image" accept="image/*" class="p-3 bg-slate-50 border border-dashed rounded-2xl text-[10px]">
+                <p class="text-[8px] text-slate-400 ml-2">Ini jadi gambar hero full-width di atas halaman detail, kayak cover Waykambas.</p>
             </div>
 
-            <textarea id="p-description" class="p-4 bg-slate-50 border rounded-2xl h-[52px] focus:outline-none" placeholder="Lead description (intro singkat, opsional)"></textarea>
+            <textarea id="p-description" class="p-4 bg-slate-50 border rounded-2xl h-[52px] focus:outline-none" placeholder="Lead description (intro singkat di bawah judul, opsional)"></textarea>
 
-            <div class="md:col-span-2 p-5 bg-slate-50 border border-dashed rounded-[1.5rem] space-y-4">
-                <div class="flex items-center justify-between gap-4">
-                    <div>
-                        <label class="text-[9px] font-bold text-slate-400 uppercase block">Gallery Images (Flexible)</label>
-                        <p class="text-[8px] text-slate-400 mt-1">Upload beberapa foto, geser buat atur urutan, & pilih lebar tiap foto (Full / Half). Ini yang bikin halaman detail fleksibel kayak Waykambas.</p>
-                    </div>
-                    <label class="shrink-0 cursor-pointer bg-[#0006ff] text-white text-[9px] font-black uppercase tracking-widest px-4 py-3 rounded-xl hover:bg-black transition-all whitespace-nowrap">
-                        + Tambah Foto
-                        <input type="file" id="p-gallery-input" accept="image/*" multiple class="hidden">
-                    </label>
+            <!-- ===================== FREEFORM RICH TEXT EDITOR (Word-like) ===================== -->
+            <div class="md:col-span-2 space-y-2">
+                <div class="flex items-center justify-between">
+                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-2">Project Story (Bebas: teks & gambar dimana aja)</label>
+                    <span class="text-[8px] text-blue-400 font-bold uppercase mr-2">Bold / Italic / Underline / Font / Insert Image</span>
                 </div>
-                <div id="gallery-editor-list" class="space-y-2"></div>
+                <div id="p-content-editor-wrap" class="border border-slate-200 rounded-2xl overflow-hidden">
+                    <div id="p-content-toolbar"></div>
+                    <div id="p-content-editor"></div>
+                </div>
+                <p class="text-[8px] text-slate-400 ml-2">Ini yang tampil di badan halaman detail — susun sendiri urutan Challenge / Strategic Idea / Outcome / gambar, bebas kayak nulis di Word.</p>
             </div>
 
             <div id="web-upload-container" class="hidden md:col-span-2 space-y-3 p-5 bg-blue-50 border border-blue-100 rounded-[1.5rem] transition-all duration-300">
@@ -238,7 +246,7 @@
                      class="h-16 w-16 md:h-20 md:w-20 object-cover rounded-xl shadow-sm border-2 border-white cursor-pointer hover:scale-105 transition-transform"
                      title="Klik untuk memperbesar">
                 <div class="flex flex-col">
-                    <div class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Gambar yang dipakai sekarang</div>
+                    <div class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Gambar cover yang dipakai sekarang</div>
                     <div class="text-[8px] text-blue-500 font-bold uppercase mt-1">Klik gambar untuk memperbesar</div>
                 </div>
             </div>
@@ -248,10 +256,6 @@
                 <label for="p-highlight" class="text-[10px] font-bold text-[#0006ff] uppercase cursor-pointer">Tampilkan di Beranda (⭐)</label>
             </div>
 
-            <textarea id="p-challenge" class="md:col-span-2 p-4 bg-slate-50 border rounded-2xl h-24 focus:outline-none" placeholder="The Challenge"></textarea>
-            <textarea id="p-strategy" class="p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Strategic Idea"></textarea>
-            <textarea id="p-outcome" class="p-4 bg-slate-50 border rounded-2xl h-32 focus:outline-none" placeholder="Outcome"></textarea>
-            
             <button type="submit" id="btn-p-submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all shadow-lg flex items-center justify-center gap-3">
                 <span id="btn-text">Publish Work</span>
             </button>
@@ -449,9 +453,59 @@
         window.currentEditUserId = null;
         window.currentEditBazarId = null;
         window.currentUserRole = null;
-        window.currentGalleryItems = [];
 
+        // --- QUILL RICH TEXT EDITOR (Word-like: bold/italic/underline/font, image anywhere) ---
+        const quillToolbarOptions = [
+            [{ 'header': [1, 2, 3, false] }],
+            [{ 'font': [] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'align': [] }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['blockquote', 'link', 'image'],
+            ['clean']
+        ];
 
+        const quill = new Quill('#p-content-editor', {
+            theme: 'snow',
+            modules: {
+                toolbar: {
+                    container: quillToolbarOptions,
+                    handlers: { image: quillImageHandler }
+                }
+            },
+            placeholder: 'Tulis cerita project di sini... bisa taruh gambar di tengah, samping, atau di mana aja, kayak nulis di Word.'
+        });
+
+        // Move Quill's auto-generated toolbar into our styled wrapper
+        document.getElementById('p-content-toolbar').appendChild(document.querySelector('.ql-toolbar'));
+
+        function quillImageHandler() {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+            input.click();
+
+            input.onchange = async () => {
+                const file = input.files[0];
+                if (!file) return;
+                const range = quill.getSelection(true);
+                try {
+                    quill.insertText(range.index, 'Mengunggah gambar...', { italic: true });
+                    const fileName = `content/${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+                    const { error } = await kancah.storage.from('project-images').upload(fileName, file);
+                    if (error) throw error;
+                    const publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
+
+                    quill.deleteText(range.index, 'Mengunggah gambar...'.length);
+                    quill.insertEmbed(range.index, 'image', publicUrl);
+                    quill.setSelection(range.index + 1);
+                } catch (err) {
+                    quill.deleteText(range.index, 'Mengunggah gambar...'.length);
+                    showToast(err.message || 'Gagal upload gambar', true);
+                }
+            };
+        }
 
         // --- THEME MODE ---
         function applyTheme() {
@@ -560,7 +614,7 @@
                     document.body.style.backgroundColor = document.documentElement.classList.contains('dark') ? '#09090b' : '#f8fafc';
                     document.getElementById('btn-users').style.display = (profile.role === 'super_admin') ? 'flex' : 'none';
                     applyTheme();
-                    loadProjectList(); loadClientList(); loadCareerList(); loadBazarList(); loadBazarOrders(); loadPackageList(); renderGalleryEditor();
+                    loadProjectList(); loadClientList(); loadCareerList(); loadBazarList(); loadBazarOrders(); loadPackageList();
                     if(profile.role === 'super_admin') loadAdminList();
                 }
             }
@@ -605,14 +659,23 @@
                 document.getElementById('p-slug').value = p.slug || '';
                 document.getElementById('p-category').value = p.category || '';
                 document.getElementById('p-highlight').checked = p.is_highlight || false;
-                document.getElementById('p-challenge').value = p.challenge || '';
-                document.getElementById('p-strategy').value = p.strategy || '';
-                document.getElementById('p-outcome').value = p.outcome || '';
                 document.getElementById('p-year').value = p.year || '';
                 document.getElementById('p-tags').value = Array.isArray(p.tags) ? p.tags.join(', ') : (p.tags || '');
                 document.getElementById('p-description').value = p.description || '';
-                window.currentGalleryItems = Array.isArray(p.gallery) ? JSON.parse(JSON.stringify(p.gallery)) : [];
-                renderGalleryEditor();
+
+                // Load rich content into Quill. Falls back to old fixed fields for projects
+                // saved before this editor existed, so nothing old gets lost.
+                if (p.content_html) {
+                    quill.root.innerHTML = p.content_html;
+                } else {
+                    let legacy = '';
+                    if (p.challenge) legacy += `<h3>The Challenge</h3><p>${p.challenge}</p>`;
+                    if (p.strategy) legacy += `<h3>Strategic Idea</h3><p>${p.strategy}</p>`;
+                    if (p.outcome) legacy += `<h3>Outcome</h3><p>${p.outcome}</p>`;
+                    if (Array.isArray(p.gallery)) p.gallery.forEach(g => { legacy += `<p><img src="${g.url}"></p>`; });
+                    quill.root.innerHTML = legacy;
+                }
+
                 if (p.image_url) {
                     document.getElementById('p-preview').src = p.image_url;
                     document.getElementById('image-preview-container').classList.remove('hidden');
@@ -630,68 +693,6 @@
                 loadProjectList();
             }
         }
-
-        // --- GALLERY EDITOR (flexible multi-image, full/half layout, drag reorder) ---
-        function renderGalleryEditor() {
-            const list = document.getElementById('gallery-editor-list');
-            if (!list) return;
-            if (!window.currentGalleryItems || window.currentGalleryItems.length === 0) {
-                list.innerHTML = `<p class="text-[9px] text-slate-300 font-bold uppercase text-center py-4">Belum ada foto gallery</p>`;
-                return;
-            }
-            list.innerHTML = window.currentGalleryItems.map((item, i) => `
-                <div class="flex items-center gap-3 bg-white border rounded-2xl p-3" data-index="${i}">
-                    <i class="fa-solid fa-grip-vertical text-slate-300 cursor-grab gallery-drag-handle"></i>
-                    <img src="${item.url}" class="w-14 h-14 object-cover rounded-xl border">
-                    <div class="flex-1 text-[9px] font-bold text-slate-400 uppercase truncate">Foto ${i + 1}</div>
-                    <button type="button" onclick="toggleGalleryLayout(${i})" class="px-3 py-2 rounded-lg text-[9px] font-black uppercase whitespace-nowrap ${item.layout === 'half' ? 'bg-blue-100 text-[#0006ff]' : 'bg-slate-100 text-slate-500'}">
-                        ${item.layout === 'half' ? 'Half Width' : 'Full Width'}
-                    </button>
-                    <button type="button" onclick="removeGalleryItem(${i})" class="text-red-500 hover:text-red-600 px-2">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </div>
-            `).join('');
-
-            new Sortable(list, {
-                animation: 150,
-                handle: '.gallery-drag-handle',
-                onEnd: () => {
-                    const newOrder = Array.from(list.children).map(el => Number(el.dataset.index));
-                    window.currentGalleryItems = newOrder.map(i => window.currentGalleryItems[i]);
-                    renderGalleryEditor();
-                }
-            });
-        }
-
-        function toggleGalleryLayout(i) {
-            window.currentGalleryItems[i].layout = window.currentGalleryItems[i].layout === 'half' ? 'full' : 'half';
-            renderGalleryEditor();
-        }
-
-        function removeGalleryItem(i) {
-            window.currentGalleryItems.splice(i, 1);
-            renderGalleryEditor();
-        }
-
-        const galleryInputEl = document.getElementById('p-gallery-input');
-        if (galleryInputEl) galleryInputEl.addEventListener('change', async (e) => {
-            const files = Array.from(e.target.files || []);
-            if (!files.length) return;
-            for (const file of files) {
-                try {
-                    const fileName = `gallery/${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
-                    const { error } = await kancah.storage.from('project-images').upload(fileName, file);
-                    if (error) throw error;
-                    const publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
-                    window.currentGalleryItems.push({ url: publicUrl, layout: 'full' });
-                } catch (err) {
-                    showToast(err.message, true);
-                }
-            }
-            renderGalleryEditor();
-            e.target.value = '';
-        });
 
         document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -734,12 +735,7 @@
         const slugVal = document.getElementById('p-slug').value;
         const htmlFileInput = document.getElementById('p-html-file');
         
-        console.log("Cek Kategori:", categoryVal);
-        console.log("Cek Input File HTML:", htmlFileInput);
-        console.log("Jumlah File HTML yg dipilih:", htmlFileInput ? htmlFileInput.files.length : 0);
-
         if (categoryVal === 'Web Development' && htmlFileInput && htmlFileInput.files.length > 0) {
-            console.log("Gas mulai upload HTML...");
             const htmlFileName = `demos/${Date.now()}_${slugVal}.html`;
             
             const { error: htmlUploadError } = await kancah.storage
@@ -749,15 +745,9 @@
                     upsert: true
                 });
 
-            if (htmlUploadError) {
-                console.error("ERROR DARI SUPABASE:", htmlUploadError);
-                throw htmlUploadError;
-            }
+            if (htmlUploadError) throw htmlUploadError;
 
             demoUrl = kancah.storage.from('project-demos').getPublicUrl(htmlFileName).data.publicUrl;
-            console.log("Sukses upload! Link demo:", demoUrl);
-        } else {
-            console.log("Syarat upload HTML tidak terpenuhi, di-skip.");
         }
         // ==========================================================
 
@@ -771,13 +761,12 @@
             slug: slugVal, 
             category: categoryVal, 
             is_highlight: isHighlightChecked,
-            challenge: document.getElementById('p-challenge').value,
-            strategy: document.getElementById('p-strategy').value,
-            outcome: document.getElementById('p-outcome').value,
             year: yearVal ? Number(yearVal) : null,
             tags: tagsVal ? tagsVal.split(',').map(t => t.trim()).filter(Boolean) : [],
             description: descVal || null,
-            gallery: window.currentGalleryItems || []
+            // Freeform rich content authored in the Word-like editor above.
+            // Requires a `content_html` (type: text) column on the `projects` table in Supabase.
+            content_html: quill.root.innerHTML
         };
         
         if (publicUrl) payload.image_url = publicUrl;
@@ -797,8 +786,7 @@
         // 5. RESET
         e.target.reset(); 
         document.getElementById('image-preview-container').classList.add('hidden');
-        window.currentGalleryItems = [];
-        renderGalleryEditor();
+        quill.root.innerHTML = '';
         
         // Sembunyikan form input HTML lagi
         const webContainer = document.getElementById('web-upload-container');
