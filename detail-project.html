@@ -122,8 +122,9 @@
         <section id="hero-cover" class="relative w-full">
 
             <!-- Cover image: full-bleed, no rounded corners, sits directly against the navbar -->
-            <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-kancah-dark overflow-hidden">
-                <img id="p-image" src="" alt="" class="w-full h-full object-cover">
+            <!-- object-contain (not object-cover) so the WHOLE image always shows — no cropping on tall/portrait uploads -->
+            <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-kancah-dark overflow-hidden flex items-center justify-center">
+                <img id="p-image" src="" alt="" class="w-full h-full object-contain">
             </div>
 
             <!-- Editorial title block: title/description left, meta (year + tags as plain list) right -->
