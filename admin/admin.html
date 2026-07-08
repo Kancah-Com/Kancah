@@ -13,8 +13,8 @@
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <!-- Blot Formatter 2: lets images be dragged/resized/stretched via corner handles, like in Word -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@enzedonline/quill-blot-formatter2@3.0/dist/css/quill-blot-formatter2.css">
-    <script src="https://cdn.jsdelivr.net/npm/@enzedonline/quill-blot-formatter2@3.0/dist/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@enzedonline/quill-blot-formatter2@3.1.1/dist/css/quill-blot-formatter2.css">
+    <script src="https://cdn.jsdelivr.net/npm/@enzedonline/quill-blot-formatter2@3.1.1/dist/index.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #111; margin: 0; padding: 0; transition: background-color 0.5s ease; }
@@ -480,7 +480,10 @@
                     handlers: { image: quillImageHandler }
                 },
                 blotFormatter2: {
-                    image: { allowAlignActions: true, allowCompressor: false },
+                    // autoHeight:false lets the resize handle set an explicit px height
+                    // instead of forcing height:auto -> width & height jadi independen,
+                    // jadi gambar bisa di-stretch bebas (gepeng) sesuai drag-nya.
+                    image: { allowAlignActions: true, allowCompressor: false, autoHeight: false },
                     resize: { allowResizeModeChange: true }
                 }
             },
