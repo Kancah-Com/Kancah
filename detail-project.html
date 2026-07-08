@@ -116,18 +116,10 @@
 
     <main class="pb-12">
 
-        <!-- ================= HERO (Waykambas-style: back link -> image below navbar -> editorial title block) ================= -->
-        <section id="hero-cover" class="relative w-full pt-24 sm:pt-32">
+        <!-- ================= HERO (Waykambas-style: image flush to navbar -> editorial title block) ================= -->
+        <section id="hero-cover" class="relative w-full pt-16 sm:pt-20">
 
-            <!-- Back link now sits ABOVE the image, clear of the fixed navbar -->
-            <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mb-6">
-                <a href="works" class="inline-flex items-center gap-2 font-bold uppercase text-[9px] tracking-widest hover:text-kancah-blue transition-all group text-gray-400">
-                    <span class="w-7 h-7 rounded-full border border-gray-100 flex items-center justify-center group-hover:border-kancah-blue group-hover:text-kancah-blue transition-all text-[8px]">←</span>
-                    Back
-                </a>
-            </div>
-
-            <!-- Cover image: full-bleed, no rounded corners, clean below navbar -->
+            <!-- Cover image: full-bleed, no rounded corners, sits directly against the navbar -->
             <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-kancah-dark overflow-hidden">
                 <img id="p-image" src="" alt="" class="w-full h-full object-cover">
             </div>
@@ -155,24 +147,22 @@
             <article id="p-content" class="pt-10 lg:pt-14"></article>
         </div>
 
-        <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-8 lg:mt-16 border-t border-gray-100 pt-8 flex flex-col items-center justify-center space-y-6">
+        <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-6 lg:mt-8 border-t border-gray-100 pt-6 flex flex-col items-center justify-center gap-4">
 
-            <a id="next-project-link" href="#" class="hidden group w-full max-w-2xl mx-auto items-center justify-between p-6 lg:p-8 rounded-3xl border border-gray-100 hover:border-kancah-blue transition-all">
-                <div>
-                    <span class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.3em] block mb-1">Next Project</span>
-                    <span id="next-project-title" class="text-xl lg:text-3xl font-bold italic uppercase tracking-tight text-kancah-dark"></span>
-                </div>
-                <span class="w-10 h-10 rounded-full bg-kancah-dark text-white flex items-center justify-center group-hover:bg-kancah-blue transition-all shrink-0">
-                    <i class="fa-solid fa-arrow-right -rotate-45 text-xs"></i>
-                </span>
-            </a>
-
-            <div class="flex flex-col items-center space-y-3">
-                <p class="text-[9px] font-black text-gray-300 uppercase tracking-[0.4em]">View More Projects</p>
-                <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-md">
-                    <span class="relative z-10 font-black uppercase tracking-[0.2em] text-[10px]">See All Projects</span>
+            <!-- Prev / Next portfolio nav — minimal, tight spacing, no extra lead copy -->
+            <nav class="flex items-center gap-3 flex-wrap justify-center">
+                <a id="prev-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue transition-colors">
+                    <span aria-hidden="true">←</span><span id="prev-project-title"></span>
                 </a>
-            </div>
+                <span id="prev-next-divider" class="hidden text-gray-300">|</span>
+                <a id="next-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue transition-colors">
+                    <span id="next-project-title"></span><span aria-hidden="true">→</span>
+                </a>
+            </nav>
+
+            <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-md">
+                <span class="relative z-10 font-black uppercase tracking-[0.2em] text-[10px]">See All Projects</span>
+            </a>
         </div>
 
     </main>
@@ -283,7 +273,7 @@
 
             renderTags(project);
             renderFreeformContent(project);
-            loadNextProject(slug);
+            loadAdjacentProjects(slug);
         }
 
         // Renders "Project Year XXXX" + any service tags as a plain vertical meta list
@@ -325,22 +315,38 @@
             container.innerHTML = legacy;
         }
 
-        // Pulls the next project in id order (wraps back to the first one at the end)
-        async function loadNextProject(currentSlug) {
+        // Pulls both the previous and next project in id order (wraps around at each end)
+        // Renders as a minimal "← Prev | Next →" nav, like Wkb's portfolio nav.
+        async function loadAdjacentProjects(currentSlug) {
             const { data: list, error } = await kancah.from('projects').select('slug, title').order('id', { ascending: true });
             if (error || !list || list.length < 2) return;
 
             const idx = list.findIndex(p => p.slug === currentSlug);
             if (idx === -1) return;
 
+            const prev = list[(idx - 1 + list.length) % list.length];
             const next = list[(idx + 1) % list.length];
-            const link = document.getElementById('next-project-link');
-            const title = document.getElementById('next-project-title');
-            if (link && next) {
-                link.href = `${window.location.pathname}?id=${next.slug}`;
-                title.innerText = next.title;
-                link.classList.remove('hidden');
-                link.classList.add('flex');
+
+            const prevLink = document.getElementById('prev-project-link');
+            const prevTitle = document.getElementById('prev-project-title');
+            const nextLink = document.getElementById('next-project-link');
+            const nextTitle = document.getElementById('next-project-title');
+            const divider = document.getElementById('prev-next-divider');
+
+            if (prevLink && prev) {
+                prevLink.href = `${window.location.pathname}?id=${prev.slug}`;
+                prevTitle.innerText = prev.title;
+                prevLink.classList.remove('hidden');
+                prevLink.classList.add('inline-flex');
+            }
+            if (nextLink && next) {
+                nextLink.href = `${window.location.pathname}?id=${next.slug}`;
+                nextTitle.innerText = next.title;
+                nextLink.classList.remove('hidden');
+                nextLink.classList.add('inline-flex');
+            }
+            if (divider && prev && next && list.length > 1) {
+                divider.classList.remove('hidden');
             }
         }
 
