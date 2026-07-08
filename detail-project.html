@@ -102,6 +102,8 @@
         </div>
     </nav>
 
+    <div id="nav-spacer"></div>
+
     <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full lg:hidden">
         <button class="absolute top-6 right-6 text-3xl" id="close-menu"><i class="fa-solid fa-xmark"></i></button>
         <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
@@ -117,7 +119,7 @@
     <main class="pb-12">
 
         <!-- ================= HERO (Waykambas-style: image flush to navbar -> editorial title block) ================= -->
-        <section id="hero-cover" class="relative w-full pt-16 sm:pt-20">
+        <section id="hero-cover" class="relative w-full">
 
             <!-- Cover image: full-bleed, no rounded corners, sits directly against the navbar -->
             <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-kancah-dark overflow-hidden">
@@ -350,6 +352,12 @@
             }
         }
 
+        function syncNavSpacer() {
+            const nav = document.querySelector('nav.fixed');
+            const spacer = document.getElementById('nav-spacer');
+            if (nav && spacer) spacer.style.height = nav.offsetHeight + 'px';
+        }
+
         function updateClock() {
             const n = new Date();
             const h = String(n.getHours()).padStart(2, '0'), m = String(n.getMinutes()).padStart(2, '0'), s = String(n.getSeconds()).padStart(2, '0');
@@ -371,6 +379,10 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             getProjectDetail(); updateClock(); updateWeather(); setInterval(updateClock, 1000);
+            syncNavSpacer();
+            window.addEventListener('resize', syncNavSpacer);
+            window.addEventListener('load', syncNavSpacer);
+            setTimeout(syncNavSpacer, 300); // safety re-check after web font swaps in
             const btn = document.getElementById('mobile-menu-button'), menu = document.getElementById('mobile-menu'), close = document.getElementById('close-menu');
             if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
             if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
