@@ -121,9 +121,9 @@
         <!-- ================= HERO (Waykambas-style: image flush to navbar -> editorial title block) ================= -->
         <section id="hero-cover" class="relative w-full">
 
-            <!-- Cover image: full-bleed, no rounded corners, sits directly against the navbar -->
-            <!-- object-contain (not object-cover) so the WHOLE image always shows — no cropping on tall/portrait uploads -->
-            <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-kancah-dark overflow-hidden flex items-center justify-center">
+            <!-- Cover image wrap: height is set via JS to exactly fill one screen (viewport - navbar), no leftover whitespace -->
+            <!-- object-contain so the WHOLE image always shows — no cropping on tall/portrait uploads -->
+            <div id="hero-image-wrap" class="relative w-full bg-kancah-dark overflow-hidden flex items-center justify-center">
                 <img id="p-image" src="" alt="" class="w-full h-full object-contain">
             </div>
 
@@ -356,7 +356,12 @@
         function syncNavSpacer() {
             const nav = document.querySelector('nav.fixed');
             const spacer = document.getElementById('nav-spacer');
-            if (nav && spacer) spacer.style.height = nav.offsetHeight + 'px';
+            const navH = nav ? nav.offsetHeight : 0;
+            if (spacer) spacer.style.height = navH + 'px';
+
+            // Cover image fills exactly one screen: viewport height minus the navbar height
+            const heroWrap = document.getElementById('hero-image-wrap');
+            if (heroWrap) heroWrap.style.height = (window.innerHeight - navH) + 'px';
         }
 
         function updateClock() {
