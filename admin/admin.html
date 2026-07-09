@@ -948,7 +948,7 @@ window.cleanEmptyParagraphs = function () {
             if(confirm) { await kancah.from('projects').delete().eq('id', id); showToast("PROJECT DIHAPUS!"); loadProjectList(); }
         }
 
-       document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
+      document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
     e.preventDefault(); 
     const btn = document.getElementById('btn-p-submit'); 
     const isHighlightChecked = document.getElementById('p-highlight').checked;
@@ -986,24 +986,23 @@ window.cleanEmptyParagraphs = function () {
             demoUrl = kancah.storage.from('project-demos').getPublicUrl(htmlFileName).data.publicUrl;
         }
 
-        // 1. BERSIHKAN PARAGRAF KOSONG TERLEBIH DAHULU
+        // 1. Bersihkan baris teks kosong murni
         cleanEmptyParagraphs();
 
-        // 2. KUNCI UTAMA ANTI-GOBLOK: Normalisasi paksa seluruh gambar melayang di editor admin
-        // agar tidak menyisakan kuncian inline height piksel raksasa ke Supabase.
-        const tempSanitizer = document.createElement('div');
-        tempSanitizer.innerHTML = quill.root.innerHTML;
+        // 2. AMANKAN STRUKTUR PAYLOAD SEBELUM MASUK SUPABASE
+        // Ambil data mentah HTML editor lalu bersihkan atribut kuncian luar editor
+        const parserWrapper = document.createElement('div');
+        parserWrapper.innerHTML = quill.root.innerHTML;
         
-        // Buang paksa inline height kuncian dari kontainer pembungkusnya
-        tempSanitizer.removeAttribute('style');
-        tempSanitizer.style.height = 'auto';
+        // Hapus paksa inline height pembungkus global editor jika ada bawaan Quill
+        parserWrapper.removeAttribute('style');
         
-        // Reset kuncian tinggi gambar hasil drag agar browser menghitung secara natural
-        tempSanitizer.querySelectorAll('img').forEach(img => {
-            img.style.height = 'auto';
+        // Simpan koordinat asli melayang (left, top, transform) tapi pastikan properti tingginya murni otomatis
+        parserWrapper.querySelectorAll('img').forEach(img => {
+            // Jangan sekali-kali mengunci tinggi gambar ke piksel statis
+            img.style.height = 'auto'; 
         });
 
-        const cleanHtmlPayload = tempSanitizer.innerHTML;
         const yearVal = document.getElementById('p-year').value; 
         const tagsVal = document.getElementById('p-tags').value; 
         const descVal = document.getElementById('p-description').value;
@@ -1016,7 +1015,7 @@ window.cleanEmptyParagraphs = function () {
             year: yearVal ? Number(yearVal) : null, 
             tags: tagsVal ? tagsVal.split(',').map(t => t.trim()).filter(Boolean) : [],
             description: descVal || null, 
-            content_html: cleanHtmlPayload // Simpan HTML yang sudah disanitasi total
+            content_html: parserWrapper.innerHTML // Masukkan HTML bersih pelindung layout
         };
         
         if (publicUrl) payload.image_url = publicUrl; 
