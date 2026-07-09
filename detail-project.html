@@ -352,68 +352,58 @@
             });
         }
 
-     function normalizeContentImageWidths() {
+   function normalizeContentImageWidths() {
     const container = document.getElementById('p-content');
     if (!container) return;
     const EDITOR_BASE_WIDTH = 1100;
 
-    // 1. Matikan sisa height & overflow agar celah putih bawah lenyap total
+    // 1. Reset awal kontainer agar dinamis
     container.style.height = 'auto';
     container.style.overflow = 'visible';
+    container.style.position = 'relative';
 
-    // 2. Normalisasi konversi awal px ke % (hanya jika admin menginput format px)
+    let maxVisualBottom = 0;
+
+    // 2. Baca susunan asli paragraf dari admin
+    container.querySelectorAll('p').forEach(p => {
+        const imgs = p.querySelectorAll('img');
+        if (imgs.length > 0) {
+            // Biarkan paragraf bertindak sebagai kanvas relatif
+            p.style.position = 'relative';
+            p.style.width = '100%';
+            p.style.display = 'block';
+            p.style.clear = 'both';
+        }
+    });
+
+    // 3. Proses Gambar & Ambil Koordinat Melayang Aslinya
     container.querySelectorAll('img').forEach(img => {
+        // Konversi awal jika admin memakai format px ke % responsif
         if (/px\s*$/.test(img.style.width || '')) {
             const pxWidth = parseFloat(img.style.width);
             img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
             img.style.height = 'auto';
         }
-    });
 
-    // 3. Kembalikan Sifat Layout Sesuai Porsi Lebar di Admin
-    container.querySelectorAll('p').forEach(p => {
-        const imgs = p.querySelectorAll('img');
+        // KANCI KUNCI UTAMA: Biarkan gambar melayang bebas sesuai settingan drag di admin!
+        // Jangan di-reset ke relative/none lagi.
         
-        if (imgs.length > 0) {
-            // Ubah paragraf menjadi flexbox multi-baris agar gambar otomatis turun/berjejer sesuai porsi lebar aslinya
-            p.style.display = 'flex';
-            p.style.flexDirection = 'row';
-            p.style.flexWrap = 'wrap'; // Izinkan gambar turun jika total lebar melebihi 100%
-            p.style.gap = '12px'; // Jarak konstan margin antar gambar di desktop & mobile
-            p.style.justifyContent = 'center'; // Buat kolase rata tengah secara estetik
-            p.style.alignItems = 'start';
-            p.style.width = '100%';
-            p.style.marginBottom = '1.5rem';
-            p.style.clear = 'both';
-
-            imgs.forEach(img => {
-                // Hancurkan sisa koordinat absolute drag admin yang merusak presisi layout
-                img.style.position = 'relative';
-                img.style.transform = 'none';
-                img.style.left = '0';
-                img.style.top = '0';
-                img.style.margin = '0';
-
-                // AMBIL NILAI LEBAR ASLI DARI ADMIN
-                let currentWidth = img.style.width;
-                
-                if (currentWidth && currentWidth.includes('%')) {
-                    const savedPercent = parseFloat(currentWidth);
-                    
-                    // Supaya tidak tabrakan dengan gap 12px, kita kurangi sedikit porsinya secara matematis
-                    // Ini menjaga agar settingan lebar dari admin (misal 30% atau 100%) tetap akurat dan sinkron
-                    img.style.width = `calc(${savedPercent}% - 12px)`;
-                } else {
-                    // Jika gambar baru belum disetel ukurannya, penuhi baris secara default
-                    img.style.width = '100%';
-                }
-
-                img.style.flexShrink = '1';
-                img.style.flexGrow = '0';
-                img.style.objectFit = 'contain'; // Mencegah gambar terdistorsi atau gepeng
-            });
+        // 4. Hitung secara real-time posisi visual terbawah gambar kolase
+        const rect = img.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        
+        // Jarak dari top kontainer detail ke ujung bawah gambar paling luar
+        const visualBottom = rect.bottom - containerRect.top;
+        if (visualBottom > maxVisualBottom) {
+            maxVisualBottom = visualBottom;
         }
     });
+
+    // 5. Potong paksa ruang kosong putih di bawah berdasarkan gambar paling bawah
+    if (maxVisualBottom > 0) {
+        // Beri space nafas aman 20px di bawah kolase terakhir
+        container.style.height = `${maxVisualBottom + 20}px`;
+    }
 }
         
 
