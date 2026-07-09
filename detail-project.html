@@ -28,6 +28,9 @@
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- FREEFORM PROJECT CONTENT (Quill output) --- */
+        #p-content { box-sizing: border-box; }
+        #p-content * { box-sizing: border-box; }
+
         #p-content img { max-width: 100%; height: auto; }
         #p-content p { margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; }
         #p-content h1, #p-content h2, #p-content h3 {
@@ -46,6 +49,27 @@
         #p-content .ql-align-center { text-align: center; }
         #p-content .ql-align-right { text-align: right; }
         #p-content .ql-align-justify { text-align: justify; }
+
+        /* --- FIX: samakan penataan (layout) desktop & mobile, --- */
+        /* --- yang beda cuma SIZE-nya, posisi sejajar tetap sejajar --- */
+
+        /* matikan lebar fixed px bawaan Quill di level style attribute, */
+        /* akan dikonversi ke % lewat JS (normalizeContentImageWidths) */
+        #p-content img {
+            max-width: 100% !important;
+            height: auto !important;
+        }
+
+        /* kalau Quill float gambar sejajar (float:left/right + width px), */
+        /* pastikan paragraf wrapper-nya nggak collapse & tetap contain float-nya */
+        #p-content p:has(img[style*="float"]) {
+            display: flow-root;
+        }
+
+        /* fallback untuk browser yang belum support :has() */
+        #p-content p.kf-has-float {
+            display: flow-root;
+        }
 
         /* --- YOUTUBE FACADE (Tampilan Thumbnail) --- */
         #p-content .kf-yt-facade {
@@ -346,11 +370,53 @@
             });
         }
 
+        /* ============================================================
+           FIX: Samakan penataan (layout) gambar antara desktop & mobile.
+           Quill biasanya menyimpan lebar gambar sejajar dalam PIXEL
+           absolut (style="width: 235px"), bukan persentase. Itu bikin
+           tampilan pecah/berubah urutan di layar sempit (mobile).
+           Solusinya: konversi width px -> % relatif terhadap lebar
+           canvas editor, supaya rasio antar-gambar (yang sejajar tetap
+           sejajar) terjaga di semua ukuran layar; yang berubah cuma
+           ukurannya (mengecil proporsional), bukan penataannya.
+           ============================================================ */
+        function normalizeContentImageWidths() {
+            const container = document.getElementById('p-content');
+            if (!container) return;
+
+            // Sesuaikan dengan lebar canvas editor Quill di CMS/admin kamu.
+            // Umumnya editor Quill default ada di kisaran 600-800px.
+            const EDITOR_BASE_WIDTH = 600;
+
+            container.querySelectorAll('img[style*="width"]').forEach(img => {
+                const style = img.getAttribute('style') || '';
+                const match = style.match(/width:\s*(\d+(?:\.\d+)?)px/);
+                if (!match) return;
+
+                const pxWidth = parseFloat(match[1]);
+                const pct = Math.min((pxWidth / EDITOR_BASE_WIDTH) * 100, 100);
+
+                const newStyle = style.replace(
+                    /width:\s*\d+(?:\.\d+)?px/,
+                    `width: ${pct.toFixed(2)}%`
+                );
+                img.setAttribute('style', newStyle);
+            });
+
+            // Fallback class untuk browser yang tidak dukung CSS :has()
+            container.querySelectorAll('p').forEach(p => {
+                if (p.querySelector('img[style*="float"]')) {
+                    p.classList.add('kf-has-float');
+                }
+            });
+        }
+
         function renderFreeformContent(project) {
             const container = document.getElementById('p-content');
 
             if (project.content_html && project.content_html.trim() !== '') {
                 container.innerHTML = project.content_html;
+                normalizeContentImageWidths(); // samakan layout desktop & mobile
                 activateYouTubeEmbeds(); // Memanggil render embed
                 return;
             }
@@ -363,6 +429,7 @@
                 project.gallery.forEach(g => { legacy += `<p><img src="${g.url}" alt=""></p>`; });
             }
             container.innerHTML = legacy;
+            normalizeContentImageWidths(); // samakan layout desktop & mobile
             activateYouTubeEmbeds(); // Memanggil render embed
         }
 
