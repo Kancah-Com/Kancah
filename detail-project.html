@@ -357,52 +357,73 @@
     if (!container) return;
     const EDITOR_BASE_WIDTH = 1100;
 
-    // 1. Reset awal kontainer agar dinamis
+    // Bersihkan style sisa eksekusi sebelumnya
     container.style.height = 'auto';
     container.style.overflow = 'visible';
-    container.style.position = 'relative';
 
-    let maxVisualBottom = 0;
+    // Deteksi apakah user membuka lewat HP (Mobile)
+    const isMobile = window.innerWidth < 768;
 
-    // 2. Baca susunan asli paragraf dari admin
-    container.querySelectorAll('p').forEach(p => {
-        const imgs = p.querySelectorAll('img');
-        if (imgs.length > 0) {
-            // Biarkan paragraf bertindak sebagai kanvas relatif
-            p.style.position = 'relative';
-            p.style.width = '100%';
+    if (isMobile) {
+        // --- 1. MODE MOBILE: RESET TOTAL LAYOUT MELAYANG ---
+        // Paksa semua elemen kembali ke jalur normal agar tidak saling tumpang tindih
+        container.querySelectorAll('p').forEach(p => {
+            p.style.position = 'static';
             p.style.display = 'block';
             p.style.clear = 'both';
-        }
-    });
+            p.style.height = 'auto';
+        });
 
-    // 3. Proses Gambar & Ambil Koordinat Melayang Aslinya
-    container.querySelectorAll('img').forEach(img => {
-        // Konversi awal jika admin memakai format px ke % responsif
-        if (/px\s*$/.test(img.style.width || '')) {
-            const pxWidth = parseFloat(img.style.width);
-            img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
+        container.querySelectorAll('img').forEach(img => {
+            img.style.position = 'static';
+            img.style.transform = 'none';
+            img.style.left = '0';
+            img.style.top = '0';
+            img.style.width = '100%'; // Gambar otomatis melebar proporsional memenuhi layar HP
             img.style.height = 'auto';
-        }
+            img.style.display = 'block';
+            img.style.margin = '1rem auto';
+        });
 
-        // KANCI KUNCI UTAMA: Biarkan gambar melayang bebas sesuai settingan drag di admin!
-        // Jangan di-reset ke relative/none lagi.
-        
-        // 4. Hitung secara real-time posisi visual terbawah gambar kolase
-        const rect = img.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
-        
-        // Jarak dari top kontainer detail ke ujung bawah gambar paling luar
-        const visualBottom = rect.bottom - containerRect.top;
-        if (visualBottom > maxVisualBottom) {
-            maxVisualBottom = visualBottom;
-        }
-    });
+    } else {
+        // --- 2. MODE DESKTOP: PERTAHANKAN HASIL DRAG ADMIN & POTONG CELAH ---
+        let maxVisualBottom = 0;
 
-    // 5. Potong paksa ruang kosong putih di bawah berdasarkan gambar paling bawah
-    if (maxVisualBottom > 0) {
-        // Beri space nafas aman 20px di bawah kolase terakhir
-        container.style.height = `${maxVisualBottom + 20}px`;
+        container.querySelectorAll('p').forEach(p => {
+            const imgs = p.querySelectorAll('img');
+            if (imgs.length > 0) {
+                p.style.position = 'relative';
+                p.style.width = '100%';
+                p.style.display = 'block';
+                p.style.clear = 'both';
+            }
+        });
+
+        container.querySelectorAll('img').forEach(img => {
+            // Konversi dari PX ke % jika ada inline style px dari Quill
+            if (/px\s*$/.test(img.style.width || '')) {
+                const pxWidth = parseFloat(img.style.width);
+                img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
+                img.style.height = 'auto';
+            }
+
+            // Hitung koordinat visual terbawah
+            const rect = img.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            const visualBottom = rect.bottom - containerRect.top;
+            
+            if (visualBottom > maxVisualBottom) {
+                maxVisualBottom = visualBottom;
+            }
+        });
+
+        // Jika teks paragraf murni lebih panjang dari gambar, kita pastikan tingginies tidak terpotong
+        const containerScrollHeight = container.scrollHeight;
+        if (maxVisualBottom > 0) {
+            const finalHeight = Math.max(maxVisualBottom + 20, containerScrollHeight);
+            container.style.height = `${finalHeight}px`;
+            container.style.position = 'relative';
+        }
     }
 }
         
@@ -492,19 +513,24 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            getProjectDetail(); updateClock(); updateWeather(); setInterval(updateClock, 1000);
-            syncNavSpacer();
-            window.addEventListener('resize', syncNavSpacer);
-            window.addEventListener('load', syncNavSpacer);
-            setTimeout(syncNavSpacer, 300);
-            const btn = document.getElementById('mobile-menu-button'), menu = document.getElementById('mobile-menu'), close = document.getElementById('close-menu');
-            if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
-            if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
-            const trigger = document.getElementById('weather-mobile-trigger'), popup = document.getElementById('location-popup');
-            if (trigger && popup) {
-                trigger.onclick = (e) => { e.stopPropagation(); popup.classList.toggle('opacity-100'); popup.classList.toggle('scale-100'); setTimeout(() => { popup.classList.remove('opacity-100', 'scale-100'); }, 3000); };
-            }
-        });
+    getProjectDetail(); updateClock(); updateWeather(); setInterval(updateClock, 1000);
+    syncNavSpacer();
+    
+    window.addEventListener('resize', syncNavSpacer);
+    window.addEventListener('load', syncNavSpacer);
+    
+    // --- TARUH DI SINI WO ---
+    window.addEventListener('resize', normalizeContentImageWidths);
+    
+    setTimeout(syncNavSpacer, 300);
+    const btn = document.getElementById('mobile-menu-button'), menu = document.getElementById('mobile-menu'), close = document.getElementById('close-menu');
+    if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
+    if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
+    const trigger = document.getElementById('weather-mobile-trigger'), popup = document.getElementById('location-popup');
+    if (trigger && popup) {
+        trigger.onclick = (e) => { e.stopPropagation(); popup.classList.toggle('opacity-100'); popup.classList.toggle('scale-100'); setTimeout(() => { popup.classList.remove('opacity-100', 'scale-100'); }, 3000); };
+    }
+});
     </script>
 </body>
 </html>
