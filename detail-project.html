@@ -31,7 +31,6 @@
         #p-content { box-sizing: border-box; width: 100%; position: relative; overflow-x: hidden; }
         #p-content * { box-sizing: border-box; }
 
-        /* Reset global image properties inside content */
         #p-content img {
             max-width: 100% !important;
             height: auto !important;
@@ -57,28 +56,17 @@
 
         /* --- YOUTUBE FACADE --- */
         #p-content .kf-yt-facade {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            overflow: hidden;
-            cursor: pointer;
-            background: #111;
-            margin: 1.5rem 0;
-            border-radius: 0.75rem;
+            position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; cursor: pointer; background: #111; margin: 1.5rem 0; border-radius: 0.75rem;
         }
         #p-content .kf-yt-facade img {
-            width: 100%; height: 100%; object-fit: cover; display: block;
-            transition: transform .4s ease, filter .4s ease;
+            width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease, filter .4s ease;
         }
         #p-content .kf-yt-facade:hover img { transform: scale(1.03); filter: brightness(0.85); }
         #p-content .kf-yt-facade .kf-yt-play {
             position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
         }
         #p-content .kf-yt-facade .kf-yt-play span {
-            width: 68px; height: 68px; border-radius: 9999px;
-            background: rgba(0,6,255,0.9); color: #fff;
-            display: flex; align-items: center; justify-content: center; font-size: 22px;
-            transition: transform .25s ease, background .25s ease;
+            width: 68px; height: 68px; border-radius: 9999px; background: rgba(0,6,255,0.9); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; transition: transform .25s ease, background .25s ease;
         }
         #p-content .kf-yt-facade:hover .kf-yt-play span { transform: scale(1.1); background: #0006ff; }
         
@@ -86,7 +74,10 @@
             width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; margin: 1.5rem 0; display: block; border-radius: 0.75rem;
         }
 
-        
+        /* --- LIVE PREVIEW WEB IFRAME --- */
+        .web-preview-frame {
+            width: 100%; height: 75vh; border: 1px solid #e2e8f0; border-radius: 1.5rem; background: #white; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); margin-top: 1.5rem;
+        }
     </style>
 </head>
 <body class="bg-white text-kancah-dark overflow-x-hidden selection:bg-kancah-blue selection:text-white">
@@ -172,6 +163,12 @@
                             Loading...
                         </h1>
                         <p id="p-description" class="hidden text-sm lg:text-lg text-gray-500 leading-relaxed font-light max-w-2xl"></p>
+                        
+                        <div id="live-preview-btn-container" class="hidden mt-6">
+                            <button onclick="toggleHtmlLivePreview()" id="btn-toggle-preview" class="inline-flex items-center justify-center px-6 py-3 bg-kancah-blue text-white rounded-full font-bold uppercase tracking-[0.15em] text-[11px] hover:bg-kancah-dark transition-all shadow-md gap-2">
+                                <i class="fa-solid fa-laptop-code"></i> <span>Live Preview Website</span>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="lg:col-span-4 lg:pt-1">
@@ -179,6 +176,18 @@
                     </div>
                 </div>
             </div>
+        </section>
+
+        <section id="html-preview-section" class="max-w-[1100px] mx-auto px-4 sm:px-6 hidden animate-zoom">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3 mt-6">
+                <div class="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Interaktif Sandbox Mode
+                </div>
+                <button onclick="toggleHtmlLivePreview()" class="text-xs font-bold uppercase tracking-widest text-red-500 hover:underline">
+                    <i class="fa-solid fa-xmark mr-1"></i> Tutup Preview
+                </button>
+            </div>
+            <iframe id="web-demo-iframe" src="" class="web-preview-frame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </section>
 
         <div class="max-w-[1100px] mx-auto px-4 sm:px-6">
@@ -271,12 +280,14 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </nav>
 
     <script>
         const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
         const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
         const kancah = supabase.createClient(SB_URL, SB_KEY);
+
+        window.currentProjectDemoUrl = null;
 
         function escapeHtml(str) {
             const div = document.createElement('div');
@@ -303,9 +314,36 @@
                 descEl.classList.remove('hidden');
             }
 
+            // CEK LIVE PREVIEW UNTUK KATEGORI WEB DEVELOPMENT
+            if (project.category === 'Web Development' && project.demo_url) {
+                window.currentProjectDemoUrl = project.demo_url;
+                document.getElementById('live-preview-btn-container').classList.remove('hidden');
+            }
+
             renderTags(project);
             renderFreeformContent(project);
             loadAdjacentProjects(slug);
+        }
+
+        // TATA LOGIKA MEMBUKA DAN MENUTUP LIVE PREVIEW HTML
+        function toggleHtmlLivePreview() {
+            const section = document.getElementById('html-preview-section');
+            const iframe = document.getElementById('web-demo-iframe');
+            const btnSpan = document.querySelector('#btn-toggle-preview span');
+            const btnIcon = document.querySelector('#btn-toggle-preview i');
+
+            if (section.classList.contains('hidden')) {
+                iframe.src = window.currentProjectDemoUrl;
+                section.classList.remove('hidden');
+                btnSpan.innerText = 'Tutup Preview';
+                btnIcon.className = 'fa-solid fa-xmark';
+                section.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                iframe.src = '';
+                section.classList.add('hidden');
+                btnSpan.innerText = 'Live Preview Website';
+                btnIcon.className = 'fa-solid fa-laptop-code';
+            }
         }
 
         function renderTags(project) {
@@ -352,81 +390,54 @@
             });
         }
 
-   function normalizeContentImageWidths() {
-    const container = document.getElementById('p-content');
-    if (!container) return;
-    const EDITOR_BASE_WIDTH = 1100;
+        // LOGIKA RE-LAYOUT GAMBAL KANCAH (ANTI SPACE KOSONG & SUPPORT RESPONSIVE MOBILE)
+        function normalizeContentImageWidths() {
+            const container = document.getElementById('p-content');
+            if (!container) return;
+            const EDITOR_BASE_WIDTH = 1100;
 
-    // Bersihkan style sisa eksekusi sebelumnya
-    container.style.height = 'auto';
-    container.style.overflow = 'visible';
+            container.style.height = 'auto';
+            container.style.overflow = 'visible';
 
-    // Deteksi apakah user membuka lewat HP (Mobile)
-    const isMobile = window.innerWidth < 768;
+            const isMobile = window.innerWidth < 768;
 
-    if (isMobile) {
-        // --- 1. MODE MOBILE: RESET TOTAL LAYOUT MELAYANG ---
-        // Paksa semua elemen kembali ke jalur normal agar tidak saling tumpang tindih
-        container.querySelectorAll('p').forEach(p => {
-            p.style.position = 'static';
-            p.style.display = 'block';
-            p.style.clear = 'both';
-            p.style.height = 'auto';
-        });
+            if (isMobile) {
+                container.querySelectorAll('p').forEach(p => {
+                    p.style.position = 'static'; p.style.display = 'block'; p.style.clear = 'both'; p.style.height = 'auto';
+                });
+                container.querySelectorAll('img').forEach(img => {
+                    img.style.position = 'static'; img.style.transform = 'none'; img.style.left = '0'; img.style.top = '0';
+                    img.style.width = '100%'; img.style.height = 'auto'; img.style.display = 'block'; img.style.margin = '1rem auto';
+                });
+            } else {
+                let maxVisualBottom = 0;
+                container.querySelectorAll('p').forEach(p => {
+                    const imgs = p.querySelectorAll('img');
+                    if (imgs.length > 0) {
+                        p.style.position = 'relative'; p.style.width = '100%'; p.style.display = 'block'; p.style.clear = 'both';
+                    }
+                });
 
-        container.querySelectorAll('img').forEach(img => {
-            img.style.position = 'static';
-            img.style.transform = 'none';
-            img.style.left = '0';
-            img.style.top = '0';
-            img.style.width = '100%'; // Gambar otomatis melebar proporsional memenuhi layar HP
-            img.style.height = 'auto';
-            img.style.display = 'block';
-            img.style.margin = '1rem auto';
-        });
+                container.querySelectorAll('img').forEach(img => {
+                    if (/px\s*$/.test(img.style.width || '')) {
+                        const pxWidth = parseFloat(img.style.width);
+                        img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
+                        img.style.height = 'auto';
+                    }
+                    const rect = img.getBoundingClientRect();
+                    const containerRect = container.getBoundingClientRect();
+                    const visualBottom = rect.bottom - containerRect.top;
+                    if (visualBottom > maxVisualBottom) { maxVisualBottom = visualBottom; }
+                });
 
-    } else {
-        // --- 2. MODE DESKTOP: PERTAHANKAN HASIL DRAG ADMIN & POTONG CELAH ---
-        let maxVisualBottom = 0;
-
-        container.querySelectorAll('p').forEach(p => {
-            const imgs = p.querySelectorAll('img');
-            if (imgs.length > 0) {
-                p.style.position = 'relative';
-                p.style.width = '100%';
-                p.style.display = 'block';
-                p.style.clear = 'both';
+                const containerScrollHeight = container.scrollHeight;
+                if (maxVisualBottom > 0) {
+                    const finalHeight = Math.max(maxVisualBottom + 20, containerScrollHeight);
+                    container.style.height = `${finalHeight}px`;
+                    container.style.position = 'relative';
+                }
             }
-        });
-
-        container.querySelectorAll('img').forEach(img => {
-            // Konversi dari PX ke % jika ada inline style px dari Quill
-            if (/px\s*$/.test(img.style.width || '')) {
-                const pxWidth = parseFloat(img.style.width);
-                img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
-                img.style.height = 'auto';
-            }
-
-            // Hitung koordinat visual terbawah
-            const rect = img.getBoundingClientRect();
-            const containerRect = container.getBoundingClientRect();
-            const visualBottom = rect.bottom - containerRect.top;
-            
-            if (visualBottom > maxVisualBottom) {
-                maxVisualBottom = visualBottom;
-            }
-        });
-
-        // Jika teks paragraf murni lebih panjang dari gambar, kita pastikan tingginies tidak terpotong
-        const containerScrollHeight = container.scrollHeight;
-        if (maxVisualBottom > 0) {
-            const finalHeight = Math.max(maxVisualBottom + 20, containerScrollHeight);
-            container.style.height = `${finalHeight}px`;
-            container.style.position = 'relative';
         }
-    }
-}
-        
 
         function renderFreeformContent(project) {
             const container = document.getElementById('p-content');
@@ -469,18 +480,14 @@
             if (prevLink && prev) {
                 prevLink.href = `${window.location.pathname}?id=${prev.slug}`;
                 prevTitle.innerText = prev.title;
-                prevLink.classList.remove('hidden');
-                prevLink.classList.add('inline-flex');
+                prevLink.classList.remove('hidden'); prevLink.classList.add('inline-flex');
             }
             if (nextLink && next) {
                 nextLink.href = `${window.location.pathname}?id=${next.slug}`;
                 nextTitle.innerText = next.title;
-                nextLink.classList.remove('hidden');
-                nextLink.classList.add('inline-flex');
+                nextLink.classList.remove('hidden'); nextLink.classList.add('inline-flex');
             }
-            if (divider && prev && next && list.length > 1) {
-                divider.classList.remove('hidden');
-            }
+            if (divider && prev && next && list.length > 1) { divider.classList.remove('hidden'); }
         }
 
         function syncNavSpacer() {
@@ -513,24 +520,23 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-    getProjectDetail(); updateClock(); updateWeather(); setInterval(updateClock, 1000);
-    syncNavSpacer();
-    
-    window.addEventListener('resize', syncNavSpacer);
-    window.addEventListener('load', syncNavSpacer);
-    
-    // --- TARUH DI SINI WO ---
-    window.addEventListener('resize', normalizeContentImageWidths);
-    
-    setTimeout(syncNavSpacer, 300);
-    const btn = document.getElementById('mobile-menu-button'), menu = document.getElementById('mobile-menu'), close = document.getElementById('close-menu');
-    if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
-    if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
-    const trigger = document.getElementById('weather-mobile-trigger'), popup = document.getElementById('location-popup');
-    if (trigger && popup) {
-        trigger.onclick = (e) => { e.stopPropagation(); popup.classList.toggle('opacity-100'); popup.classList.toggle('scale-100'); setTimeout(() => { popup.classList.remove('opacity-100', 'scale-100'); }, 3000); };
-    }
-});
+            getProjectDetail(); updateClock(); updateWeather(); setInterval(updateClock, 1000);
+            syncNavSpacer();
+            window.addEventListener('resize', syncNavSpacer);
+            window.addEventListener('load', syncNavSpacer);
+            
+            // AUTOMATIC RESIZE CHECKER UNTUK LAYOUT GAMBAR
+            window.addEventListener('resize', normalizeContentImageWidths);
+
+            setTimeout(syncNavSpacer, 300);
+            const btn = document.getElementById('mobile-menu-button'), menu = document.getElementById('mobile-menu'), close = document.getElementById('close-menu');
+            if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
+            if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
+            const trigger = document.getElementById('weather-mobile-trigger'), popup = document.getElementById('location-popup');
+            if (trigger && popup) {
+                trigger.onclick = (e) => { e.stopPropagation(); popup.classList.toggle('opacity-100'); popup.classList.toggle('scale-100'); setTimeout(() => { popup.classList.remove('opacity-100', 'scale-100'); }, 3000); };
+            }
+        });
     </script>
 </body>
 </html>
