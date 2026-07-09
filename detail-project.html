@@ -21,7 +21,17 @@
         }
     </script>
     <style>
-        body { font-family: 'Ubuntu', sans-serif; background-color: white; margin: 0; padding: 0; }
+       body { 
+    font-family: 'Ubuntu', sans-serif; 
+    background-color: white; 
+    margin: 0; 
+    padding: 0; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+main { flex: 1 0 auto; }
+footer { flex-shrink: 0; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
