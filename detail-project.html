@@ -43,29 +43,35 @@ footer {
 /* Mengatur container agar fleksibel dan bisa di-scroll */
 #more-works-gallery {
     display: flex;
-    flex-wrap: nowrap;         /* Pastikan SEMUA item tetap dalam 1 baris */
-    overflow-x: auto;          /* Aktifkan scroll horizontal */
-    gap: 20px;                 /* Jarak antar kartu */
-    padding-bottom: 20px;      /* Ruang untuk scrollbar agar tidak menempel */
-    -webkit-overflow-scrolling: touch; /* Biar smooth di iPhone */
-    scrollbar-width: none;     /* Sembunyikan scrollbar di Firefox */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
 }
 
-/* Sembunyikan scrollbar di Chrome/Safari */
 #more-works-gallery::-webkit-scrollbar {
     display: none;
 }
 
-/* Pengaturan lebar kartu */
+/* KARTU WORK */
 .work-card {
-    flex: 0 0 280px;           /* Lebar tetap di mobile */
-    max-width: 280px;
+    flex: 0 0 280px; /* Ukuran mobile: bisa di-scroll */
 }
 
-@media (min-width: 768px) {
+/* KETIKA DI DESKTOP: PAKSA JADI 3 KOLOM RATA */
+@media (min-width: 1024px) {
+    #more-works-gallery {
+        display: grid;                /* Ubah dari flex ke grid */
+        grid-template-columns: repeat(3, 1fr); /* Paksa 3 kolom sama lebar */
+        overflow-x: hidden;           /* Matikan scroll karena sudah pas 3 */
+        gap: 20px;
+    }
+    
     .work-card {
-        flex: 0 0 350px;       /* Lebar lebih luas di desktop */
-        max-width: 350px;
+        flex: 0 0 100%;               /* Ambil lebar penuh dari grid cell */
+        max-width: 100%;
     }
 }
 #p-content {
