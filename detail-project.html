@@ -391,54 +391,96 @@
         }
 
         // LOGIKA RE-LAYOUT GAMBAL KANCAH (ANTI SPACE KOSONG & SUPPORT RESPONSIVE MOBILE)
-        function normalizeContentImageWidths() {
-            const container = document.getElementById('p-content');
-            if (!container) return;
-            const EDITOR_BASE_WIDTH = 1100;
+       function normalizeContentImageWidths() {
+    const container = document.getElementById('p-content');
+    if (!container) return;
+    const EDITOR_BASE_WIDTH = 1100;
 
-            container.style.height = 'auto';
-            container.style.overflow = 'visible';
+    // Ambil semua gambar di dalam artikel
+    const allImages = container.querySelectorAll('img');
 
-            const isMobile = window.innerWidth < 768;
+    // Fungsi inti untuk ngitung koordinat setelah gambar dipastikan ke-load
+    function calculateFinalHeight() {
+        container.style.height = 'auto';
+        container.style.overflow = 'visible';
 
-            if (isMobile) {
-                container.querySelectorAll('p').forEach(p => {
-                    p.style.position = 'static'; p.style.display = 'block'; p.style.clear = 'both'; p.style.height = 'auto';
-                });
-                container.querySelectorAll('img').forEach(img => {
-                    img.style.position = 'static'; img.style.transform = 'none'; img.style.left = '0'; img.style.top = '0';
-                    img.style.width = '100%'; img.style.height = 'auto'; img.style.display = 'block'; img.style.margin = '1rem auto';
-                });
-            } else {
-                let maxVisualBottom = 0;
-                container.querySelectorAll('p').forEach(p => {
-                    const imgs = p.querySelectorAll('img');
-                    if (imgs.length > 0) {
-                        p.style.position = 'relative'; p.style.width = '100%'; p.style.display = 'block'; p.style.clear = 'both';
-                    }
-                });
+        const isMobile = window.innerWidth < 768;
 
-                container.querySelectorAll('img').forEach(img => {
-                    if (/px\s*$/.test(img.style.width || '')) {
-                        const pxWidth = parseFloat(img.style.width);
-                        img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
-                        img.style.height = 'auto';
-                    }
-                    const rect = img.getBoundingClientRect();
-                    const containerRect = container.getBoundingClientRect();
-                    const visualBottom = rect.bottom - containerRect.top;
-                    if (visualBottom > maxVisualBottom) { maxVisualBottom = visualBottom; }
-                });
+        if (isMobile) {
+            // MODE MOBILE: Matikan semua posisi melayang biar ngalir normal ke bawah
+            container.querySelectorAll('p').forEach(p => {
+                p.style.position = 'static'; p.style.display = 'block'; p.style.clear = 'both'; p.style.height = 'auto';
+            });
+            allImages.forEach(img => {
+                img.style.position = 'static'; img.style.transform = 'none'; img.style.left = '0'; img.style.top = '0';
+                img.style.width = '100%'; img.style.height = 'auto'; img.style.display = 'block'; img.style.margin = '1rem auto';
+            });
+        } else {
+            // MODE DESKTOP: Pertahankan posisi drag & ukur presisi ujung bawah gambar
+            let maxVisualBottom = 0;
 
-                const containerScrollHeight = container.scrollHeight;
-                if (maxVisualBottom > 0) {
-                    const finalHeight = Math.max(maxVisualBottom + 20, containerScrollHeight);
-                    container.style.height = `${finalHeight}px`;
-                    container.style.position = 'relative';
+            container.querySelectorAll('p').forEach(p => {
+                const imgs = p.querySelectorAll('img');
+                if (imgs.length > 0) {
+                    p.style.position = 'relative'; p.style.width = '100%'; p.style.display = 'block'; p.style.clear = 'both';
                 }
+            });
+
+            allImages.forEach(img => {
+                // Konversi PX ke % jika dipasang inline style px dari Quill admin
+                if (/px\s*$/.test(img.style.width || '')) {
+                    const pxWidth = parseFloat(img.style.width);
+                    img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
+                    img.style.height = 'auto';
+                }
+
+                // Ambil koordinat fisik terbawah asli gambar
+                const rect = img.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                const visualBottom = rect.bottom - containerRect.top;
+
+                if (visualBottom > maxVisualBottom) {
+                    maxVisualBottom = visualBottom;
+                }
+            });
+
+            // Kunci kontainer tepat di bawah gambar paling luar + kasih nafas 20px
+            const containerScrollHeight = container.scrollHeight;
+            if (maxVisualBottom > 0) {
+                const finalHeight = Math.max(maxVisualBottom + 20, containerScrollHeight);
+                container.style.height = `${finalHeight}px`;
+                container.style.position = 'relative';
             }
         }
+        
+        // Panggil nav spacer bawaan template biar footer ikut menyesuaikan
+        if (typeof syncNavSpacer === 'function') {
+            syncNavSpacer();
+        }
+    }
 
+    // TRACKING PROTEKSI: Tunggu semua gambar kelar loading, baru eksekusi rumusnya!
+    let loadedCount = 0;
+    if (allImages.length === 0) {
+        calculateFinalHeight();
+    } else {
+        allImages.forEach(img => {
+            if (img.complete) {
+                loadedCount++;
+                if (loadedCount === allImages.length) calculateFinalHeight();
+            } else {
+                img.addEventListener('load', () => {
+                    loadedCount++;
+                    if (loadedCount === allImages.length) calculateFinalHeight();
+                });
+                img.addEventListener('error', () => {
+                    loadedCount++;
+                    if (loadedCount === allImages.length) calculateFinalHeight();
+                });
+            }
+        });
+    }
+}
         function renderFreeformContent(project) {
             const container = document.getElementById('p-content');
 
