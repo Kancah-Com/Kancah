@@ -310,10 +310,15 @@
             <textarea id="p-description" class="p-4 bg-slate-50 border rounded-2xl h-[52px] focus:outline-none" placeholder="Lead description (intro singkat di bawah judul, opsional)"></textarea>
 
             <div class="md:col-span-2 space-y-2">
-                <div class="flex items-center justify-between">
-                    <label class="text-[9px] font-bold text-slate-400 uppercase ml-2">Project Story (Bebas: teks, gambar & video YouTube)</label>
-                    <span class="text-[8px] text-blue-400 font-bold uppercase mr-2">Bold / Italic / Underline / Font / Insert Image / Video</span>
-                </div>
+              <div class="flex items-center justify-between flex-wrap gap-2">
+    <label class="text-[9px] font-bold text-slate-400 uppercase ml-2">Project Story (Bebas: teks, gambar & video YouTube)</label>
+    <div class="flex items-center gap-2">
+        <button type="button" onclick="fixAllImagesResponsive()" class="text-[8px] font-black uppercase tracking-widest text-white bg-[#0006ff] px-3 py-1.5 rounded-full hover:bg-black transition-all">
+            <i class="fa-solid fa-arrows-left-right-to-line mr-1"></i>Konversi ke Responsif
+        </button>
+        <span class="text-[8px] text-blue-400 font-bold uppercase mr-2">Bold / Italic / Underline / Font / Insert Image / Video</span>
+    </div>
+</div>
                 <div id="p-content-editor-wrap" class="border border-slate-200 rounded-2xl overflow-hidden">
                     <div id="p-content-toolbar"></div>
                     <div id="p-content-editor"></div>
@@ -615,325 +620,358 @@
         // jadi ikut kesave ke content_html dan tampil sama persis di halaman project publik.
         // ===================================================================
         (function setupFreeImageFormatter() {
-            const editorRoot = document.querySelector('#p-content-editor .ql-editor');
-            let selectedImg = null;
-            let overlayEl, toolbarEl;
-            const handlePositions = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
+    const editorRoot = document.querySelector('#p-content-editor .ql-editor');
+    let selectedImg = null;
+    let overlayEl, toolbarEl;
+    const handlePositions = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
+            function getEditorContentWidth() {
+        const cs = getComputedStyle(editorRoot);
+        const padL = parseFloat(cs.paddingLeft) || 0;
+        const padR = parseFloat(cs.paddingRight) || 0;
+        return editorRoot.clientWidth - padL - padR;
+    }
 
-            function buildOverlay() {
-                overlayEl = document.createElement('div');
-                overlayEl.className = 'kf-img-overlay';
-                handlePositions.forEach(pos => {
-                    const h = document.createElement('div');
-                    h.className = `kf-img-handle kf-handle-${pos}`;
-                    h.dataset.pos = pos;
-                    h.addEventListener('mousedown', onHandleMouseDown);
-                    overlayEl.appendChild(h);
-                });
-                document.body.appendChild(overlayEl);
+          
+    function buildOverlay() {
+        overlayEl = document.createElement('div');
+        overlayEl.className = 'kf-img-overlay';
+        handlePositions.forEach(pos => {
+            const h = document.createElement('div');
+            h.className = `kf-img-handle kf-handle-${pos}`;
+            h.dataset.pos = pos;
+            h.addEventListener('mousedown', onHandleMouseDown);
+            overlayEl.appendChild(h);
+        });
+        document.body.appendChild(overlayEl);
 
-                toolbarEl = document.createElement('div');
-                toolbarEl.className = 'kf-img-toolbar';
-                toolbarEl.innerHTML = `
-                    <button type="button" data-align="left" title="Rata kiri"><i class="fa-solid fa-align-left"></i></button>
-                    <button type="button" data-align="center" title="Rata tengah"><i class="fa-solid fa-align-center"></i></button>
-                    <button type="button" data-align="right" title="Rata kanan"><i class="fa-solid fa-align-right"></i></button>
-                    <button type="button" data-align="reset" title="Reset ukuran & posisi"><i class="fa-solid fa-arrows-rotate"></i></button>
-                    <button type="button" data-action="delete" title="Hapus gambar"><i class="fa-solid fa-trash-can"></i></button>
-                `;
-                document.body.appendChild(toolbarEl);
+        toolbarEl = document.createElement('div');
+        toolbarEl.className = 'kf-img-toolbar';
+        toolbarEl.innerHTML = `
+            <button type="button" data-align="left" title="Rata kiri"><i class="fa-solid fa-align-left"></i></button>
+            <button type="button" data-align="center" title="Rata tengah"><i class="fa-solid fa-align-center"></i></button>
+            <button type="button" data-align="right" title="Rata kanan"><i class="fa-solid fa-align-right"></i></button>
+            <button type="button" data-align="reset" title="Reset ukuran & posisi"><i class="fa-solid fa-arrows-rotate"></i></button>
+            <button type="button" data-action="delete" title="Hapus gambar"><i class="fa-solid fa-trash-can"></i></button>
+        `;
+        document.body.appendChild(toolbarEl);
 
-                toolbarEl.querySelectorAll('button[data-align]').forEach(btn => {
-                    btn.addEventListener('mousedown', (e) => e.preventDefault());
-                    btn.addEventListener('click', () => applyAlign(btn.dataset.align));
-                });
-                toolbarEl.querySelector('button[data-action="delete"]').addEventListener('click', () => {
-                    if (selectedImg) { selectedImg.remove(); deselectImage(); }
-                });
-            }
+        toolbarEl.querySelectorAll('button[data-align]').forEach(btn => {
+            btn.addEventListener('mousedown', (e) => e.preventDefault());
+            btn.addEventListener('click', () => applyAlign(btn.dataset.align));
+        });
+        toolbarEl.querySelector('button[data-action="delete"]').addEventListener('click', () => {
+            if (selectedImg) { selectedImg.remove(); deselectImage(); }
+        });
+    }
 
-            function positionOverlay() {
-                if (!selectedImg) return;
-                const rect = selectedImg.getBoundingClientRect();
-                overlayEl.style.top = `${rect.top + window.scrollY}px`;
-                overlayEl.style.left = `${rect.left + window.scrollX}px`;
-                overlayEl.style.width = `${rect.width}px`;
-                overlayEl.style.height = `${rect.height}px`;
-                overlayEl.style.display = 'block';
+          function positionOverlay() {
+        if (!selectedImg) return;
+        const rect = selectedImg.getBoundingClientRect();
+        overlayEl.style.top = `${rect.top + window.scrollY}px`;
+        overlayEl.style.left = `${rect.left + window.scrollX}px`;
+        overlayEl.style.width = `${rect.width}px`;
+        overlayEl.style.height = `${rect.height}px`;
+        overlayEl.style.display = 'block';
 
-                toolbarEl.style.top = `${rect.top + window.scrollY - 42}px`;
-                toolbarEl.style.left = `${rect.left + window.scrollX}px`;
-                toolbarEl.style.display = 'flex';
-            }
+        toolbarEl.style.top = `${rect.top + window.scrollY - 42}px`;
+        toolbarEl.style.left = `${rect.left + window.scrollX}px`;
+        toolbarEl.style.display = 'flex';
+    }
 
-            function selectImage(img) {
-                selectedImg = img;
-                if (!overlayEl) buildOverlay();
-                positionOverlay();
-            }
-
-            function deselectImage() {
-                selectedImg = null;
-                if (overlayEl) overlayEl.style.display = 'none';
-                if (toolbarEl) toolbarEl.style.display = 'none';
-            }
+         function selectImage(img) {
+        selectedImg = img;
+        if (!overlayEl) buildOverlay();
+        positionOverlay();
+    }
+          function deselectImage() {
+        selectedImg = null;
+        if (overlayEl) overlayEl.style.display = 'none';
+        if (toolbarEl) toolbarEl.style.display = 'none';
+    }
 
             function applyAlign(type) {
-                if (!selectedImg) return;
-                selectedImg.style.position = 'relative';
-                if (type === 'reset') {
-                    selectedImg.removeAttribute('style');
-                } else {
-                    selectedImg.style.left = '0px';
-                    selectedImg.style.top = '0px';
-                    selectedImg.style.display = 'block';
-                    if (type === 'left') { selectedImg.style.marginLeft = '0'; selectedImg.style.marginRight = 'auto'; }
-                    if (type === 'center') { selectedImg.style.marginLeft = 'auto'; selectedImg.style.marginRight = 'auto'; }
-                    if (type === 'right') { selectedImg.style.marginLeft = 'auto'; selectedImg.style.marginRight = '0'; }
-                }
-                positionOverlay();
-            }
+        if (!selectedImg) return;
+        if (type === 'reset') {
+            selectedImg.removeAttribute('style');
+        } else {
+            selectedImg.style.position = 'relative';
+            selectedImg.style.transform = 'none'; // buang geseran drag kalau ada
+            if (type === 'left') { selectedImg.style.display = 'block'; selectedImg.style.marginLeft = '0'; selectedImg.style.marginRight = 'auto'; }
+            if (type === 'center') { selectedImg.style.display = 'block'; selectedImg.style.marginLeft = 'auto'; selectedImg.style.marginRight = 'auto'; }
+            if (type === 'right') { selectedImg.style.display = 'block'; selectedImg.style.marginLeft = 'auto'; selectedImg.style.marginRight = '0'; }
+        }
+        positionOverlay();
+    }
 
-            // --- RESIZE: sudut (nw/ne/sw/se) = rasio terkunci, tengah/tepi (n/s/e/w) = bebas (bisa gepeng) ---
-            let resizeState = null;
-            function onHandleMouseDown(e) {
-                e.preventDefault(); e.stopPropagation();
-                if (!selectedImg) return;
-                const rect = selectedImg.getBoundingClientRect();
-                const pos = e.currentTarget.dataset.pos;
-                resizeState = {
-                    pos,
-                    isCorner: pos.length === 2, // nw, ne, sw, se = handle sudut
-                    startX: e.clientX,
-                    startY: e.clientY,
-                    startW: rect.width,
-                    startH: rect.height,
-                    aspectRatio: rect.width / rect.height
-                };
-                document.addEventListener('mousemove', onResizeMove);
-                document.addEventListener('mouseup', onResizeUp);
-            }
+               // --- RESIZE: sudut (nw/ne/sw/se) = rasio terkunci, tengah/tepi (n/s/e/w) = bebas (bisa gepeng) ---
+    let resizeState = null;
+    function onHandleMouseDown(e) {
+        e.preventDefault(); e.stopPropagation();
+        if (!selectedImg) return;
+        const rect = selectedImg.getBoundingClientRect();
+        const pos = e.currentTarget.dataset.pos;
+        resizeState = {
+            pos,
+            isCorner: pos.length === 2,
+            startX: e.clientX,
+            startY: e.clientY,
+            startW: rect.width,
+            startH: rect.height,
+            aspectRatio: rect.width / rect.height
+        };
+        document.addEventListener('mousemove', onResizeMove);
+        document.addEventListener('mouseup', onResizeUp);
+    }
+
             function onResizeMove(e) {
-                if (!resizeState || !selectedImg) return;
-                const dx = e.clientX - resizeState.startX;
-                const dy = e.clientY - resizeState.startY;
-                const pos = resizeState.pos;
-                let newW = resizeState.startW, newH = resizeState.startH;
+        if (!resizeState || !selectedImg) return;
+        const dx = e.clientX - resizeState.startX;
+        const dy = e.clientY - resizeState.startY;
+        const pos = resizeState.pos;
+        let newW = resizeState.startW, newH = resizeState.startH;
 
-                if (resizeState.isCorner) {
-                    // Handle sudut: kunci rasio, pakai delta yang paling dominan biar drag ke arah manapun tetap smooth
-                    const signX = pos.includes('e') ? 1 : -1;
-                    const signY = pos.includes('s') ? 1 : -1;
-                    const deltaW = dx * signX;
-                    const deltaH = dy * signY;
-                    const minStart = Math.min(resizeState.startW, resizeState.startH);
-                    let scale = Math.abs(deltaW) > Math.abs(deltaH)
-                        ? (resizeState.startW + deltaW) / resizeState.startW
-                        : (resizeState.startH + deltaH) / resizeState.startH;
-                    scale = Math.max(scale, 20 / minStart); // cegah kebalik/negatif atau kekecilan
-                    newW = resizeState.startW * scale;
-                    newH = resizeState.startH * scale;
-                } else {
-                    // Handle tengah/tepi: bebas, cuma satu sisi berubah, boleh gepeng
-                    if (pos.includes('e')) newW = resizeState.startW + dx;
-                    if (pos.includes('w')) newW = resizeState.startW - dx;
-                    if (pos.includes('s')) newH = resizeState.startH + dy;
-                    if (pos.includes('n')) newH = resizeState.startH - dy;
-                    newW = Math.max(20, newW);
-                    newH = Math.max(20, newH);
+        if (resizeState.isCorner) {
+            const signX = pos.includes('e') ? 1 : -1;
+            const signY = pos.includes('s') ? 1 : -1;
+            const deltaW = dx * signX;
+            const deltaH = dy * signY;
+            const minStart = Math.min(resizeState.startW, resizeState.startH);
+            let scale = Math.abs(deltaW) > Math.abs(deltaH)
+                ? (resizeState.startW + deltaW) / resizeState.startW
+                : (resizeState.startH + deltaH) / resizeState.startH;
+            scale = Math.max(scale, 20 / minStart);
+            newW = resizeState.startW * scale;
+            newH = resizeState.startH * scale;
+        } else {
+            if (pos.includes('e')) newW = resizeState.startW + dx;
+            if (pos.includes('w')) newW = resizeState.startW - dx;
+            if (pos.includes('s')) newH = resizeState.startH + dy;
+            if (pos.includes('n')) newH = resizeState.startH - dy;
+            newW = Math.max(20, newW);
+            newH = Math.max(20, newH);
+        }
+
+        // Selama drag masih pakai px biar smooth ngikutin kursor.
+        selectedImg.style.width = `${newW}px`;
+        selectedImg.style.height = `${newH}px`;
+        positionOverlay();
+    }
+             function onResizeUp() {
+        if (selectedImg) {
+            // Baru di sini dikonversi ke % + aspect-ratio, biar ukurannya ikut
+            // menyesuaikan lebar layar tapi bentuk/rasionya tetap sama persis.
+            const rect = selectedImg.getBoundingClientRect();
+            const containerWidth = getEditorContentWidth() || rect.width;
+            const widthPct = (rect.width / containerWidth) * 100;
+            selectedImg.style.width = `${widthPct.toFixed(2)}%`;
+            selectedImg.style.height = '';
+            selectedImg.style.aspectRatio = `${rect.width.toFixed(2)} / ${rect.height.toFixed(2)}`;
+            positionOverlay();
+        }
+        resizeState = null;
+        document.removeEventListener('mousemove', onResizeMove);
+        document.removeEventListener('mouseup', onResizeUp);
+    }
+
+          // --- SMART GUIDES (gak berubah — tetap berbasis posisi visual gambar) ---
+    const SNAP_THRESHOLD = 6;
+    let guideLines = [];
+    function ensureGuideLines() {
+        if (guideLines.length) return guideLines;
+        for (let i = 0; i < 8; i++) {
+            const el = document.createElement('div');
+            el.className = 'kf-guide-line';
+            document.body.appendChild(el);
+            guideLines.push(el);
+        }
+        return guideLines;
+    }
+          function hideGuideLines() { guideLines.forEach(g => g.style.display = 'none'); }
+    function showVGuide(el, xPix, top, bottom) {
+        el.className = 'kf-guide-line kf-guide-v';
+        el.style.left = `${xPix}px`;
+        el.style.top = `${top}px`;
+        el.style.height = `${Math.max(1, bottom - top)}px`;
+        el.style.display = 'block';
+    }
+           function showHGuide(el, yPix, left, right) {
+        el.className = 'kf-guide-line kf-guide-h';
+        el.style.top = `${yPix}px`;
+        el.style.left = `${left}px`;
+        el.style.width = `${Math.max(1, right - left)}px`;
+        el.style.display = 'block';
+    }
+
+           function computeAlignmentSnap(img) {
+        hideGuideLines();
+        const rect = img.getBoundingClientRect();
+        const editorRect = editorRoot.getBoundingClientRect();
+        const others = Array.from(editorRoot.querySelectorAll('img')).filter(el => el !== img);
+
+        const targetsX = [];
+        const targetsY = [];
+        others.forEach(other => {
+            const r = other.getBoundingClientRect();
+            const spanTop = Math.min(rect.top, r.top) - 24, spanBottom = Math.max(rect.bottom, r.bottom) + 24;
+            const spanLeft = Math.min(rect.left, r.left) - 24, spanRight = Math.max(rect.right, r.right) + 24;
+            targetsX.push({ value: r.left, top: spanTop, bottom: spanBottom });
+            targetsX.push({ value: r.left + r.width / 2, top: spanTop, bottom: spanBottom });
+            targetsX.push({ value: r.right, top: spanTop, bottom: spanBottom });
+            targetsY.push({ value: r.top, left: spanLeft, right: spanRight });
+            targetsY.push({ value: r.top + r.height / 2, left: spanLeft, right: spanRight });
+            targetsY.push({ value: r.bottom, left: spanLeft, right: spanRight });
+        });
+        targetsX.push({ value: editorRect.left, top: editorRect.top, bottom: editorRect.bottom });
+        targetsX.push({ value: editorRect.left + editorRect.width / 2, top: editorRect.top, bottom: editorRect.bottom });
+        targetsX.push({ value: editorRect.right, top: editorRect.top, bottom: editorRect.bottom });
+
+        const mySidesX = [rect.left, rect.left + rect.width / 2, rect.right];
+        const mySidesY = [rect.top, rect.top + rect.height / 2, rect.bottom];
+
+        const lines = ensureGuideLines();
+        let vUsed = 0, hUsed = 4;
+        let snappedX = null, snappedY = null;
+
+        xLoop:
+        for (const my of mySidesX) {
+            for (const t of targetsX) {
+                if (Math.abs(t.value - my) <= SNAP_THRESHOLD) {
+                    snappedX = t.value - my;
+                    if (vUsed < 4) showVGuide(lines[vUsed++], t.value, t.top, t.bottom);
+                    break xLoop;
                 }
-
-                selectedImg.style.width = `${newW}px`;
-                selectedImg.style.height = `${newH}px`;
-                positionOverlay();
             }
-            function onResizeUp() {
-                resizeState = null;
-                document.removeEventListener('mousemove', onResizeMove);
-                document.removeEventListener('mouseup', onResizeUp);
-            }
-
-            // --- SMART GUIDES: pool garis bantu yang dipakai ulang tiap drag ---
-            const SNAP_THRESHOLD = 6; // px, seberapa deket baru dianggap "nempel"
-            let guideLines = [];
-            function ensureGuideLines() {
-                if (guideLines.length) return guideLines;
-                for (let i = 0; i < 8; i++) {
-                    const el = document.createElement('div');
-                    el.className = 'kf-guide-line';
-                    document.body.appendChild(el);
-                    guideLines.push(el);
+        }
+        yLoop:
+        for (const my of mySidesY) {
+            for (const t of targetsY) {
+                if (Math.abs(t.value - my) <= SNAP_THRESHOLD) {
+                    snappedY = t.value - my;
+                    if (hUsed < 8) showHGuide(lines[hUsed++], t.value, t.left, t.right);
+                    break yLoop;
                 }
-                return guideLines;
             }
-            function hideGuideLines() { guideLines.forEach(g => g.style.display = 'none'); }
-            function showVGuide(el, xPix, top, bottom) {
-                el.className = 'kf-guide-line kf-guide-v';
-                el.style.left = `${xPix}px`;
-                el.style.top = `${top}px`;
-                el.style.height = `${Math.max(1, bottom - top)}px`;
-                el.style.display = 'block';
-            }
-            function showHGuide(el, yPix, left, right) {
-                el.className = 'kf-guide-line kf-guide-h';
-                el.style.top = `${yPix}px`;
-                el.style.left = `${left}px`;
-                el.style.width = `${Math.max(1, right - left)}px`;
-                el.style.display = 'block';
-            }
+        }
+        return { snappedX, snappedY };
+    }
 
-            // Cocokin tepi kiri/tengah/kanan & atas/tengah/bawah gambar yang lagi digeser
-            // dengan gambar lain di editor (dan tepi/tengah kolom editor), kayak smart guides Canva.
-            function computeAlignmentSnap(img) {
-                hideGuideLines();
-                const rect = img.getBoundingClientRect();
-                const editorRect = editorRoot.getBoundingClientRect();
-                const others = Array.from(editorRoot.querySelectorAll('img')).filter(el => el !== img);
+            // --- DRAG: hasil akhirnya disimpan sebagai transform: translate(%, %). ---
+    // % di transform itu relatif ke UKURAN GAMBAR ITU SENDIRI, jadi kalau
+    // gambarnya mengecil di HP, geserannya otomatis ikut mengecil proporsional.
+    let dragState = null;
+    editorRoot.addEventListener('mousedown', (e) => {
+        const img = e.target.closest('img');
+        if (!img || !editorRoot.contains(img)) return;
+        e.preventDefault();
+        if (img !== selectedImg) selectImage(img);
+        img.style.position = 'relative';
+        img.classList.add('kf-dragging');
+         // Kalau gambar udah pernah digeser (tersimpan sbg transform %),
+        // ubah dulu jadi px sementara biar drag-nya smooth.
+        let startLeftPx = 0, startTopPx = 0;
+        const existingTransform = img.style.transform || '';
+        const tMatch = existingTransform.match(/translate\(\s*(-?[\d.]+)%\s*,\s*(-?[\d.]+)%\s*\)/);
+        if (tMatch) {
+            const rect = img.getBoundingClientRect();
+            startLeftPx = (parseFloat(tMatch[1]) / 100) * rect.width;
+            startTopPx = (parseFloat(tMatch[2]) / 100) * rect.height;
+        } else {
+            startLeftPx = parseFloat(img.style.left) || 0;
+            startTopPx = parseFloat(img.style.top) || 0;
+        }
 
-                const targetsX = [];
-                const targetsY = [];
-                others.forEach(other => {
-                    const r = other.getBoundingClientRect();
-                    const spanTop = Math.min(rect.top, r.top) - 24, spanBottom = Math.max(rect.bottom, r.bottom) + 24;
-                    const spanLeft = Math.min(rect.left, r.left) - 24, spanRight = Math.max(rect.right, r.right) + 24;
-                    targetsX.push({ value: r.left, top: spanTop, bottom: spanBottom });
-                    targetsX.push({ value: r.left + r.width / 2, top: spanTop, bottom: spanBottom });
-                    targetsX.push({ value: r.right, top: spanTop, bottom: spanBottom });
-                    targetsY.push({ value: r.top, left: spanLeft, right: spanRight });
-                    targetsY.push({ value: r.top + r.height / 2, left: spanLeft, right: spanRight });
-                    targetsY.push({ value: r.bottom, left: spanLeft, right: spanRight });
-                });
-                // Tepi & tengah kolom editor, biar bisa nge-center-in ke halaman juga
-                targetsX.push({ value: editorRect.left, top: editorRect.top, bottom: editorRect.bottom });
-                targetsX.push({ value: editorRect.left + editorRect.width / 2, top: editorRect.top, bottom: editorRect.bottom });
-                targetsX.push({ value: editorRect.right, top: editorRect.top, bottom: editorRect.bottom });
-
-                const mySidesX = [rect.left, rect.left + rect.width / 2, rect.right];
-                const mySidesY = [rect.top, rect.top + rect.height / 2, rect.bottom];
-
-                const lines = ensureGuideLines();
-                let vUsed = 0, hUsed = 4; // guideLines[0..3] = vertical, [4..7] = horizontal
-                let snappedX = null, snappedY = null;
-
-                xLoop:
-                for (const my of mySidesX) {
-                    for (const t of targetsX) {
-                        if (Math.abs(t.value - my) <= SNAP_THRESHOLD) {
-                            snappedX = t.value - my;
-                            if (vUsed < 4) showVGuide(lines[vUsed++], t.value, t.top, t.bottom);
-                            break xLoop;
-                        }
-                    }
-                }
-                yLoop:
-                for (const my of mySidesY) {
-                    for (const t of targetsY) {
-                        if (Math.abs(t.value - my) <= SNAP_THRESHOLD) {
-                            snappedY = t.value - my;
-                            if (hUsed < 8) showHGuide(lines[hUsed++], t.value, t.left, t.right);
-                            break yLoop;
-                        }
-                    }
-                }
-                return { snappedX, snappedY };
-            }
-
-            // --- DRAG: geser gambar ke mana aja (offset relatif dari posisi normalnya) ---
-            // SHIFT = kunci ke satu sumbu (horizontal ATAU vertical) biar gesernya lurus kayak di Word/PPT.
-            // Otomatis juga nge-snap/nempel ke tepi & tengah gambar lain kayak smart guides di Canva.
-            let dragState = null;
-            editorRoot.addEventListener('mousedown', (e) => {
-                const img = e.target.closest('img');
-                if (!img || !editorRoot.contains(img)) return;
-                e.preventDefault();
-                if (img !== selectedImg) selectImage(img);
-                img.style.position = 'relative';
-                img.classList.add('kf-dragging');
                 dragState = {
-                    img,
-                    startX: e.clientX,
-                    startY: e.clientY,
-                    startLeft: parseFloat(img.style.left) || 0,
-                    startTop: parseFloat(img.style.top) || 0,
-                    moved: false,
-                    axisLock: null
-                };
-                ensureGuideLines();
-                document.addEventListener('mousemove', onDragMove);
-                document.addEventListener('mouseup', onDragUp);
+            img,
+            startX: e.clientX,
+            startY: e.clientY,
+            startLeft: startLeftPx,
+            startTop: startTopPx,
+            originalTransform: existingTransform,
+            originalLeft: img.style.left,
+            originalTop: img.style.top,
+            moved: false,
+            axisLock: null
+        };
+
+        img.style.transform = 'none';
+        img.style.left = `${startLeftPx}px`;
+        img.style.top = `${startTopPx}px`;
+ ensureGuideLines();
+        document.addEventListener('mousemove', onDragMove);
+        document.addEventListener('mouseup', onDragUp);
             });
-            function onDragMove(e) {
-                if (!dragState) return;
-                let dx = e.clientX - dragState.startX;
-                let dy = e.clientY - dragState.startY;
-                if (!dragState.moved && Math.abs(dx) < 3 && Math.abs(dy) < 3) return;
-                dragState.moved = true;
-
-                // Tahan Shift = kunci sumbu (horizontal atau vertical), ditentukan sekali di awal drag
-                if (e.shiftKey) {
-                    if (!dragState.axisLock) dragState.axisLock = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
-                    if (dragState.axisLock === 'x') dy = 0; else dx = 0;
-                } else {
-                    dragState.axisLock = null;
-                }
-
-                let newLeft = dragState.startLeft + dx;
-                let newTop = dragState.startTop + dy;
-                dragState.img.style.left = `${newLeft}px`;
-                dragState.img.style.top = `${newTop}px`;
-
-                // Smart snap ke gambar lain (skip snap-X kalau lagi dikunci vertical, dan sebaliknya)
-                const snap = computeAlignmentSnap(dragState.img);
-                if (snap.snappedX !== null && dragState.axisLock !== 'y') newLeft += snap.snappedX;
-                if (snap.snappedY !== null && dragState.axisLock !== 'x') newTop += snap.snappedY;
-                dragState.img.style.left = `${newLeft}px`;
-                dragState.img.style.top = `${newTop}px`;
-
-                positionOverlay();
+           function onDragUp() {
+        if (dragState) {
+            const img = dragState.img;
+            img.classList.remove('kf-dragging');
+            if (dragState.moved) {
+                const leftPx = parseFloat(img.style.left) || 0;
+                const topPx = parseFloat(img.style.top) || 0;
+                const rect = img.getBoundingClientRect();
+                const w = rect.width || 1;
+                const h = rect.height || 1;
+                img.style.left = '';
+                img.style.top = '';
+                img.style.transform = `translate(${((leftPx / w) * 100).toFixed(2)}%, ${((topPx / h) * 100).toFixed(2)}%)`;
+            } else {
+                img.style.transform = dragState.originalTransform || '';
+                img.style.left = dragState.originalLeft || '';
+                img.style.top = dragState.originalTop || '';
             }
-            function onDragUp() {
-                if (dragState) dragState.img.classList.remove('kf-dragging');
-                dragState = null;
-                hideGuideLines();
-                document.removeEventListener('mousemove', onDragMove);
-                document.removeEventListener('mouseup', onDragUp);
-            }
+        }
+        dragState = null;
+        hideGuideLines();
+        document.removeEventListener('mousemove', onDragMove);
+        document.removeEventListener('mouseup', onDragUp);
+    }
 
-            document.addEventListener('mousedown', (e) => {
-                if (selectedImg && !e.target.closest('img') && !e.target.closest('.kf-img-overlay') && !e.target.closest('.kf-img-toolbar')) {
-                    deselectImage();
-                }
-            });
-            window.addEventListener('scroll', () => { if (selectedImg) positionOverlay(); });
-            window.addEventListener('resize', () => { if (selectedImg) positionOverlay(); });
+    document.addEventListener('mousedown', (e) => {
+        if (selectedImg && !e.target.closest('img') && !e.target.closest('.kf-img-overlay') && !e.target.closest('.kf-img-toolbar')) {
+            deselectImage();
+        }
+    });
+    window.addEventListener('scroll', () => { if (selectedImg) positionOverlay(); });
+    window.addEventListener('resize', () => { if (selectedImg) positionOverlay(); });
         })();
 
-        function quillImageHandler() {
-            const input = document.createElement('input');
-            input.setAttribute('type', 'file');
-            input.setAttribute('accept', 'image/*');
-            input.click();
+       function convertImageToResponsive(img) {
+        const cs = img.style;
+        const hasPxWidth = /px\s*$/.test(cs.width || '');
+        const hasPxOffset = /px\s*$/.test(cs.left || '') || /px\s*$/.test(cs.top || '');
+        if (!hasPxWidth && !hasPxOffset) return false;
 
-            input.onchange = async () => {
-                const file = input.files[0];
-                if (!file) return;
-                const range = quill.getSelection(true);
-                try {
-                    quill.insertText(range.index, 'Mengunggah gambar...', { italic: true });
-                    const fileName = `content/${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
-                    const { error } = await kancah.storage.from('project-images').upload(fileName, file);
-                    if (error) throw error;
-                    const publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
-
-                    quill.deleteText(range.index, 'Mengunggah gambar...'.length);
-                    quill.insertEmbed(range.index, 'image', publicUrl);
-                    quill.setSelection(range.index + 1);
-                } catch (err) {
-                    quill.deleteText(range.index, 'Mengunggah gambar...'.length);
-                    showToast(err.message || 'Gagal upload gambar', true);
-                }
-            };
+        const rect = img.getBoundingClientRect();
+        if (hasPxWidth) {
+            const containerWidth = getEditorContentWidth() || rect.width;
+            img.style.width = `${((rect.width / containerWidth) * 100).toFixed(2)}%`;
+            img.style.height = '';
+            img.style.aspectRatio = `${rect.width.toFixed(2)} / ${rect.height.toFixed(2)}`;
         }
+        if (hasPxOffset) {
+            const leftPx = parseFloat(cs.left) || 0;
+            const topPx = parseFloat(cs.top) || 0;
+            const rect2 = img.getBoundingClientRect();
+            const w = rect2.width || rect.width || 1;
+            const h = rect2.height || rect.height || 1;
+            img.style.left = '';
+            img.style.top = '';
+            img.style.transform = `translate(${((leftPx / w) * 100).toFixed(2)}%, ${((topPx / h) * 100).toFixed(2)}%)`;
+        }
+        return true;
+    }
+
+    window.fixAllImagesResponsive = function () {
+        const imgs = editorRoot.querySelectorAll('img');
+        let count = 0;
+        imgs.forEach(img => { if (convertImageToResponsive(img)) count++; });
+        if (count > 0) {
+            showToast(`${count} gambar dikonversi ke mode responsif. Cek tampilannya, lalu klik UPDATE WORK NOW.`);
+        } else {
+            showToast('Semua gambar di project ini udah dalam format responsif.');
+        }
+    };
+})();
+
 
         // --- THEME MODE ---
         function applyTheme() {
