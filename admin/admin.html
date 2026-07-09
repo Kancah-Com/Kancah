@@ -40,7 +40,13 @@
         #p-content-toolbar.ql-toolbar { border-radius: 1rem 1rem 0 0; background: #f8fafc; }
         .ql-container.ql-snow, .ql-toolbar.ql-snow { border-color: #e2e8f0 !important; }
 
-        #p-content-editor-wrap { max-width: 1100px; margin: 0 auto; }
+        #p-content-editor-wrap {
+    resize: vertical; /* Memungkinkan user mengubah tinggi editor */
+    overflow: auto;
+    min-height: 320px;
+    max-height: 800px;
+    border: 2px solid #e2e8f0; /* Batasan visual yang jelas */
+}
         #p-content-editor .ql-editor { padding: 20px 24px; }
 
         #p-content-editor .ql-editor {
@@ -678,24 +684,25 @@
 
 function onResizeUp() {
     if (selectedImg) {
-        const rect = selectedImg.getBoundingClientRect();
-        const containerWidth = getEditorContentWidth() || rect.width;
+        // 1. Dapatkan ukuran container editor
+        const editorWidth = getEditorContentWidth();
         
-        // 1. Set width gambar dalam persentase agar responsif
-        const newWidth = ((rect.width / containerWidth) * 100).toFixed(2);
-        selectedImg.style.width = `${newWidth}%`;
-        selectedImg.style.height = 'auto'; // Pastikan height otomatis
+        // 2. Hitung persentase agar gambar responsif, bukan fix pixel
+        const newWidthPercent = ((selectedImg.clientWidth / editorWidth) * 100).toFixed(2);
         
-        // 2. PAKSA PARAGRAF PEMBUNGKUS MENGIKUTI UKURAN GAMBAR
+        // 3. Terapkan ke gambar & paksa height jadi auto
+        selectedImg.style.width = `${newWidthPercent}%`;
+        selectedImg.style.height = 'auto';
+        
+        // 4. "Sikat" whitespace pada pembungkus (parent) gambar
         const parent = selectedImg.closest('p, div');
         if (parent) {
-            parent.style.lineHeight = '0';
-            parent.style.marginBottom = '0';
-            parent.style.marginTop = '0';
-            parent.style.padding = '0';
+            parent.style.lineHeight = '0'; // Menghilangkan spasi antar baris di p
+            parent.style.marginBottom = '0'; // Menghilangkan margin bawah
+            parent.style.display = 'block';
         }
-        
-        positionOverlay();
+
+        positionOverlay(); // Update posisi handle resize
         
         // Optional: Trigger pembersihan otomatis setelah resize
         cleanEmptyParagraphs();
