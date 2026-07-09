@@ -365,7 +365,7 @@
             img.style.height = 'auto';
         }
 
-        // Konversi left/top px (format lama) → transform translate %
+        // Konversi left/top px → transform translate %
         const hasPxLeft = /px\s*$/.test(img.style.left || '');
         const hasPxTop  = /px\s*$/.test(img.style.top  || '');
         if (hasPxLeft || hasPxTop) {
@@ -379,6 +379,14 @@
             img.style.transform = `translate(${((leftPx / w) * 100).toFixed(2)}%, ${((topPx / h) * 100).toFixed(2)}%)`;
         }
     });
+
+    // PERBAIKAN UTAMA: Tambahkan clear-fix pembongkar layout hantu di akhir kontainer
+    // Ini memaksa browser membungkus ulang tinggi halaman agar space kosong di bawah terpotong otomatis
+    const clearFix = document.createElement('div');
+    clearFix.style.clear = 'both';
+    clearFix.style.display = 'block';
+    clearFix.style.height = '0';
+    container.appendChild(clearFix);
 }
         
 
