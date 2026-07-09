@@ -180,19 +180,18 @@ footer {
             <article id="p-content" class="pt-6"></article>
         </div>
 
-<div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-16 border-t border-gray-100 pt-6 pb-20 flex flex-col items-center justify-center gap-8">
-    <nav class="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 w-full justify-center text-center">
-        <a id="prev-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue transition-all line-clamp-1">
-            <span aria-hidden="true">←</span> <span id="prev-project-title"></span>
-        </a>
-        <a id="next-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue transition-all line-clamp-1">
-            <span id="next-project-title"></span> <span aria-hidden="true">→</span>
-        </a>
-    </nav>
-    <a href="works" class="inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 hover:bg-kancah-blue active:scale-95">
-        See All Projects
-    </a>
-</div>
+<!-- More Projects Section -->
+<section class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-24 mb-32">
+    <div class="flex items-center justify-between mb-10">
+        <h2 class="text-xl font-black uppercase italic tracking-tighter text-kancah-dark">More Works</h2>
+        <a href="works" class="text-[10px] font-black uppercase tracking-[0.2em] hover:text-kancah-blue transition-all underline underline-offset-4">See All</a>
+    </div>
+
+    <!-- Gallery Container (Bisa di-scroll horizontal) -->
+    <div id="more-works-gallery" class="flex gap-6 overflow-x-auto pb-8 no-scrollbar snap-x">
+        <!-- Project Cards akan di-generate oleh JS -->
+    </div>
+</section>
     </main>
 
     <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
@@ -289,8 +288,31 @@ footer {
             renderTags(project);
             renderFreeformContent(project);
             loadAdjacentProjects(slug);
+            loadMoreWorks(slug);
         }
+async function loadMoreWorks(currentSlug) {
+    const gallery = document.getElementById('more-works-gallery');
+    // Pastikan variabel 'kancah' sudah terdefinisi di atasnya
+    const { data: list } = await kancah.from('projects')
+        .select('slug, title, image_url, category')
+        .order('created_at', { ascending: false })
+        .limit(6);
+    
+    if (!list) return;
 
+    // Filter agar project saat ini tidak muncul
+    const otherProjects = list.filter(p => p.slug !== currentSlug);
+
+    gallery.innerHTML = otherProjects.map(p => `
+        <a href="?id=${p.slug}" class="snap-start flex-none w-[280px] sm:w-[350px] group">
+            <div class="aspect-[4/3] w-full bg-slate-100 rounded-2xl overflow-hidden mb-4">
+                <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <p class="text-[10px] font-black uppercase tracking-widest text-kancah-blue mb-1">${p.category}</p>
+            <h3 class="text-lg font-bold italic uppercase tracking-tighter text-kancah-dark group-hover:text-kancah-blue transition-colors">${p.title}</h3>
+        </a>
+    `).join('');
+}
         function renderTags(project) {
             const wrap = document.getElementById('p-tags'); let html = '';
             if (project.year) { html += `<span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Project Year ${escapeHtml(project.year)}</span>`; }
