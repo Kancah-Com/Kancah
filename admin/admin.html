@@ -68,7 +68,23 @@
             border-left: 3px solid #0006ff; padding-left: 1.25rem; margin: 1.5rem 0;
             font-style: italic; color: #374151;
         }
-        
+        #p-content-editor .ql-editor p:has(img) {
+    line-height: 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    display: block !important;
+}
+
+#p-content-editor .ql-editor img {
+    vertical-align: bottom !important;
+    display: block !important;
+    max-width: 100% !important;
+}
+
+/* Memastikan wrapper editor tidak membatasi ukuran */
+#p-content-editor .ql-editor {
+    overflow-x: hidden;
+}
         /* --- YOUTUBE EMBED EDITOR --- */
         #p-content-editor .ql-editor iframe.ql-video {
             width: 100%;
@@ -660,14 +676,36 @@
                 selectedImg.style.width = `${newW}px`; selectedImg.style.height = `${newH}px`; positionOverlay();
             }
 
-            function onResizeUp() {
-                if (selectedImg) {
-                    const rect = selectedImg.getBoundingClientRect(); const containerWidth = getEditorContentWidth() || rect.width;
-                    selectedImg.style.width = `${((rect.width / containerWidth) * 100).toFixed(2)}%`; selectedImg.style.height = '';
-                    selectedImg.style.aspectRatio = `${rect.width.toFixed(2)} / ${rect.height.toFixed(2)}`; positionOverlay();
-                }
-                resizeState = null; document.removeEventListener('mousemove', onResizeMove); document.removeEventListener('mouseup', onResizeUp);
-            }
+function onResizeUp() {
+    if (selectedImg) {
+        const rect = selectedImg.getBoundingClientRect();
+        const containerWidth = getEditorContentWidth() || rect.width;
+        
+        // 1. Set width gambar dalam persentase agar responsif
+        const newWidth = ((rect.width / containerWidth) * 100).toFixed(2);
+        selectedImg.style.width = `${newWidth}%`;
+        selectedImg.style.height = 'auto'; // Pastikan height otomatis
+        
+        // 2. PAKSA PARAGRAF PEMBUNGKUS MENGIKUTI UKURAN GAMBAR
+        const parent = selectedImg.closest('p, div');
+        if (parent) {
+            parent.style.lineHeight = '0';
+            parent.style.marginBottom = '0';
+            parent.style.marginTop = '0';
+            parent.style.padding = '0';
+        }
+        
+        positionOverlay();
+        
+        // Optional: Trigger pembersihan otomatis setelah resize
+        cleanEmptyParagraphs();
+    }
+    
+    // Reset state resize
+    resizeState = null;
+    document.removeEventListener('mousemove', onResizeMove);
+    document.removeEventListener('mouseup', onResizeUp);
+}
 
             const SNAP_THRESHOLD = 6; let guideLines = [];
             function ensureGuideLines() {
@@ -797,42 +835,22 @@
             // dari Enter kosong berkali-kali. Aman: gak akan nyentuh paragraf
             // yang masih ada teks, gambar, atau video di dalamnya.
 window.cleanEmptyParagraphs = function () {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = quill.root.innerHTML;
-    let removed = 0;
+    const editor = document.querySelector('#p-content-editor .ql-editor');
+    if (!editor) return;
 
-    // Ambil seluruh elemen paragraf (<p>) di dalam editor secara menyeluruh, bukan hanya direct children
-    const paragraphs = Array.from(tmp.querySelectorAll('p'));
-    
-    paragraphs.forEach((el) => {
-        // Cek teks asli dan bersihkan dari karakter whitespace tak terlihat (Unicode / ZWSP)
-        const textContent = el.textContent.replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
-        const rawInner = el.innerHTML.trim();
+    // Ambil semua elemen P yang mungkin mengandung sisa whitespace
+    const elements = Array.from(editor.querySelectorAll('p'));
+    elements.forEach(el => {
+        // Cek apakah elemen ini benar-benar kosong
+        const isEmpty = el.innerHTML.replace(/<br\s*\/?>|&nbsp;|\s/g, '') === '';
+        const hasMedia = !!el.querySelector('img, iframe, video');
         
-        // Kondisi jika paragraf dianggap kosong secara visual
-        const isQuillEmpty = rawInner === '<br>' || rawInner === '' || rawInner === '&nbsp;' || textContent === '';
-        const hasMedia = !!el.querySelector('img, iframe, video, audio');
-
-        if (isQuillEmpty && !hasMedia) {
-            // Hapus paksa elemen paragraf kosong ini agar tidak meninggalkan whitespace/space hantu
+        // Jika kosong dan tidak ada gambar di dalamnya, HAPUS
+        if (isEmpty && !hasMedia) {
             el.remove();
-            removed++;
         }
     });
-
-    if (removed > 0) {
-        // Pastikan editor tidak benar-benar kosong total agar Quill tidak error
-        if (tmp.children.length === 0 || tmp.innerHTML.trim() === '') {
-            tmp.innerHTML = '<p><br></p>';
-        }
-        quill.root.innerHTML = tmp.innerHTML;
-        showToast(`${removed} baris kosong hantu berhasil dibersihkan!`);
-    } else {
-        showToast('Tidak ditemukan baris kosong hantu.');
-    }
-    return removed;
 };
-        })();
 
         // --- THEME MODE ---
         function applyTheme() {
