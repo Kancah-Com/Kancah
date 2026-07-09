@@ -932,7 +932,6 @@
     });
     window.addEventListener('scroll', () => { if (selectedImg) positionOverlay(); });
     window.addEventListener('resize', () => { if (selectedImg) positionOverlay(); });
-        })();
 
        function convertImageToResponsive(img) {
         const cs = img.style;
@@ -970,7 +969,7 @@
             showToast('Semua gambar di project ini udah dalam format responsif.');
         }
     };
-
+})();
 
         // --- THEME MODE ---
         function applyTheme() {
