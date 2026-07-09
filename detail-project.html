@@ -356,16 +356,18 @@
     const container = document.getElementById('p-content');
     if (!container) return;
     const EDITOR_BASE_WIDTH = 1100;
+    
+    let maxVisualBottom = 0;
 
     container.querySelectorAll('img').forEach(img => {
-        // Konversi width px → %
+        // 1. Konversi width px → % agar responsif
         if (/px\s*$/.test(img.style.width || '')) {
             const pxWidth = parseFloat(img.style.width);
             img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
             img.style.height = 'auto';
         }
 
-        // Konversi left/top px → transform translate %
+        // 2. Konversi left/top px → transform translate %
         const hasPxLeft = /px\s*$/.test(img.style.left || '');
         const hasPxTop  = /px\s*$/.test(img.style.top  || '');
         if (hasPxLeft || hasPxTop) {
@@ -378,15 +380,26 @@
             img.style.top  = '';
             img.style.transform = `translate(${((leftPx / w) * 100).toFixed(2)}%, ${((topPx / h) * 100).toFixed(2)}%)`;
         }
+
+        // 3. KALKULASI JARAK VISUAL ELEMEN TERBAWAH
+        // Kita hitung posisi asli elemen ditambah pergeseran transform-nya
+        const rect = img.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        
+        // Jarak relatif bagian bawah gambar dari top kontainer pembungkus
+        const visualBottom = rect.bottom - containerRect.top;
+        if (visualBottom > maxVisualBottom) {
+            maxVisualBottom = visualBottom;
+        }
     });
 
-    // PERBAIKAN UTAMA: Tambahkan clear-fix pembongkar layout hantu di akhir kontainer
-    // Ini memaksa browser membungkus ulang tinggi halaman agar space kosong di bawah terpotong otomatis
-    const clearFix = document.createElement('div');
-    clearFix.style.clear = 'both';
-    clearFix.style.display = 'block';
-    clearFix.style.height = '0';
-    container.appendChild(clearFix);
+    // 4. EKSEKUSI PEMOTONGAN LAYOUT
+    // Jika ada elemen gambar yang digeser melayang, paksa tinggi kontainer mengunci di batas visual paling bawah
+    if (maxVisualBottom > 0) {
+        // Tambahkan sedikit padding aman (misal 40px) di bawah gambar kolase terakhir
+        container.style.height = `${maxVisualBottom + 40}px`;
+        container.style.position = 'relative';
+    }
 }
         
 
