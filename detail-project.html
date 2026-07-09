@@ -40,23 +40,34 @@ footer {
 }
 /* Ganti CSS untuk #more-works-gallery di style Anda */
 /* Container galeri agar bisa digeser dan tidak scrollbar */
+/* Mengatur container agar fleksibel dan bisa di-scroll */
 #more-works-gallery {
     display: flex;
-    overflow-x: auto;
+    flex-direction: row;      /* Selalu berjejer ke samping */
+    overflow-x: auto;         /* Mengaktifkan scroll horizontal */
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-    gap: 1.5rem; /* Jarak antar kartu */
+    scrollbar-width: none;    /* Sembunyikan scrollbar di Firefox */
+    gap: 1.5rem;              /* Jarak antar kartu */
+    padding-bottom: 1rem;     /* Ruang agar scrollbar tidak menempel */
 }
 
+/* Sembunyikan scrollbar di Chrome/Safari */
 #more-works-gallery::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
 }
 
-/* Biar kartu tidak menyusut saat ditarik */
+/* Mengatur ukuran kartu agar konsisten */
 #more-works-gallery > a {
-    flex: 0 0 auto; /* Penting: agar ukuran kartu tetap, tidak gepeng */
-    width: 280px;  /* Lebar kartu */
+    flex: 0 0 auto;           /* Mencegah kartu menyusut (gepeng) */
+    width: 280px;             /* Lebar kartu di mobile */
+}
+
+/* Opsional: Ubah lebar kartu di desktop agar lebih luas jika perlu */
+@media (min-width: 768px) {
+    #more-works-gallery > a {
+        width: 350px;         /* Lebar kartu di desktop */
+    }
 }
 #p-content {
     /* Mencegah overflow */
