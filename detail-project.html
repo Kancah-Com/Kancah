@@ -180,13 +180,19 @@ footer {
             <article id="p-content" class="pt-6"></article>
         </div>
 
-<div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-16 border-t border-gray-100 pt-6 pb-20 flex flex-col items-center justify-center gap-4">            <nav class="flex items-center gap-3 flex-wrap justify-center">
-                <a id="prev-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue"><span aria-hidden="true">←</span><span id="prev-project-title"></span></a>
-                <span id="prev-next-divider" class="hidden text-gray-300">|</span>
-                <a id="next-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue"><span id="next-project-title"></span><span aria-hidden="true">→</span></a>
-            </nav>
-            <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em]">See All Projects</a>
-        </div>
+<div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-16 border-t border-gray-100 pt-6 pb-20 flex flex-col items-center justify-center gap-8">
+    <nav class="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 w-full justify-center text-center">
+        <a id="prev-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue transition-all line-clamp-1">
+            <span aria-hidden="true">←</span> <span id="prev-project-title"></span>
+        </a>
+        <a id="next-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue transition-all line-clamp-1">
+            <span id="next-project-title"></span> <span aria-hidden="true">→</span>
+        </a>
+    </nav>
+    <a href="works" class="inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-300 hover:bg-kancah-blue active:scale-95">
+        See All Projects
+    </a>
+</div>
     </main>
 
     <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
