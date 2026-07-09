@@ -61,11 +61,7 @@
    -> ini biang keladi whitespace-nya. Paksa tinggi paragrafnya jadi 0
    biar gak makan tempat, overflow visible biar gambarnya tetap
    keliatan di posisi geserannya. */
-#p-content p:has(img[style*="transform"]) {
-    height: 0 !important;
-    min-height: 0 !important;
-    overflow: visible !important;
-}
+
 #p-content img {
     display: block !important;
     vertical-align: bottom !important;
@@ -245,7 +241,33 @@
             if (Array.isArray(project.tags)) { project.tags.forEach(tag => { html += `<span class="text-sm font-medium text-gray-600 block">${escapeHtml(tag)}</span>`; }); }
             wrap.innerHTML = html;
         }
+function reserveDraggedImageSpace() {
+    const container = document.getElementById('p-content');
+    if (!container) return;
 
+    container.querySelectorAll('p').forEach(p => {
+        const img = p.querySelector('img');
+        if (!img || !img.style.transform) return; // cuma proses <p> yang gambarnya hasil drag
+
+        // reset dulu biar pengukuran akurat
+        p.style.height = '';
+        p.style.paddingBottom = '';
+        p.style.overflow = 'visible';
+        p.style.position = 'relative';
+
+        const pRect = p.getBoundingClientRect();
+        const imgRect = img.getBoundingClientRect();
+        const overhang = imgRect.bottom - pRect.bottom;
+
+        if (overhang > 0) {
+            // gambar nongol ke bawah box aslinya -> kasih ruang tambahan
+            p.style.paddingBottom = Math.ceil(overhang) + 'px';
+        } else {
+            // gambar geser ke atas -> susutin box biar gak nyisa gap
+            p.style.height = Math.max(0, Math.ceil(pRect.height + overhang)) + 'px';
+        }
+    });
+}
         /* --- BERSIHIN PARAGRAF/DIV KOSONG SISA QUILL ---
            Ini versi simpel & aman: cuma nyembunyiin elemen yang beneran kosong
            (gak ada teks & gak ada gambar/iframe/video di dalemnya).
@@ -268,26 +290,22 @@
             });
         }
 
-        function renderFreeformContent(project) {
-            const container = document.getElementById('p-content');
-            if (project.content_html && project.content_html.trim() !== '') {
-                container.innerHTML = project.content_html;
+       function renderFreeformContent(project) {
+    const container = document.getElementById('p-content');
+    if (project.content_html && project.content_html.trim() !== '') {
+        container.innerHTML = project.content_html;
 
-                // Bersihin sekali pas render awal
-                exterminateGhostSpaces();
+        exterminateGhostSpaces();
+        reserveDraggedImageSpace();
 
-                // Kalo ada gambar yang belum kelar loading, cek ulang tiap satu kelar
-                // (jaga-jaga ada <p> pembungkus gambar yang lagi keliatan kosong sementara)
-                const imgs = container.getElementsByTagName('img');
-                for (let i = 0; i < imgs.length; i++) {
-                    imgs[i].addEventListener('load', exterminateGhostSpaces);
-                    imgs[i].addEventListener('error', exterminateGhostSpaces);
-                }
-
-                // Safety net pas semua resource halaman kelar loading (font, dst)
-                window.addEventListener('load', exterminateGhostSpaces, { once: true });
-            }
+        const imgs = container.getElementsByTagName('img');
+        for (let i = 0; i < imgs.length; i++) {
+            imgs[i].addEventListener('load', () => { exterminateGhostSpaces(); reserveDraggedImageSpace(); });
+            imgs[i].addEventListener('error', () => { exterminateGhostSpaces(); reserveDraggedImageSpace(); });
         }
+        window.addEventListener('load', () => { exterminateGhostSpaces(); reserveDraggedImageSpace(); }, { once: true });
+    }
+}
 
         async function loadAdjacentProjects(currentSlug) {
             const { data: list } = await kancah.from('projects').select('slug, title').order('id', { ascending: true });
@@ -332,6 +350,8 @@
             window.addEventListener('resize', () => {
                 syncNavSpacer();
                 exterminateGhostSpaces();
+                    reserveDraggedImageSpace();
+
             });
         });
     </script>
