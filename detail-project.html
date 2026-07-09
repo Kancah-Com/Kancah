@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="h-full m-0 p-0 overflow-x-hidden scroll-smooth">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,68 +21,47 @@
         }
     </script>
     <style>
-        /* --- KUNCI TOTAL ANTI WHITESPACE HANTU --- */
-        html { height: 100%; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Ubuntu', sans-serif;
-            min-height: 100%; margin: 0; padding: 0; 
-            display: flex; flex-direction: column; 
-            overflow-x: hidden; background-color: white;
-        }
-        main { flex: 1 0 auto; display: block; width: 100%; position: relative; }
-        footer { flex-shrink: 0; width: 100%; margin-top: auto !important; position: relative; z-index: 10; }
-
+        body { font-family: 'Ubuntu', sans-serif; background-color: white; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- ARTIKEL CONTAINER (Bebas whitespace hantu) --- */
+        /* --- FREEFORM ARTIKEL CONTAINER --- */
         #p-content { 
-            box-sizing: border-box; width: 100%; display: block; 
-            height: auto !important; min-height: 50px;
-            overflow: hidden !important; position: relative;
+            box-sizing: border-box; 
+            width: 100%; 
+            position: relative; 
+            display: block;
+            overflow: visible !important; /* Biarkan kalkulasi JS menentukan tinggi pastinya */
         }
-        #p-content::after { content: ""; display: table; clear: both; }
         #p-content * { box-sizing: border-box; }
 
-        #p-content img { max-width: 100% !important; height: auto !important; }
-        #p-content p { position: relative; margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; clear: both; }
-        #p-content p::after { content: ""; display: table; clear: both; }
-        
-        #p-content h1, #p-content h2, #p-content h3 { font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem; clear: both; }
+        /* Pertahankan posisi absolut bawaan admin agar layout desktop & mobile sama persis */
+        #p-content img {
+            max-width: none !important; /* Jangan dipaksa 100% biar skala drag admin gak rusak */
+            height: auto !important;
+        }
+
+        #p-content p { position: relative; margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; }
+        #p-content h1, #p-content h2, #p-content h3 { font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem; }
         #p-content > *:first-child { margin-top: 0 !important; }
         #p-content h1 { font-size: 2.5rem; }
         #p-content h2 { font-size: 2rem; }
         #p-content h3 { font-size: 1.5rem; }
-        #p-content ul, #p-content ol { margin: 0 0 1.25rem 1.5rem; color: #4b5563; font-weight: 300; clear: both; }
+        #p-content ul, #p-content ol { margin: 0 0 1.25rem 1.5rem; color: #4b5563; font-weight: 300; }
         #p-content a { color: #0006ff; text-decoration: underline; }
-        #p-content blockquote { border-left: 3px solid #0006ff; padding-left: 1.25rem; margin: 1.5rem 0; font-style: italic; color: #374151; clear: both; }
-        #p-content .ql-align-center { text-align: center; }
-        #p-content .ql-align-right { text-align: right; }
-        #p-content .ql-align-justify { text-align: justify; }
-
-        /* --- YOUTUBE FACADE --- */
-        #p-content .kf-yt-facade { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; cursor: pointer; background: #111; margin: 1.5rem 0; border-radius: 0.75rem; clear: both; }
-        #p-content .kf-yt-facade img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease, filter .4s ease; }
-        #p-content .kf-yt-facade:hover img { transform: scale(1.03); filter: brightness(0.85); }
-        #p-content .kf-yt-facade .kf-yt-play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-        #p-content .kf-yt-facade .kf-yt-play span { width: 68px; height: 68px; border-radius: 9999px; background: rgba(0,6,255,0.9); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; transition: transform .25s ease, background .25s ease; }
-        #p-content .kf-yt-facade:hover .kf-yt-play span { transform: scale(1.1); background: #0006ff; }
+        #p-content blockquote { border-left: 3px solid #0006ff; padding-left: 1.25rem; margin: 1.5rem 0; font-style: italic; color: #374151; }
         
-        iframe.ql-video, .kf-yt-frame { width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; margin: 1.5rem 0; display: block; border-radius: 0.75rem; clear: both; }
+        iframe.ql-video, .kf-yt-frame { width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; margin: 1.5rem 0; display: block; border-radius: 0.75rem; }
         .web-preview-frame { width: 100%; height: 75vh; border: 1px solid #e2e8f0; border-radius: 1.5rem; background: white; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); margin-top: 1.5rem; }
     </style>
 </head>
-<body class="text-kancah-dark selection:bg-kancah-blue selection:text-white">
+<body class="text-kancah-dark overflow-x-hidden selection:bg-kancah-blue selection:text-white">
 
     <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
-            <div class="flex-none">
-                <a href="/">
-                    <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
-                </a>
-            </div>
+            <div class="flex-none"><a href="/"><img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain"></a></div>
             <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
                 <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
                 <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
@@ -96,46 +75,14 @@
                         <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
                             <span id="nav-time">00:00:00</span> <span class="text-[#0006ff] font-black">|</span> <span id="nav-temp">--°C</span>
                         </div>
-                        <div class="flex items-center justify-center gap-2 mt-1.5 leading-none">
-                            <div class="relative flex h-1 w-1">
-                                <span class="animate-ping absolute h-full w-full rounded-full bg-[#0006ff] opacity-40"></span>
-                                <span class="h-1 w-1 rounded-full bg-[#0006ff]"></span>
-                            </div>
-                            <span class="text-[#0006ff] font-black text-[8px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
-                        </div>
                     </div>
                 </div>
-                <div class="relative sm:hidden">
-                    <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-[#0006ff] text-[#0006ff] text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">Kancah HQ, Yogyakarta</div>
-                    <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 border border-kancah-blue rounded-full select-none tabular-nums cursor-pointer">
-                        <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
-                            <span id="nav-time-mobile">00:00</span> <span class="text-kancah-blue font-black">|</span> <span id="nav-temp-mobile">--°C</span>
-                        </div>
-                    </div>
-                </div>
-                <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-kancah-dark transition-all">
-                    Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
-                </a>
-                <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
-                    <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
-                </button>
+                <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111]" id="mobile-menu-button"><i class="fa-solid fa-bars-staggered text-base"></i></button>
             </div>
         </div>
     </nav>
 
     <div id="nav-spacer"></div>
-
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full lg:hidden">
-        <button class="absolute top-6 right-6 text-3xl" id="close-menu"><i class="fa-solid fa-xmark"></i></button>
-        <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-            <a href="about" class="mobile-link">Agency</a>
-            <a href="services" class="mobile-link">Capabilities</a>
-            <a href="works" class="mobile-link text-kancah-blue font-black">Work</a>
-            <a href="pricelist" class="mobile-link">Pricelist</a>
-            <a href="careers" class="mobile-link">Careers</a>
-            <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
-        </div>
-    </div>
 
     <main class="pb-12">
         <section id="hero-cover" class="relative w-full">
@@ -149,103 +96,35 @@
                         <h1 id="p-title" class="text-4xl lg:text-6xl font-bold tracking-tighter leading-[1.05] uppercase italic text-kancah-dark mb-6">Loading...</h1>
                         <p id="p-description" class="hidden text-sm lg:text-lg text-gray-500 leading-relaxed font-light max-w-2xl"></p>
                         <div id="live-preview-btn-container" class="hidden mt-6">
-                            <button onclick="toggleHtmlLivePreview()" id="btn-toggle-preview" class="inline-flex items-center justify-center px-6 py-3 bg-kancah-blue text-white rounded-full font-bold uppercase tracking-[0.15em] text-[11px] hover:bg-kancah-dark transition-all shadow-md gap-2">
-                                <i class="fa-solid fa-laptop-code"></i> <span>Live Preview Website</span>
-                            </button>
+                            <button onclick="toggleHtmlLivePreview()" id="btn-toggle-preview" class="inline-flex items-center justify-center px-6 py-3 bg-kancah-blue text-white rounded-full font-bold uppercase tracking-[0.15em] text-[11px] hover:bg-kancah-dark transition-all gap-2"><i class="fa-solid fa-laptop-code"></i> <span>Live Preview Website</span></button>
                         </div>
                     </div>
-                    <div class="lg:col-span-4 lg:pt-1">
-                        <div id="p-tags" class="flex flex-col gap-2"></div>
-                    </div>
+                    <div class="lg:col-span-4 lg:pt-1"><div id="p-tags" class="flex flex-col gap-2"></div></div>
                 </div>
             </div>
         </section>
 
         <section id="html-preview-section" class="max-w-[1100px] mx-auto px-4 sm:px-6 hidden">
-            <div class="flex items-center justify-between border-b border-gray-100 pb-3 mt-6">
-                <div class="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-widest">
-                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Interaktif Sandbox Mode
-                </div>
-                <button onclick="toggleHtmlLivePreview()" class="text-xs font-bold uppercase tracking-widest text-red-500 hover:underline">
-                    <i class="fa-solid fa-xmark mr-1"></i> Tutup Preview
-                </button>
-            </div>
-            <iframe id="web-demo-iframe" src="" class="web-preview-frame" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe id="web-demo-iframe" src="" class="web-preview-frame"></iframe>
         </section>
 
-        <div class="max-w-[1100px] mx-auto px-4 sm:px-6">
+        <div class="max-w-[1100px] mx-auto px-4 sm:px-6 relative">
             <article id="p-content" class="pt-6"></article>
         </div>
 
-        <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-6 lg:mt-8 border-t border-gray-100 pt-6 flex flex-col items-center justify-center gap-4">
+        <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-12 border-t border-gray-100 pt-6 flex flex-col items-center justify-center gap-4 relative z-20">
             <nav class="flex items-center gap-3 flex-wrap justify-center">
-                <a id="prev-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue transition-colors">
-                    <span aria-hidden="true">←</span><span id="prev-project-title"></span>
-                </a>
+                <a id="prev-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue"><span aria-hidden="true">←</span><span id="prev-project-title"></span></a>
                 <span id="prev-next-divider" class="hidden text-gray-300">|</span>
-                <a id="next-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue transition-colors">
-                    <span id="next-project-title"></span><span aria-hidden="true">→</span>
-                </a>
+                <a id="next-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue"><span id="next-project-title"></span><span aria-hidden="true">→</span></a>
             </nav>
-            <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-md">
-                <span class="relative z-10 font-black uppercase tracking-[0.2em] text-[10px]">See All Projects</span>
-            </a>
+            <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue text-[10px] font-black uppercase tracking-[0.2em]">See All Projects</a>
         </div>
     </main>
 
-    <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
-        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
-            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-            </div>
-        </div>
-        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
-                <div class="lg:col-span-5 flex flex-col justify-start items-start">
-                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">PUNYA IDE? <br> <span class="text-[#0006ff] italic">OBROLIN AJA.</span></h2>
-                    <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-[#111111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#0006ff] hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
-                        Ayo Diskusi <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
-                    </a>
-                </div>
-                <div class="lg:col-span-4 flex flex-col gap-6">
-                    <div>
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
-                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm"><p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p></address>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <a href="mailto:kancahcreative@gmail.com" class="text-sm font-bold text-white hover:text-[#0006ff] transition-colors flex items-center gap-2 w-max"><i class="fa-regular fa-envelope"></i> kancahcreative@gmail.com</a>
-                        <a href="https://wa.me/6289524687866" class="text-sm font-bold text-white hover:text-[#0006ff] transition-colors flex items-center gap-2 w-max"><i class="fa-brands fa-whatsapp"></i> +62 895-2468-7866</a>
-                    </div>
-                </div>
-                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="services" class="text-white hover:text-[#0006ff] transition-colors">Services</a></li>
-                            <li><a href="works" class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
-                            <li><a href="pricelist" class="text-white hover:text-[#0006ff] transition-colors">Pricelist</a></li>
-                            <li><a href="about" class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
-                            <li><a href="careers" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
-                        </ul>
-                    </div>
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="#" class="text-white hover:text-[#0006ff] transition-colors">Instagram</a></li>
-                            <li><a href="#" class="text-white hover:text-[#0006ff] transition-colors">LinkedIn</a></li>
-                            <li><a href="#" class="text-white hover:text-[#0006ff] transition-colors">Behance</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
-                <p class="text-center md:text-left">&copy; 2026 PT. Kancah Media Sejahtera.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms</a>
-                </div>
-            </div>
+    <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans">
+        <div class="max-w-[1400px] mx-auto px-6 py-8 text-center text-gray-500 text-[10px] font-bold tracking-widest uppercase">
+            <p>&copy; 2026 PT. Kancah Media Sejahtera. All Rights Reserved.</p>
         </div>
     </footer>
 
@@ -255,179 +134,106 @@
         const kancah = supabase.createClient(SB_URL, SB_KEY);
         window.currentProjectDemoUrl = null;
 
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.innerText = str == null ? '' : String(str);
-            return div.innerHTML;
-        }
-
         async function getProjectDetail() {
             const urlParams = new URLSearchParams(window.location.search);
             const slug = urlParams.get('id');
             if (!slug) { window.location.href = 'works'; return; }
             const { data: project, error } = await kancah.from('projects').select('*').eq('slug', slug).single();
-            if (error || !project) { console.error("Gagal ambil data:", error); return; }
+            if (error || !project) return;
 
             document.getElementById('page-title').innerText = `${project.title} • Kancah`;
             document.getElementById('p-title').innerText = project.title;
             document.getElementById('p-category').innerText = project.category;
             document.getElementById('p-image').src = project.image_url;
-            document.getElementById('p-image').alt = project.title || '';
-
-            const descEl = document.getElementById('p-description');
-            if (project.description) {
-                descEl.innerText = project.description;
-                descEl.classList.remove('hidden');
-            }
 
             if (project.category === 'Web Development' && project.demo_url) {
                 window.currentProjectDemoUrl = project.demo_url;
                 document.getElementById('live-preview-btn-container').classList.remove('hidden');
             }
 
-            renderTags(project);
             renderFreeformContent(project);
             loadAdjacentProjects(slug);
         }
 
-        function toggleHtmlLivePreview() {
-            const section = document.getElementById('html-preview-section');
-            const iframe = document.getElementById('web-demo-iframe');
-            const btnSpan = document.querySelector('#btn-toggle-preview span');
-            const btnIcon = document.querySelector('#btn-toggle-preview i');
-
-            if (section.classList.contains('hidden')) {
-                iframe.src = window.currentProjectDemoUrl;
-                section.classList.remove('hidden');
-                btnSpan.innerText = 'Tutup Preview';
-                btnIcon.className = 'fa-solid fa-xmark';
-                section.scrollIntoView({ behavior: 'smooth' });
-            } else {
-                iframe.src = '';
-                section.classList.add('hidden');
-                btnSpan.innerText = 'Live Preview Website';
-                btnIcon.className = 'fa-solid fa-laptop-code';
-            }
-        }
-
-        function renderTags(project) {
-            const wrap = document.getElementById('p-tags');
-            let html = '';
-            if (project.year) { html += `<span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Project Year ${escapeHtml(project.year)}</span>`; }
-            if (Array.isArray(project.tags)) {
-                project.tags.forEach(tag => { html += `<span class="text-sm font-medium text-gray-600">${escapeHtml(tag)}</span>`; });
-            }
-            wrap.innerHTML = html;
-        }
-
-        function activateYouTubeEmbeds() {
-            const container = document.getElementById('p-content');
-            if (!container) return;
-            const iframes = container.querySelectorAll('iframe[src*="youtube.com/embed/"]');
-            iframes.forEach(iframe => {
-                const match = (iframe.getAttribute('src') || '').match(/embed\/([\w-]{11})/);
-                if (!match) return;
-                const videoId = match[1];
-                const facade = document.createElement('div');
-                facade.className = 'kf-yt-facade';
-                facade.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'" alt="Thumbnail" loading="lazy"><div class="kf-yt-play"><span><i class="fa-solid fa-play"></i></span></div>`;
-                facade.addEventListener('click', () => {
-                    const frame = document.createElement('iframe');
-                    frame.className = 'kf-yt-frame';
-                    frame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-                    frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-                    frame.setAttribute('allowfullscreen', '');
-                    facade.replaceWith(frame);
-                }, { once: true });
-                iframe.replaceWith(facade);
-            });
-        }
-
+        /* --- DETEKTIF KOORDINAT SEJATI ANTI-WHITESPACE HANTU --- */
         function normalizeContentImageWidths() {
             const container = document.getElementById('p-content');
             if (!container) return;
-            const EDITOR_BASE_WIDTH = 1100;
-            const isMobile = window.innerWidth < 768;
 
-            if (isMobile) {
-                container.style.height = 'auto';
-                container.querySelectorAll('p').forEach(p => { p.style.position = 'static'; p.style.display = 'block'; p.style.clear = 'both'; p.style.height = 'auto'; });
-                container.querySelectorAll('img').forEach(img => { img.style.position = 'static'; img.style.transform = 'none'; img.style.left = '0'; img.style.top = '0'; img.style.width = '100%'; img.style.height = 'auto'; img.style.display = 'block'; img.style.margin = '1rem auto'; });
+            // Pastikan container bersih dari kuncian lama sebelum kalkulasi ulang
+            container.style.height = 'auto';
+
+            const images = container.querySelectorAll('img');
+            let absoluteMaxBottom = 0;
+
+            images.forEach(img => {
+                // Ambil tinggi top asli paragraf pembungkus gambar
+                const parentParagraph = img.closest('p');
+                const parentTop = parentParagraph ? parentParagraph.offsetTop : 0;
+
+                // Baca manual nilai inline top asli gambar
+                const inlineTop = parseFloat(img.style.top) || 0;
+                let transformY = 0;
+
+                // Ekstrak nilai translate jika di-drag melayang bebas di admin
+                const transformStr = img.style.transform || '';
+                const match = transformStr.match(/translate\(\s*(-?[\d.]+)%\s*,\s*(-?[\d.]+)%\s*\)/);
+                if (match) {
+                    const percentY = parseFloat(match[2]);
+                    transformY = (percentY / 100) * (img.offsetHeight || 0);
+                }
+
+                // Kalkulasikan posisi sejati pixel ujung paling bawah gambar kolase
+                const realImgBottom = parentTop + inlineTop + transformY + (img.offsetHeight || 0);
+                
+                if (realImgBottom > absoluteMaxBottom) {
+                    absoluteMaxBottom = realImgBottom;
+                }
+            });
+
+            // Potong paksa tinggi kontainer artikel tepat di bawah batas gambar terluar!
+            if (absoluteMaxBottom > 0) {
+                const nativeScrollHeight = container.scrollHeight;
+                container.style.height = `${Math.max(absoluteMaxBottom + 20, nativeScrollHeight)}px`;
             } else {
-                let maxVisualBottom = 0;
-                container.querySelectorAll('p').forEach(p => { if (p.querySelectorAll('img').length > 0) { p.style.position = 'relative'; p.style.width = '100%'; p.style.display = 'block'; p.style.clear = 'both'; } });
-                container.querySelectorAll('img').forEach(img => {
-                    if (/px\s*$/.test(img.style.width || '')) {
-                        const pxWidth = parseFloat(img.style.width);
-                        img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
-                        img.style.height = 'auto';
-                    }
-                    const imgBottom = img.offsetTop + img.offsetHeight;
-                    if (imgBottom > maxVisualBottom) { maxVisualBottom = imgBottom; }
-                });
-                // KUNCI UTAMA: Kita lepas total paksaan kuncian tinggi piksel di publik!
                 container.style.height = 'auto';
             }
-            if (typeof syncNavSpacer === 'function') { syncNavSpacer(); }
+
+            if (typeof syncNavSpacer === 'function') syncNavSpacer();
         }
 
         function renderFreeformContent(project) {
             const container = document.getElementById('p-content');
-            if (project.content_html && project.content_html.trim() !== '') {
+            if (project.content_html) {
                 container.innerHTML = project.content_html;
-                setTimeout(normalizeContentImageWidths, 100);
-                container.querySelectorAll('img').forEach(img => { img.addEventListener('load', normalizeContentImageWidths); });
-                activateYouTubeEmbeds();
-                return;
+                
+                // Pemicu instan begitu aset gambar ter-render
+                setTimeout(normalizeContentImageWidths, 150);
+                container.querySelectorAll('img').forEach(img => {
+                    img.addEventListener('load', normalizeContentImageWidths);
+                });
             }
-            let legacy = '';
-            if (project.challenge) legacy += `<h3>The Challenge</h3><p>${escapeHtml(project.challenge)}</p>`;
-            if (project.strategy) legacy += `<h3>Strategic Idea</h3><p>${escapeHtml(project.strategy)}</p>`;
-            if (project.outcome) legacy += `<h3>Outcome</h3><p>${escapeHtml(project.outcome)}</p>`;
-            if (Array.isArray(project.gallery)) { project.gallery.forEach(g => { legacy += `<p><img src="${g.url}" alt=""></p>`; }); }
-            container.innerHTML = legacy;
-            setTimeout(normalizeContentImageWidths, 100);
-            activateYouTubeEmbeds();
         }
 
         async function loadAdjacentProjects(currentSlug) {
-            const { data: list, error } = await kancah.from('projects').select('slug, title').order('id', { ascending: true });
-            if (error || !list || list.length < 2) return;
+            const { data: list } = await kancah.from('projects').select('slug, title').order('id', { ascending: true });
+            if (!list || list.length < 2) return;
             const idx = list.findIndex(p => p.slug === currentSlug); if (idx === -1) return;
             const prev = list[(idx - 1 + list.length) % list.length]; const next = list[(idx + 1) % list.length];
-            const prevLink = document.getElementById('prev-project-link'); const prevTitle = document.getElementById('prev-project-title');
-            const nextLink = document.getElementById('next-project-link'); const nextTitle = document.getElementById('next-project-title'); const divider = document.getElementById('prev-next-divider');
-            if (prevLink && prev) { prevLink.href = `${window.location.pathname}?id=${prev.slug}`; prevTitle.innerText = prev.title; prevLink.classList.remove('hidden'); prevLink.classList.add('inline-flex'); }
-            if (nextLink && next) { nextLink.href = `${window.location.pathname}?id=${next.slug}`; nextTitle.innerText = next.title; nextLink.classList.remove('hidden'); nextLink.classList.add('inline-flex'); }
-            if (divider && prev && next && list.length > 1) { divider.classList.remove('hidden'); }
+            const prevLink = document.getElementById('prev-project-link'); const nextLink = document.getElementById('next-project-link');
+            if (prevLink && prev) { prevLink.href = `?id=${prev.slug}`; document.getElementById('prev-project-title').innerText = prev.title; prevLink.classList.remove('hidden'); }
+            if (nextLink && next) { nextLink.href = `?id=${next.slug}`; document.getElementById('next-project-title').innerText = next.title; nextLink.classList.remove('hidden'); }
         }
 
         function syncNavSpacer() {
-            const nav = document.querySelector('nav.fixed'); const spacer = document.getElementById('nav-spacer'); const navH = nav ? nav.offsetHeight : 0;
-            if (spacer) spacer.style.height = navH + 'px';
-            const heroWrap = document.getElementById('hero-image-wrap'); if (heroWrap) heroWrap.style.height = (window.innerHeight - navH) + 'px';
-        }
-
-        function updateClock() {
-            const n = new Date(); const h = String(n.getHours()).padStart(2, '0'), m = String(n.getMinutes()).padStart(2, '0'), s = String(n.getSeconds()).padStart(2, '0');
-            if(document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
-            if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
-        }
-
-        async function updateWeather() {
-            try {
-                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true'); const data = await res.json();
-                if (data && data.current_weather) { const temp = Math.round(data.current_weather.temperature) + "°C"; if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = temp; if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = temp; }
-            } catch (e) {}
+            const nav = document.querySelector('nav.fixed'); const spacer = document.getElementById('nav-spacer');
+            if (spacer && nav) spacer.style.height = nav.offsetHeight + 'px';
+            const heroWrap = document.getElementById('hero-image-wrap'); if (heroWrap && nav) heroWrap.style.height = (window.innerHeight - nav.offsetHeight) + 'px';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            getProjectDetail(); updateClock(); updateWeather(); setInterval(updateClock, 1000); syncNavSpacer();
+            getProjectDetail(); syncNavSpacer();
             window.addEventListener('resize', () => { syncNavSpacer(); normalizeContentImageWidths(); });
-            window.addEventListener('load', () => { syncNavSpacer(); normalizeContentImageWidths(); });
-            const btn = document.getElementById('mobile-menu-button'), menu = document.getElementById('mobile-menu'), close = document.getElementById('close-menu');
-            if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
-            if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
         });
     </script>
 </body>
