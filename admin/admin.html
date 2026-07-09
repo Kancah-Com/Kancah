@@ -36,6 +36,10 @@
 
         /* --- Quill editor styling (Word-like) --- */
         #p-content-editor { background: white; border-radius: 0 0 1rem 1rem; }
+        #p-content-editor .ql-editor {
+    overflow: hidden !important; /* Mematikan scroll bar di dalam editor */
+    height: auto !important;
+}
         #p-content-editor .ql-editor { min-height: 320px; font-size: 15px; line-height: 1.7; }
         #p-content-toolbar.ql-toolbar { border-radius: 1rem 1rem 0 0; background: #f8fafc; }
         .ql-container.ql-snow, .ql-toolbar.ql-snow { border-color: #e2e8f0 !important; }
@@ -54,9 +58,18 @@
             font-size: 16px;
         }
         #p-content-editor .ql-editor > *:first-child { margin-top: 0 !important; }
-        #p-content-editor .ql-editor p {
-            margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300;
+       #p-content-editor .ql-editor p {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important; /* Menggunakan flex untuk mengunci konten */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
         }
+        #p-content-editor .ql-editor::after {
+    content: none !important; /* Menghilangkan spasi tambahan di akhir editor */
+}
         #p-content-editor .ql-editor h1,
         #p-content-editor .ql-editor h2,
         #p-content-editor .ql-editor h3 {
@@ -684,31 +697,26 @@
 
 function onResizeUp() {
     if (selectedImg) {
-        // 1. Dapatkan ukuran container editor
-        const editorWidth = getEditorContentWidth();
+        const rect = selectedImg.getBoundingClientRect();
         
-        // 2. Hitung persentase agar gambar responsif, bukan fix pixel
-        const newWidthPercent = ((selectedImg.clientWidth / editorWidth) * 100).toFixed(2);
+        // 1. Update gambar ke persentase (agar mengikuti lebar editor)
+        const containerWidth = getEditorContentWidth();
+        selectedImg.style.width = `${((rect.width / containerWidth) * 100).toFixed(2)}%`;
+        selectedImg.style.height = 'auto'; // Biar proporsional
         
-        // 3. Terapkan ke gambar & paksa height jadi auto
-        selectedImg.style.width = `${newWidthPercent}%`;
-        selectedImg.style.height = 'auto';
-        
-        // 4. "Sikat" whitespace pada pembungkus (parent) gambar
+        // 2. KUNCI PARENT-NYA agar mengikuti ukuran gambar
         const parent = selectedImg.closest('p, div');
         if (parent) {
-            parent.style.lineHeight = '0'; // Menghilangkan spasi antar baris di p
-            parent.style.marginBottom = '0'; // Menghilangkan margin bawah
-            parent.style.display = 'block';
+            parent.style.height = 'auto'; // Reset agar tidak ada whitespace sisa
+            parent.style.minHeight = '0';
         }
-
-        positionOverlay(); // Update posisi handle resize
         
-        // Optional: Trigger pembersihan otomatis setelah resize
-        cleanEmptyParagraphs();
+        positionOverlay();
     }
     
-    // Reset state resize
+    // 3. Tambahan: Panggil fungsi pembersih setelah resize
+    cleanEmptyParagraphs();
+    
     resizeState = null;
     document.removeEventListener('mousemove', onResizeMove);
     document.removeEventListener('mouseup', onResizeUp);
