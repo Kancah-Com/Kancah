@@ -277,81 +277,70 @@ footer {
     </footer>
 
     <script>
-        const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
-        const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-        const kancah = supabase.createClient(SB_URL, SB_KEY);
+    const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
+    const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
+    const kancah = supabase.createClient(SB_URL, SB_KEY);
 
-        function escapeHtml(str) {
-            const div = document.createElement('div');
-            div.innerText = str == null ? '' : String(str);
-            return div.innerHTML;
-        }
-
-        async function getProjectDetail() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const slug = urlParams.get('id');
-            if (!slug) { window.location.href = 'works'; return; }
-            const { data: project, error } = await kancah.from('projects').select('*').eq('slug', slug).single();
-            if (error || !project) return;
-
-            document.getElementById('page-title').innerText = `${project.title} • Kancah`;
-            document.getElementById('p-title').innerText = project.title;
-            document.getElementById('p-category').innerText = project.category;
-            document.getElementById('p-image').src = project.image_url;
-
-            const descEl = document.getElementById('p-description');
-            if (project.description) { descEl.innerText = project.description; descEl.classList.remove('hidden'); }
-
-            renderTags(project);
-            renderFreeformContent(project);
-            loadAdjacentProjects(slug);
-            loadMoreWorks(slug);
-        }
-async function loadMoreWorks(currentSlug) {
-    const gallery = document.getElementById('more-works-gallery');
-    
-    // Ambil data (tambah limit sesuai keinginan, misalnya 10)
-    const { data: list } = await kancah.from('projects')
-        .select('slug, title, image_url, category')
-        .order('created_at', { ascending: false })
-        .limit(10); 
-    
-    if (!list) return;
-
-    const otherProjects = list.filter(p => p.slug !== currentSlug);
-
-    if (otherProjects.length === 0) {
-        document.getElementById('more-works-section').classList.add('hidden');
-        return;
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.innerText = str == null ? '' : String(str);
+        return div.innerHTML;
     }
 
-    gallery.innerHTML = otherProjects.map(p => `
-        <a href="?id=${p.slug}" class="snap-start group">
-            <div class="aspect-[4/3] w-[280px] sm:w-[320px] bg-slate-100 rounded-2xl overflow-hidden mb-4">
-                <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            </div>
-            <p class="text-[9px] font-black uppercase tracking-widest text-kancah-blue mb-1">${p.category}</p>
-            <h3 class="text-md font-bold italic uppercase tracking-tighter text-kancah-dark group-hover:text-kancah-blue transition-colors">${p.title}</h3>
-        </a>
-    `).join('');
-}
+    async function getProjectDetail() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const slug = urlParams.get('id');
+        if (!slug) { window.location.href = 'works'; return; }
+        const { data: project, error } = await kancah.from('projects').select('*').eq('slug', slug).single();
+        if (error || !project) return;
 
-    gallery.innerHTML = otherProjects.map(p => `
-        <a href="?id=${p.slug}" class="block group">
-            <div class="aspect-[4/3] w-full bg-slate-100 rounded-2xl overflow-hidden mb-4">
-                <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-            </div>
-            <p class="text-[10px] font-black uppercase tracking-widest text-kancah-blue mb-1">${p.category}</p>
-            <h3 class="text-lg font-bold italic uppercase tracking-tighter text-kancah-dark group-hover:text-kancah-blue transition-colors">${p.title}</h3>
-        </a>
-    `).join('');
-}
-        function renderTags(project) {
-            const wrap = document.getElementById('p-tags'); let html = '';
-            if (project.year) { html += `<span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Project Year ${escapeHtml(project.year)}</span>`; }
-            if (Array.isArray(project.tags)) { project.tags.forEach(tag => { html += `<span class="text-sm font-medium text-gray-600 block">${escapeHtml(tag)}</span>`; }); }
-            wrap.innerHTML = html;
+        document.getElementById('page-title').innerText = `${project.title} • Kancah`;
+        document.getElementById('p-title').innerText = project.title;
+        document.getElementById('p-category').innerText = project.category;
+        document.getElementById('p-image').src = project.image_url;
+
+        const descEl = document.getElementById('p-description');
+        if (project.description) { descEl.innerText = project.description; descEl.classList.remove('hidden'); }
+
+        renderTags(project);
+        renderFreeformContent(project);
+        loadAdjacentProjects(slug);
+        loadMoreWorks(slug);
+    }
+
+    async function loadMoreWorks(currentSlug) {
+        const gallery = document.getElementById('more-works-gallery');
+        const { data: list } = await kancah.from('projects')
+            .select('slug, title, image_url, category')
+            .order('created_at', { ascending: false })
+            .limit(10); 
+        
+        if (!list) return;
+
+        const otherProjects = list.filter(p => p.slug !== currentSlug);
+
+        if (otherProjects.length === 0) {
+            document.getElementById('more-works-section').classList.add('hidden');
+            return;
         }
+
+        gallery.innerHTML = otherProjects.map(p => `
+            <a href="?id=${p.slug}" class="snap-start block group">
+                <div class="aspect-[4/3] w-[280px] sm:w-[320px] bg-slate-100 rounded-2xl overflow-hidden mb-4">
+                    <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                </div>
+                <p class="text-[9px] font-black uppercase tracking-widest text-kancah-blue mb-1">${p.category}</p>
+                <h3 class="text-md font-bold italic uppercase tracking-tighter text-kancah-dark group-hover:text-kancah-blue transition-colors">${p.title}</h3>
+            </a>
+        `).join('');
+    }
+
+    function renderTags(project) {
+        const wrap = document.getElementById('p-tags'); let html = '';
+        if (project.year) { html += `<span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Project Year ${escapeHtml(project.year)}</span>`; }
+        if (Array.isArray(project.tags)) { project.tags.forEach(tag => { html += `<span class="text-sm font-medium text-gray-600 block">${escapeHtml(tag)}</span>`; }); }
+        wrap.innerHTML = html;
+    }
 
         /* --- SCRIPT PEMBUNUH WHITE SPACE MUTLAK --- */
         function exterminateGhostSpaces() {
