@@ -44,12 +44,24 @@
         #p-content-toolbar.ql-toolbar { border-radius: 1rem 1rem 0 0; background: #f8fafc; }
         .ql-container.ql-snow, .ql-toolbar.ql-snow { border-color: #e2e8f0 !important; }
 
-        #p-content-editor-wrap {
-    resize: vertical; /* Memungkinkan user mengubah tinggi editor */
-    overflow: auto;
+      #p-content-editor-wrap {
+    resize: vertical; 
+    overflow: hidden !important; /* MENGHILANGKAN SCROLLBAR SECARA TOTAL */
     min-height: 320px;
-    max-height: 800px;
-    border: 2px solid #e2e8f0; /* Batasan visual yang jelas */
+    border: 2px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+}
+
+#p-content-editor {
+    flex-grow: 1;
+    overflow: hidden !important; /* Editor tidak boleh punya scrollbar sendiri */
+}
+
+#p-content-editor .ql-editor {
+    height: 100% !important; /* Paksa tinggi editor mengikuti box */
+    overflow-y: hidden !important; /* MATIKAN SCROLL VERTIKAL */
+    padding: 20px 24px;
 }
         #p-content-editor .ql-editor { padding: 20px 24px; }
 
