@@ -27,7 +27,7 @@
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- ARTIKEL CONTENT CONTAINER (PROTEKSI WHITEPACE MUTLAK) --- */
+        /* --- ARTIKEL CONTENT CONTAINER (AUTO-SHRINK MODE) --- */
         #p-content { 
             box-sizing: border-box; 
             width: 100%; 
@@ -37,13 +37,24 @@
         }
         #p-content * { box-sizing: border-box; }
 
-        /* Biarkan ukuran gambar mengikuti persentase skala hasil drag admin */
+        /* Amankan skala gambar agar mengikuti persentase scaling admin tanpa merusak aspek rasio */
         #p-content img {
-            max-width: none !important;
+            max-width: 100% !important;
             height: auto !important;
         }
 
-        #p-content p { position: relative; margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; }
+        /* GUNAKAN DISPLAY GRID PADA PARAGRAF: Memaksa area kosong Quill auto-collapse / mengecil ke 0 jika tidak ada visual benda di situ */
+        #p-content p { 
+            position: relative; 
+            margin-bottom: 1.25rem; 
+            line-height: 1.75; 
+            color: #4b5563; 
+            font-weight: 300;
+            display: grid;
+            grid-template-columns: 100%;
+            height: auto !important; /* Paksa matikan inline height sisa pembesaran gambar dari admin */
+        }
+        
         #p-content h1, #p-content h2, #p-content h3 { font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem; }
         #p-content > *:first-child { margin-top: 0 !important; }
         #p-content h1 { font-size: 2.5rem; }
@@ -220,27 +231,23 @@
             wrap.innerHTML = html;
         }
 
-        /* --- DETEKTIF KOORDINAT REAL-TIME (MENDUKUNG MULTI-NESTED ELEMENTS & TRANSFORMS) --- */
+        /* --- FUNGSI DETEKSI MATEMATIKA ELEMENT SEJATI --- */
         function normalizeContentImageWidths() {
             const container = document.getElementById('p-content');
             if (!container) return;
 
-            // Kembalikan tinggi alami kontainer agar browser melakukan render ulang elemen
             container.style.height = 'auto';
-
-            // Ambil semua elemen bertipe gambar, termasuk yang terbungkus paragraf kosong
             const allImages = container.getElementsByTagName('img');
             let absoluteMaxBottom = 0;
 
             for (let i = 0; i < allImages.length; i++) {
                 const img = allImages[i];
-                
-                // Lacak elemen paragraf terdekat untuk mengetahui base offset Y dokumen
                 const parentParagraph = img.closest('p') || img.parentElement;
+                
+                // Gunakan offsetTop murni paragraf pembungkus asli
                 const parentTop = parentParagraph ? parentParagraph.offsetTop : 0;
-
-                // Hitung kumulatif properti inline top & transform translateY hasil drag admin
                 const inlineTop = parseFloat(img.style.top) || 0;
+                
                 let transformY = 0;
                 const transformStr = img.style.transform || '';
                 const match = transformStr.match(/translate\(\s*(-?[\d.]+)%\s*,\s*(-?[\d.]+)%\s*\)/);
@@ -250,7 +257,7 @@
                     transformY = (percentY / 100) * (img.offsetHeight || 0);
                 }
 
-                // Kalkulasikan letak fisik piksel ujung terbawah gambar di layar secara presisi
+                // Kalkulasi letak sejati benda di layar
                 const realImgBottom = parentTop + inlineTop + transformY + (img.offsetHeight || 0);
                 
                 if (realImgBottom > absoluteMaxBottom) {
@@ -258,10 +265,9 @@
                 }
             }
 
-            // KUNCI CUT-OFF: Paksa kontainer berhenti tepat di bawah gambar terluar + kasih jarak aman 30px
+            // FORCE AUTO-SHRINK: Pangkas habis semua ruang kosong sisa resize Quill admin!
             if (absoluteMaxBottom > 0) {
-                const containerScrollHeight = container.scrollHeight;
-                container.style.height = `${Math.max(absoluteMaxBottom + 30, containerScrollHeight)}px`;
+                container.style.height = `${absoluteMaxBottom + 20}px`;
             } else {
                 container.style.height = 'auto';
             }
@@ -274,7 +280,6 @@
             if (project.content_html && project.content_html.trim() !== '') {
                 container.innerHTML = project.content_html;
                 
-                // Triger instan & pasang event loader untuk mengantisipasi jeda unduh gambar browser
                 setTimeout(normalizeContentImageWidths, 150);
                 const imgs = container.getElementsByTagName('img');
                 for (let i = 0; i < imgs.length; i++) {
