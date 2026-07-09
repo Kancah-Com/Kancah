@@ -47,7 +47,28 @@
         #p-content span {
             min-height: 0 !important;
         }
+/* Tambahkan ini di bagian <style> halaman detail-project.html */
 
+/* 1. Menghilangkan margin/padding untuk paragraf yang berisi gambar */
+.project-content-container p:has(img) {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+    display: block !important;
+}
+
+/* 2. Memastikan gambar menempel rapat */
+.project-content-container img {
+    display: block !important;
+    vertical-align: bottom !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 3. Mencegah spasi tambahan di akhir container */
+.project-content-container {
+    line-height: 0 !important;
+}
         #p-content img {
             height: auto !important; 
             max-width: 100% !important;
