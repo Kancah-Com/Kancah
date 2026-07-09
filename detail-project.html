@@ -29,39 +29,43 @@
 
         /* --- ARTIKEL CONTENT CONTAINER (AUTO-SHRINK MODE) --- */
        /* --- ARTIKEL CONTENT CONTAINER (PERBAIKAN TOTAL LAYOUT SINKRON) --- */
+/* --- ARTIKEL CONTENT CONTAINER (AUTO-COLLAPSE ANTI PUTIH HANTU) --- */
 #p-content { 
     box-sizing: border-box; 
     width: 100%; 
     position: relative; 
-    display: flow-root; /* Memaksa browser menghitung tinggi asli seluruh elemen di dalamnya secara natural */
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
     overflow: visible !important;
-    min-height: 100px;
+    height: auto !important; /* Jangan pernah dikunci piksel statis lagi! */
 }
 #p-content * { box-sizing: border-box; }
 
-/* Jaga agar gambar hasil drag ukurannya konsisten sesuai persentase admin */
+/* Mengamankan ukuran gambar agar tidak merusak tata letak kolase admin */
 #p-content img {
     max-width: 100% !important;
     height: auto !important;
-    display: inline-block;
+    display: block;
 }
 
-/* Mengembalikan paragraf ke alur normal dokumen, sekaligus membersihkan tumpukan */
+/* KUNCI UTAMA: Memaksa paragraf pembungkus menyusut 100% mengikuti ukuran gambar di dalamnya */
 #p-content p { 
     position: relative; 
-    margin-bottom: 1.25rem; 
+    margin: 0 0 1rem 0;
     line-height: 1.75; 
     color: #4b5563; 
     font-weight: 300;
-    clear: both; /* Mencegah gambar melayang menabrak baris teks */
-    height: auto !important; 
+    display: inline-block;
+    width: 100%;
+    height: auto !important; /* Hancurkan sisa tinggi piksel bawaan editor saat di-resize */
+    min-height: 0 !important;
 }
 
-/* Pastikan elemen penutup membersihkan semua float/absolute sebelum tombol navigasi & footer */
-#p-content::after {
-    content: "";
-    display: table;
-    clear: both;
+/* Jika ada paragraf kosong tanpa teks atau gambar (hanya berisi <br> atau &nbsp; hantu), hilangkan total posisinya */
+#p-content p:empty, 
+#p-content p[style*="height"][style*="px"] {
+    display: none !important;
 }
         
         #p-content h1, #p-content h2, #p-content h3 { font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem; }
@@ -242,53 +246,44 @@
 
         /* --- FUNGSI DETEKSI MATEMATIKA ELEMENT SEJATI --- */
         /* --- DETEKTIF PIXEL AKURAT: MENGHITUNG BATAS VISUAL ELEMEN TERBAWAH --- */
+/* --- DETEKTIF STRUKTUR KONTEN: HANCURKAN KOTAK KOSONG SISA RESIZE --- */
 function normalizeContentImageWidths() {
     const container = document.getElementById('p-content');
     if (!container) return;
 
-    // Kembalikan ke otomatis terlebih dahulu agar elemen tidak terkunci saat window di-resize
+    // Bersihkan inline style kaku bawaan pembungkus utama jika ada
     container.style.height = 'auto';
-    container.style.paddingBottom = '0px';
 
-    // Ambil semua element anak di dalam artikel (img, p, h1, h2, div, dll)
-    const allElements = container.getElementsByTagName('*');
-    let maxVisualBottom = 0;
-
-    // Dapatkan koordinat batas atas kontainer artikel sebagai benchmark (titik 0)
-    const containerTop = container.getBoundingClientRect().top + window.scrollY;
-
-    for (let i = 0; i < allElements.length; i++) {
-        const el = allElements[i];
-        
-        // Lewati elemen yang tidak memiliki dimensi visual
-        if (el.offsetHeight === 0 && el.offsetWidth === 0) continue;
-
-        // Hitung posisi absolut ujung bawah elemen saat ini di dalam dokumen
-        const elBottom = el.getBoundingClientRect().bottom + window.scrollY;
-        const relativeBottom = elBottom - containerTop;
-
-        if (relativeBottom > maxVisualBottom) {
-            maxVisualBottom = relativeBottom;
+    // Cari seluruh paragraf di dalam artikel
+    const paragraphs = container.querySelectorAll('p');
+    paragraphs.forEach(p => {
+        // Jika paragraf hanya berisi spasi kosong atau tag break bawaan Quill, langsung eliminasi
+        if (p.innerHTML.trim() === '<br>' || p.innerHTML.trim() === '&nbsp;' || p.innerText.trim() === '') {
+            if (p.querySelectorAll('img').length === 0) {
+                p.style.display = 'none';
+                p.style.margin = '0';
+                p.style.padding = '0';
+            }
         }
-    }
-
-    // Jika ditemukan koordinat elemen paling bawah, kunci tinggi artikel di titik tersebut + beri jeda aman 40px
-    if (maxVisualBottom > 0) {
-        container.style.height = `${maxVisualBottom + 40}px`;
-    }
+        
+        // Netralkan paksa inline height jika paragraf membungkus gambar yang sudah dikecilkan
+        if (p.querySelectorAll('img').length > 0) {
+            p.style.height = 'auto';
+        }
+    });
 
     if (typeof syncNavSpacer === 'function') syncNavSpacer();
 }
 
-       function renderFreeformContent(project) {
+function renderFreeformContent(project) {
     const container = document.getElementById('p-content');
     if (project.content_html && project.content_html.trim() !== '') {
         container.innerHTML = project.content_html;
         
-        // Pemicu kalkulasi instan setelah DOM terisi
-        setTimeout(normalizeContentImageWidths, 200);
-
-        // Pantau seluruh gambar di dalam artikel, jalankan kalkulasi ulang setiap kali gambar selesai loading
+        // Eksekusi pembersihan instan
+        normalizeContentImageWidths();
+        
+        // Jalankan ulang saat gambar termuat sempurna untuk mematangkan tata letak
         const imgs = container.getElementsByTagName('img');
         for (let i = 0; i < imgs.length; i++) {
             imgs[i].addEventListener('load', normalizeContentImageWidths);
