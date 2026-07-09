@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id" class="scroll-smooth h-auto m-0 p-0 overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,6 +21,19 @@
         }
     </script>
     <style>
+        /* --- KUNCI ANTI RUANG PUTIH HANTU DI BAWAH FOOTER --- */
+        html, body {
+            height: auto !important;
+            min-height: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow-x: hidden !important;
+            display: flex;
+            flex-direction: column;
+        }
+        main { flex: 1 0 auto; }
+        footer { flex-shrink: 0; width: 100% !important; margin: 0 !important; }
+
         body { font-family: 'Ubuntu', sans-serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -28,7 +41,13 @@
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- FREEFORM PROJECT CONTENT (Quill output) --- */
-        #p-content { box-sizing: border-box; width: 100%; position: relative; overflow-x: hidden; }
+        #p-content { 
+            box-sizing: border-box; 
+            width: 100%; 
+            position: relative; 
+            overflow: hidden !important;
+            height: auto !important;
+        }
         #p-content * { box-sizing: border-box; }
 
         #p-content img {
@@ -76,11 +95,11 @@
 
         /* --- LIVE PREVIEW WEB IFRAME --- */
         .web-preview-frame {
-            width: 100%; height: 75vh; border: 1px solid #e2e8f0; border-radius: 1.5rem; background: #white; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); margin-top: 1.5rem;
+            width: 100%; height: 75vh; border: 1px solid #e2e8f0; border-radius: 1.5rem; background: white; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); margin-top: 1.5rem;
         }
     </style>
 </head>
-<body class="bg-white text-kancah-dark overflow-x-hidden selection:bg-kancah-blue selection:text-white">
+<body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white">
 
     <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
@@ -149,7 +168,6 @@
     </div>
 
     <main class="pb-12">
-
         <section id="hero-cover" class="relative w-full">
             <div id="hero-image-wrap" class="relative w-full bg-kancah-dark overflow-hidden flex items-center justify-center">
                 <img id="p-image" src="" alt="" class="w-full h-full object-cover">
@@ -164,6 +182,7 @@
                         </h1>
                         <p id="p-description" class="hidden text-sm lg:text-lg text-gray-500 leading-relaxed font-light max-w-2xl"></p>
                         
+                        <!-- LIVE PREVIEW MODULE -->
                         <div id="live-preview-btn-container" class="hidden mt-6">
                             <button onclick="toggleHtmlLivePreview()" id="btn-toggle-preview" class="inline-flex items-center justify-center px-6 py-3 bg-kancah-blue text-white rounded-full font-bold uppercase tracking-[0.15em] text-[11px] hover:bg-kancah-dark transition-all shadow-md gap-2">
                                 <i class="fa-solid fa-laptop-code"></i> <span>Live Preview Website</span>
@@ -178,7 +197,8 @@
             </div>
         </section>
 
-        <section id="html-preview-section" class="max-w-[1100px] mx-auto px-4 sm:px-6 hidden animate-zoom">
+        <!-- LIVE PREVIEW BOX -->
+        <section id="html-preview-section" class="max-w-[1100px] mx-auto px-4 sm:px-6 hidden">
             <div class="flex items-center justify-between border-b border-gray-100 pb-3 mt-6">
                 <div class="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-widest">
                     <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Interaktif Sandbox Mode
@@ -209,7 +229,6 @@
                 <span class="relative z-10 font-black uppercase tracking-[0.2em] text-[10px]">See All Projects</span>
             </a>
         </div>
-
     </main>
 
     <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
@@ -280,7 +299,7 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </footer>
 
     <script>
         const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
@@ -314,7 +333,6 @@
                 descEl.classList.remove('hidden');
             }
 
-            // CEK LIVE PREVIEW UNTUK KATEGORI WEB DEVELOPMENT
             if (project.category === 'Web Development' && project.demo_url) {
                 window.currentProjectDemoUrl = project.demo_url;
                 document.getElementById('live-preview-btn-container').classList.remove('hidden');
@@ -325,7 +343,6 @@
             loadAdjacentProjects(slug);
         }
 
-        // TATA LOGIKA MEMBUKA DAN MENUTUP LIVE PREVIEW HTML
         function toggleHtmlLivePreview() {
             const section = document.getElementById('html-preview-section');
             const iframe = document.getElementById('web-demo-iframe');
@@ -390,103 +407,72 @@
             });
         }
 
-        // LOGIKA RE-LAYOUT GAMBAL KANCAH (ANTI SPACE KOSONG & SUPPORT RESPONSIVE MOBILE)
-       function normalizeContentImageWidths() {
-    const container = document.getElementById('p-content');
-    if (!container) return;
-    const EDITOR_BASE_WIDTH = 1100;
+        /* --- FUNGSI RESET TINGGI TOTAL: AMANKAN AREA TEPAT DI BAWAH GAMBAR TERLUAR --- */
+        function normalizeContentImageWidths() {
+            const container = document.getElementById('p-content');
+            if (!container) return;
+            const EDITOR_BASE_WIDTH = 1100;
 
-    // Ambil semua gambar di dalam artikel
-    const allImages = container.querySelectorAll('img');
+            const isMobile = window.innerWidth < 768;
 
-    // Fungsi inti untuk ngitung koordinat setelah gambar dipastikan ke-load
-    function calculateFinalHeight() {
-        container.style.height = 'auto';
-        container.style.overflow = 'visible';
-
-        const isMobile = window.innerWidth < 768;
-
-        if (isMobile) {
-            // MODE MOBILE: Matikan semua posisi melayang biar ngalir normal ke bawah
-            container.querySelectorAll('p').forEach(p => {
-                p.style.position = 'static'; p.style.display = 'block'; p.style.clear = 'both'; p.style.height = 'auto';
-            });
-            allImages.forEach(img => {
-                img.style.position = 'static'; img.style.transform = 'none'; img.style.left = '0'; img.style.top = '0';
-                img.style.width = '100%'; img.style.height = 'auto'; img.style.display = 'block'; img.style.margin = '1rem auto';
-            });
-        } else {
-            // MODE DESKTOP: Pertahankan posisi drag & ukur presisi ujung bawah gambar
-            let maxVisualBottom = 0;
-
-            container.querySelectorAll('p').forEach(p => {
-                const imgs = p.querySelectorAll('img');
-                if (imgs.length > 0) {
-                    p.style.position = 'relative'; p.style.width = '100%'; p.style.display = 'block'; p.style.clear = 'both';
-                }
-            });
-
-            allImages.forEach(img => {
-                // Konversi PX ke % jika dipasang inline style px dari Quill admin
-                if (/px\s*$/.test(img.style.width || '')) {
-                    const pxWidth = parseFloat(img.style.width);
-                    img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
-                    img.style.height = 'auto';
-                }
-
-                // Ambil koordinat fisik terbawah asli gambar
-                const rect = img.getBoundingClientRect();
-                const containerRect = container.getBoundingClientRect();
-                const visualBottom = rect.bottom - containerRect.top;
-
-                if (visualBottom > maxVisualBottom) {
-                    maxVisualBottom = visualBottom;
-                }
-            });
-
-            // Kunci kontainer tepat di bawah gambar paling luar + kasih nafas 20px
-            const containerScrollHeight = container.scrollHeight;
-            if (maxVisualBottom > 0) {
-                const finalHeight = Math.max(maxVisualBottom + 20, containerScrollHeight);
-                container.style.height = `${finalHeight}px`;
-                container.style.position = 'relative';
-            }
-        }
-        
-        // Panggil nav spacer bawaan template biar footer ikut menyesuaikan
-        if (typeof syncNavSpacer === 'function') {
-            syncNavSpacer();
-        }
-    }
-
-    // TRACKING PROTEKSI: Tunggu semua gambar kelar loading, baru eksekusi rumusnya!
-    let loadedCount = 0;
-    if (allImages.length === 0) {
-        calculateFinalHeight();
-    } else {
-        allImages.forEach(img => {
-            if (img.complete) {
-                loadedCount++;
-                if (loadedCount === allImages.length) calculateFinalHeight();
+            if (isMobile) {
+                container.style.height = 'auto';
+                container.style.display = 'block';
+                container.querySelectorAll('p').forEach(p => {
+                    p.style.position = 'static'; p.style.display = 'block'; p.style.clear = 'both'; p.style.height = 'auto';
+                });
+                container.querySelectorAll('img').forEach(img => {
+                    img.style.position = 'static'; img.style.transform = 'none'; img.style.left = '0'; img.style.top = '0';
+                    img.style.width = '100%'; img.style.height = 'auto'; img.style.display = 'block'; img.style.margin = '1rem auto';
+                });
             } else {
-                img.addEventListener('load', () => {
-                    loadedCount++;
-                    if (loadedCount === allImages.length) calculateFinalHeight();
+                container.style.display = 'block';
+                let maxVisualBottom = 0;
+
+                container.querySelectorAll('p').forEach(p => {
+                    if (p.querySelectorAll('img').length > 0) {
+                        p.style.position = 'relative'; p.style.width = '100%'; p.style.display = 'block'; p.style.clear = 'both';
+                    }
                 });
-                img.addEventListener('error', () => {
-                    loadedCount++;
-                    if (loadedCount === allImages.length) calculateFinalHeight();
+
+                const imgs = container.querySelectorAll('img');
+                imgs.forEach(img => {
+                    if (/px\s*$/.test(img.style.width || '')) {
+                        const pxWidth = parseFloat(img.style.width);
+                        img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
+                        img.style.height = 'auto';
+                    }
+                    
+                    // Gunakan offsetTop + offsetHeight murni elemen untuk kalkulasi batas bawah sejati
+                    const imgBottom = img.offsetTop + img.offsetHeight;
+                    if (imgBottom > maxVisualBottom) {
+                        maxVisualBottom = imgBottom;
+                    }
                 });
+
+                if (maxVisualBottom > 0) {
+                    container.style.height = (maxVisualBottom + 30) + 'px';
+                } else {
+                    container.style.height = 'auto';
+                }
             }
-        });
-    }
-}
+
+            if (typeof syncNavSpacer === 'function') { syncNavSpacer(); }
+        }
+
         function renderFreeformContent(project) {
             const container = document.getElementById('p-content');
 
             if (project.content_html && project.content_html.trim() !== '') {
                 container.innerHTML = project.content_html;
-                normalizeContentImageWidths();
+                
+                // Daftarkan pemicu normalisasi begitu semua resource internal kelar dibaca browser
+                setTimeout(normalizeContentImageWidths, 100);
+                const allImgs = container.querySelectorAll('img');
+                allImgs.forEach(img => {
+                    img.addEventListener('load', normalizeContentImageWidths);
+                });
+                
                 activateYouTubeEmbeds();
                 return;
             }
@@ -499,7 +485,7 @@
                 project.gallery.forEach(g => { legacy += `<p><img src="${g.url}" alt=""></p>`; });
             }
             container.innerHTML = legacy;
-            normalizeContentImageWidths();
+            setTimeout(normalizeContentImageWidths, 100);
             activateYouTubeEmbeds();
         }
 
@@ -564,20 +550,12 @@
         document.addEventListener('DOMContentLoaded', () => {
             getProjectDetail(); updateClock(); updateWeather(); setInterval(updateClock, 1000);
             syncNavSpacer();
-            window.addEventListener('resize', syncNavSpacer);
-            window.addEventListener('load', syncNavSpacer);
+            window.addEventListener('resize', () => { syncNavSpacer(); normalizeContentImageWidths(); });
+            window.addEventListener('load', () => { syncNavSpacer(); normalizeContentImageWidths(); });
             
-            // AUTOMATIC RESIZE CHECKER UNTUK LAYOUT GAMBAR
-            window.addEventListener('resize', normalizeContentImageWidths);
-
-            setTimeout(syncNavSpacer, 300);
             const btn = document.getElementById('mobile-menu-button'), menu = document.getElementById('mobile-menu'), close = document.getElementById('close-menu');
             if(btn) btn.onclick = () => { menu.classList.replace('translate-x-full', 'translate-x-0'); document.body.style.overflow = 'hidden'; };
             if(close) close.onclick = () => { menu.classList.replace('translate-x-0', 'translate-x-full'); document.body.style.overflow = ''; };
-            const trigger = document.getElementById('weather-mobile-trigger'), popup = document.getElementById('location-popup');
-            if (trigger && popup) {
-                trigger.onclick = (e) => { e.stopPropagation(); popup.classList.toggle('opacity-100'); popup.classList.toggle('scale-100'); setTimeout(() => { popup.classList.remove('opacity-100', 'scale-100'); }, 3000); };
-            }
         });
     </script>
 </body>
