@@ -948,52 +948,97 @@ window.cleanEmptyParagraphs = function () {
             if(confirm) { await kancah.from('projects').delete().eq('id', id); showToast("PROJECT DIHAPUS!"); loadProjectList(); }
         }
 
-        document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
-            e.preventDefault(); const btn = document.getElementById('btn-p-submit'); const isHighlightChecked = document.getElementById('p-highlight').checked;
-            btn.disabled = true; btn.innerText = 'PROCESSING...';
-            try {
-                if (isHighlightChecked) {
-                    let query = kancah.from('projects').select('id', { count: 'exact', head: true }).eq('is_highlight', true);
-                    if (window.currentEditProjectId) query = query.neq('id', window.currentEditProjectId);
-                    const { count } = await query;
-                    if (count >= 2) { showToast("Konten yg dihighlight sudah 2 bang.", true); btn.disabled = false; btn.innerText = window.currentEditProjectId ? 'UPDATE WORK NOW' : 'Publish Work'; return; }
-                }
+       document.getElementById('portfolioForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); 
+    const btn = document.getElementById('btn-p-submit'); 
+    const isHighlightChecked = document.getElementById('p-highlight').checked;
+    btn.disabled = true; 
+    btn.innerText = 'PROCESSING...';
+    
+    try {
+        if (isHighlightChecked) {
+            let query = kancah.from('projects').select('id', { count: 'exact', head: true }).eq('is_highlight', true);
+            if (window.currentEditProjectId) query = query.neq('id', window.currentEditProjectId);
+            const { count } = await query;
+            if (count >= 2) { 
+                showToast("Konten yg dihighlight sudah 2 bang.", true); 
+                btn.disabled = false; 
+                btn.innerText = window.currentEditProjectId ? 'UPDATE WORK NOW' : 'Publish Work'; 
+                return; 
+            }
+        }
 
-                let publicUrl = null; const fileInput = document.getElementById('p-image');
-                if (fileInput.files.length > 0) {
-                    const fileName = `works/${Date.now()}`; await kancah.storage.from('project-images').upload(fileName, fileInput.files[0]);
-                    publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
-                }
+        let publicUrl = null; 
+        const fileInput = document.getElementById('p-image');
+        if (fileInput.files.length > 0) {
+            const fileName = `works/${Date.now()}`; 
+            await kancah.storage.from('project-images').upload(fileName, fileInput.files[0]);
+            publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
+        }
 
-                let demoUrl = null; const categoryVal = document.getElementById('p-category').value; const slugVal = document.getElementById('p-slug').value; const htmlFileInput = document.getElementById('p-html-file');
-                if (categoryVal === 'Web Development' && htmlFileInput && htmlFileInput.files.length > 0) {
-                    const htmlFileName = `demos/${Date.now()}_${slugVal}.html`;
-                    await kancah.storage.from('project-demos').upload(htmlFileName, htmlFileInput.files[0], { contentType: 'text/html', upsert: true });
-                    demoUrl = kancah.storage.from('project-demos').getPublicUrl(htmlFileName).data.publicUrl;
-                }
+        let demoUrl = null; 
+        const categoryVal = document.getElementById('p-category').value; 
+        const slugVal = document.getElementById('p-slug').value; 
+        const htmlFileInput = document.getElementById('p-html-file');
+        if (categoryVal === 'Web Development' && htmlFileInput && htmlFileInput.files.length > 0) {
+            const htmlFileName = `demos/${Date.now()}_${slugVal}.html`;
+            await kancah.storage.from('project-demos').upload(htmlFileName, htmlFileInput.files[0], { contentType: 'text/html', upsert: true });
+            demoUrl = kancah.storage.from('project-demos').getPublicUrl(htmlFileName).data.publicUrl;
+        }
 
-                // Bersihin baris/paragraf kosong otomatis sebelum disimpan, biar gak
-                // nyisa whitespace gede di halaman project (termasuk bekas gambar
-                // yang dihapus).
-                cleanEmptyParagraphs();
+        // 1. BERSIHKAN PARAGRAF KOSONG TERLEBIH DAHULU
+        cleanEmptyParagraphs();
 
-                const yearVal = document.getElementById('p-year').value; const tagsVal = document.getElementById('p-tags').value; const descVal = document.getElementById('p-description').value;
-                const payload = {
-                    title: document.getElementById('p-title').value, slug: slugVal, category: categoryVal, is_highlight: isHighlightChecked,
-                    year: yearVal ? Number(yearVal) : null, tags: tagsVal ? tagsVal.split(',').map(t => t.trim()).filter(Boolean) : [],
-                    description: descVal || null, content_html: quill.root.innerHTML
-                };
-                if (publicUrl) payload.image_url = publicUrl; if (demoUrl) payload.demo_url = demoUrl;
-
-                if (window.currentEditProjectId) {
-                    await kancah.from('projects').update(payload).eq('id', window.currentEditProjectId); showToast("PROJECT UPDATED!");
-                } else {
-                    if (!publicUrl) throw new Error("Harap unggah foto untuk project baru.");
-                    await kancah.from('projects').insert([payload]); showToast("PROJECT PUBLISHED!");
-                }
-                resetPortfolioForm(); loadProjectList();
-            } catch (err) { showToast(err.message, true); } finally { btn.disabled = false; btn.innerText = 'Publish Work'; }
+        // 2. KUNCI UTAMA ANTI-GOBLOK: Normalisasi paksa seluruh gambar melayang di editor admin
+        // agar tidak menyisakan kuncian inline height piksel raksasa ke Supabase.
+        const tempSanitizer = document.createElement('div');
+        tempSanitizer.innerHTML = quill.root.innerHTML;
+        
+        // Buang paksa inline height kuncian dari kontainer pembungkusnya
+        tempSanitizer.removeAttribute('style');
+        tempSanitizer.style.height = 'auto';
+        
+        // Reset kuncian tinggi gambar hasil drag agar browser menghitung secara natural
+        tempSanitizer.querySelectorAll('img').forEach(img => {
+            img.style.height = 'auto';
         });
+
+        const cleanHtmlPayload = tempSanitizer.innerHTML;
+        const yearVal = document.getElementById('p-year').value; 
+        const tagsVal = document.getElementById('p-tags').value; 
+        const descVal = document.getElementById('p-description').value;
+        
+        const payload = {
+            title: document.getElementById('p-title').value, 
+            slug: slugVal, 
+            category: categoryVal, 
+            is_highlight: isHighlightChecked,
+            year: yearVal ? Number(yearVal) : null, 
+            tags: tagsVal ? tagsVal.split(',').map(t => t.trim()).filter(Boolean) : [],
+            description: descVal || null, 
+            content_html: cleanHtmlPayload // Simpan HTML yang sudah disanitasi total
+        };
+        
+        if (publicUrl) payload.image_url = publicUrl; 
+        if (demoUrl) payload.demo_url = demoUrl;
+
+        if (window.currentEditProjectId) {
+            await kancah.from('projects').update(payload).eq('id', window.currentEditProjectId); 
+            showToast("PROJECT UPDATED!");
+        } else {
+            if (!publicUrl) throw new Error("Harap unggah foto untuk project baru.");
+            await kancah.from('projects').insert([payload]); 
+            showToast("PROJECT PUBLISHED!");
+        }
+        resetPortfolioForm(); 
+        loadProjectList();
+    } catch (err) { 
+        showToast(err.message, true); 
+    } finally { 
+        btn.disabled = false; 
+        btn.innerText = 'Publish Work'; 
+    }
+});
 
         // --- CLIENT LOGIC ---
         async function loadClientList() {
