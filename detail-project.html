@@ -325,32 +325,36 @@ footer {
     }
 
     async function loadMoreWorks(currentSlug) {
-        const gallery = document.getElementById('more-works-gallery');
-        const { data: list } = await kancah.from('projects')
-            .select('slug, title, image_url, category')
-            .order('created_at', { ascending: false })
-            .limit(10); 
-        
-        if (!list) return;
+    const gallery = document.getElementById('more-works-gallery');
+    
+    // Ganti .limit(10) menjadi .limit(4) 
+    // Kita ambil 4 supaya kalau salah satu project adalah project yang sedang dibuka,
+    // kita masih punya 3 project lain untuk ditampilkan.
+    const { data: list } = await kancah.from('projects')
+        .select('slug, title, image_url, category')
+        .order('created_at', { ascending: false })
+        .limit(4); 
+    
+    if (!list) return;
 
-        const otherProjects = list.filter(p => p.slug !== currentSlug);
+    // Filter project yang sedang dibuka
+    const otherProjects = list.filter(p => p.slug !== currentSlug).slice(0, 3); // Ambil tepat 3 saja
 
-        if (otherProjects.length === 0) {
-            document.getElementById('more-works-section').classList.add('hidden');
-            return;
-        }
-
-        // Di dalam fungsi loadMoreWorks, perbarui bagian .map
-gallery.innerHTML = otherProjects.map(p => `
-    <a href="?id=${p.slug}" class="work-card group snap-start">
-        <div class="aspect-[4/3] w-full bg-slate-100 rounded-2xl overflow-hidden mb-4">
-            <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-        </div>
-        <p class="text-[9px] font-black uppercase tracking-widest text-kancah-blue mb-1">${p.category}</p>
-        <h3 class="text-md font-bold italic uppercase tracking-tighter text-kancah-dark group-hover:text-kancah-blue transition-colors">${p.title}</h3>
-    </a>
-`).join('');
+    if (otherProjects.length === 0) {
+        document.getElementById('more-works-section').classList.add('hidden');
+        return;
     }
+
+    gallery.innerHTML = otherProjects.map(p => `
+        <a href="?id=${p.slug}" class="work-card group">
+            <div class="aspect-[4/3] w-full bg-slate-100 rounded-2xl overflow-hidden mb-4">
+                <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <p class="text-[9px] font-black uppercase tracking-widest text-kancah-blue mb-1">${p.category}</p>
+            <h3 class="text-md font-bold italic uppercase tracking-tighter text-kancah-dark group-hover:text-kancah-blue transition-colors">${p.title}</h3>
+        </a>
+    `).join('');
+}
 
     function renderTags(project) {
         const wrap = document.getElementById('p-tags'); let html = '';
