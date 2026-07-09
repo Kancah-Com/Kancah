@@ -597,6 +597,35 @@
             return null;
         }
 
+        // Quill Image Upload Handler — upload ke Supabase storage, insert URL publiknya
+function quillImageHandler() {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+        const file = input.files[0];
+        if (!file) return;
+
+        const range = quill.getSelection(true) || { index: quill.getLength() };
+
+        try {
+            const fileName = `content/${Date.now()}_${file.name}`;
+            const { error: uploadError } = await kancah.storage
+                .from('project-images')
+                .upload(fileName, file);
+            if (uploadError) throw uploadError;
+
+            const publicUrl = kancah.storage.from('project-images').getPublicUrl(fileName).data.publicUrl;
+
+            quill.insertEmbed(range.index, 'image', publicUrl, 'user');
+            quill.setSelection(range.index + 1);
+        } catch (err) {
+            showToast('Gagal upload gambar: ' + err.message, true);
+        }
+    };
+}
         // Quill Video Embed Handler
         function quillVideoHandler() {
             const url = prompt('Tempel link YouTube-nya (contoh: https://www.youtube.com/watch?v=xxxx atau https://youtu.be/xxxx)');
