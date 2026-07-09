@@ -352,54 +352,66 @@
             });
         }
 
-        function normalizeContentImageWidths() {
+       function normalizeContentImageWidths() {
     const container = document.getElementById('p-content');
     if (!container) return;
     const EDITOR_BASE_WIDTH = 1100;
-    
-    let maxVisualBottom = 0;
 
+    // 1. Bersihkan sisa styling height dari percobaan sebelumnya agar scrollbar hantu hilang
+    container.style.height = 'auto';
+    container.style.overflow = 'visible';
+
+    // 2. Normalisasi width px ke % untuk gambar normal
     container.querySelectorAll('img').forEach(img => {
-        // 1. Konversi width px → % agar responsif
         if (/px\s*$/.test(img.style.width || '')) {
             const pxWidth = parseFloat(img.style.width);
             img.style.width = `${((pxWidth / EDITOR_BASE_WIDTH) * 100).toFixed(2)}%`;
             img.style.height = 'auto';
         }
-
-        // 2. Konversi left/top px → transform translate %
-        const hasPxLeft = /px\s*$/.test(img.style.left || '');
-        const hasPxTop  = /px\s*$/.test(img.style.top  || '');
-        if (hasPxLeft || hasPxTop) {
-            const leftPx = parseFloat(img.style.left) || 0;
-            const topPx  = parseFloat(img.style.top)  || 0;
-            const rect   = img.getBoundingClientRect();
-            const w = rect.width  || 1;
-            const h = rect.height || 1;
-            img.style.left = '';
-            img.style.top  = '';
-            img.style.transform = `translate(${((leftPx / w) * 100).toFixed(2)}%, ${((topPx / h) * 100).toFixed(2)}%)`;
-        }
-
-        // 3. KALKULASI JARAK VISUAL ELEMEN TERBAWAH
-        // Kita hitung posisi asli elemen ditambah pergeseran transform-nya
-        const rect = img.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
-        
-        // Jarak relatif bagian bawah gambar dari top kontainer pembungkus
-        const visualBottom = rect.bottom - containerRect.top;
-        if (visualBottom > maxVisualBottom) {
-            maxVisualBottom = visualBottom;
-        }
     });
 
-    // 4. EKSEKUSI PEMOTONGAN LAYOUT
-    // Jika ada elemen gambar yang digeser melayang, paksa tinggi kontainer mengunci di batas visual paling bawah
-    if (maxVisualBottom > 0) {
-        // Tambahkan sedikit padding aman (misal 40px) di bawah gambar kolase terakhir
-        container.style.height = `${maxVisualBottom + 40}px`;
-        container.style.position = 'relative';
-    }
+    // 3. SULAP PARAGRAF BERISI GAMBAR KECIL MENJADI GRID OTOMATIS
+    // Cari semua tag <p> yang di dalamnya mengandung gambar
+    container.querySelectorAll('p').forEach(p => {
+        const imgs = p.querySelectorAll('img');
+        
+        // Jika di dalam satu baris paragraf ada lebih dari 1 gambar, atau ada gambar berukuran kecil
+        if (imgs.length > 0) {
+            let hasSmallImage = false;
+            imgs.forEach(img => {
+                const w = img.style.width;
+                if (w && parseFloat(w) < 90) {
+                    hasSmallImage = true;
+                }
+            });
+
+            if (hasSmallImage || imgs.length > 1) {
+                // Paksa paragraf ini bertindak sebagai baris Flexbox/Grid
+                p.style.display = 'flex';
+                p.style.flexWrap = 'wrap';
+                p.style.gap = '16px'; // Beri jarak antar gambar biar estetik
+                p.style.justifyContent = 'center'; // Rata tengah kolasenya
+                p.style.alignItems = 'start';
+                p.style.width = '100%';
+                p.style.marginBottom = '1.5rem';
+                p.style.clear = 'both';
+
+                // Hilangkan gaya transform/left/top bawaan drag lama yang merusak layout
+                imgs.forEach(img => {
+                    img.style.position = 'relative';
+                    img.style.transform = 'none';
+                    img.style.left = '0';
+                    img.style.top = '0';
+                    img.style.margin = '0';
+                    
+                    // Jika belum diset width-nya, bagi rata otomatis
+                    if (!img.style.width) {
+                        img.style.width = `calc(${100 / imgs.length}% - 16px)`;
+                    }
+                });
+            }
+        }
+    });
 }
         
 
