@@ -22,23 +22,29 @@
     </script>
     <style>
       /* GANTI CSS BODY ANDA DENGAN INI */
-body { 
-    font-family: 'Ubuntu', sans-serif; 
-    background-color: white; 
-    margin: 0; 
-    display: grid;
-    grid-template-rows: auto 1fr auto; /* Header, Main, Footer */
+html, body {
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
-}
-
-main { 
     display: flex;
     flex-direction: column;
-    min-height: 0; /* Penting agar main tidak mendorong footer */
+}
+
+main {
+    flex: 1 0 auto; /* Memaksa main mengisi ruang tapi tidak melar paksa */
+    padding-bottom: 0 !important; /* Hapus semua padding bawah */
 }
 
 footer {
-    width: 100%;
+    flex-shrink: 0;
+}
+
+#p-content {
+    /* Mencegah overflow */
+    overflow: hidden;
+    /* Pastikan tidak ada margin bottom di container utama */
+    margin-bottom: 0 !important;
+    padding-bottom: 40px; /* Cukup beri napas sedikit di akhir */
 }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -46,14 +52,7 @@ footer {
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- ARTIKEL CONTENT --- */
-        #p-content { 
-            box-sizing: border-box; 
-            width: 100%; 
-            position: relative; 
-            display: block; 
-            overflow: visible;
-            /* GAK ADA LAGI 'height: auto !important' DISINI, BIAR JS BISA BEKERJA! */
-        }
+     
         #p-content * { box-sizing: border-box; }
 /* TAMBAHKAN DI DALAM <style> */
 #p-content p:has(img) {
@@ -334,7 +333,7 @@ footer {
 
             // 5. EKSEKUSI: Potong kontainer pas di bawah elemen paling bawah
             if (maxBottomPixel > 0) {
-                container.style.height = (maxBottomPixel + 40) + 'px'; // Kasih napas 40px ke footer
+                container.style.height = (maxBottomPixel) + 'px'; // Kasih napas 40px ke footer
             } else {
                 container.style.height = 'auto';
             }
