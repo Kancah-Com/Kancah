@@ -33,19 +33,21 @@
             width: 100%; 
             position: relative; 
             display: block; 
+            overflow: visible;
+            /* GAK ADA LAGI 'height: auto !important' DISINI, BIAR JS BISA BEKERJA! */
         }
         #p-content * { box-sizing: border-box; }
 
-        /* KUNCI FINAL: PAKSA SEMUA BUNGKUSAN MENYUSUT MENGIKUTI GAMBAR! */
+        /* PAKSA BUNGKUSAN KOSONG SISA QUILL MENGECIL */
         #p-content p, 
         #p-content div, 
         #p-content span {
-            height: auto !important; /* Hancurkan sisa tinggi gambar raksasa */
+            height: auto !important; 
             min-height: 0 !important;
         }
 
         #p-content img {
-            height: auto !important; /* Pastikan rasio gambar gak gepeng */
+            height: auto !important; 
             max-width: 100% !important;
         }
 
@@ -58,8 +60,6 @@
         #p-content ul, #p-content ol { margin: 0 0 1.25rem 1.5rem; color: #4b5563; font-weight: 300; }
         #p-content a { color: #0006ff; text-decoration: underline; }
         #p-content blockquote { border-left: 3px solid #0006ff; padding-left: 1.25rem; margin: 1.5rem 0; font-style: italic; color: #374151; }
-        
-        /* Pengecualian buat video iframe biar gak gepeng */
         iframe.ql-video, .kf-yt-frame { width: 100%; aspect-ratio: 16 / 9; height: auto !important; border: 0; margin: 1.5rem 0; display: block; border-radius: 0.75rem; }
     </style>
 </head>
@@ -224,30 +224,74 @@
             wrap.innerHTML = html;
         }
 
+        /* --- SCRIPT PEMBUNUH WHITE SPACE MUTLAK --- */
+        function exterminateGhostSpaces() {
+            const container = document.getElementById('p-content');
+            if (!container) return;
+
+            // 1. Lepas tinggi kontainer sementara buat ngukur ukuran aslinya
+            container.style.height = 'auto';
+
+            // 2. Sembunyikan semua <p> atau <div> kosong sisa enter di admin
+            container.querySelectorAll('p, div').forEach(el => {
+                if (el.innerHTML.replace(/<br>|&nbsp;|\s/g, '') === '' && el.querySelectorAll('img, iframe, video').length === 0) {
+                    el.style.display = 'none';
+                }
+            });
+
+            const containerRect = container.getBoundingClientRect();
+            let maxBottomPixel = 0;
+
+            // 3. Lacak di mana ujung visual gambar/iframe yg paling bawah (sudah include ukuran mobile)
+            container.querySelectorAll('img, iframe, video').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.height > 0) { // Pastikan elemennya kelihatan di layar
+                    const elBottom = rect.bottom - containerRect.top;
+                    if (elBottom > maxBottomPixel) maxBottomPixel = elBottom;
+                }
+            });
+
+            // 4. Lacak juga ujung visual dari teks-teks penjelasan lo
+            container.querySelectorAll('h1, h2, h3, h4, p, blockquote, ul, ol').forEach(el => {
+                if (el.textContent.trim().length > 0) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.height > 0) {
+                        const elBottom = rect.bottom - containerRect.top;
+                        if (elBottom > maxBottomPixel) maxBottomPixel = elBottom;
+                    }
+                }
+            });
+
+            // 5. EKSEKUSI: Potong kontainer pas di bawah elemen paling bawah
+            if (maxBottomPixel > 0) {
+                container.style.height = (maxBottomPixel + 40) + 'px'; // Kasih napas 40px ke footer
+            } else {
+                container.style.height = 'auto';
+            }
+
+            if (typeof syncNavSpacer === 'function') syncNavSpacer();
+        }
+
         function renderFreeformContent(project) {
             const container = document.getElementById('p-content');
             if (project.content_html && project.content_html.trim() !== '') {
                 container.innerHTML = project.content_html;
                 
-                // HAPUS SECARA PAKSA SEMUA ATRIBUT TINGGI DARI EDITOR
-                const allElements = container.querySelectorAll('p, div, span, img');
-                allElements.forEach(el => {
-                    // Buang style inline
-                    el.style.height = 'auto';
-                    el.style.minHeight = '0px';
-                    // Buang atribut tag HTML (kalo disimpen bentuk <img height="2000">)
-                    if(el.hasAttribute('height')) {
-                        el.removeAttribute('height');
-                    }
-                });
+                // Triger hitungan saat gambar sudah ter-load di layar user
+                const imgs = container.getElementsByTagName('img');
+                for (let i = 0; i < imgs.length; i++) {
+                    imgs[i].addEventListener('load', exterminateGhostSpaces);
+                }
 
-                // SEMBUNYIKAN PARAGRAF KOSONG MELOMPONG SISA ENTER QUILL
-                container.querySelectorAll('p').forEach(p => {
-                    // Cek kalau isinya cuma <br>, &nbsp;, atau spasi doang, dan gak ada gambar/iframe
-                    if (p.innerHTML.replace(/<br>|&nbsp;|\s/g, '') === '' && p.querySelectorAll('img, iframe').length === 0) {
-                        p.style.display = 'none';
-                    }
-                });
+                // Triger paksa berkali-kali di 3 detik pertama buat mastiin gak ada frame yg lolos
+                let checkCount = 0;
+                const layoutInterval = setInterval(() => {
+                    exterminateGhostSpaces();
+                    checkCount++;
+                    if (checkCount > 15) clearInterval(layoutInterval);
+                }, 200);
+
+                exterminateGhostSpaces();
             }
         }
 
@@ -269,7 +313,11 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             getProjectDetail(); syncNavSpacer();
-            window.addEventListener('resize', syncNavSpacer);
+            // Setiap layarnya diputar/di-resize, ukur ulang!
+            window.addEventListener('resize', () => {
+                syncNavSpacer();
+                exterminateGhostSpaces();
+            });
         });
     </script>
 </body>
