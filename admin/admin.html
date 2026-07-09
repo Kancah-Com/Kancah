@@ -797,17 +797,29 @@
             // dari Enter kosong berkali-kali. Aman: gak akan nyentuh paragraf
             // yang masih ada teks, gambar, atau video di dalamnya.
             // ===================================================================
-            window.cleanEmptyParagraphs = function () {
-                let removed = 0;
-                Array.from(editorRoot.children).forEach(el => {
-                    const isEmpty = el.textContent.replace(/\u200B/g, '').trim() === '';
-                    const hasMedia = el.querySelector('img, iframe');
-                    if (isEmpty && !hasMedia) { el.remove(); removed++; }
-                });
-                if (removed > 0) { showToast(`${removed} baris kosong dibersihin. Klik UPDATE WORK NOW buat nyimpen.`); }
-                else { showToast('Gak ada baris kosong yang ketemu.'); }
-                return removed;
-            };
+window.cleanEmptyParagraphs = function () {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = quill.root.innerHTML;
+    let removed = 0;
+
+    Array.from(tmp.children).forEach(el => {
+        // Quill pakai <p><br></p> untuk baris kosong
+        const rawInner = el.innerHTML.trim();
+        const isQuillEmpty = rawInner === '<br>' || rawInner === '' || rawInner === '&nbsp;';
+        const hasMedia = !!el.querySelector('img, iframe, video');
+        if (isQuillEmpty && !hasMedia) { el.remove(); removed++; }
+    });
+
+    if (removed > 0) {
+        // Quill butuh minimal 1 block element
+        if (tmp.children.length === 0) tmp.innerHTML = '<p><br></p>';
+        quill.root.innerHTML = tmp.innerHTML;
+        showToast(`${removed} baris kosong dibersihin. Klik UPDATE WORK NOW buat nyimpen.`);
+    } else {
+        showToast('Gak ada baris kosong yang ketemu.');
+    }
+    return removed;
+};
         })();
 
         // --- THEME MODE ---
