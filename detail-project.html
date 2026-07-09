@@ -27,19 +27,19 @@
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- FREEFORM ARTIKEL CONTAINER --- */
+        /* --- ARTIKEL CONTENT CONTAINER (ISOLASI WHITE SPACE) --- */
         #p-content { 
             box-sizing: border-box; 
             width: 100%; 
             position: relative; 
             display: block;
-            overflow: visible !important; /* Biarkan kalkulasi JS menentukan tinggi pastinya */
+            overflow: visible !important;
         }
         #p-content * { box-sizing: border-box; }
 
-        /* Pertahankan posisi absolut bawaan admin agar layout desktop & mobile sama persis */
+        /* Jaga agar posisi absolut & transform drag admin tetap sinkron dan presisi */
         #p-content img {
-            max-width: none !important; /* Jangan dipaksa 100% biar skala drag admin gak rusak */
+            max-width: none !important;
             height: auto !important;
         }
 
@@ -54,14 +54,17 @@
         #p-content blockquote { border-left: 3px solid #0006ff; padding-left: 1.25rem; margin: 1.5rem 0; font-style: italic; color: #374151; }
         
         iframe.ql-video, .kf-yt-frame { width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; margin: 1.5rem 0; display: block; border-radius: 0.75rem; }
-        .web-preview-frame { width: 100%; height: 75vh; border: 1px solid #e2e8f0; border-radius: 1.5rem; background: white; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); margin-top: 1.5rem; }
     </style>
 </head>
 <body class="text-kancah-dark overflow-x-hidden selection:bg-kancah-blue selection:text-white">
 
     <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
-            <div class="flex-none"><a href="/"><img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain"></a></div>
+            <div class="flex-none">
+                <a href="/">
+                    <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
+                </a>
+            </div>
             <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
                 <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
                 <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
@@ -95,36 +98,71 @@
                         <span id="p-category" class="text-kancah-blue font-black text-[10px] uppercase tracking-[0.3em] block mb-3">Category</span>
                         <h1 id="p-title" class="text-4xl lg:text-6xl font-bold tracking-tighter leading-[1.05] uppercase italic text-kancah-dark mb-6">Loading...</h1>
                         <p id="p-description" class="hidden text-sm lg:text-lg text-gray-500 leading-relaxed font-light max-w-2xl"></p>
-                        <div id="live-preview-btn-container" class="hidden mt-6">
-                            <button onclick="toggleHtmlLivePreview()" id="btn-toggle-preview" class="inline-flex items-center justify-center px-6 py-3 bg-kancah-blue text-white rounded-full font-bold uppercase tracking-[0.15em] text-[11px] hover:bg-kancah-dark transition-all gap-2"><i class="fa-solid fa-laptop-code"></i> <span>Live Preview Website</span></button>
-                        </div>
                     </div>
                     <div class="lg:col-span-4 lg:pt-1"><div id="p-tags" class="flex flex-col gap-2"></div></div>
                 </div>
             </div>
         </section>
 
-        <section id="html-preview-section" class="max-w-[1100px] mx-auto px-4 sm:px-6 hidden">
-            <iframe id="web-demo-iframe" src="" class="web-preview-frame"></iframe>
-        </section>
-
-        <div class="max-w-[1100px] mx-auto px-4 sm:px-6 relative">
+        <div class="max-w-[1100px] mx-auto px-4 sm:px-6">
             <article id="p-content" class="pt-6"></article>
         </div>
 
-        <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-12 border-t border-gray-100 pt-6 flex flex-col items-center justify-center gap-4 relative z-20">
+        <div class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-16 border-t border-gray-100 pt-6 flex flex-col items-center justify-center gap-4">
             <nav class="flex items-center gap-3 flex-wrap justify-center">
                 <a id="prev-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue"><span aria-hidden="true">←</span><span id="prev-project-title"></span></a>
                 <span id="prev-next-divider" class="hidden text-gray-300">|</span>
                 <a id="next-project-link" href="#" class="hidden items-center gap-2 font-bold text-sm text-kancah-dark hover:text-kancah-blue"><span id="next-project-title"></span><span aria-hidden="true">→</span></a>
             </nav>
-            <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue text-[10px] font-black uppercase tracking-[0.2em]">See All Projects</a>
+            <a href="works" class="group relative inline-flex items-center justify-center px-9 py-3.5 bg-kancah-dark text-white rounded-full text-[10px] font-black uppercase tracking-[0.2em]">See All Projects</a>
         </div>
     </main>
 
-    <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans">
-        <div class="max-w-[1400px] mx-auto px-6 py-8 text-center text-gray-500 text-[10px] font-bold tracking-widest uppercase">
-            <p>&copy; 2026 PT. Kancah Media Sejahtera. All Rights Reserved.</p>
+    <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
+        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
+            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+            </div>
+        </div>
+        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
+                <div class="lg:col-span-5 flex flex-col justify-start items-start">
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
+                        PUNYA IDE? <br> <span class="text-[#0006ff] italic">OBROLIN AJA.</span>
+                    </h2>
+                    <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-[#111111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#0006ff] hover:text-white transition-all duration-300">
+                        Ayo Diskusi <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                    </a>
+                </div>
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <div>
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
+                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
+                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
+                        </address>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <a href="mailto:kancahcreative@gmail.com" class="text-sm font-bold text-white hover:text-[#0006ff] transition-colors flex items-center gap-2 w-max"><i class="fa-regular fa-envelope"></i> kancahcreative@gmail.com</a>
+                        <a href="https://wa.me/6289524687866" class="text-sm font-bold text-white hover:text-[#0006ff] transition-colors flex items-center gap-2 w-max"><i class="fa-brands fa-whatsapp"></i> +62 895-2468-7866</a>
+                    </div>
+                </div>
+                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="services" class="text-white hover:text-[#0006ff] transition-colors">Services</a></li>
+                            <li><a href="works" class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
+                            <li><a href="pricelist" class="text-white hover:text-[#0006ff] transition-colors">Pricelist</a></li>
+                            <li><a href="about" class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
+                            <li><a href="careers" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
+                <p class="text-center md:text-left">&copy; 2026 PT. Kancah Media Sejahtera.</p>
+            </div>
         </div>
     </footer>
 
@@ -132,7 +170,6 @@
         const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
         const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
         const kancah = supabase.createClient(SB_URL, SB_KEY);
-        window.currentProjectDemoUrl = null;
 
         async function getProjectDetail() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -146,55 +183,63 @@
             document.getElementById('p-category').innerText = project.category;
             document.getElementById('p-image').src = project.image_url;
 
-            if (project.category === 'Web Development' && project.demo_url) {
-                window.currentProjectDemoUrl = project.demo_url;
-                document.getElementById('live-preview-btn-container').classList.remove('hidden');
-            }
+            const descEl = document.getElementById('p-description');
+            if (project.description) { descEl.innerText = project.description; descEl.classList.remove('hidden'); }
 
+            renderTags(project);
             renderFreeformContent(project);
             loadAdjacentProjects(slug);
         }
 
-        /* --- DETEKTIF KOORDINAT SEJATI ANTI-WHITESPACE HANTU --- */
+        function renderTags(project) {
+            const wrap = document.getElementById('p-tags'); let html = '';
+            if (project.year) { html += `<span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Project Year ${escapeHtml(project.year)}</span>`; }
+            if (Array.isArray(project.tags)) { project.tags.forEach(tag => { html += `<span class="text-sm font-medium text-gray-600 block">${escapeHtml(tag)}</span>`; }); }
+            wrap.innerHTML = html;
+        }
+
+        /* --- DETEKTIF PIXEL ULTRA AKURAT (MENDUKUNG NESTED CHILD & MATRIX TRANSLATE) --- */
         function normalizeContentImageWidths() {
             const container = document.getElementById('p-content');
             if (!container) return;
 
-            // Pastikan container bersih dari kuncian lama sebelum kalkulasi ulang
+            // Reset paksa tinggi awal agar tidak terjadi penumpukan kalkulasi piksel
             container.style.height = 'auto';
 
-            const images = container.querySelectorAll('img');
+            // Amankan pencarian gambar secara menyeluruh, bahkan jika dibungkus element bersarang
+            const allImages = container.getElementsByTagName('img');
             let absoluteMaxBottom = 0;
 
-            images.forEach(img => {
-                // Ambil tinggi top asli paragraf pembungkus gambar
-                const parentParagraph = img.closest('p');
+            for (let i = 0; i < allImages.length; i++) {
+                const img = allImages[i];
+                
+                // Cari elemen induk bertipe paragraf (<p>) untuk menentukan koordinat dasar Y
+                const parentParagraph = img.closest('p') || img.parentElement;
                 const parentTop = parentParagraph ? parentParagraph.offsetTop : 0;
 
-                // Baca manual nilai inline top asli gambar
+                // Baca inline style top & extract offset Y asli dari CSS transform translate
                 const inlineTop = parseFloat(img.style.top) || 0;
                 let transformY = 0;
-
-                // Ekstrak nilai translate jika di-drag melayang bebas di admin
                 const transformStr = img.style.transform || '';
                 const match = transformStr.match(/translate\(\s*(-?[\d.]+)%\s*,\s*(-?[\d.]+)%\s*\)/);
+                
                 if (match) {
                     const percentY = parseFloat(match[2]);
                     transformY = (percentY / 100) * (img.offsetHeight || 0);
                 }
 
-                // Kalkulasikan posisi sejati pixel ujung paling bawah gambar kolase
+                // Kalkulasikan tinggi fisik absolut ujung bawah gambar kolase di browser
                 const realImgBottom = parentTop + inlineTop + transformY + (img.offsetHeight || 0);
                 
                 if (realImgBottom > absoluteMaxBottom) {
                     absoluteMaxBottom = realImgBottom;
                 }
-            });
+            }
 
-            // Potong paksa tinggi kontainer artikel tepat di bawah batas gambar terluar!
+            // Potong paksa whitespace tepat 20px di bawah gambar terluar tanpa merusak layout kolase
             if (absoluteMaxBottom > 0) {
-                const nativeScrollHeight = container.scrollHeight;
-                container.style.height = `${Math.max(absoluteMaxBottom + 20, nativeScrollHeight)}px`;
+                const containerScrollHeight = container.scrollHeight;
+                container.style.height = `${Math.max(absoluteMaxBottom + 20, containerScrollHeight)}px`;
             } else {
                 container.style.height = 'auto';
             }
@@ -204,14 +249,15 @@
 
         function renderFreeformContent(project) {
             const container = document.getElementById('p-content');
-            if (project.content_html) {
+            if (project.content_html && project.content_html.trim() !== '') {
                 container.innerHTML = project.content_html;
                 
-                // Pemicu instan begitu aset gambar ter-render
+                // Triger hitungan instan begitu element masuk DOM + pasang event pelacak load gambar
                 setTimeout(normalizeContentImageWidths, 150);
-                container.querySelectorAll('img').forEach(img => {
-                    img.addEventListener('load', normalizeContentImageWidths);
-                });
+                const imgs = container.getElementsByTagName('img');
+                for (let i = 0; i < imgs.length; i++) {
+                    imgs[i].addEventListener('load', normalizeContentImageWidths);
+                }
             }
         }
 
@@ -234,6 +280,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             getProjectDetail(); syncNavSpacer();
             window.addEventListener('resize', () => { syncNavSpacer(); normalizeContentImageWidths(); });
+            window.addEventListener('load', () => { syncNavSpacer(); normalizeContentImageWidths(); });
         });
     </script>
 </body>
