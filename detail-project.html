@@ -50,30 +50,28 @@
 /* Tambahkan ini di bagian <style> halaman detail-project.html */
 
 /* 1. Menghilangkan margin/padding untuk paragraf yang berisi gambar */
-.project-content-container p:has(img) {
+#p-content p:has(img) {
     margin: 0 !important;
     padding: 0 !important;
     line-height: 0 !important;
     display: block !important;
 }
-
-/* 2. Memastikan gambar menempel rapat */
-.project-content-container img {
+/* Gambar yang di-drag manual (pake transform translate) cuma geser
+   secara visual, tapi <p> pembungkusnya tetap reserve ruang aslinya
+   -> ini biang keladi whitespace-nya. Paksa tinggi paragrafnya jadi 0
+   biar gak makan tempat, overflow visible biar gambarnya tetap
+   keliatan di posisi geserannya. */
+#p-content p:has(img[style*="transform"]) {
+    height: 0 !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+}
+#p-content img {
     display: block !important;
     vertical-align: bottom !important;
     margin: 0 !important;
     padding: 0 !important;
 }
-
-/* 3. Mencegah spasi tambahan di akhir container */
-.project-content-container {
-    line-height: 0 !important;
-}
-        #p-content img {
-            height: auto !important; 
-            max-width: 100% !important;
-            display: block;
-        }
 
         #p-content p { position: relative; margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; }
         #p-content h1, #p-content h2, #p-content h3 { font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem; }
@@ -258,7 +256,7 @@
             const container = document.getElementById('p-content');
             if (!container) return;
 
-            container.querySelectorAll('p, div, span').forEach(el => {
+           container.querySelectorAll('p, div, span, h1, h2, h3, li, blockquote').forEach(el => {
                 const isEmpty = el.innerHTML.replace(/<br\s*\/?>|&nbsp;|\s/g, '') === '';
                 const hasMedia = el.querySelector('img, iframe, video');
                 if (isEmpty && !hasMedia) {
