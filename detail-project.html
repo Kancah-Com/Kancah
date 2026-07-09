@@ -28,35 +28,16 @@
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- FREEFORM PROJECT CONTENT (Quill output) --- */
-        #p-content { box-sizing: border-box; width: 100%; }
+        #p-content { box-sizing: border-box; width: 100%; position: relative; }
         #p-content * { box-sizing: border-box; }
 
-        /* Reset global untuk semua gambar di dalam konten detail */
+        /* Reset global image properties inside content */
         #p-content img {
             max-width: 100% !important;
             height: auto !important;
-            display: block;
         }
 
-        /* FIX UTAMA: Paragraf yang berisi gambar berjajar dipaksa menjadi Flex Row */
-        #p-content p.kf-flex-container {
-            display: flex !important;
-            flex-direction: row !important;
-            flex-wrap: nowrap !important; /* Haram hukumnya gambar turun ke bawah di mobile */
-            align-items: flex-start !important;
-            justify-content: flex-start !important;
-            gap: 16px !important; /* Jarak antar gambar dampingan */
-            width: 100% !important;
-            margin-bottom: 1.25rem !important;
-            clear: both;
-        }
-
-        #p-content p.kf-flex-container img {
-            flex-shrink: 1 !important; /* Mengizinkan gambar mengecil proporsional di HP */
-            object-fit: contain !important;
-        }
-
-        #p-content p { margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; }
+        #p-content p { position: relative; margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; clear: both; }
         #p-content h1, #p-content h2, #p-content h3 {
             font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem;
         }
@@ -74,7 +55,7 @@
         #p-content .ql-align-right { text-align: right; }
         #p-content .ql-align-justify { text-align: justify; }
 
-        /* --- YOUTUBE FACADE (Tampilan Thumbnail) --- */
+        /* --- YOUTUBE FACADE --- */
         #p-content .kf-yt-facade {
             position: relative;
             width: 100%;
@@ -100,8 +81,28 @@
             transition: transform .25s ease, background .25s ease;
         }
         #p-content .kf-yt-facade:hover .kf-yt-play span { transform: scale(1.1); background: #0006ff; }
-        #p-content iframe.ql-video, #p-content .kf-yt-frame {
+        
+        iframe.ql-video, .kf-yt-frame {
             width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; margin: 1.5rem 0; display: block; border-radius: 0.75rem;
+        }
+
+        /* MEDIA QUERY CRITICAL: Di HP matikan paksa freeform positioning agar tidak tabrakan/tumpang tindih */
+        @media (max-width: 767px) {
+            #p-content p {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+            }
+            #p-content img {
+                position: static !important;
+                transform: none !important;
+                width: 100% !important;
+                height: auto !important;
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                left: 0 !important;
+                top: 0 !important;
+            }
         }
     </style>
 </head>
@@ -368,59 +369,26 @@
             });
         }
 
-        /* --- LOGIC UTAMI: Normalisasi Gambar Bersandingan Agar Konsisten Desktop & Mobile --- */
         function normalizeContentImageWidths() {
             const container = document.getElementById('p-content');
             if (!container) return;
 
-            // Base width standard editor CMS admin kamu
             const EDITOR_BASE_WIDTH = 1100;
+            const isMobile = window.innerWidth < 768;
 
-            container.querySelectorAll('p').forEach(p => {
-                const imgs = p.querySelectorAll('img');
-
-                if (imgs.length > 1) {
-                    // Inject class flex container agar di mobile layoutnya dipaksa sejajar horizontal
-                    p.classList.add('kf-flex-container');
-
-                    let totalPxWidth = 0;
-                    imgs.forEach(img => {
-                        const style = img.getAttribute('style') || '';
-                        const match = style.match(/width:\s*(\d+(?:\.\d+)?)px/);
-                        if (match) totalPxWidth += parseFloat(match[1]);
-                    });
-
-                    imgs.forEach(img => {
-                        const style = img.getAttribute('style') || '';
-                        const match = style.match(/width:\s*(\d+(?:\.\d+)?)px/);
-                        
-                        // Buang properti float bawaan Quill yang bikin teks tabrakan acak
-                        let newStyle = style.replace(/float:\s*(left|right);?/g, '');
-
-                        if (match) {
-                            const pxWidth = parseFloat(match[1]);
-                            // Konversi ke persentase flex-basis dampingan
-                            const pct = (pxWidth / (totalPxWidth || EDITOR_BASE_WIDTH)) * 100;
-                            newStyle = newStyle.replace(/width:\s*\d+(?:\.\d+)?px/, `width: ${pct.toFixed(2)}%`);
-                        } else if (!style.includes('width')) {
-                            newStyle += `; width: ${(100 / imgs.length).toFixed(2)}%;`;
-                        }
-                        img.setAttribute('style', newStyle);
-                    });
-                } else if (imgs.length === 1) {
-                    // Kasus gambar tunggal, konversi px ke % biasa biar ga luber dari layar hp
-                    const img = imgs[0];
+            // Di desktop, kita konversi lebar px ke % secara proporsional agar aman di layar monitor mana saja tanpa merusak koordinat geser
+            if (!isMobile) {
+                container.querySelectorAll('img').forEach(img => {
                     const style = img.getAttribute('style') || '';
                     const match = style.match(/width:\s*(\d+(?:\.\d+)?)px/);
-
                     if (match) {
                         const pxWidth = parseFloat(match[1]);
-                        const pct = Math.min((pxWidth / EDITOR_BASE_WIDTH) * 100, 100);
-                        const newStyle = style.replace(/width:\s*\d+(?:\.\d+)?px/, `width: ${pct.toFixed(2)}%`);
-                        img.setAttribute('style', newStyle);
+                        const pct = (pxWidth / EDITOR_BASE_WIDTH) * 100;
+                        img.style.width = `${pct.toFixed(2)}%`;
+                        img.style.height = 'auto';
                     }
-                }
-            });
+                });
+            }
         }
 
         function renderFreeformContent(project) {
