@@ -43,13 +43,12 @@ footer {
 /* Mengatur container agar fleksibel dan bisa di-scroll */
 #more-works-gallery {
     display: flex;
-    flex-direction: row;      /* Selalu berjejer ke samping */
-    overflow-x: auto;         /* Mengaktifkan scroll horizontal */
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;    /* Sembunyikan scrollbar di Firefox */
-    gap: 1.5rem;              /* Jarak antar kartu */
-    padding-bottom: 1rem;     /* Ruang agar scrollbar tidak menempel */
+    flex-wrap: nowrap;         /* Pastikan SEMUA item tetap dalam 1 baris */
+    overflow-x: auto;          /* Aktifkan scroll horizontal */
+    gap: 20px;                 /* Jarak antar kartu */
+    padding-bottom: 20px;      /* Ruang untuk scrollbar agar tidak menempel */
+    -webkit-overflow-scrolling: touch; /* Biar smooth di iPhone */
+    scrollbar-width: none;     /* Sembunyikan scrollbar di Firefox */
 }
 
 /* Sembunyikan scrollbar di Chrome/Safari */
@@ -57,16 +56,16 @@ footer {
     display: none;
 }
 
-/* Mengatur ukuran kartu agar konsisten */
-#more-works-gallery > a {
-    flex: 0 0 auto;           /* Mencegah kartu menyusut (gepeng) */
-    width: 280px;             /* Lebar kartu di mobile */
+/* Pengaturan lebar kartu */
+.work-card {
+    flex: 0 0 280px;           /* Lebar tetap di mobile */
+    max-width: 280px;
 }
 
-/* Opsional: Ubah lebar kartu di desktop agar lebih luas jika perlu */
 @media (min-width: 768px) {
-    #more-works-gallery > a {
-        width: 350px;         /* Lebar kartu di desktop */
+    .work-card {
+        flex: 0 0 350px;       /* Lebar lebih luas di desktop */
+        max-width: 350px;
     }
 }
 #p-content {
@@ -335,15 +334,16 @@ footer {
             return;
         }
 
-        gallery.innerHTML = otherProjects.map(p => `
-            <a href="?id=${p.slug}" class="snap-start block group">
-                <div class="aspect-[4/3] w-[280px] sm:w-[320px] bg-slate-100 rounded-2xl overflow-hidden mb-4">
-                    <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                </div>
-                <p class="text-[9px] font-black uppercase tracking-widest text-kancah-blue mb-1">${p.category}</p>
-                <h3 class="text-md font-bold italic uppercase tracking-tighter text-kancah-dark group-hover:text-kancah-blue transition-colors">${p.title}</h3>
-            </a>
-        `).join('');
+        // Di dalam fungsi loadMoreWorks, perbarui bagian .map
+gallery.innerHTML = otherProjects.map(p => `
+    <a href="?id=${p.slug}" class="work-card group snap-start">
+        <div class="aspect-[4/3] w-full bg-slate-100 rounded-2xl overflow-hidden mb-4">
+            <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+        </div>
+        <p class="text-[9px] font-black uppercase tracking-widest text-kancah-blue mb-1">${p.category}</p>
+        <h3 class="text-md font-bold italic uppercase tracking-tighter text-kancah-dark group-hover:text-kancah-blue transition-colors">${p.title}</h3>
+    </a>
+`).join('');
     }
 
     function renderTags(project) {
