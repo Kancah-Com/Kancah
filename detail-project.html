@@ -28,32 +28,41 @@
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- ARTIKEL CONTENT CONTAINER (AUTO-SHRINK MODE) --- */
-        #p-content { 
-            box-sizing: border-box; 
-            width: 100%; 
-            position: relative; 
-            display: block;
-            overflow: visible !important;
-        }
-        #p-content * { box-sizing: border-box; }
+       /* --- ARTIKEL CONTENT CONTAINER (PERBAIKAN TOTAL LAYOUT SINKRON) --- */
+#p-content { 
+    box-sizing: border-box; 
+    width: 100%; 
+    position: relative; 
+    display: flow-root; /* Memaksa browser menghitung tinggi asli seluruh elemen di dalamnya secara natural */
+    overflow: visible !important;
+    min-height: 100px;
+}
+#p-content * { box-sizing: border-box; }
 
-        /* Amankan skala gambar agar mengikuti persentase scaling admin tanpa merusak aspek rasio */
-        #p-content img {
-            max-width: 100% !important;
-            height: auto !important;
-        }
+/* Jaga agar gambar hasil drag ukurannya konsisten sesuai persentase admin */
+#p-content img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: inline-block;
+}
 
-        /* GUNAKAN DISPLAY GRID PADA PARAGRAF: Memaksa area kosong Quill auto-collapse / mengecil ke 0 jika tidak ada visual benda di situ */
-        #p-content p { 
-            position: relative; 
-            margin-bottom: 1.25rem; 
-            line-height: 1.75; 
-            color: #4b5563; 
-            font-weight: 300;
-            display: grid;
-            grid-template-columns: 100%;
-            height: auto !important; /* Paksa matikan inline height sisa pembesaran gambar dari admin */
-        }
+/* Mengembalikan paragraf ke alur normal dokumen, sekaligus membersihkan tumpukan */
+#p-content p { 
+    position: relative; 
+    margin-bottom: 1.25rem; 
+    line-height: 1.75; 
+    color: #4b5563; 
+    font-weight: 300;
+    clear: both; /* Mencegah gambar melayang menabrak baris teks */
+    height: auto !important; 
+}
+
+/* Pastikan elemen penutup membersihkan semua float/absolute sebelum tombol navigasi & footer */
+#p-content::after {
+    content: "";
+    display: table;
+    clear: both;
+}
         
         #p-content h1, #p-content h2, #p-content h3 { font-weight: 700; letter-spacing: -0.02em; color: #111111; margin: 2rem 0 1rem; }
         #p-content > *:first-child { margin-top: 0 !important; }
@@ -232,61 +241,60 @@
         }
 
         /* --- FUNGSI DETEKSI MATEMATIKA ELEMENT SEJATI --- */
-        function normalizeContentImageWidths() {
-            const container = document.getElementById('p-content');
-            if (!container) return;
+        /* --- DETEKTIF PIXEL AKURAT: MENGHITUNG BATAS VISUAL ELEMEN TERBAWAH --- */
+function normalizeContentImageWidths() {
+    const container = document.getElementById('p-content');
+    if (!container) return;
 
-            container.style.height = 'auto';
-            const allImages = container.getElementsByTagName('img');
-            let absoluteMaxBottom = 0;
+    // Kembalikan ke otomatis terlebih dahulu agar elemen tidak terkunci saat window di-resize
+    container.style.height = 'auto';
+    container.style.paddingBottom = '0px';
 
-            for (let i = 0; i < allImages.length; i++) {
-                const img = allImages[i];
-                const parentParagraph = img.closest('p') || img.parentElement;
-                
-                // Gunakan offsetTop murni paragraf pembungkus asli
-                const parentTop = parentParagraph ? parentParagraph.offsetTop : 0;
-                const inlineTop = parseFloat(img.style.top) || 0;
-                
-                let transformY = 0;
-                const transformStr = img.style.transform || '';
-                const match = transformStr.match(/translate\(\s*(-?[\d.]+)%\s*,\s*(-?[\d.]+)%\s*\)/);
-                
-                if (match) {
-                    const percentY = parseFloat(match[2]);
-                    transformY = (percentY / 100) * (img.offsetHeight || 0);
-                }
+    // Ambil semua element anak di dalam artikel (img, p, h1, h2, div, dll)
+    const allElements = container.getElementsByTagName('*');
+    let maxVisualBottom = 0;
 
-                // Kalkulasi letak sejati benda di layar
-                const realImgBottom = parentTop + inlineTop + transformY + (img.offsetHeight || 0);
-                
-                if (realImgBottom > absoluteMaxBottom) {
-                    absoluteMaxBottom = realImgBottom;
-                }
-            }
+    // Dapatkan koordinat batas atas kontainer artikel sebagai benchmark (titik 0)
+    const containerTop = container.getBoundingClientRect().top + window.scrollY;
 
-            // FORCE AUTO-SHRINK: Pangkas habis semua ruang kosong sisa resize Quill admin!
-            if (absoluteMaxBottom > 0) {
-                container.style.height = `${absoluteMaxBottom + 20}px`;
-            } else {
-                container.style.height = 'auto';
-            }
+    for (let i = 0; i < allElements.length; i++) {
+        const el = allElements[i];
+        
+        // Lewati elemen yang tidak memiliki dimensi visual
+        if (el.offsetHeight === 0 && el.offsetWidth === 0) continue;
 
-            if (typeof syncNavSpacer === 'function') syncNavSpacer();
+        // Hitung posisi absolut ujung bawah elemen saat ini di dalam dokumen
+        const elBottom = el.getBoundingClientRect().bottom + window.scrollY;
+        const relativeBottom = elBottom - containerTop;
+
+        if (relativeBottom > maxVisualBottom) {
+            maxVisualBottom = relativeBottom;
         }
+    }
 
-        function renderFreeformContent(project) {
-            const container = document.getElementById('p-content');
-            if (project.content_html && project.content_html.trim() !== '') {
-                container.innerHTML = project.content_html;
-                
-                setTimeout(normalizeContentImageWidths, 150);
-                const imgs = container.getElementsByTagName('img');
-                for (let i = 0; i < imgs.length; i++) {
-                    imgs[i].addEventListener('load', normalizeContentImageWidths);
-                }
-            }
+    // Jika ditemukan koordinat elemen paling bawah, kunci tinggi artikel di titik tersebut + beri jeda aman 40px
+    if (maxVisualBottom > 0) {
+        container.style.height = `${maxVisualBottom + 40}px`;
+    }
+
+    if (typeof syncNavSpacer === 'function') syncNavSpacer();
+}
+
+       function renderFreeformContent(project) {
+    const container = document.getElementById('p-content');
+    if (project.content_html && project.content_html.trim() !== '') {
+        container.innerHTML = project.content_html;
+        
+        // Pemicu kalkulasi instan setelah DOM terisi
+        setTimeout(normalizeContentImageWidths, 200);
+
+        // Pantau seluruh gambar di dalam artikel, jalankan kalkulasi ulang setiap kali gambar selesai loading
+        const imgs = container.getElementsByTagName('img');
+        for (let i = 0; i < imgs.length; i++) {
+            imgs[i].addEventListener('load', normalizeContentImageWidths);
         }
+    }
+}
 
         async function loadAdjacentProjects(currentSlug) {
             const { data: list } = await kancah.from('projects').select('slug, title').order('id', { ascending: true });
