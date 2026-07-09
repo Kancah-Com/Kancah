@@ -352,16 +352,16 @@
             });
         }
 
-       function normalizeContentImageWidths() {
+      function normalizeContentImageWidths() {
     const container = document.getElementById('p-content');
     if (!container) return;
     const EDITOR_BASE_WIDTH = 1100;
 
-    // 1. Bersihkan sisa styling height & overflow agar space putih bawah lenyap
+    // 1. Matikan sisa height & overflow agar celah putih bawah lenyap total
     container.style.height = 'auto';
     container.style.overflow = 'visible';
 
-    // 2. Normalisasi lebar gambar dari px ke % awal
+    // 2. Normalisasi konversi awal px ke % (hanya jika admin menginput format px)
     container.querySelectorAll('img').forEach(img => {
         if (/px\s*$/.test(img.style.width || '')) {
             const pxWidth = parseFloat(img.style.width);
@@ -370,50 +370,48 @@
         }
     });
 
-    // 3. Paksa Paragraf Kolase Tetap Berjejer Sama Rata di Desktop & Mobile
+    // 3. Kembalikan Sifat Layout Sesuai Porsi Lebar di Admin
     container.querySelectorAll('p').forEach(p => {
         const imgs = p.querySelectorAll('img');
         
         if (imgs.length > 0) {
-            let hasSmallImage = false;
+            // Ubah paragraf menjadi flexbox multi-baris agar gambar otomatis turun/berjejer sesuai porsi lebar aslinya
+            p.style.display = 'flex';
+            p.style.flexDirection = 'row';
+            p.style.flexWrap = 'wrap'; // Izinkan gambar turun jika total lebar melebihi 100%
+            p.style.gap = '12px'; // Jarak konstan margin antar gambar di desktop & mobile
+            p.style.justifyContent = 'center'; // Buat kolase rata tengah secara estetik
+            p.style.alignItems = 'start';
+            p.style.width = '100%';
+            p.style.marginBottom = '1.5rem';
+            p.style.clear = 'both';
+
             imgs.forEach(img => {
-                const w = img.style.width;
-                if (w && parseFloat(w) < 90) {
-                    hasSmallImage = true;
-                }
-            });
+                // Hancurkan sisa koordinat absolute drag admin yang merusak presisi layout
+                img.style.position = 'relative';
+                img.style.transform = 'none';
+                img.style.left = '0';
+                img.style.top = '0';
+                img.style.margin = '0';
 
-            // Jika baris paragraf terdeteksi sebagai kolase (gambar kecil atau gambar > 1)
-            if (hasSmallImage || imgs.length > 1) {
-                // Paksa layout jadi baris horizontal yang flexibel di semua device
-                p.style.display = 'flex';
-                p.style.flexDirection = 'row'; 
-                p.style.flexWrap = 'nowrap'; // Jangan biarkan gambar jeblos turun ke bawah di mobile
-                p.style.gap = '12px'; // Jarak margin antar gambar (sama rata di mobile & desktop)
-                p.style.justifyContent = 'center';
-                p.style.alignItems = 'stretch'; // Biar tinggi gambar otomatis sejajar rata air
-                p.style.width = '100%';
-                p.style.marginBottom = '1.5rem';
-                p.style.clear = 'both';
-
-                // Hitung pembagian lebar otomatis berdasarkan jumlah gambar di baris itu
-                // Misal: 3 gambar = masing-masing dapet ~33% minus gap marginnya
-                const totalGapPixels = 12 * (imgs.length - 1);
+                // AMBIL NILAI LEBAR ASLI DARI ADMIN
+                let currentWidth = img.style.width;
                 
-                imgs.forEach(img => {
-                    // Hancurkan sisa koordinat absolute drag admin yang merusak presisi
-                    img.style.position = 'relative';
-                    img.style.transform = 'none';
-                    img.style.left = '0';
-                    img.style.top = '0';
-                    img.style.margin = '0';
+                if (currentWidth && currentWidth.includes('%')) {
+                    const savedPercent = parseFloat(currentWidth);
                     
-                    // Bagi rata ukuran gambar secara matematis agar presisi di desktop maupun mobile
-                    img.style.width = `calc(${100 / imgs.length}% - ${(totalGapPixels / imgs.length)}px)`;
-                    img.style.flexShrink = '1'; // Ijinkan gambar mengecil secara proporsional di mobile
-                    img.style.objectFit = 'cover'; // Gambar tidak akan gepeng meski layarnya menciut
-                });
-            }
+                    // Supaya tidak tabrakan dengan gap 12px, kita kurangi sedikit porsinya secara matematis
+                    // Ini menjaga agar settingan lebar dari admin (misal 30% atau 100%) tetap akurat dan sinkron
+                    img.style.width = `calc(${savedPercent}% - 12px)`;
+                } else {
+                    // Jika gambar baru belum disetel ukurannya, penuhi baris secara default
+                    img.style.width = '100%';
+                }
+
+                img.style.flexShrink = '1';
+                img.style.flexGrow = '0';
+                img.style.objectFit = 'contain'; // Mencegah gambar terdistorsi atau gepeng
+            });
         }
     });
 }
