@@ -28,27 +28,30 @@
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- ARTIKEL CONTENT --- */
+        /* CATATAN: Container ini SENGAJA gak dikasih height manual pake JS lagi.
+           Dulu bug-nya karena tinggi container di-hardcode via pixel (getBoundingClientRect),
+           jadi kalo perhitungannya meleset dikit (gambar telat kelar loading, font telat render, dll),
+           whitespace-nya cuma pindah tempat doang (ke bawah gambar, ke bawah footer, dst).
+           Sekarang tingginya auto FULL ngikutin isi asli, dan yang kita bersihin cuma
+           elemen kosong sisa Quill (p/div kosong) dengan display:none. Jauh lebih stabil. */
         #p-content { 
             box-sizing: border-box; 
             width: 100%; 
             position: relative; 
             display: block; 
-            overflow: visible;
-            /* GAK ADA LAGI 'height: auto !important' DISINI, BIAR JS BISA BEKERJA! */
         }
         #p-content * { box-sizing: border-box; }
 
-        /* PAKSA BUNGKUSAN KOSONG SISA QUILL MENGECIL */
         #p-content p, 
         #p-content div, 
         #p-content span {
-            height: auto !important; 
             min-height: 0 !important;
         }
 
         #p-content img {
             height: auto !important; 
             max-width: 100% !important;
+            display: block;
         }
 
         #p-content p { position: relative; margin-bottom: 1.25rem; line-height: 1.75; color: #4b5563; font-weight: 300; }
@@ -224,74 +227,46 @@
             wrap.innerHTML = html;
         }
 
-        /* --- SCRIPT PEMBUNUH WHITE SPACE MUTLAK --- */
+        /* --- BERSIHIN PARAGRAF/DIV KOSONG SISA QUILL ---
+           Ini versi simpel & aman: cuma nyembunyiin elemen yang beneran kosong
+           (gak ada teks & gak ada gambar/iframe/video di dalemnya).
+           GAK ada lagi manual pixel-height hack, jadi tinggi #p-content
+           selalu ngikutin tinggi konten aslinya secara natural (auto).
+           Ini yang bikin whitespace gak bisa "pindah-pindah" tempat lagi. */
         function exterminateGhostSpaces() {
             const container = document.getElementById('p-content');
             if (!container) return;
 
-            // 1. Lepas tinggi kontainer sementara buat ngukur ukuran aslinya
-            container.style.height = 'auto';
-
-            // 2. Sembunyikan semua <p> atau <div> kosong sisa enter di admin
-            container.querySelectorAll('p, div').forEach(el => {
-                if (el.innerHTML.replace(/<br>|&nbsp;|\s/g, '') === '' && el.querySelectorAll('img, iframe, video').length === 0) {
+            container.querySelectorAll('p, div, span').forEach(el => {
+                const isEmpty = el.innerHTML.replace(/<br\s*\/?>|&nbsp;|\s/g, '') === '';
+                const hasMedia = el.querySelector('img, iframe, video');
+                if (isEmpty && !hasMedia) {
                     el.style.display = 'none';
+                } else if (el.style.display === 'none') {
+                    // kalo ternyata ada isinya (misal setelah gambar lazy-load), balikin lagi
+                    el.style.display = '';
                 }
             });
-
-            const containerRect = container.getBoundingClientRect();
-            let maxBottomPixel = 0;
-
-            // 3. Lacak di mana ujung visual gambar/iframe yg paling bawah (sudah include ukuran mobile)
-            container.querySelectorAll('img, iframe, video').forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.height > 0) { // Pastikan elemennya kelihatan di layar
-                    const elBottom = rect.bottom - containerRect.top;
-                    if (elBottom > maxBottomPixel) maxBottomPixel = elBottom;
-                }
-            });
-
-            // 4. Lacak juga ujung visual dari teks-teks penjelasan lo
-            container.querySelectorAll('h1, h2, h3, h4, p, blockquote, ul, ol').forEach(el => {
-                if (el.textContent.trim().length > 0) {
-                    const rect = el.getBoundingClientRect();
-                    if (rect.height > 0) {
-                        const elBottom = rect.bottom - containerRect.top;
-                        if (elBottom > maxBottomPixel) maxBottomPixel = elBottom;
-                    }
-                }
-            });
-
-            // 5. EKSEKUSI: Potong kontainer pas di bawah elemen paling bawah
-            if (maxBottomPixel > 0) {
-                container.style.height = (maxBottomPixel + 40) + 'px'; // Kasih napas 40px ke footer
-            } else {
-                container.style.height = 'auto';
-            }
-
-            if (typeof syncNavSpacer === 'function') syncNavSpacer();
         }
 
         function renderFreeformContent(project) {
             const container = document.getElementById('p-content');
             if (project.content_html && project.content_html.trim() !== '') {
                 container.innerHTML = project.content_html;
-                
-                // Triger hitungan saat gambar sudah ter-load di layar user
+
+                // Bersihin sekali pas render awal
+                exterminateGhostSpaces();
+
+                // Kalo ada gambar yang belum kelar loading, cek ulang tiap satu kelar
+                // (jaga-jaga ada <p> pembungkus gambar yang lagi keliatan kosong sementara)
                 const imgs = container.getElementsByTagName('img');
                 for (let i = 0; i < imgs.length; i++) {
                     imgs[i].addEventListener('load', exterminateGhostSpaces);
+                    imgs[i].addEventListener('error', exterminateGhostSpaces);
                 }
 
-                // Triger paksa berkali-kali di 3 detik pertama buat mastiin gak ada frame yg lolos
-                let checkCount = 0;
-                const layoutInterval = setInterval(() => {
-                    exterminateGhostSpaces();
-                    checkCount++;
-                    if (checkCount > 15) clearInterval(layoutInterval);
-                }, 200);
-
-                exterminateGhostSpaces();
+                // Safety net pas semua resource halaman kelar loading (font, dst)
+                window.addEventListener('load', exterminateGhostSpaces, { once: true });
             }
         }
 
@@ -311,8 +286,29 @@
             const heroWrap = document.getElementById('hero-image-wrap'); if (heroWrap && nav) heroWrap.style.height = (window.innerHeight - nav.offsetHeight) + 'px';
         }
 
+        /* --- JAM & SUHU DI NAVBAR (disamain kaya di halaman Contact) --- */
+        async function updateWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+                const data = await res.json();
+                if (data?.current_weather) {
+                    const t = Math.round(data.current_weather.temperature) + "°C";
+                    if (document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = t;
+                    if (document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = t;
+                }
+            } catch (e) {}
+        }
+
+        function updateClock() {
+            const n = new Date();
+            const h = String(n.getHours()).padStart(2, '0'), m = String(n.getMinutes()).padStart(2, '0'), s = String(n.getSeconds()).padStart(2, '0');
+            if (document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
+            if (document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             getProjectDetail(); syncNavSpacer();
+            updateWeather(); updateClock(); setInterval(updateClock, 1000);
             // Setiap layarnya diputar/di-resize, ukur ulang!
             window.addEventListener('resize', () => {
                 syncNavSpacer();
