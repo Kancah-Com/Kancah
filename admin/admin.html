@@ -801,31 +801,34 @@ window.cleanEmptyParagraphs = function () {
     tmp.innerHTML = quill.root.innerHTML;
     let removed = 0;
 
-    // Ambil semua elemen anak langsung
-    const children = Array.from(tmp.children);
+    // Ambil seluruh elemen paragraf (<p>) di dalam editor secara menyeluruh, bukan hanya direct children
+    const paragraphs = Array.from(tmp.querySelectorAll('p'));
     
-    children.forEach((el, index) => {
+    paragraphs.forEach((el) => {
+        // Cek teks asli dan bersihkan dari karakter whitespace tak terlihat (Unicode / ZWSP)
+        const textContent = el.textContent.replace(/[\u200B-\u200D\uFEFF]/g, '').trim();
         const rawInner = el.innerHTML.trim();
-        const isQuillEmpty = rawInner === '<br>' || rawInner === '' || rawInner === '&nbsp;';
-        const hasMedia = !!el.querySelector('img, iframe, video');
+        
+        // Kondisi jika paragraf dianggap kosong secara visual
+        const isQuillEmpty = rawInner === '<br>' || rawInner === '' || rawInner === '&nbsp;' || textContent === '';
+        const hasMedia = !!el.querySelector('img, iframe, video, audio');
 
-        // MODIFIKASI: Hanya hapus baris kosong jika berada di paling bawah editor 
-        // atau jika terjadi penumpukan baris kosong berturut-turut (lebih dari 2 Enter)
         if (isQuillEmpty && !hasMedia) {
-            const nextEl = children[index + 1];
-            const nextInner = nextEl ? nextEl.innerHTML.trim() : '';
-            
-            // Hapus jika ada baris kosong berturut-turut ATAU baris kosong di akhir konten
-            if (nextInner === '<br>' || index === children.length - 1) {
-                el.remove();
-                removed++;
-            }
+            // Hapus paksa elemen paragraf kosong ini agar tidak meninggalkan whitespace/space hantu
+            el.remove();
+            removed++;
         }
     });
 
     if (removed > 0) {
-        if (tmp.children.length === 0) tmp.innerHTML = '<p><br></p>';
+        // Pastikan editor tidak benar-benar kosong total agar Quill tidak error
+        if (tmp.children.length === 0 || tmp.innerHTML.trim() === '') {
+            tmp.innerHTML = '<p><br></p>';
+        }
         quill.root.innerHTML = tmp.innerHTML;
+        showToast(`${removed} baris kosong hantu berhasil dibersihkan!`);
+    } else {
+        showToast('Tidak ditemukan baris kosong hantu.');
     }
     return removed;
 };
