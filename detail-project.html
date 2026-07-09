@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth h-auto m-0 p-0 overflow-x-hidden">
+<html lang="id" class="h-full m-0 p-0 overflow-x-hidden scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,31 +21,48 @@
         }
     </script>
     <style>
-        /* --- KUNCI ANTI RUANG PUTIH HANTU DI BAWAH FOOTER --- */
-        html, body {
-            height: auto !important;
-            min-height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            overflow-x: hidden !important;
+        /* --- BLOCKING TOTAL WHITE SPACE HANTU DI BAWAH FOOTER --- */
+        html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body { 
+            font-family: 'Ubuntu', sans-serif;
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+            background-color: white;
         }
-        main { flex: 1 0 auto; }
-        footer { flex-shrink: 0; width: 100% !important; margin: 0 !important; }
+        
+        /* Memaksa elemen utama mengambil seluruh ruang atas, dan mendorong nav/footer ke bawah */
+        main { 
+            flex: 1 0 auto; 
+            display: block;
+            width: 100%;
+        }
+        
+        /* Menghilangkan sisa gap render di bawah footer */
+        footer { 
+            flex-shrink: 0; 
+            width: 100%; 
+            margin-top: auto !important; 
+        }
 
-        body { font-family: 'Ubuntu', sans-serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- FREEFORM PROJECT CONTENT (Quill output) --- */
+        /* --- QUILL FREEFORM CONTENT --- */
         #p-content { 
             box-sizing: border-box; 
             width: 100%; 
             position: relative; 
-            overflow: hidden !important;
+            display: block;
             height: auto !important;
         }
         #p-content * { box-sizing: border-box; }
@@ -99,7 +116,7 @@
         }
     </style>
 </head>
-<body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white">
+<body class="text-kancah-dark selection:bg-kancah-blue selection:text-white">
 
     <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
         <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
@@ -182,7 +199,7 @@
                         </h1>
                         <p id="p-description" class="hidden text-sm lg:text-lg text-gray-500 leading-relaxed font-light max-w-2xl"></p>
                         
-                        <!-- LIVE PREVIEW MODULE -->
+                        <!-- LIVE PREVIEW BUTTON CONTAINER -->
                         <div id="live-preview-btn-container" class="hidden mt-6">
                             <button onclick="toggleHtmlLivePreview()" id="btn-toggle-preview" class="inline-flex items-center justify-center px-6 py-3 bg-kancah-blue text-white rounded-full font-bold uppercase tracking-[0.15em] text-[11px] hover:bg-kancah-dark transition-all shadow-md gap-2">
                                 <i class="fa-solid fa-laptop-code"></i> <span>Live Preview Website</span>
@@ -197,7 +214,7 @@
             </div>
         </section>
 
-        <!-- LIVE PREVIEW BOX -->
+        <!-- PREVIEW WEB MODULE -->
         <section id="html-preview-section" class="max-w-[1100px] mx-auto px-4 sm:px-6 hidden">
             <div class="flex items-center justify-between border-b border-gray-100 pb-3 mt-6">
                 <div class="flex items-center gap-2 text-xs text-gray-400 font-bold uppercase tracking-widest">
@@ -407,7 +424,7 @@
             });
         }
 
-        /* --- FUNGSI RESET TINGGI TOTAL: AMANKAN AREA TEPAT DI BAWAH GAMBAR TERLUAR --- */
+        /* --- FUNGSI ADAPTIF LAYOUT GAMBAL: AMAN DARI SPACE PUTIH --- */
         function normalizeContentImageWidths() {
             const container = document.getElementById('p-content');
             if (!container) return;
@@ -417,7 +434,6 @@
 
             if (isMobile) {
                 container.style.height = 'auto';
-                container.style.display = 'block';
                 container.querySelectorAll('p').forEach(p => {
                     p.style.position = 'static'; p.style.display = 'block'; p.style.clear = 'both'; p.style.height = 'auto';
                 });
@@ -426,7 +442,6 @@
                     img.style.width = '100%'; img.style.height = 'auto'; img.style.display = 'block'; img.style.margin = '1rem auto';
                 });
             } else {
-                container.style.display = 'block';
                 let maxVisualBottom = 0;
 
                 container.querySelectorAll('p').forEach(p => {
@@ -443,7 +458,6 @@
                         img.style.height = 'auto';
                     }
                     
-                    // Gunakan offsetTop + offsetHeight murni elemen untuk kalkulasi batas bawah sejati
                     const imgBottom = img.offsetTop + img.offsetHeight;
                     if (imgBottom > maxVisualBottom) {
                         maxVisualBottom = imgBottom;
@@ -451,7 +465,7 @@
                 });
 
                 if (maxVisualBottom > 0) {
-                    container.style.height = (maxVisualBottom + 30) + 'px';
+                    container.style.height = (maxVisualBottom + 20) + 'px';
                 } else {
                     container.style.height = 'auto';
                 }
@@ -466,10 +480,8 @@
             if (project.content_html && project.content_html.trim() !== '') {
                 container.innerHTML = project.content_html;
                 
-                // Daftarkan pemicu normalisasi begitu semua resource internal kelar dibaca browser
                 setTimeout(normalizeContentImageWidths, 100);
-                const allImgs = container.querySelectorAll('img');
-                allImgs.forEach(img => {
+                container.querySelectorAll('img').forEach(img => {
                     img.addEventListener('load', normalizeContentImageWidths);
                 });
                 
