@@ -39,17 +39,24 @@ footer {
     flex-shrink: 0;
 }
 /* Ganti CSS untuk #more-works-gallery di style Anda */
+/* Container galeri agar bisa digeser dan tidak scrollbar */
 #more-works-gallery {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr)); /* 1 kolom di HP */
-    gap: 2rem;
-    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    gap: 1.5rem; /* Jarak antar kartu */
 }
 
-@media (min-width: 640px) {
-    #more-works-gallery {
-        grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 kolom di desktop */
-    }
+#more-works-gallery::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+/* Biar kartu tidak menyusut saat ditarik */
+#more-works-gallery > a {
+    flex: 0 0 auto; /* Penting: agar ukuran kartu tetap, tidak gepeng */
+    width: 280px;  /* Lebar kartu */
 }
 #p-content {
     /* Mencegah overflow */
@@ -193,15 +200,13 @@ footer {
         </div>
 
 <!-- More Projects Section -->
-<section class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-12 mb-16 border-t border-gray-100 pt-10">
-    <div class="flex items-center justify-between mb-8"> <div>
-            <p class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.3em] mb-1">Continue Exploring</p>
-            <h2 class="text-xl font-black uppercase italic tracking-tighter text-kancah-dark">More Works</h2>
-        </div>
-        <a href="works" class="text-[10px] font-black uppercase tracking-[0.2em] hover:text-kancah-blue transition-all underline underline-offset-4">See All</a>
+<section id="more-works-section" class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-16 mb-20 border-t border-gray-100 pt-10">
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-lg font-black uppercase italic tracking-tighter text-kancah-dark">More Works</h2>
+        <a href="works" class="text-[9px] font-black uppercase tracking-[0.2em] hover:text-kancah-blue transition-all underline underline-offset-4">See All</a>
     </div>
 
-    <div id="more-works-gallery" class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div id="more-works-gallery">
         </div>
 </section>
     </main>
@@ -305,22 +310,31 @@ footer {
 async function loadMoreWorks(currentSlug) {
     const gallery = document.getElementById('more-works-gallery');
     
-    // Ambil 7 proyek terbaru (jika yang dibuka adalah salah satunya, kita masih punya cadangan)
+    // Ambil data (tambah limit sesuai keinginan, misalnya 10)
     const { data: list } = await kancah.from('projects')
         .select('slug, title, image_url, category')
         .order('created_at', { ascending: false })
-        .limit(7); 
+        .limit(10); 
     
     if (!list) return;
 
-    // Filter: Buang project yang slug-nya SAMA dengan slug yang sedang dibuka
-    const otherProjects = list.filter(p => p.slug !== currentSlug).slice(0, 3);
+    const otherProjects = list.filter(p => p.slug !== currentSlug);
 
-    // Jika setelah difilter ternyata kosong (misal cuma ada 1 project di db), jangan tampilkan apa-apa
     if (otherProjects.length === 0) {
-        document.querySelector('.max-w-\\[1100px\\].mx-auto.px-4.sm\\:px-6.mt-24.mb-32')?.classList.add('hidden');
+        document.getElementById('more-works-section').classList.add('hidden');
         return;
     }
+
+    gallery.innerHTML = otherProjects.map(p => `
+        <a href="?id=${p.slug}" class="snap-start group">
+            <div class="aspect-[4/3] w-[280px] sm:w-[320px] bg-slate-100 rounded-2xl overflow-hidden mb-4">
+                <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <p class="text-[9px] font-black uppercase tracking-widest text-kancah-blue mb-1">${p.category}</p>
+            <h3 class="text-md font-bold italic uppercase tracking-tighter text-kancah-dark group-hover:text-kancah-blue transition-colors">${p.title}</h3>
+        </a>
+    `).join('');
+}
 
     gallery.innerHTML = otherProjects.map(p => `
         <a href="?id=${p.slug}" class="block group">
