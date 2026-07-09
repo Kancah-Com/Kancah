@@ -796,6 +796,20 @@
             // gambar yang dihapus manual (backspace) sebelum fix ini ada, atau
             // dari Enter kosong berkali-kali. Aman: gak akan nyentuh paragraf
             // yang masih ada teks, gambar, atau video di dalamnya.
+            window.stripImagePositionsAuto = function () {
+    const editorRoot = document.querySelector('#p-content-editor .ql-editor');
+    let fixed = 0;
+    editorRoot.querySelectorAll('img').forEach(img => {
+        if (img.style.transform || img.style.left || img.style.top) {
+            img.style.transform = '';
+            img.style.left = '';
+            img.style.top = '';
+            img.style.position = '';
+            fixed++;
+        }
+    });
+    return fixed;
+};
 window.cleanEmptyParagraphs = function () {
     const tmp = document.createElement('div');
     tmp.innerHTML = quill.root.innerHTML;
