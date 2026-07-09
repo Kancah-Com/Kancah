@@ -305,14 +305,23 @@ footer {
         }
 async function loadMoreWorks(currentSlug) {
     const gallery = document.getElementById('more-works-gallery');
+    
+    // Ambil 7 proyek terbaru (jika yang dibuka adalah salah satunya, kita masih punya cadangan)
     const { data: list } = await kancah.from('projects')
         .select('slug, title, image_url, category')
         .order('created_at', { ascending: false })
-        .limit(3); // Cukup ambil 3 agar rapi (3 kolom desktop)
+        .limit(7); 
     
     if (!list) return;
 
-    const otherProjects = list.filter(p => p.slug !== currentSlug);
+    // Filter: Buang project yang slug-nya SAMA dengan slug yang sedang dibuka
+    const otherProjects = list.filter(p => p.slug !== currentSlug).slice(0, 3);
+
+    // Jika setelah difilter ternyata kosong (misal cuma ada 1 project di db), jangan tampilkan apa-apa
+    if (otherProjects.length === 0) {
+        document.querySelector('.max-w-\\[1100px\\].mx-auto.px-4.sm\\:px-6.mt-24.mb-32')?.classList.add('hidden');
+        return;
+    }
 
     gallery.innerHTML = otherProjects.map(p => `
         <a href="?id=${p.slug}" class="block group">
