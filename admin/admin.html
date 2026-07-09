@@ -796,27 +796,36 @@
             // gambar yang dihapus manual (backspace) sebelum fix ini ada, atau
             // dari Enter kosong berkali-kali. Aman: gak akan nyentuh paragraf
             // yang masih ada teks, gambar, atau video di dalamnya.
-            // ===================================================================
 window.cleanEmptyParagraphs = function () {
     const tmp = document.createElement('div');
     tmp.innerHTML = quill.root.innerHTML;
     let removed = 0;
 
-    Array.from(tmp.children).forEach(el => {
-        // Quill pakai <p><br></p> untuk baris kosong
+    // Ambil semua elemen anak langsung
+    const children = Array.from(tmp.children);
+    
+    children.forEach((el, index) => {
         const rawInner = el.innerHTML.trim();
         const isQuillEmpty = rawInner === '<br>' || rawInner === '' || rawInner === '&nbsp;';
         const hasMedia = !!el.querySelector('img, iframe, video');
-        if (isQuillEmpty && !hasMedia) { el.remove(); removed++; }
+
+        // MODIFIKASI: Hanya hapus baris kosong jika berada di paling bawah editor 
+        // atau jika terjadi penumpukan baris kosong berturut-turut (lebih dari 2 Enter)
+        if (isQuillEmpty && !hasMedia) {
+            const nextEl = children[index + 1];
+            const nextInner = nextEl ? nextEl.innerHTML.trim() : '';
+            
+            // Hapus jika ada baris kosong berturut-turut ATAU baris kosong di akhir konten
+            if (nextInner === '<br>' || index === children.length - 1) {
+                el.remove();
+                removed++;
+            }
+        }
     });
 
     if (removed > 0) {
-        // Quill butuh minimal 1 block element
         if (tmp.children.length === 0) tmp.innerHTML = '<p><br></p>';
         quill.root.innerHTML = tmp.innerHTML;
-        showToast(`${removed} baris kosong dibersihin. Klik UPDATE WORK NOW buat nyimpen.`);
-    } else {
-        showToast('Gak ada baris kosong yang ketemu.');
     }
     return removed;
 };
