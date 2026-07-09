@@ -38,7 +38,19 @@ main {
 footer {
     flex-shrink: 0;
 }
+/* Ganti CSS untuk #more-works-gallery di style Anda */
+#more-works-gallery {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr)); /* 1 kolom di HP */
+    gap: 2rem;
+    width: 100%;
+}
 
+@media (min-width: 640px) {
+    #more-works-gallery {
+        grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 kolom di desktop */
+    }
+}
 #p-content {
     /* Mencegah overflow */
     overflow: hidden;
@@ -181,16 +193,17 @@ footer {
         </div>
 
 <!-- More Projects Section -->
-<section class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-24 mb-32">
-    <div class="flex items-center justify-between mb-10">
-        <h2 class="text-xl font-black uppercase italic tracking-tighter text-kancah-dark">More Works</h2>
-        <a href="works" class="text-[10px] font-black uppercase tracking-[0.2em] hover:text-kancah-blue transition-all underline underline-offset-4">See All</a>
+<section class="max-w-[1100px] mx-auto px-4 sm:px-6 mt-24 mb-32 border-t border-gray-100 pt-16">
+    <div class="flex items-center justify-between mb-12">
+        <div>
+            <p class="text-[9px] font-black text-kancah-blue uppercase tracking-[0.3em] mb-2">Continue Exploring</p>
+            <h2 class="text-3xl font-black uppercase italic tracking-tighter text-kancah-dark">More Works</h2>
+        </div>
+        <a href="works" class="text-[10px] font-black uppercase tracking-[0.2em] hover:text-kancah-blue transition-all underline underline-offset-4">See All Projects</a>
     </div>
 
-    <!-- Gallery Container (Bisa di-scroll horizontal) -->
-    <div id="more-works-gallery" class="flex gap-6 overflow-x-auto pb-8 no-scrollbar snap-x">
-        <!-- Project Cards akan di-generate oleh JS -->
-    </div>
+    <div id="more-works-gallery">
+        </div>
 </section>
     </main>
 
@@ -292,19 +305,17 @@ footer {
         }
 async function loadMoreWorks(currentSlug) {
     const gallery = document.getElementById('more-works-gallery');
-    // Pastikan variabel 'kancah' sudah terdefinisi di atasnya
     const { data: list } = await kancah.from('projects')
         .select('slug, title, image_url, category')
         .order('created_at', { ascending: false })
-        .limit(6);
+        .limit(3); // Cukup ambil 3 agar rapi (3 kolom desktop)
     
     if (!list) return;
 
-    // Filter agar project saat ini tidak muncul
     const otherProjects = list.filter(p => p.slug !== currentSlug);
 
     gallery.innerHTML = otherProjects.map(p => `
-        <a href="?id=${p.slug}" class="snap-start flex-none w-[280px] sm:w-[350px] group">
+        <a href="?id=${p.slug}" class="block group">
             <div class="aspect-[4/3] w-full bg-slate-100 rounded-2xl overflow-hidden mb-4">
                 <img src="${p.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
             </div>
