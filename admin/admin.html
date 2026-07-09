@@ -975,8 +975,22 @@ window.cleanEmptyParagraphs = function () {
                 // Bersihin baris/paragraf kosong otomatis sebelum disimpan, biar gak
                 // nyisa whitespace gede di halaman project (termasuk bekas gambar
                 // yang dihapus).
+                stripImagePositionsAuto();
                 cleanEmptyParagraphs();
-
+window.stripImagePositionsAuto = function () {
+    const editorRoot = document.querySelector('#p-content-editor .ql-editor');
+    let fixed = 0;
+    editorRoot.querySelectorAll('img').forEach(img => {
+        if (img.style.transform || img.style.left || img.style.top) {
+            img.style.transform = '';
+            img.style.left = '';
+            img.style.top = '';
+            img.style.position = '';
+            fixed++;
+        }
+    });
+    return fixed;
+};
                 const yearVal = document.getElementById('p-year').value; const tagsVal = document.getElementById('p-tags').value; const descVal = document.getElementById('p-description').value;
                 const payload = {
                     title: document.getElementById('p-title').value, slug: slugVal, category: categoryVal, is_highlight: isHighlightChecked,
