@@ -26,24 +26,19 @@ body {
     font-family: 'Ubuntu', sans-serif; 
     background-color: white; 
     margin: 0; 
-    padding: 0; 
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Memastikan footer selalu di bawah */
-    overflow-x: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Header, Main, Footer */
+    min-height: 100vh;
 }
 
-/* Memastikan main container tidak menciptakan spasi ekstra */
 main { 
-    flex: 1; 
     display: flex;
     flex-direction: column;
+    min-height: 0; /* Penting agar main tidak mendorong footer */
 }
 
-/* Hilangkan margin bawaan footer */
 footer {
-    margin-top: auto; /* Mendorong footer ke paling bawah */
-    flex-shrink: 0;
+    width: 100%;
 }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -67,7 +62,10 @@ footer {
     line-height: 0 !important;
     display: block !important;
 }
-
+#p-content p:empty {
+    display: none !important;
+    margin: 0 !important;
+}
 #p-content img {
     display: block !important;
     vertical-align: bottom !important; /* MENGHILANGKAN CELAH HANTU DI BAWAH GAMBAR */
@@ -384,11 +382,18 @@ footer {
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            function updateTime() {
+         function updateTime() {
     const now = new Date();
-    const timeStr = now.toLocaleTimeString('id-ID', { hour12: false });
+    // Memastikan format HH:mm:ss dengan titik dua
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    const timeStr = `${hours}:${minutes}:${seconds}`;
+    const timeStrShort = `${hours}:${minutes}`;
+
     document.getElementById('nav-time').innerText = timeStr;
-    document.getElementById('nav-time-mobile').innerText = timeStr.slice(0, 5);
+    document.getElementById('nav-time-mobile').innerText = timeStrShort;
 }
 setInterval(updateTime, 1000);
 updateTime();
