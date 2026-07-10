@@ -1223,45 +1223,42 @@ async function updateWeather() {
         });
     }
 
-    async function playIntro() {
+   async function playIntro() {
         // 1. Brackets konvergen (anticipation)
-        await sleep(150);
+        await sleep(300); // Jeda sebelum mulai
         brackets.forEach(b => b.classList.add('play'));
 
-        // 2. Counter loading 0 -> 100
-        await sleep(250);
-        await countUpTo(100, 1150);
+        // 2. Counter loading 0 -> 100 (Ubah 1150 ke 2500 agar lebih pelan)
+        await sleep(500); 
+        await countUpTo(100, 2500); 
 
         // 3. Flash + counter menghilang
         counterWrap.classList.add('intro-fade-out');
         flash.classList.add('play');
-        await sleep(220);
+        await sleep(400); // Jeda sebelum logo muncul
 
         // 4. Logo muncul + ring pulse
         logo.classList.add('play');
         ring1.classList.add('play');
         ring2.classList.add('play');
-        await sleep(550);
+        await sleep(800); // Logo tampil lebih lama sebelum shine
         shine.classList.add('play');
 
-        // 5. Tagline mengetik huruf demi huruf
-        await sleep(350);
+        // 5. Tagline muncul
+        await sleep(600);
         const letters = tagline.querySelectorAll('span');
         letters.forEach((el, i) => {
-            setTimeout(() => el.classList.add('show'), i * 34);
+            setTimeout(() => el.classList.add('show'), i * 50); // Typing speed lebih lambat
         });
-        await sleep(letters.length * 34 + 300);
+        await sleep(1500); // Tahan sebentar di sini agar user sempat baca tagline
 
-        // 6. Jeda menahan komposisi penuh
-        await sleep(500);
-
-        // 7. Reveal: panel kiri-kanan terbuka seperti pintu
+        // 6. Reveal: panel terbuka
         centerContent.classList.add('intro-hide-content');
-        await sleep(150);
+        await sleep(300);
         panelLeft.classList.add('open');
         panelRight.classList.add('open');
 
-        await sleep(1050);
+        await sleep(1000);
         document.body.style.overflow = '';
         sessionStorage.setItem('kancahIntroShown', '1');
         loader.remove();
