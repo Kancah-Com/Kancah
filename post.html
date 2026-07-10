@@ -68,31 +68,30 @@
     }
 
     async function loadPost() {
-        const slug = getSlug();
-        console.log("Mencari slug:", slug);
+    const slug = getSlug();
+    if (!slug) return;
 
-        if (!slug || slug === 'post' || slug === 'post.html') {
-            return; // Biarkan saja jika tidak ada slug
+    // Ganti .single() dengan .maybeSingle() agar tidak error kalau tidak ketemu
+    // Ganti .from('posts') ke 'projects' jika datamu ada di tabel projects
+    const { data, error } = await kancah
+        .from('posts') 
+        .select('*')
+        .ilike('slug', slug)
+        .maybeSingle(); // <--- Pakai ini lebih aman
+    
+    if (error) {
+        console.error("Supabase Error:", error);
+        // Cek apakah error karena Policy (406 sering karena Policy)
+        if(error.code === 'PGRST116') {
+             // Data tidak ditemukan
         }
-        
-        // Pastikan nama tabel di .from() BENAR-BENAR ada di Supabase kamu
-        const { data, error } = await kancah
-            .from('posts') 
-            .select('*')
-            .ilike('slug', slug)
-            .single();
-        
-        if (error || !data) {
-            console.error("Supabase Error:", error);
-            document.body.innerHTML = `
-                <div class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
-                    <h1 class="text-6xl mb-4">❌</h1>
-                    <h2 class="text-2xl font-bold uppercase italic">404 - Post Tidak Ditemukan</h2>
-                    <p class="text-gray-500 mt-2">Slug "${slug}" tidak ada di database.</p>
-                </div>
-            `;
-            return;
-        }
+        return;
+    }
+
+    if (!data) {
+        document.body.innerHTML = '<div class="text-center py-20">Post tidak ditemukan di database.</div>';
+        return;
+    }
 
         // Render Data
         document.title = data.title + ' • Kancah Creative';
