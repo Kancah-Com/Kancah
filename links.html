@@ -132,9 +132,10 @@
                     return;
                 }
 
-               container.innerHTML = data.map((l, i) => `
+              // Ganti bagian class-nya menjadi seperti ini:
+container.innerHTML = data.map((l, i) => `
     <a href="${l.url}" target="_blank" rel="noopener"
-       class="link-card-in group flex items-center justify-center gap-3 bg-kancah-blue text-white font-bold uppercase tracking-[0.15em] text-sm py-5 px-8 rounded-full transition-colors duration-300 hover:bg-kancah-dark"
+       class="link-card-in group flex items-center justify-center gap-3 bg-kancah-blue text-white font-bold uppercase tracking-[0.15em] text-xs py-3.5 px-6 rounded-full transition-colors duration-300 hover:bg-kancah-dark"
        style="animation-delay:${(i * 0.08).toFixed(2)}s">
         ${l.icon ? `<i class="${l.icon} text-white"></i>` : ''}
         <span>${l.title}</span>
