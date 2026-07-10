@@ -825,61 +825,56 @@ async function loadFeaturedData(filter = 'all') {
             const delay = (i * 0.06).toFixed(2);
 
             return `
-            <div class="group cursor-pointer bg-white border border-gray-200 rounded-2xl overflow-hidden flex flex-col relative
-                        transition-all duration-500 hover:-translate-y-1
-                        hover:border-kancah-blue hover:shadow-[0_0_0_1px_#0006ff,0_12px_32px_rgba(0,6,255,0.1)]"
+            <div class="group cursor-pointer"
                  onclick="${action}"
                  style="opacity:0; transform:translateY(24px);
                         animation: featuredCardIn 0.55s cubic-bezier(.23,1,.32,1) ${delay}s forwards;">
 
                 <!-- Thumbnail -->
-                <div class="relative overflow-hidden aspect-[16/10] bg-kancah-light">
+                <div class="relative overflow-hidden rounded-[1.5rem] aspect-[4/3] bg-kancah-dark border border-gray-200
+                            group-hover:border-kancah-blue transition-colors duration-500">
                     <img src="${p.image_url}" alt="${p.title}" loading="lazy"
-                         class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]">
+                         class="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.05]">
 
-                    <!-- Index badge -->
-                    <span class="absolute top-3 left-3 text-[9px] font-bold uppercase tracking-widest
-                                 text-white bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                    <!-- Scrim biar ghost number tetap kebaca di foto apapun -->
+                    <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/45 to-transparent pointer-events-none"></div>
+
+                    <!-- Ghost index number, bleeding di sudut -->
+                    <span class="pointer-events-none absolute -top-3 -right-1 text-[76px] sm:text-[92px] font-black italic leading-none select-none text-white/25">
                         ${idx}
                     </span>
 
-                    <!-- Hover overlay -->
-                    <div class="absolute inset-0 bg-kancah-blue/0 group-hover:bg-kancah-blue/[0.07]
-                                transition-all duration-300 flex items-center justify-center">
-                        ${isWeb ? `
-                        <span class="text-[9px] font-bold uppercase tracking-widest
-                                     bg-kancah-blue text-white px-5 py-2.5 rounded-full
-                                     opacity-0 group-hover:opacity-100
-                                     translate-y-2 group-hover:translate-y-0
-                                     transition-all duration-300
-                                     shadow-lg shadow-kancah-blue/30">
-                            Live Preview
-                        </span>` : ''}
-                    </div>
+                    <!-- Wash biru saat hover -->
+                    <div class="absolute inset-0 bg-kancah-blue opacity-0 group-hover:opacity-[0.1] transition-opacity duration-500 pointer-events-none"></div>
 
-                    <!-- Arrow icon -->
-                    <div class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full border border-gray-200
-                                flex items-center justify-center
-                                opacity-0 scale-75
+                    <!-- Live Preview pill (khusus web) -->
+                    ${isWeb ? `
+                    <div class="absolute inset-x-0 bottom-0 p-4 flex justify-center opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                        <span class="inline-flex items-center gap-2 bg-white text-kancah-dark px-5 py-2.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-xl">
+                            <span class="relative flex h-1.5 w-1.5">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kancah-blue opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-kancah-blue"></span>
+                            </span>
+                            Live Preview
+                        </span>
+                    </div>` : ''}
+
+                    <!-- Arrow circle -->
+                    <div class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/95 backdrop-blur flex items-center justify-center
+                                opacity-0 scale-75 border border-transparent
                                 group-hover:opacity-100 group-hover:scale-100 group-hover:border-kancah-blue
                                 transition-all duration-300">
-                        <svg viewBox="0 0 12 12" fill="none" stroke="#0006FF" stroke-width="1.8"
-                             style="width:11px;height:11px;">
-                            <path d="M2 10L10 2M10 2H4M10 2v6"/>
-                        </svg>
+                        <i class="fa-solid fa-arrow-right -rotate-45 text-kancah-blue text-[11px]"></i>
                     </div>
                 </div>
 
                 <!-- Meta -->
-                <div class="p-4 flex flex-col gap-1.5 flex-grow">
-                    <span class="text-[8px] font-bold uppercase tracking-[0.18em]
-                                 text-white bg-kancah-blue px-2.5 py-1 rounded-full w-fit">
-                        ${p.category.toUpperCase()}
+                <div class="pt-4">
+                    <span class="inline-flex items-center gap-2 text-[9px] font-black uppercase tracking-[0.3em] text-kancah-blue mb-2">
+                        <span class="w-3 h-[2px] bg-kancah-blue"></span>${p.category}
                     </span>
-                    <h3 class="text-[15px] font-bold uppercase tracking-wide
-                               text-kancah-dark group-hover:text-kancah-blue
-                               transition-colors leading-snug line-clamp-2">
-                        ${p.title.toUpperCase()}
+                    <h3 class="text-lg font-black uppercase tracking-tight text-kancah-dark group-hover:text-kancah-blue transition-colors leading-tight">
+                        ${p.title}
                     </h3>
                 </div>
             </div>`;
