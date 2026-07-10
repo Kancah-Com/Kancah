@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Links • Kancah Creative</title>
-    <meta name="description" content="Semua link penting Kancah Creative — Instagram, WhatsApp, portfolio, dan lainnya, dalam satu halaman.">
+    <meta name="description" content="Semua akses cepat ke Kancah Creative — sosial media, portofolio, layanan, dan kontak, dalam satu halaman.">
     <link rel="icon" type="image/png" href="./assets/logowh.png">
 
     <!-- Supabase JS -->
@@ -17,19 +17,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Tailwind Config — samain persis dengan design guide kancah.com -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
                     colors: {
-                        kancah: {
-                            blue: '#0006ff',
-                            dark: '#111111',
-                            gray: '#393939',
-                            light: '#f4f4f5'
-                        }
+                        kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' }
                     },
                     backgroundImage: {
                         'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.06) 1px, transparent 0)"
@@ -40,100 +34,138 @@
     </script>
 
     <style>
-        body {
-            font-family: 'Ubuntu', sans-serif;
-            background-color: #ffffff;
-        }
+        body { font-family: 'Ubuntu', sans-serif; background-color: #ffffff; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Fade-up masuk, identik dengan animasi di kancah.com */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
         .animate-fade-up { animation: fadeUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-150 { animation-delay: 0.15s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        .delay-400 { animation-delay: 0.4s; }
+        .delay-100 { animation-delay: .08s; } .delay-200 { animation-delay: .16s; }
+        .delay-300 { animation-delay: .24s; } .delay-400 { animation-delay: .32s; }
+        .delay-500 { animation-delay: .4s; }
 
-        @keyframes linkCardIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
 
-        /* Footer marquee — sama seperti footer di halaman lain */
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Radial blue glow ambient, konsisten dengan hero section web utama */
-        .glow-blob {
-            position: absolute;
-            border-radius: 9999px;
-            filter: blur(120px);
-            pointer-events: none;
-        }
+        .glow-blob { position: absolute; border-radius: 9999px; filter: blur(110px); pointer-events: none; }
+
+        .chip-scroll::-webkit-scrollbar { display: none; }
+        .chip-scroll { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 
 <body class="text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px] relative min-h-screen flex flex-col items-center">
 
-    <!-- Ambient glow, senada dengan hero & CTA section kancah.com -->
-    <div class="glow-blob w-[500px] h-[500px] bg-kancah-blue/10 -top-40 -right-40"></div>
-    <div class="glow-blob w-[400px] h-[400px] bg-kancah-blue/5 top-[60vh] -left-40"></div>
+    <div class="glow-blob w-[480px] h-[480px] bg-kancah-blue/10 -top-32 -right-32"></div>
+    <div class="glow-blob w-[360px] h-[360px] bg-kancah-blue/5 top-[70vh] -left-32"></div>
 
-    <!-- ==========================================
-         MAIN CONTENT CONTAINER
-    =========================================== -->
-    <div class="w-full max-w-[560px] px-5 sm:px-6 pt-10 pb-6 relative z-10 flex flex-col items-center min-h-screen overflow-y-auto no-scrollbar">
+    <div class="w-full max-w-[600px] px-4 sm:px-6 pt-6 pb-4 relative z-10 flex flex-col items-center">
 
-        <!-- Status Pill — replika weather/time module navbar kancah.com -->
-        <div class="mb-10 opacity-0 animate-fade-up">
-            <div class="flex items-center justify-center gap-3 sm:gap-4 bg-white/80 backdrop-blur-md border border-kancah-blue rounded-full px-5 sm:px-7 py-2.5 shadow-sm">
-                <div class="relative flex h-1.5 w-1.5">
+        <!-- Utility bar: jam & cuaca real-time -->
+        <div class="w-full flex justify-center mb-6 opacity-0 animate-fade-up">
+            <div class="inline-flex items-center gap-2.5 bg-white border border-gray-200 rounded-full px-4 py-1.5 shadow-sm">
+                <span class="relative flex h-1.5 w-1.5">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kancah-blue opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-kancah-blue"></span>
+                </span>
+                <span class="tabular-nums font-black text-[10px] text-kancah-dark tracking-[0.05em]" id="live-time">00:00:00</span>
+                <span class="text-kancah-blue text-[10px] font-black">|</span>
+                <span class="tabular-nums font-black text-[10px] text-kancah-dark" id="live-temp">--°C</span>
+                <span class="text-gray-300 text-[10px] hidden xs:inline">·</span>
+                <span class="hidden xs:inline text-gray-400 font-bold uppercase tracking-[0.15em] text-[9px]">Yogyakarta</span>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             HERO — satu identitas, satu pernyataan
+        =========================================== -->
+        <div class="w-full relative rounded-[2.25rem] bg-kancah-dark text-white overflow-hidden p-7 sm:p-10 shadow-2xl opacity-0 animate-fade-up delay-100">
+            <div class="absolute -top-16 -right-16 w-56 h-56 bg-kancah-blue/25 rounded-full blur-[80px] pointer-events-none"></div>
+            <div class="absolute inset-0 opacity-[0.04] pointer-events-none" style="background-image: radial-gradient(#ffffff 1px, transparent 0); background-size: 18px 18px;"></div>
+
+            <div class="relative z-10 flex flex-col items-center text-center">
+                <img src="assets/logowh.png" alt="Kancah Creative" class="h-8 sm:h-9 w-auto object-contain mb-5" onerror="this.style.display='none'">
+
+                <a href="https://www.instagram.com/kancahcom" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 bg-white/10 hover:bg-kancah-blue border border-white/10 rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white/80 hover:text-white transition-all duration-300 mb-6">
+                    <i class="fa-solid fa-at text-[9px]"></i> kancahcom
+                </a>
+
+                <h1 class="leading-[0.88] tracking-tighter uppercase">
+                    <span class="block text-[10vw] sm:text-4xl font-black">DIGITAL <span class="italic text-kancah-blue">&amp;</span></span>
+                    <span class="block text-[10vw] sm:text-4xl font-black">CREATIVE AGENCY.</span>
+                </h1>
+                <p class="text-gray-400 text-xs sm:text-sm font-light leading-relaxed mt-4 max-w-xs">
+                    Satu halaman buat semua akses ke Kancah — sosial media, layanan, portofolio, sampai cara mulai proyek bareng kami.
+                </p>
+
+                <div class="flex items-center gap-6 sm:gap-10 border-t border-white/10 mt-7 pt-5 w-full justify-center">
+                    <div class="flex flex-col items-center">
+                        <span class="text-xl sm:text-2xl font-black text-white">50+</span>
+                        <span class="text-[8px] uppercase tracking-widest text-gray-500 font-bold mt-0.5">Projects</span>
+                    </div>
+                    <div class="w-px h-8 bg-white/10"></div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-xl sm:text-2xl font-black text-kancah-blue">5</span>
+                        <span class="text-[8px] uppercase tracking-widest text-gray-500 font-bold mt-0.5">Layanan</span>
+                    </div>
+                    <div class="w-px h-8 bg-white/10"></div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-xl sm:text-2xl font-black text-white">2026</span>
+                        <span class="text-[8px] uppercase tracking-widest text-gray-500 font-bold mt-0.5">Est.</span>
+                    </div>
                 </div>
-                <div class="flex items-center gap-2 sm:gap-3 tabular-nums font-black text-[11px] sm:text-xs text-kancah-dark tracking-[0.05em]">
-                    <span id="live-time">00:00:00</span>
-                    <span class="text-kancah-blue">|</span>
-                    <span id="live-temp">--°C</span>
-                    <span class="text-kancah-blue hidden xs:inline">|</span>
-                    <span class="hidden xs:inline text-gray-400 font-bold uppercase tracking-[0.2em] text-[9px]">Kancah HQ, Yogyakarta</span>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             QUICK INFO — kontak & studio, biar informatif
+        =========================================== -->
+        <div class="w-full grid grid-cols-3 gap-2.5 sm:gap-3 mt-4 opacity-0 animate-fade-up delay-200">
+            <a href="https://wa.me/6289524687866" target="_blank" rel="noopener" class="group flex flex-col items-center justify-center gap-1.5 bg-white border border-gray-200 hover:border-kancah-blue rounded-2xl py-4 px-2 text-center transition-all duration-300">
+                <i class="fa-brands fa-whatsapp text-kancah-blue text-base"></i>
+                <span class="text-[8px] font-black uppercase tracking-widest text-gray-400 group-hover:text-kancah-blue transition-colors">WhatsApp</span>
+            </a>
+            <a href="mailto:kancahcreative@gmail.com" class="group flex flex-col items-center justify-center gap-1.5 bg-white border border-gray-200 hover:border-kancah-blue rounded-2xl py-4 px-2 text-center transition-all duration-300">
+                <i class="fa-regular fa-envelope text-kancah-blue text-base"></i>
+                <span class="text-[8px] font-black uppercase tracking-widest text-gray-400 group-hover:text-kancah-blue transition-colors">Email</span>
+            </a>
+            <a href="https://maps.google.com/?q=Jalan+Anggajaya+2+Condongcatur+Sleman+Yogyakarta" target="_blank" rel="noopener" class="group flex flex-col items-center justify-center gap-1.5 bg-white border border-gray-200 hover:border-kancah-blue rounded-2xl py-4 px-2 text-center transition-all duration-300">
+                <i class="fa-solid fa-location-dot text-kancah-blue text-base"></i>
+                <span class="text-[8px] font-black uppercase tracking-widest text-gray-400 group-hover:text-kancah-blue transition-colors">Studio</span>
+            </a>
+        </div>
+
+        <!-- ==========================================
+             CAPABILITIES — chip scroll ke halaman services
+        =========================================== -->
+        <div class="w-full mt-7 opacity-0 animate-fade-up delay-200">
+            <span class="text-kancah-blue font-black text-[9px] uppercase tracking-[0.3em] block mb-3 px-1">Capabilities</span>
+            <div class="flex gap-2 overflow-x-auto chip-scroll pb-1">
+                <a href="https://kancah.com/services#brand" target="_blank" class="shrink-0 px-4 py-2 rounded-full border border-gray-200 hover:border-kancah-blue hover:bg-kancah-blue hover:text-white text-[10px] font-bold uppercase tracking-widest text-kancah-dark transition-all duration-300">Brand Design</a>
+                <a href="https://kancah.com/services#promotion" target="_blank" class="shrink-0 px-4 py-2 rounded-full border border-gray-200 hover:border-kancah-blue hover:bg-kancah-blue hover:text-white text-[10px] font-bold uppercase tracking-widest text-kancah-dark transition-all duration-300">Promotion Design</a>
+                <a href="https://kancah.com/services#techdev" target="_blank" class="shrink-0 px-4 py-2 rounded-full border border-gray-200 hover:border-kancah-blue hover:bg-kancah-blue hover:text-white text-[10px] font-bold uppercase tracking-widest text-kancah-dark transition-all duration-300">Tech Development</a>
+                <a href="https://kancah.com/services#digital" target="_blank" class="shrink-0 px-4 py-2 rounded-full border border-gray-200 hover:border-kancah-blue hover:bg-kancah-blue hover:text-white text-[10px] font-bold uppercase tracking-widest text-kancah-dark transition-all duration-300">Social Media</a>
+                <a href="https://kancah.com/services#audiovisual" target="_blank" class="shrink-0 px-4 py-2 rounded-full border border-gray-200 hover:border-kancah-blue hover:bg-kancah-blue hover:text-white text-[10px] font-bold uppercase tracking-widest text-kancah-dark transition-all duration-300">Audio Visual</a>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             QUICK LINKS — data dari Supabase
+        =========================================== -->
+        <div class="w-full mt-8 opacity-0 animate-fade-up delay-300">
+            <span class="text-kancah-blue font-black text-[9px] uppercase tracking-[0.3em] block mb-3 px-1">Akses Cepat</span>
+            <div id="links-container" class="w-full space-y-3">
+                <div class="text-center py-6 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">
+                    Menghubungkan <i class="fa-solid fa-circle-notch fa-spin ml-2"></i>
                 </div>
             </div>
         </div>
-
-        <!-- Profile Area -->
-        <div class="w-full text-center flex flex-col items-center opacity-0 animate-fade-up delay-100">
-            <div class="mb-6 flex justify-center">
-                <img src="assets/kancah-logo.png" alt="Kancah Creative Logo" class="h-12 sm:h-14 w-auto object-contain hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/220x60/111111/ffffff?text=KANCAH'">
-            </div>
-
-            <h1 class="leading-[0.85] tracking-tighter uppercase">
-                <span class="block text-[13vw] sm:text-6xl font-black text-kancah-dark">@KANCAH<span class="italic text-kancah-blue">COM</span></span>
-            </h1>
-            <p class="text-gray-400 text-[10px] sm:text-[11px] uppercase tracking-[0.35em] mt-4 font-bold">Dream. Play. Create.</p>
-
-            <p class="text-gray-500 text-xs sm:text-sm font-light leading-relaxed mt-4 max-w-xs sm:max-w-sm">
-                Digital &amp; creative agency di Yogyakarta. Semua link penting kita, kumpul di satu tempat ini.
-            </p>
-        </div>
-
-        <!-- Links Container -->
-        <div id="links-container" class="w-full space-y-3.5 sm:space-y-4 mt-10 opacity-0 animate-fade-up delay-200">
-            <div class="text-center py-6 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">
-                Menghubungkan <i class="fa-solid fa-circle-notch fa-spin ml-2"></i>
-            </div>
-        </div>
-
-        <!-- Spacer -->
-        <div class="flex-grow min-h-8"></div>
 
         <!-- Social Media Pill -->
-        <div class="mt-10 mb-8 opacity-0 animate-fade-up delay-300">
-            <div class="bg-white border border-gray-200 rounded-full px-7 sm:px-8 py-3.5 sm:py-4 flex items-center justify-center gap-6 sm:gap-8 text-lg sm:text-xl shadow-sm">
+        <div class="mt-9 mb-6 opacity-0 animate-fade-up delay-400">
+            <div class="bg-white border border-gray-200 rounded-full px-7 sm:px-8 py-3.5 flex items-center justify-center gap-6 sm:gap-8 text-lg shadow-sm">
                 <a href="https://www.instagram.com/kancahcom" target="_blank" rel="noopener" aria-label="Instagram Kancah" class="w-9 h-9 rounded-full flex items-center justify-center text-kancah-dark hover:bg-kancah-blue hover:text-white transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
                 <a href="https://www.linkedin.com/company/kancah/" target="_blank" rel="noopener" aria-label="LinkedIn Kancah" class="w-9 h-9 rounded-full flex items-center justify-center text-kancah-dark hover:bg-kancah-blue hover:text-white transition-all duration-300"><i class="fa-brands fa-linkedin"></i></a>
                 <a href="https://wa.me/6289524687866" target="_blank" rel="noopener" aria-label="WhatsApp Kancah" class="w-9 h-9 rounded-full flex items-center justify-center text-kancah-dark hover:bg-kancah-blue hover:text-white transition-all duration-300"><i class="fa-brands fa-whatsapp"></i></a>
@@ -141,13 +173,13 @@
             </div>
         </div>
 
-        <!-- CTA mini, senada dengan CTA glow di homepage -->
-        <div class="w-full mb-10 opacity-0 animate-fade-up delay-400">
+        <!-- CTA -->
+        <div class="w-full mb-8 opacity-0 animate-fade-up delay-500">
             <a href="https://kancah.com/contact" target="_blank" rel="noopener" class="group relative flex items-center justify-between gap-4 rounded-[1.75rem] p-6 sm:p-7 overflow-hidden text-white shadow-xl shadow-kancah-blue/10"
                style="background: radial-gradient(circle at 85% 20%, rgba(255,255,255,.25), transparent 30%), linear-gradient(135deg, #0006ff 0%, #111111 65%, #000000 100%);">
                 <div class="relative z-10">
                     <span class="text-[9px] font-black uppercase tracking-[0.3em] text-white/60">Punya Ide?</span>
-                    <p class="text-lg sm:text-xl font-black uppercase tracking-tight leading-tight mt-1">Ayo Ngobrol Bareng Kancah</p>
+                    <p class="text-lg sm:text-xl font-black uppercase tracking-tight leading-tight mt-1">Jadwalkan Konsultasi Gratis</p>
                 </div>
                 <span class="relative z-10 shrink-0 w-11 h-11 rounded-full bg-white text-kancah-blue flex items-center justify-center group-hover:bg-kancah-dark group-hover:text-white transition-all duration-300">
                     <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300 text-sm"></i>
@@ -156,16 +188,21 @@
         </div>
 
         <!-- Footer -->
-        <div class="w-full border-t border-gray-100 pt-6 pb-2 flex flex-col items-center gap-3 opacity-0 animate-fade-up delay-400">
-            <a href="https://kancah.com" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 group">
-                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-kancah-blue transition-colors">&copy; 2026 PT. Kancah Media Sejahtera</span>
-            </a>
-            <span class="text-[9px] font-bold text-gray-300 uppercase tracking-widest">Jalan Anggajaya 2, Condongcatur, Sleman, Yogyakarta</span>
+        <div class="w-full border-t border-gray-100 pt-6 pb-3 flex flex-col items-center gap-4 opacity-0 animate-fade-up delay-500">
+            <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[9px] font-bold uppercase tracking-widest text-gray-400">
+                <a href="https://kancah.com/about" target="_blank" class="hover:text-kancah-blue transition-colors">Agency</a>
+                <a href="https://kancah.com/services" target="_blank" class="hover:text-kancah-blue transition-colors">Capabilities</a>
+                <a href="https://kancah.com/works" target="_blank" class="hover:text-kancah-blue transition-colors">Work</a>
+                <a href="https://kancah.com/pricelist" target="_blank" class="hover:text-kancah-blue transition-colors">Pricelist</a>
+                <a href="https://kancah.com/careers" target="_blank" class="hover:text-kancah-blue transition-colors">Careers</a>
+            </div>
+            <span class="text-[9px] font-bold text-gray-300 uppercase tracking-widest text-center">Jalan Anggajaya 2, Condongcatur, Sleman, Yogyakarta 55281</span>
+            <a href="https://kancah.com" target="_blank" rel="noopener" class="text-[9px] font-bold text-gray-400 hover:text-kancah-blue uppercase tracking-widest transition-colors">&copy; 2026 PT. Kancah Media Sejahtera</a>
         </div>
 
     </div>
 
-    <!-- Marquee strip bawah, identik dengan strip footer kancah.com -->
+    <!-- Marquee strip -->
     <div class="w-full py-3 border-t border-gray-100 bg-white relative z-10">
         <div class="footer-marquee-content flex gap-12 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.25em] text-gray-300">
             <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> •
@@ -174,7 +211,7 @@
     </div>
 
     <script>
-        // ── Real-time clock ──
+        // ── Jam real-time ──
         function updateTime() {
             const now = new Date();
             const h = String(now.getHours()).padStart(2, '0');
@@ -186,15 +223,14 @@
         setInterval(updateTime, 1000);
         updateTime();
 
-        // ── Real-time weather (Open-Meteo), sama seperti navbar kancah.com ──
+        // ── Cuaca real-time (Open-Meteo) ──
         async function updateWeather() {
             try {
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
                 const data = await res.json();
                 if (data && data.current_weather) {
-                    const temp = Math.round(data.current_weather.temperature) + "°C";
                     const el = document.getElementById('live-temp');
-                    if (el) el.innerText = temp;
+                    if (el) el.innerText = Math.round(data.current_weather.temperature) + "°C";
                 }
             } catch (e) { console.error("Weather offline"); }
         }
@@ -206,7 +242,24 @@
         const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
         const kancah = supabase.createClient(kancahUrl, kancahKey);
 
-        // ── Fetch & render links, gaya kartu senada dengan Featured Works kancah.com ──
+        // ── Deteksi kategori & ikon otomatis dari URL, biar tiap link informatif ──
+        function getLinkMeta(url = '') {
+            const u = url.toLowerCase();
+            if (u.includes('instagram.com')) return { icon: 'fa-brands fa-instagram', label: 'Social' };
+            if (u.includes('wa.me') || u.includes('whatsapp')) return { icon: 'fa-brands fa-whatsapp', label: 'Kontak' };
+            if (u.includes('linkedin.com')) return { icon: 'fa-brands fa-linkedin', label: 'Social' };
+            if (u.includes('tiktok.com')) return { icon: 'fa-brands fa-tiktok', label: 'Social' };
+            if (u.includes('youtube.com') || u.includes('youtu.be')) return { icon: 'fa-brands fa-youtube', label: 'Video' };
+            if (u.includes('behance.net')) return { icon: 'fa-brands fa-behance', label: 'Portfolio' };
+            if (u.includes('mailto:')) return { icon: 'fa-regular fa-envelope', label: 'Kontak' };
+            if (u.includes('maps.google') || u.includes('goo.gl/maps')) return { icon: 'fa-solid fa-location-dot', label: 'Lokasi' };
+            if (u.includes('works') || u.includes('portfolio')) return { icon: 'fa-solid fa-briefcase', label: 'Portfolio' };
+            if (u.includes('pricelist') || u.includes('price')) return { icon: 'fa-solid fa-tags', label: 'Pricelist' };
+            if (u.includes('contact')) return { icon: 'fa-regular fa-comments', label: 'Kontak' };
+            return { icon: 'fa-solid fa-link', label: 'Link' };
+        }
+
+        // ── Render Links dari Supabase ──
         async function loadLinks() {
             const container = document.getElementById('links-container');
 
@@ -220,26 +273,24 @@
                 }
 
                 container.innerHTML = data.map((l, index) => {
-                    const num = String(index + 1).padStart(2, '0');
-                    const delay = (index * 0.07).toFixed(2);
+                    const meta = getLinkMeta(l.url);
+                    const delay = (index * 0.06).toFixed(2);
                     return `
                     <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" rel="noopener"
-                       style="opacity:0; transform:translateY(16px); animation: linkCardIn 0.5s cubic-bezier(.23,1,.32,1) ${delay}s forwards;"
-                       class="group relative w-full flex items-center bg-white border border-gray-200 py-4 sm:py-5 px-6 sm:px-7 rounded-full hover:border-kancah-blue hover:shadow-[0_15px_30px_-10px_rgba(0,6,255,0.25)] hover:-translate-y-0.5 transition-all duration-400 overflow-hidden">
+                       style="opacity:0; transform:translateY(14px); animation: cardIn 0.5s cubic-bezier(.23,1,.32,1) ${delay}s forwards;"
+                       class="group relative w-full flex items-center gap-4 bg-white border border-gray-200 py-4 px-5 sm:px-6 rounded-2xl hover:border-kancah-blue hover:shadow-[0_15px_30px_-10px_rgba(0,6,255,0.25)] hover:-translate-y-0.5 transition-all duration-400">
 
-                        <!-- Ghost Number -->
-                        <span class="shrink-0 text-2xl sm:text-3xl font-black italic text-kancah-blue/10 group-hover:text-kancah-blue/25 transition-colors pointer-events-none select-none w-10 sm:w-12">
-                            ${num}
-                        </span>
+                        <div class="shrink-0 w-11 h-11 rounded-full bg-kancah-light flex items-center justify-center group-hover:bg-kancah-blue transition-all duration-300">
+                            <i class="${meta.icon} text-kancah-dark group-hover:text-white transition-colors duration-300 text-sm"></i>
+                        </div>
 
-                        <!-- Judul Link -->
-                        <span class="font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] text-kancah-dark group-hover:text-kancah-blue relative z-10 transition-colors flex-1 text-center px-2 line-clamp-1">
-                            ${l.title}
-                        </span>
+                        <div class="flex-1 min-w-0 text-left">
+                            <span class="block text-[8px] font-black uppercase tracking-[0.2em] text-kancah-blue/70 mb-0.5">${meta.label}</span>
+                            <span class="block font-bold text-[12px] sm:text-sm uppercase tracking-wide text-kancah-dark group-hover:text-kancah-blue transition-colors truncate">${l.title}</span>
+                        </div>
 
-                        <!-- Arrow Icon Circle -->
-                        <div class="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-kancah-light flex items-center justify-center group-hover:bg-kancah-blue transition-all duration-300">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-kancah-dark group-hover:text-white group-hover:rotate-0 transition-all duration-300 text-xs"></i>
+                        <div class="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-gray-300 group-hover:text-kancah-blue group-hover:translate-x-0.5 transition-all duration-300">
+                            <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300 text-xs"></i>
                         </div>
                     </a>
                 `}).join('');
@@ -249,7 +300,6 @@
             }
         }
 
-        // ── Track click count ──
         async function trackClick(id) {
             try {
                 const { data } = await kancah.from('links').select('clicks').eq('id', id).single();
