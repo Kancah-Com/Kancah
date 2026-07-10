@@ -132,18 +132,14 @@
                     return;
                 }
 
-                container.innerHTML = data.map((l, i) => `
-                    <a href="${l.url}" target="_blank" rel="noopener"
-                       class="link-card-in group relative flex items-center justify-between gap-4 bg-kancah-blue rounded-2xl py-4 sm:py-5 px-5 sm:px-6 overflow-hidden transition-all duration-300 hover:-translate-y-1 active:scale-[0.98] hover:shadow-xl hover:shadow-black/30"
-                       style="animation-delay:${(i * 0.08).toFixed(2)}s">
-                        <span class="relative z-10 flex items-center gap-3 min-w-0">
-                            ${l.icon ? `<i class="${l.icon} text-white text-lg w-5 text-center flex-shrink-0"></i>` : ''}
-                            <span class="font-bold uppercase tracking-[0.12em] text-sm sm:text-base text-white truncate">${l.title}</span>
-                        </span>
-                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 text-white relative z-10 flex-shrink-0"></i>
-                        <div class="absolute inset-0 bg-kancah-dark translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                    </a>
-                `).join('');
+               container.innerHTML = data.map((l, i) => `
+    <a href="${l.url}" target="_blank" rel="noopener"
+       class="link-card-in group flex items-center justify-center gap-3 bg-kancah-blue text-white font-bold uppercase tracking-[0.15em] text-sm py-5 px-8 rounded-full transition-colors duration-300 hover:bg-kancah-dark"
+       style="animation-delay:${(i * 0.08).toFixed(2)}s">
+        ${l.icon ? `<i class="${l.icon} text-white"></i>` : ''}
+        <span>${l.title}</span>
+    </a>
+`).join('');
             } catch (err) {
                 console.error('Links load error:', err);
                 container.innerHTML = `
