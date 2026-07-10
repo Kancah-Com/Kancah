@@ -586,7 +586,25 @@
                 } catch (err) { showToast('Gagal upload: ' + err.message, true); }
             };
         }
+// --- MANAGE LINKS ---
+async function loadLinkAdmin() {
+    const { data } = await supabase.from('links').select('*').order('sort_order');
+    const table = document.getElementById('link-list-table');
+    table.innerHTML = data.map(l => `
+        <tr>
+            <td class="p-4">${l.title}</td>
+            <td class="p-4 font-bold text-blue-600">${l.clicks} Clicks</td>
+            <td class="p-4"><button onclick="deleteLink(${l.id})" class="text-red-500">Hapus</button></td>
+        </tr>
+    `).join('');
+}
 
+async function addLink() {
+    const title = document.getElementById('link-title').value;
+    const url = document.getElementById('link-url').value;
+    await supabase.from('links').insert([{ title, url }]);
+    loadLinkAdmin();
+}
         function extractYouTubeId(url) {
             const patterns = [
                 /(?:youtube\.com\/watch\?v=)([\w-]{11})/,
