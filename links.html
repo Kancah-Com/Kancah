@@ -69,8 +69,10 @@
         </form>
     </div>
 
-    <script>
-        const kancah = supabase.createClient('URL_SUPABASE_ANDA', 'KEY_SUPABASE_ANDA');
+   <script>
+        const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
+        const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
+        const kancah = supabase.createClient(kancahUrl, kancahKey);
 
         // Logic kirim lead ke database
         document.getElementById('leadForm').onsubmit = async (e) => {
