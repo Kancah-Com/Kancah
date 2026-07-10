@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 24px 24px; }
+    </style>
+</head>
+<body class="bg-white min-h-screen p-6 flex flex-col items-center">
+    
+    <div class="max-w-md w-full text-center mt-10">
+        <img src="assets/kancah-logo.png" class="w-16 mx-auto mb-6">
+        <div id="links-container" class="flex flex-col gap-4">
+            <!-- Link akan dimuat di sini -->
+        </div>
+    </div>
+
+    <script>
+        const supabase = supabase.createClient('YOUR_SUPABASE_URL', 'YOUR_SUPABASE_ANON_KEY');
+
+        async function loadLinks() {
+            const { data } = await supabase.from('links').select('*').order('sort_order');
+            const container = document.getElementById('links-container');
+            container.innerHTML = data.map(l => `
+                <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" 
+                   class="block p-4 border border-black rounded-full font-bold hover:bg-[#0006ff] hover:text-white transition-all uppercase text-xs tracking-widest">
+                   ${l.title}
+                </a>
+            `).join('');
+        }
+
+        async function trackClick(id) {
+            const { data } = await supabase.from('links').select('clicks').eq('id', id).single();
+            await supabase.from('links').update({ clicks: data.clicks + 1 }).eq('id', id);
+        }
+
+        loadLinks();
+    </script>
+</body>
+</html>
