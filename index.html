@@ -238,6 +238,41 @@
         <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
     </div>
 </div>
+
+<!-- ════════════════════════════════════════
+     WEB SHOWCASE OVERLAY
+════════════════════════════════════════ -->
+<div id="web-showcase" class="fixed inset-0 z-[200] bg-white hidden flex-col">
+
+    <!-- Header -->
+    <div class="h-16 sm:h-20 border-b border-gray-100 flex items-center justify-between px-4 sm:px-8 bg-white/90 backdrop-blur-xl">
+        <div class="flex items-center gap-4">
+            <button onclick="closeShowcase()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="hidden sm:block">
+                <h4 id="showcase-title" class="font-bold text-sm uppercase italic leading-none">Project Demo</h4>
+                <p class="text-[9px] text-kancah-blue font-bold uppercase tracking-widest mt-1">Live Experience Mode</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <button onclick="copyDemoLink()" class="hidden sm:flex w-10 h-10 items-center justify-center rounded-full border border-slate-200 hover:border-kancah-blue hover:text-kancah-blue transition-all">
+                <i class="fa-regular fa-copy text-xs"></i>
+            </button>
+            <a id="showcase-new-tab" href="#" target="_blank" class="bg-kancah-blue text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all">
+                Open <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[8px]"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Iframe area -->
+    <div class="flex-1 bg-slate-100 p-4 sm:p-8 flex justify-center items-start overflow-hidden">
+        <div id="iframe-wrapper" class="w-full h-full bg-white shadow-2xl transition-all duration-500 rounded-xl overflow-hidden border border-slate-200">
+            <iframe id="showcase-iframe" src=""></iframe>
+        </div>
+    </div>
+</div>
     <header class="relative min-h-screen flex flex-col justify-center items-center sm:items-start pt-32 lg:pt-36 pb-20 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden bg-white text-center sm:text-left">
     
     <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]" 
