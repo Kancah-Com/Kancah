@@ -1,11 +1,14 @@
 RewriteEngine On
 RewriteBase /
 
-# 1. Jika URL-nya kancah.com/sesuatu, arahkan ke post.html
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([a-zA-Z0-9_-]+)$ post.html?slug=$1 [L,QSA]
+# 1. Pastikan file/folder fisik (assets, admin.html) tidak terganggu
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
 
-# 2. Jika mengakses file .html langsung, hilangkan ekstensinya
+# 2. Arahkan slug (contoh: /BG) ke post.html?slug=BG
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ post.html?slug=$1 [L,QSA]
+
+# 3. Hilangkan ekstensi .html untuk halaman lain
 RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^([a-zA-Z0-9_-]+)$ $1.html [L]
+RewriteRule ^(.*)$ $1.html [L]
