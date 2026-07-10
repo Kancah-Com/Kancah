@@ -35,41 +35,53 @@
         </form>
     </div>
 
-      <script>
-        const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
-        const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-        const kancah = supabase.createClient(kancahUrl, kancahKey);
+    <script>
+    const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
+    const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
+    // Gunakan 'kancah' sebagai nama variabel agar konsisten
+    const kancah = supabase.createClient(kancahUrl, kancahKey);
 
-        async function loadLinks() {
-            const { data } = await supabase.from('links').select('*').order('sort_order', {ascending: true});
-            const container = document.getElementById('links-container');
-            container.innerHTML = data.map(l => `
-                <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" 
-                   class="block bg-white border border-slate-100 py-4 px-6 rounded-full font-bold uppercase text-[11px] tracking-[0.2em] text-slate-900 text-center hover:bg-[#0006ff] hover:text-white transition-all shadow-sm">
-                   ${l.title}
-                </a>
-            `).join('');
+    async function loadLinks() {
+        // Ganti 'supabase' menjadi 'kancah'
+        const { data, error } = await kancah.from('links').select('*').order('sort_order', {ascending: true});
+        
+        if (error) {
+            console.error("Error loading links:", error);
+            return;
         }
 
-        async function trackClick(id) {
-            const { data } = await supabase.from('links').select('clicks').eq('id', id).single();
-            await supabase.from('links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', id);
-        }
+        const container = document.getElementById('links-container');
+        container.innerHTML = data.map(l => `
+            <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" 
+               class="block bg-white border border-slate-100 py-4 px-6 rounded-full font-bold uppercase text-[11px] tracking-[0.2em] text-slate-900 text-center hover:bg-[#0006ff] hover:text-white transition-all shadow-sm">
+               ${l.title}
+            </a>
+        `).join('');
+    }
 
-        document.getElementById('leadForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const btn = document.getElementById('btn-submit');
-            btn.innerText = 'MENGIRIM...';
-            await supabase.from('leads').insert([{
-                nama: document.getElementById('nama').value,
-                whatsapp: document.getElementById('wa').value
-            }]);
-            alert('Pesan terkirim, tim Kancah segera hubungi!');
-            document.getElementById('leadForm').reset();
-            btn.innerText = 'KIRIM PESAN';
-        };
+    async function trackClick(id) {
+        // Ganti 'supabase' menjadi 'kancah'
+        const { data } = await kancah.from('links').select('clicks').eq('id', id).single();
+        await kancah.from('links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', id);
+    }
 
-        loadLinks();
-    </script>
+    document.getElementById('leadForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-submit');
+        btn.innerText = 'MENGIRIM...';
+        
+        // Ganti 'supabase' menjadi 'kancah'
+        await kancah.from('leads').insert([{
+            nama: document.getElementById('nama').value,
+            whatsapp: document.getElementById('wa').value
+        }]);
+        
+        alert('Pesan terkirim, tim Kancah segera hubungi!');
+        document.getElementById('leadForm').reset();
+        btn.innerText = 'KIRIM PESAN';
+    };
+
+    loadLinks();
+</script>
 </body>
 </html>
