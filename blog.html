@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights • Kancah Creative</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Ubuntu', sans-serif; }
+        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
+        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    </style>
+</head>
+<body class="bg-white text-kancah-dark">
+
+    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 flex justify-between items-center px-6">
+        <a href="/"><img src="assets/kancah-logo.png" class="h-6 sm:h-9 w-auto"></a>
+        <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white font-black uppercase tracking-[0.2em] rounded-full hover:bg-kancah-dark transition-all">Talk</a>
+    </nav>
+
+    <main class="pt-32 pb-20 max-w-[1200px] mx-auto px-6">
+        <div class="mb-16">
+            <span class="text-kancah-blue font-bold text-xs uppercase tracking-[0.3em]">Insights & Stories</span>
+            <h1 class="text-6xl sm:text-7xl font-bold tracking-tighter uppercase mt-4">Kancah <span class="text-kancah-blue italic">Journal</span></h1>
+        </div>
+
+        <div id="blog-list" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            </div>
+    </main>
+
+    <footer class="bg-kancah-dark text-white pt-10 border-t border-white/10">
+        <div class="w-full py-3 border-b border-white/10 bg-white/5">
+            <div class="footer-marquee-content flex gap-12 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+            </div>
+        </div>
+        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8 text-center text-[10px] font-bold tracking-widest uppercase text-gray-500">
+            © 2026 PT. Kancah Media Sejahtera.
+        </div>
+    </footer>
+
+    <script>
+        const kancah = supabase.createClient('URL', 'KEY');
+        async function loadPosts() {
+            const { data } = await kancah.from('posts').select('*').order('created_at', {ascending: false});
+            const container = document.getElementById('blog-list');
+            container.innerHTML = data.map(post => `
+                <a href="post.html?slug=${post.slug}" class="group space-y-4">
+                    <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-slate-100">
+                        <img src="${post.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <h2 class="text-xl font-bold uppercase tracking-tight group-hover:text-kancah-blue transition-colors">${post.title}</h2>
+                    <p class="text-gray-500 text-sm font-light">${post.excerpt}</p>
+                </a>
+            `).join('');
+        }
+        loadPosts();
+    </script>
+</body>
+</html>
