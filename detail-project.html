@@ -22,6 +22,15 @@
     </script>
     <style>
       /* GANTI CSS BODY ANDA DENGAN INI */
+        /* TAMBAH DI <style> */
+#hero-image-wrap {
+    height: calc(100dvh - 80px);
+}
+@media (max-width: 640px) {
+    #hero-image-wrap {
+        height: calc(100dvh - 64px);
+    }
+}
 html, body {
     margin: 0;
     padding: 0;
@@ -395,11 +404,12 @@ function renderFreeformContent(project) {
             if (nextLink && next) { nextLink.href = `?id=${next.slug}`; document.getElementById('next-project-title').innerText = next.title; nextLink.classList.remove('hidden'); }
         }
 
-        function syncNavSpacer() {
-            const nav = document.querySelector('nav.fixed'); const spacer = document.getElementById('nav-spacer');
-            if (spacer && nav) spacer.style.height = nav.offsetHeight + 'px';
-            const heroWrap = document.getElementById('hero-image-wrap'); if (heroWrap && nav) heroWrap.style.height = (window.innerHeight - nav.offsetHeight) + 'px';
-        }
+       // BARU
+function syncNavSpacer() {
+    const nav = document.querySelector('nav.fixed');
+    const spacer = document.getElementById('nav-spacer');
+    if (spacer && nav) spacer.style.height = nav.offsetHeight + 'px';
+}
 
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobile-menu-button'); 
@@ -461,8 +471,8 @@ async function updateWeather() {
 updateWeather();
             getProjectDetail(); syncNavSpacer();
             // Setiap layarnya diputar/di-resize, ukur ulang!
-            window.addEventListener('resize', () => {
-                syncNavSpacer();
+window.addEventListener('resize', syncNavSpacer);
+
             });
         });
     </script>
