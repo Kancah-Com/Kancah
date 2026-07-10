@@ -191,7 +191,18 @@ footer {
         </div>
     </div>
 </nav>
-
+<!-- Tambahkan ini di bawah elemen <nav> -->
+<div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full lg:hidden transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]">
+    <button class="absolute top-6 right-6 text-3xl" id="close-menu"><i class="fa-solid fa-xmark"></i></button>
+    <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
+        <a href="about" class="mobile-link hover:text-kancah-blue">Agency</a>
+        <a href="services" class="mobile-link hover:text-kancah-blue">Capabilities</a>
+        <a href="works" class="mobile-link hover:text-kancah-blue">Work</a>
+        <a href="pricelist" class="mobile-link hover:text-kancah-blue">Pricelist</a>
+        <a href="careers" class="mobile-link hover:text-kancah-blue">Careers</a>
+        <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
+    </div>
+</div>
     <div id="nav-spacer"></div>
 
     <main class="pb-12">
@@ -451,6 +462,34 @@ footer {
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-button'); 
+    const menu = document.getElementById('mobile-menu');
+    const close = document.getElementById('close-menu');
+    const body = document.body;
+
+    // Buka Menu
+    if (btn && menu) {
+        btn.onclick = () => {
+            menu.classList.replace('translate-x-full', 'translate-x-0');
+            body.style.overflow = 'hidden'; // Kunci scroll halaman
+        };
+    }
+
+    // Tutup Menu
+    if (close && menu) {
+        close.onclick = () => {
+            menu.classList.replace('translate-x-0', 'translate-x-full');
+            body.style.overflow = ''; // Aktifkan kembali scroll
+        };
+    }
+
+    // Tutup saat link di dalam menu diklik
+    document.querySelectorAll('.mobile-link').forEach(l => {
+        l.onclick = () => {
+            menu.classList.replace('translate-x-0', 'translate-x-full');
+            body.style.overflow = '';
+        };
+    });
          function updateTime() {
     const now = new Date();
     // Memastikan format HH:mm:ss dengan titik dua
