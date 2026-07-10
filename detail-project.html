@@ -22,15 +22,6 @@
     </script>
     <style>
       /* GANTI CSS BODY ANDA DENGAN INI */
-        /* TAMBAH DI <style> */
-#hero-image-wrap {
-    height: calc(100dvh - 80px);
-}
-@media (max-width: 640px) {
-    #hero-image-wrap {
-        height: calc(100dvh - 64px);
-    }
-}
 html, body {
     margin: 0;
     padding: 0;
@@ -384,15 +375,75 @@ footer {
     }
 
         /* --- SCRIPT PEMBUNUH WHITE SPACE MUTLAK --- */
-        
+        function exterminateGhostSpaces() {
+            const container = document.getElementById('p-content');
+            if (!container) return;
 
+            // 1. Lepas tinggi kontainer sementara buat ngukur ukuran aslinya
+            container.style.height = 'auto';
 
-function renderFreeformContent(project) {
-    const container = document.getElementById('p-content');
-    if (project.content_html && project.content_html.trim() !== '') {
-        container.innerHTML = project.content_html;
-    }
-}
+            // 2. Sembunyikan semua <p> atau <div> kosong sisa enter di admin
+            container.querySelectorAll('p, div').forEach(el => {
+                if (el.innerHTML.replace(/<br>|&nbsp;|\s/g, '') === '' && el.querySelectorAll('img, iframe, video').length === 0) {
+                    el.style.display = 'none';
+                }
+            });
+
+            const containerRect = container.getBoundingClientRect();
+            let maxBottomPixel = 0;
+
+            // 3. Lacak di mana ujung visual gambar/iframe yg paling bawah (sudah include ukuran mobile)
+            container.querySelectorAll('img, iframe, video').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.height > 0) { // Pastikan elemennya kelihatan di layar
+                    const elBottom = rect.bottom - containerRect.top;
+                    if (elBottom > maxBottomPixel) maxBottomPixel = elBottom;
+                }
+            });
+
+            // 4. Lacak juga ujung visual dari teks-teks penjelasan lo
+            container.querySelectorAll('h1, h2, h3, h4, p, blockquote, ul, ol').forEach(el => {
+                if (el.textContent.trim().length > 0) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.height > 0) {
+                        const elBottom = rect.bottom - containerRect.top;
+                        if (elBottom > maxBottomPixel) maxBottomPixel = elBottom;
+                    }
+                }
+            });
+
+            // 5. EKSEKUSI: Potong kontainer pas di bawah elemen paling bawah
+            if (maxBottomPixel > 0) {
+                container.style.height = (maxBottomPixel) + 'px'; // Kasih napas 40px ke footer
+            } else {
+                container.style.height = 'auto';
+            }
+
+            if (typeof syncNavSpacer === 'function') syncNavSpacer();
+        }
+
+        function renderFreeformContent(project) {
+            const container = document.getElementById('p-content');
+            if (project.content_html && project.content_html.trim() !== '') {
+                container.innerHTML = project.content_html;
+                
+                // Triger hitungan saat gambar sudah ter-load di layar user
+                const imgs = container.getElementsByTagName('img');
+                for (let i = 0; i < imgs.length; i++) {
+                    imgs[i].addEventListener('load', exterminateGhostSpaces);
+                }
+
+                // Triger paksa berkali-kali di 3 detik pertama buat mastiin gak ada frame yg lolos
+                let checkCount = 0;
+                const layoutInterval = setInterval(() => {
+                    exterminateGhostSpaces();
+                    checkCount++;
+                    if (checkCount > 15) clearInterval(layoutInterval);
+                }, 200);
+
+                exterminateGhostSpaces();
+            }
+        }
 
         async function loadAdjacentProjects(currentSlug) {
             const { data: list } = await kancah.from('projects').select('slug, title').order('id', { ascending: true });
@@ -404,12 +455,11 @@ function renderFreeformContent(project) {
             if (nextLink && next) { nextLink.href = `?id=${next.slug}`; document.getElementById('next-project-title').innerText = next.title; nextLink.classList.remove('hidden'); }
         }
 
-       // BARU
-function syncNavSpacer() {
-    const nav = document.querySelector('nav.fixed');
-    const spacer = document.getElementById('nav-spacer');
-    if (spacer && nav) spacer.style.height = nav.offsetHeight + 'px';
-}
+        function syncNavSpacer() {
+            const nav = document.querySelector('nav.fixed'); const spacer = document.getElementById('nav-spacer');
+            if (spacer && nav) spacer.style.height = nav.offsetHeight + 'px';
+            const heroWrap = document.getElementById('hero-image-wrap'); if (heroWrap && nav) heroWrap.style.height = (window.innerHeight - nav.offsetHeight) + 'px';
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobile-menu-button'); 
@@ -471,8 +521,9 @@ async function updateWeather() {
 updateWeather();
             getProjectDetail(); syncNavSpacer();
             // Setiap layarnya diputar/di-resize, ukur ulang!
-window.addEventListener('resize', syncNavSpacer);
-
+            window.addEventListener('resize', () => {
+                syncNavSpacer();
+                exterminateGhostSpaces();
             });
         });
     </script>
