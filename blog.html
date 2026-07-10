@@ -110,8 +110,8 @@
 
             grid.innerHTML = data.map(post => `
                 <article class="group hover:-translate-y-2 transition-all duration-300">
-                    <a href="post.html?slug=${post.slug}">
-                        <div class="overflow-hidden rounded-3xl mb-6 bg-slate-100 aspect-[3/2]">
+<a href="/${post.slug}">
+<div class="overflow-hidden rounded-3xl mb-6 bg-slate-100 aspect-[3/2]">
                             <img src="${post.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <h3 class="text-xl font-bold uppercase tracking-tight mb-2 group-hover:text-kancah-blue">${post.title}</h3>
