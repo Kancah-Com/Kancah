@@ -67,9 +67,9 @@
         return path.split('/').filter(Boolean).pop(); 
     }
 
-    async function loadPost() {
+ async function loadPost() {
     const slug = getSlug();
-    if (!slug) return;
+    console.log("LOG SLUG YANG DITANGKAP:", slug); // CEK INI DI F12 CONSOLE
 
     // Ganti .single() dengan .maybeSingle() agar tidak error kalau tidak ketemu
     // Ganti .from('posts') ke 'projects' jika datamu ada di tabel projects
