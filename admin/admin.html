@@ -382,7 +382,26 @@
                     </table>
                 </div>
             </section>
-
+<section id="tab-blog" class="tab-content hidden space-y-8">
+    <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm">
+        <h2 class="text-xl font-bold italic uppercase mb-6">Manage Blog Posts</h2>
+        <form id="blogForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <input type="text" id="b-title" class="p-4 bg-slate-50 border rounded-2xl" placeholder="Judul Blog" required>
+            <input type="text" id="b-slug" class="p-4 bg-slate-50 border rounded-2xl" placeholder="Slug (url-friendly-title)" required>
+            <textarea id="b-excerpt" class="md:col-span-2 p-4 bg-slate-50 border rounded-2xl" placeholder="Ringkasan singkat (SEO)"></textarea>
+            <div class="md:col-span-2">
+                <label class="text-[9px] font-bold text-slate-400 uppercase ml-2">Konten Blog</label>
+                <div id="blog-editor" class="h-64 mt-2"></div>
+            </div>
+            <button type="submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all">Publish Post</button>
+        </form>
+    </div>
+    
+    <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm">
+        <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 italic mb-6">Existing Posts</h3>
+        <table class="w-full text-left"><tbody id="blog-list-table"></tbody></table>
+    </div>
+</section>
             <section id="tab-clients" class="tab-content hidden space-y-8">
                 <div class="bg-white p-6 md:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm text-center">
                     <h2 class="text-xl font-bold italic uppercase mb-6">Client Logos</h2>
@@ -503,19 +522,7 @@
             <tbody id="link-list-table"></tbody>
         </table>
     </div>
-    <section id="tab-blog" class="tab-content hidden space-y-8">
-    <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm">
-        <h2 class="text-xl font-bold italic uppercase mb-6">Manage Blog Posts</h2>
-        <form id="blogForm" class="space-y-4">
-            <input type="text" id="b-title" class="w-full p-4 bg-slate-50 border rounded-2xl" placeholder="Judul Blog" required>
-            <input type="text" id="b-slug" class="w-full p-4 bg-slate-50 border rounded-2xl" placeholder="Slug (url-friendly-title)" required>
-            <textarea id="b-excerpt" class="w-full p-4 bg-slate-50 border rounded-2xl" placeholder="Ringkasan singkat (SEO)"></textarea>
-            <input type="file" id="b-image" class="w-full p-3 border border-dashed rounded-2xl text-xs">
-            <div id="blog-editor" class="h-64 mb-10"></div>
-            <button type="submit" class="w-full bg-[#0006ff] text-white py-4 rounded-2xl font-bold uppercase text-xs hover:bg-black">Publish Post</button>
-        </form>
-    </div>
-</section>
+
 </section>
             <section id="tab-users" class="tab-content hidden space-y-8">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -592,15 +599,35 @@
             ['clean']
         ];
 // Inisialisasi editor untuk blog
+// Inisialisasi Quill untuk Blog
 const blogQuill = new Quill('#blog-editor', { theme: 'snow' });
 
 document.getElementById('blogForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    // 1. Upload Gambar Hero ke storage 'blog-images'
-    // 2. Simpan ke tabel 'posts'
-    // 3. showToast('Blog Published!');
-    // 4. loadBlogList();
+    const title = document.getElementById('b-title').value;
+    const slug = document.getElementById('b-slug').value;
+    const excerpt = document.getElementById('b-excerpt').value;
+    const content_html = blogQuill.root.innerHTML;
+
+    const { error } = await kancah.from('posts').insert([{ title, slug, excerpt, content_html }]);
+    if (error) { showToast(error.message, true); } 
+    else { 
+        showToast('POST PUBLISHED!'); 
+        e.target.reset(); 
+        blogQuill.root.innerHTML = ''; 
+        loadBlogList(); 
+    }
 });
+
+async function loadBlogList() {
+    const { data } = await kancah.from('posts').select('*').order('created_at', {ascending: false});
+    document.getElementById('blog-list-table').innerHTML = (data || []).map(p => `
+        <tr class="border-b">
+            <td class="py-4 font-bold">${p.title}</td>
+            <td class="py-4 text-right"><button onclick="deletePost('${p.id}')" class="text-red-500"><i class="fa-solid fa-trash"></i></button></td>
+        </tr>
+    `).join('');
+}
         const quill = new Quill('#p-content-editor', {
             theme: 'snow',
             modules: {
