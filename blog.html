@@ -96,7 +96,9 @@
 
     <!-- Scripts -->
     <script>
-        const kancah = supabase.createClient('URL', 'KEY');
+           const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
+        const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
+        const kancah = supabase.createClient(kancahUrl, kancahKey);
         async function fetchPosts() {
             const grid = document.getElementById('blog-grid');
             const { data } = await kancah.from('posts').select('*').order('created_at', {ascending: false});
