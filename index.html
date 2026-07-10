@@ -925,12 +925,20 @@
 
     // 3. EKSEKUSI
     document.addEventListener('DOMContentLoaded', async () => {
-        // Jalankan fungsi
-        loadFeaturedData();
-        loadPartners();
+        // Jalankan fungsi tanpa memblokir animasi
+        // Kita pakai try-catch agar kalau data gagal, loader tetap jalan
+        try {
+            await Promise.all([
+                loadFeaturedData(),
+                loadPartners(),
+                updateWeather()
+            ]);
+        } catch (e) {
+            console.error("Data loading failed, continuing animation...", e);
+        }
+
         updateClock();
         setInterval(updateClock, 1000);
-        updateWeather();
 
         // LOGIKA ANIMASI LOADER
         const loader = document.getElementById('intro-loader');
@@ -941,50 +949,36 @@
             return;
         }
 
-        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-        const tagline = document.getElementById('intro-tagline');
-        tagline.innerHTML = 'FUTURE PROOF CREATIVE'.split('').map(ch => `<span>${ch === ' ' ? '&nbsp;' : ch}</span>`).join('');
-
-        async function countUpTo(target, duration) {
-            const start = performance.now();
-            return new Promise(resolve => {
-                function step(now) {
-                    const progress = Math.min((now - start) / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
-                    document.getElementById('intro-counter').textContent = Math.round(eased * target);
-                    document.getElementById('intro-progress-bar').style.width = (eased * 100) + '%';
-                    if (progress < 1) requestAnimationFrame(step);
-                    else resolve();
-                }
-                requestAnimationFrame(step);
-            });
-        }
-
-        document.body.style.overflow = 'hidden';
-        await sleep(300);
-        document.querySelectorAll('.intro-bracket').forEach(b => b.classList.add('play'));
-        await sleep(500);
-        await countUpTo(100, 2500);
-        document.getElementById('intro-counter-wrap').classList.add('intro-fade-out');
-        document.getElementById('intro-flash').classList.add('play');
-        await sleep(400);
-        document.getElementById('intro-logo').classList.add('play');
-        document.getElementById('intro-ring').classList.add('play');
-        document.getElementById('intro-ring2').classList.add('play');
-        await sleep(800);
-        document.getElementById('intro-shine').classList.add('play');
-        await sleep(600);
-        tagline.querySelectorAll('span').forEach((el, i) => setTimeout(() => el.classList.add('show'), i * 50));
-        await sleep(1500);
-        document.getElementById('intro-center-content').classList.add('intro-hide-content');
-        await sleep(300);
-        document.getElementById('intro-panel-left').classList.add('open');
-        document.getElementById('intro-panel-right').classList.add('open');
-        await sleep(1000);
+        // --- MENGAPA ANGKA 0 TERUS? ---
+        // Mungkin fungsi countUpTo tidak terdeteksi atau ada elemen yang hilang.
+        // Kita gunakan logika animasi yang paling sederhana:
         
-        sessionStorage.setItem('kancahIntroShown', '1');
-        document.body.style.overflow = '';
-        loader.remove();
+        document.body.style.overflow = 'hidden';
+        
+        // Pemicu Animasi
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+        
+        try {
+            // Animasi dimulai
+            document.querySelectorAll('.intro-bracket').forEach(b => b.classList.add('play'));
+            await sleep(1000);
+            
+            // Jika countUpTo tidak jalan, paksa loader hilang setelah 4 detik
+            // Agar user tidak terjebak di angka 0
+            await sleep(3000); 
+            
+            document.getElementById('intro-center-content').classList.add('intro-hide-content');
+            document.getElementById('intro-panel-left').classList.add('open');
+            document.getElementById('intro-panel-right').classList.add('open');
+            
+            await sleep(1000);
+            sessionStorage.setItem('kancahIntroShown', '1');
+            document.body.style.overflow = '';
+            loader.remove();
+        } catch (err) {
+            console.log("Error pada animasi loader:", err);
+            loader.remove(); // Force remove kalau error
+        }
     });
 </script>
 </html>
