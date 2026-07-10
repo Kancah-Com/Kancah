@@ -1,14 +1,11 @@
 RewriteEngine On
+RewriteBase /
 
-# 1. Aturan untuk URL Clean (Kancah.com/SLUG)
-# Jika user akses domain.com/APASAJASLUG
-# Arahkan ke post.html?slug=APASAJASLUG
-# Tapi, jangan arahkan jika file atau foldernya beneran ada (seperti admin.html, assets, dll)
+# 1. Jika URL-nya kancah.com/sesuatu, arahkan ke post.html
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([a-zA-Z0-9_-]+)/?$ post.html?slug=$1 [L,QSA]
+RewriteRule ^([a-zA-Z0-9_-]+)$ post.html?slug=$1 [L,QSA]
 
-# 2. Aturan untuk hilangkan .html (tetap simpan untuk halaman lain)
-RewriteCond %{REQUEST_FILENAME} !-d
+# 2. Jika mengakses file .html langsung, hilangkan ekstensinya
 RewriteCond %{REQUEST_FILENAME}\.html -f
-RewriteRule ^(.*)$ $1.html [NC,L]
+RewriteRule ^([a-zA-Z0-9_-]+)$ $1.html [L]
