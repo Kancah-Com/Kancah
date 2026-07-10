@@ -117,20 +117,22 @@
     <script>
         const kancah = supabase.createClient('https://hmzwjceomnneiczbpban.supabase.co', 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__');
 
-        async function loadLinks() {
-            const container = document.getElementById('links-container');
-            try {
-                const { data, error } = await kancah.from('links').select('*').order('sort_order', { ascending: true });
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    container.innerHTML = `
-                        <div class="text-center py-16 text-gray-400">
-                            <i class="fa-regular fa-face-frown text-2xl mb-3 block"></i>
-                            <span class="text-[10px] font-black uppercase tracking-[0.3em]">Belum ada link tersedia</span>
-                        </div>`;
-                    return;
-                }
+     async function loadLinks() {
+    const container = document.getElementById('links-container');
+    try {
+        const { data, error } = await kancah.from('links').select('*').order('sort_order', { ascending: true });
+        
+        // --- TAMBAHAN DEBUGGING ---
+        if (error) {
+            console.error("Supabase Error:", error);
+            container.innerHTML = `<div class="text-red-500 text-xs">Error: ${error.message}</div>`;
+            return;
+        }
+        
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="text-center py-10 text-gray-400 text-xs uppercase tracking-widest">Belum ada link.</div>';
+            return;
+        }
 
               // Ganti bagian class-nya menjadi seperti ini:
 container.innerHTML = data.map((l, i) => `
