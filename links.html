@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links | Kancah Creative</title>
+    <title>Official Links • Kancah</title>
     <link rel="icon" type="image/png" href="./assets/logowh.png">
     
+    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Fonts & Icons (Ubuntu Font persis Kancah) -->
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Konfigurasi Tailwind (Persis Kancah Web) -->
     <script>
         tailwind.config = {
             theme: {
@@ -35,120 +39,141 @@
     </script>
     <style>
         body { font-family: 'Ubuntu', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
         
-        /* Hilangkan scrollbar bawaan */
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
-        
-        /* Custom Checkbox ala Kancah */
-        input[type="checkbox"]:checked + div {
-            border-color: #0006ff;
-            background-color: rgba(0, 6, 255, 0.05);
-            color: #0006ff;
+        /* Animasi masuk */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+        .animate-fade-up { animation: fadeUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
     </style>
 </head>
 
-<body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px] min-h-screen flex justify-center pb-20 relative">
+<body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px] min-h-screen flex justify-center pb-12">
 
-    <div class="w-full max-w-[600px] px-6 pt-16 relative z-10">
+    <!-- Container Utama -->
+    <div class="w-full max-w-[600px] px-6 pt-16 sm:pt-20 relative z-10">
 
-        <div class="flex flex-col items-center text-center mb-12">
-            <div class="mb-8 flex justify-center">
-                <img src="./assets/kancah-logo.png" alt="Kancah Logo" class="w-40 h-auto object-contain" onerror="this.src='https://via.placeholder.com/150?text=KANCAH'">
-            </div>
-            
-            <h1 class="text-3xl font-black uppercase tracking-tighter text-kancah-dark leading-none">Kancah Creative</h1>
-            <span class="text-kancah-blue font-bold text-[10px] uppercase tracking-[0.3em] block mt-3">Digital & Creative Agency</span>
-
-            <div class="flex items-center gap-6 mt-6 text-2xl">
-                <a href="https://www.instagram.com/kancahcom" target="_blank" class="text-kancah-dark hover:text-kancah-blue hover:-translate-y-1 transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/company/kancah/" target="_blank" class="text-kancah-dark hover:text-kancah-blue hover:-translate-y-1 transition-all duration-300"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://wa.me/628924687866" target="_blank" class="text-kancah-dark hover:text-kancah-blue hover:-translate-y-1 transition-all duration-300"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
-        </div>
-
-        <div id="links-container" class="space-y-4 mb-16">
-            <div class="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 animate-pulse">
-                Memuat tautan...
-            </div>
-        </div>
-
-        <div class="bg-white rounded-[2rem] shadow-xl border border-gray-100 overflow-hidden mt-10">
-            <div class="p-8 text-center border-b border-gray-100">
-                <h2 class="text-2xl font-black uppercase tracking-tighter">Mulai Proyek</h2>
-                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-2">Isi detail untuk diskusi dengan Kancah</p>
-            </div>
-
-            <form id="leadForm" class="p-8 space-y-8 bg-white">
+        <!-- ==========================================
+             1. HEADER EDITORIAL (Ala Kancah Web)
+        =========================================== -->
+        <div class="mb-14 text-left animate-fade-up">
+            <div class="flex items-center justify-between mb-8">
+                <img src="./assets/kancah-logo.png" alt="Kancah Logo" class="h-8 w-auto object-contain" onerror="this.src='https://via.placeholder.com/150?text=KANCAH'">
                 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <!-- Social Media -->
+                <div class="flex items-center gap-4 text-xl">
+                    <a href="https://www.instagram.com/kancahcom" target="_blank" class="text-gray-400 hover:text-kancah-blue transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/kancah/" target="_blank" class="text-gray-400 hover:text-kancah-blue transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://wa.me/628924687866" target="_blank" class="text-gray-400 hover:text-kancah-blue transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <span class="text-kancah-blue font-bold text-[10px] sm:text-xs uppercase tracking-[0.3em] block mb-3">Connect With Us</span>
+            <h1 class="text-5xl sm:text-6xl font-black tracking-tighter leading-[0.85] uppercase">
+                OFFICIAL <br> <span class="text-kancah-blue italic">LINKS.</span>
+            </h1>
+            <p class="text-gray-500 text-sm mt-5 font-light leading-relaxed">
+                Satu pintu untuk semua akses ke Kancah Creative. Jelajahi karya kami atau mari mulai diskusi untuk brand kamu.
+            </p>
+        </div>
+
+        <!-- ==========================================
+             2. BUTTON LINKS (Ala Filter Kancah)
+        =========================================== -->
+        <div id="links-container" class="space-y-3 mb-16 animate-fade-up" style="animation-delay: 0.1s; opacity: 0;">
+            <!-- Loading State -->
+            <div class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                Memuat tautan... <i class="fa-solid fa-spinner fa-spin ml-2"></i>
+            </div>
+        </div>
+
+        <!-- ==========================================
+             3. CONTACT FORM (Identik contact.html)
+        =========================================== -->
+        <div class="border-t border-gray-100 pt-12 animate-fade-up" style="animation-delay: 0.2s; opacity: 0;">
+            <div class="mb-10 text-left">
+                <span class="text-kancah-blue font-bold text-[10px] sm:text-xs uppercase tracking-[0.3em] block mb-2">Yuk, Hubungi Kami</span>
+                <h2 class="text-4xl sm:text-5xl font-black tracking-tighter leading-[0.85] uppercase">
+                    MULAI <span class="text-kancah-blue italic">PROYEK.</span>
+                </h2>
+            </div>
+
+            <form id="leadForm" class="space-y-6 sm:space-y-8">
+                
+                <!-- Inputs -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                     <div class="relative group">
-                        <input type="text" id="nama" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-base font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Nama Lengkap">
-                        <label for="nama" class="absolute left-0 -top-3.5 text-gray-400 text-[10px] font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-[10px] peer-focus:font-bold">Nama Lengkap</label>
+                        <input type="text" id="nama" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-lg font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Nama">
+                        <label for="nama" class="absolute left-0 -top-3.5 text-gray-400 text-[10px] font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-[10px] peer-focus:font-bold">Nama Panggilan</label>
                     </div>
                     <div class="relative group">
-                        <input type="text" id="instansi" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-base font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Instansi">
+                        <input type="text" id="instansi" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-lg font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Brand">
                         <label for="instansi" class="absolute left-0 -top-3.5 text-gray-400 text-[10px] font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-[10px] peer-focus:font-bold">Instansi / Brand</label>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
                     <div class="relative group">
-                        <input type="email" id="email" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-base font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Email">
+                        <input type="email" id="email" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-lg font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Email">
                         <label for="email" class="absolute left-0 -top-3.5 text-gray-400 text-[10px] font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-[10px] peer-focus:font-bold">Email Aktif</label>
                     </div>
                     <div class="relative group">
-                        <input type="tel" id="wa" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-base font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="WhatsApp">
+                        <input type="tel" id="wa" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-lg font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="WhatsApp">
                         <label for="wa" class="absolute left-0 -top-3.5 text-gray-400 text-[10px] font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-[10px] peer-focus:font-bold">No. WhatsApp</label>
                     </div>
                 </div>
 
+                <!-- Checkbox Layanan Ala Filter Button web Kancah -->
                 <div class="pt-2">
-                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Layanan yang dibutuhkan</label>
-                    <div class="grid grid-cols-2 gap-3">
-                        <label class="relative cursor-pointer group">
+                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4">Layanan Kebutuhan</label>
+                    <div class="flex flex-wrap gap-2">
+                        <label class="cursor-pointer relative">
                             <input type="checkbox" name="services" value="Brand Design" class="peer sr-only">
-                            <div class="p-3 border border-gray-200 rounded-xl transition-all text-gray-400 peer-checked:font-bold text-center">
-                                <span class="text-[10px] font-bold uppercase tracking-widest">Brand Design</span>
+                            <div class="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue peer-checked:bg-kancah-blue peer-checked:text-white peer-checked:border-kancah-blue peer-checked:shadow-lg peer-checked:shadow-kancah-blue/20">
+                                Brand Design
                             </div>
                         </label>
-                        <label class="relative cursor-pointer group">
+                        <label class="cursor-pointer relative">
                             <input type="checkbox" name="services" value="Promotion" class="peer sr-only">
-                            <div class="p-3 border border-gray-200 rounded-xl transition-all text-gray-400 peer-checked:font-bold text-center">
-                                <span class="text-[10px] font-bold uppercase tracking-widest">Promotion</span>
+                            <div class="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue peer-checked:bg-kancah-blue peer-checked:text-white peer-checked:border-kancah-blue peer-checked:shadow-lg peer-checked:shadow-kancah-blue/20">
+                                Promotion
                             </div>
                         </label>
-                        <label class="relative cursor-pointer group">
+                        <label class="cursor-pointer relative">
                             <input type="checkbox" name="services" value="Tech Dev" class="peer sr-only">
-                            <div class="p-3 border border-gray-200 rounded-xl transition-all text-gray-400 peer-checked:font-bold text-center">
-                                <span class="text-[10px] font-bold uppercase tracking-widest">Tech Dev</span>
+                            <div class="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue peer-checked:bg-kancah-blue peer-checked:text-white peer-checked:border-kancah-blue peer-checked:shadow-lg peer-checked:shadow-kancah-blue/20">
+                                Tech Dev
                             </div>
                         </label>
-                        <label class="relative cursor-pointer group">
+                        <label class="cursor-pointer relative">
                             <input type="checkbox" name="services" value="Audio Visual" class="peer sr-only">
-                            <div class="p-3 border border-gray-200 rounded-xl transition-all text-gray-400 peer-checked:font-bold text-center">
-                                <span class="text-[10px] font-bold uppercase tracking-widest">Audio Visual</span>
+                            <div class="px-5 py-2.5 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue peer-checked:bg-kancah-blue peer-checked:text-white peer-checked:border-kancah-blue peer-checked:shadow-lg peer-checked:shadow-kancah-blue/20">
+                                Audio Visual
                             </div>
                         </label>
                     </div>
                 </div>
 
                 <div class="relative group pt-4">
-                    <textarea id="pesan" rows="1" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-base font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent resize-none overflow-hidden" placeholder="Pesan" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
+                    <textarea id="pesan" required rows="1" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 text-lg font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent resize-none h-auto min-h-[60px]" placeholder="Pesan" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
                     <label for="pesan" class="absolute left-0 -top-3.5 text-gray-400 text-[10px] font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-[10px] peer-focus:font-bold">Ceritain Dikit Kebutuhanmu</label>
                 </div>
                 
                 <div class="pt-4">
                     <button type="submit" id="btn-submit" class="w-full group relative inline-flex items-center justify-center gap-3 bg-kancah-dark text-white px-8 py-5 rounded-full font-bold uppercase tracking-widest text-[11px] hover:bg-kancah-blue transition-all duration-300 shadow-xl overflow-hidden">
-                        <span class="relative z-10">Kirim Permintaan</span>
-                        <i class="fa-solid fa-arrow-right -rotate-45 relative z-10 group-hover:rotate-0 transition-transform"></i>
+                        <span class="relative z-10">Kirim Sinyal</span>
+                        <i class="fa-solid fa-paper-plane relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                        <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                     </button>
                 </div>
             </form>
         </div>
         
-        <div class="mt-12 text-center border-t border-gray-200 pt-6">
-            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">© 2026 PT. Kancah Media Sejahtera.</p>
+        <!-- Copyright -->
+        <div class="mt-16 text-center border-t border-gray-200 pt-6">
+            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">© 2026 PT. Kancah Media Sejahtera.</p>
         </div>
 
     </div>
@@ -168,20 +193,21 @@
                 if (error) throw error;
 
                 if (data.length === 0) {
-                    container.innerHTML = '<p class="text-[10px] font-bold uppercase tracking-widest text-gray-400 text-center">Belum ada tautan aktif.</p>';
+                    container.innerHTML = '<p class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Belum ada tautan aktif.</p>';
                     return;
                 }
 
-                // Render tombol Links dengan styling Kancah (Pill, Bold, Uppercase)
+                // Render tombol Links dengan style Typographic Kancah
                 container.innerHTML = data.map(l => `
                     <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" 
-                       class="group relative w-full flex items-center justify-center bg-white border border-gray-200 py-[18px] px-6 rounded-full shadow-sm hover:border-kancah-blue hover:bg-kancah-blue transition-all duration-300 overflow-hidden">
-                        <span class="font-bold text-[11px] uppercase tracking-[0.2em] text-kancah-dark group-hover:text-white relative z-10 transition-colors">${l.title}</span>
+                       class="group relative w-full flex items-center justify-between bg-white border border-gray-200 py-[18px] px-8 rounded-[2rem] hover:border-kancah-blue hover:bg-gray-50 transition-all duration-300">
+                        <span class="font-bold text-[11px] sm:text-xs uppercase tracking-[0.2em] text-kancah-dark group-hover:text-kancah-blue transition-colors">${l.title}</span>
+                        <i class="fa-solid fa-arrow-right -rotate-45 text-gray-300 group-hover:text-kancah-blue group-hover:rotate-0 transition-transform duration-300"></i>
                     </a>
                 `).join('');
             } catch (err) {
                 console.error("Error:", err);
-                container.innerHTML = '<p class="text-[10px] font-bold uppercase tracking-widest text-red-500 text-center">Gagal memuat tautan.</p>';
+                container.innerHTML = '<p class="text-[10px] font-bold uppercase tracking-widest text-red-500">Gagal memuat tautan.</p>';
             }
         }
 
@@ -215,12 +241,11 @@
                 }]);
 
                 if (error) throw error;
-                alert('Pesan terkirim! Tim Kancah Creative akan segera menghubungi Anda.');
+                alert('Sinyal berhasil dikirim! Tim Kancah akan segera menghubungi Anda.');
                 e.target.reset();
-                // Reset textarea height
                 document.getElementById('pesan').style.height = '';
             } catch (err) {
-                alert('Terjadi kesalahan. Silakan coba hubungi via WhatsApp.');
+                alert('Terjadi kesalahan. Silakan coba hubungi via WhatsApp langsung.');
             } finally {
                 btn.innerHTML = originalHTML;
                 btn.disabled = false;
