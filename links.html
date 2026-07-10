@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links • Kancah</title>
+    <title>Links • Kancah Creative</title>
     <link rel="icon" type="image/png" href="./assets/logowh.png">
     
     <!-- Supabase JS -->
@@ -31,15 +31,22 @@
                         } 
                     },
                     backgroundImage: {
-                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
+                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.08) 1px, transparent 0)"
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 10s infinite',
+                        'marquee-bg': 'marqueeBg 30s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
+                        blob: {
+                            '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                        },
+                        marqueeBg: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }
                         }
                     }
                 }
@@ -47,7 +54,7 @@
         }
     </script>
     <style>
-        body { font-family: 'Ubuntu', sans-serif; }
+        body { font-family: 'Ubuntu', sans-serif; background-color: #F8FAFC; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
         /* Animasi masuk elemen */
@@ -57,75 +64,110 @@
         }
         .animate-fade-up { animation: fadeUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
         
-        /* Glass/Glow Effect untuk Link */
-        .link-card {
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .link-card:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 20px 40px -15px rgba(0, 6, 255, 0.25);
-        }
+        /* Delay Utilities */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
     </style>
 </head>
 
-<body class="bg-[#fafafa] text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px] min-h-screen flex flex-col items-center justify-center relative">
+<body class="text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-hidden relative min-h-screen flex flex-col items-center justify-center">
 
-    <!-- Efek Ambient Light di Background -->
-    <div class="fixed top-[-10%] left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-kancah-blue/10 rounded-full blur-[100px] pointer-events-none z-0 animate-float"></div>
+    <!-- ==========================================
+         BACKGROUND DINAMIS (Anti-Sepi)
+    =========================================== -->
+    <!-- 1. Tech Dots -->
+    <div class="fixed inset-0 bg-tech-pattern bg-[length:30px_30px] z-0 pointer-events-none opacity-60"></div>
+    
+    <!-- 2. Animated Floating Orbs -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none flex justify-center items-center">
+        <div class="absolute top-[10%] left-[-10%] w-[400px] h-[400px] bg-kancah-blue/20 rounded-full blur-[100px] animate-blob"></div>
+        <div class="absolute top-[30%] right-[-10%] w-[350px] h-[350px] bg-blue-300/30 rounded-full blur-[100px] animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-[450px] h-[450px] bg-indigo-500/10 rounded-full blur-[120px] animate-blob animation-delay-4000"></div>
+    </div>
 
-    <!-- Container Utama (Lebih ramping ala Linktree) -->
-    <div class="w-full max-w-[500px] px-6 py-16 relative z-10 flex flex-col items-center min-h-screen">
+    <!-- 3. Giant Scrolling Text (Watermark) -->
+    <div class="fixed inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-[0.03] -rotate-12 scale-150">
+        <div class="whitespace-nowrap font-black text-[15vw] uppercase tracking-tighter animate-marquee-bg flex w-max">
+            <span>FUTURE PROOF CREATIVE AGENCY • CREATIVE LOGIC SYSTEMS • FUTURE PROOF CREATIVE AGENCY • CREATIVE LOGIC SYSTEMS • </span>
+            <span>FUTURE PROOF CREATIVE AGENCY • CREATIVE LOGIC SYSTEMS • FUTURE PROOF CREATIVE AGENCY • CREATIVE LOGIC SYSTEMS • </span>
+        </div>
+    </div>
 
-        <!-- ==========================================
-             1. PROFILE HEADER
-        =========================================== -->
-        <div class="w-full text-center flex flex-col items-center animate-fade-up">
-            <!-- Logo -->
-            <div class="w-24 h-24 mb-6 bg-white rounded-full flex items-center justify-center shadow-lg border border-gray-100 p-4">
-                <img src="./assets/kancah-logo.png" alt="Kancah Logo" class="w-full h-auto object-contain" onerror="this.src='https://via.placeholder.com/150?text=K'">
-            </div>
-
-            <!-- Title & Tagline -->
-            <h1 class="text-2xl font-black tracking-tight uppercase text-kancah-dark">@kancahcom</h1>
-            <p class="text-gray-500 text-sm mt-2 font-medium">Future Proof Creative Agency.</p>
-
-            <!-- Social Media Icons -->
-            <div class="flex items-center justify-center gap-5 mt-6 text-[22px]">
-                <a href="https://www.instagram.com/kancahcom" target="_blank" class="text-gray-400 hover:text-kancah-blue hover:-translate-y-1 transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/company/kancah/" target="_blank" class="text-gray-400 hover:text-kancah-blue hover:-translate-y-1 transition-all duration-300"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://wa.me/628924687866" target="_blank" class="text-gray-400 hover:text-kancah-blue hover:-translate-y-1 transition-all duration-300"><i class="fa-brands fa-whatsapp"></i></a>
+    <!-- ==========================================
+         MAIN CONTENT CONTAINER
+    =========================================== -->
+    <div class="w-full max-w-[550px] px-6 py-12 relative z-10 flex flex-col items-center h-screen overflow-y-auto no-scrollbar">
+        
+        <!-- Tech Pill (Status) -->
+        <div class="mb-8 opacity-0 animate-fade-up">
+            <div class="flex items-center justify-center gap-3 bg-white/60 backdrop-blur-md border border-gray-200/60 px-5 py-2 rounded-full shadow-sm">
+                <div class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kancah-blue opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-kancah-blue"></span>
+                </div>
+                <div class="flex gap-2 font-bold text-[10px] uppercase tracking-[0.2em] text-kancah-dark">
+                    <span>Kancah HQ</span>
+                    <span class="text-kancah-blue">|</span>
+                    <span id="live-time">00:00</span>
+                </div>
             </div>
         </div>
 
-        <!-- Divider -->
-        <div class="w-12 h-1 bg-kancah-blue/20 rounded-full my-10 animate-fade-up" style="animation-delay: 0.1s; opacity: 0;"></div>
+        <!-- Profile Area -->
+        <div class="w-full text-center flex flex-col items-center opacity-0 animate-fade-up delay-100">
+            <!-- Logo with Pulse Ring -->
+            <div class="relative w-28 h-28 mb-5">
+                <div class="absolute inset-0 bg-kancah-blue/20 rounded-full animate-pulse-slow scale-110"></div>
+                <div class="absolute inset-0 bg-white rounded-full flex items-center justify-center shadow-xl border border-gray-100 p-4 z-10">
+                    <img src="./assets/kancah png.png" alt="Kancah Logo" class="w-full h-auto object-contain" onerror="this.src='https://via.placeholder.com/150?text=K'">
+                </div>
+            </div>
 
-        <!-- ==========================================
-             2. BUTTON LINKS
-        =========================================== -->
-        <div id="links-container" class="w-full space-y-4 animate-fade-up" style="animation-delay: 0.2s; opacity: 0;">
+            <h1 class="text-3xl font-black tracking-tighter uppercase text-kancah-dark leading-none">@kancahcom</h1>
+            <p class="text-gray-500 text-[11px] uppercase tracking-[0.2em] mt-3 font-bold">Dream. Play. Create.</p>
+        </div>
+
+        <!-- Links Container -->
+        <div id="links-container" class="w-full space-y-4 mt-10 opacity-0 animate-fade-up delay-200">
             <!-- Loading State -->
             <div class="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-                Memuat tautan... <i class="fa-solid fa-spinner fa-spin ml-2"></i>
+                Menghubungkan... <i class="fa-solid fa-circle-notch fa-spin ml-2"></i>
             </div>
         </div>
 
-        <!-- Spacer to push footer down if content is short -->
-        <div class="flex-grow"></div>
-
-        <!-- ==========================================
-             3. FOOTER
-        =========================================== -->
-        <div class="mt-16 text-center animate-fade-up" style="animation-delay: 0.3s; opacity: 0;">
-            <a href="/" class="flex items-center justify-center gap-2 group">
-                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-kancah-blue transition-colors">Powered by Kancah</span>
-                <i class="fa-solid fa-bolt text-gray-300 text-[10px] group-hover:text-kancah-blue transition-colors"></i>
+        <!-- Social Media Floating Pill -->
+        <div class="mt-12 mb-8 opacity-0 animate-fade-up delay-300">
+            <div class="bg-white/80 backdrop-blur-xl border border-gray-200/60 rounded-full px-8 py-4 flex items-center justify-center gap-8 text-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                <a href="https://www.instagram.com/kancahcom" target="_blank" class="text-kancah-dark hover:text-kancah-blue hover:scale-110 transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/kancah/" target="_blank" class="text-kancah-dark hover:text-kancah-blue hover:scale-110 transition-all duration-300"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://wa.me/628924687866" target="_blank" class="text-kancah-dark hover:text-kancah-blue hover:scale-110 transition-all duration-300"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="mt-auto pt-6 pb-4 text-center opacity-0 animate-fade-up delay-300">
+            <a href="/" class="inline-flex items-center justify-center gap-2 group">
+                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-kancah-blue transition-colors">Creative Logic Systems</span>
             </a>
         </div>
 
     </div>
 
     <script>
+        // Real-time Clock
+        function updateTime() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const el = document.getElementById('live-time');
+            if(el) el.innerText = `${h}:${m} WIB`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
         // Supabase Init
         const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
         const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
@@ -144,20 +186,29 @@
                     return;
                 }
 
-                // Render tombol Links dengan style Typographic terpusat ala Linktree
-                container.innerHTML = data.map(l => `
+                // Render tombol Links dengan gaya Glassmorphism & Ghost Numbers
+                container.innerHTML = data.map((l, index) => {
+                    const num = String(index + 1).padStart(2, '0');
+                    return `
                     <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" 
-                       class="link-card relative w-full flex items-center justify-center bg-white border border-gray-100 py-5 px-8 rounded-full hover:border-kancah-blue hover:bg-kancah-blue group overflow-hidden shadow-sm">
+                       class="group relative w-full flex items-center bg-white/60 backdrop-blur-lg border border-white py-5 px-8 rounded-full hover:border-kancah-blue hover:bg-kancah-blue transition-all duration-500 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_15px_30px_rgba(0,6,255,0.2)] hover:-translate-y-1">
+                        
+                        <!-- Ghost Number (Di kiri) -->
+                        <span class="absolute left-6 text-3xl font-black italic text-gray-200/60 group-hover:text-white/20 transition-colors pointer-events-none select-none">
+                            ${num}
+                        </span>
                         
                         <!-- Teks Utama -->
-                        <span class="font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] text-kancah-dark group-hover:text-white relative z-10 transition-colors text-center w-full">
+                        <span class="font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] text-kancah-dark group-hover:text-white relative z-10 transition-colors text-center w-full mx-8 line-clamp-1">
                             ${l.title}
                         </span>
                         
-                        <!-- Ikon panah tersembunyi yang muncul saat di-hover -->
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-white absolute right-6 opacity-0 group-hover:opacity-100 group-hover:rotate-0 transition-all duration-300"></i>
+                        <!-- Arrow Icon Circle (Di kanan) -->
+                        <div class="absolute right-3 w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm group-hover:bg-white group-hover:scale-95 transition-all duration-300">
+                            <i class="fa-solid fa-arrow-right -rotate-45 text-gray-400 group-hover:text-kancah-blue group-hover:rotate-0 transition-all duration-300 text-xs"></i>
+                        </div>
                     </a>
-                `).join('');
+                `}).join('');
             } catch (err) {
                 console.error("Error:", err);
                 container.innerHTML = '<p class="text-[10px] font-bold uppercase tracking-widest text-red-500 text-center">Gagal memuat tautan.</p>';
