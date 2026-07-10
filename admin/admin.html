@@ -253,6 +253,9 @@
                 <button onclick="showTab('bazar')" id="btn-bazar" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
                     <i class="fa-solid fa-store w-5"></i> Bazar
                 </button>
+                <button onclick="showTab('links')" id="btn-links" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
+    <i class="fa-solid fa-link w-5"></i> Link-in-Bio
+</button>
                 <button onclick="showTab('users')" id="btn-users" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left" style="display: none;">
                     <i class="fa-solid fa-users-gear w-5"></i> Admins
                 </button>
@@ -481,7 +484,22 @@
                     <table class="w-full text-left text-sm min-w-[760px]"><tbody id="bazar-list-table"></tbody></table>
                 </div>
             </section>
-
+<section id="tab-links" class="tab-content hidden space-y-8">
+    <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm">
+        <h2 class="text-xl font-bold italic uppercase mb-6">Manage Quick Links</h2>
+        <form id="linkForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <input type="text" id="link-title" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Judul Link" required>
+            <input type="url" id="link-url" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="URL (https://...)" required>
+            <button type="submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all">Publish Link</button>
+        </form>
+    </div>
+    <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm">
+        <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 italic mb-6">Existing Links</h3>
+        <table class="w-full text-left">
+            <tbody id="link-list-table"></tbody>
+        </table>
+    </div>
+</section>
             <section id="tab-users" class="tab-content hidden space-y-8">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-1 space-y-6">
@@ -587,24 +605,42 @@
             };
         }
 // --- MANAGE LINKS ---
+// --- MANAGE LINKS ---
 async function loadLinkAdmin() {
-    const { data } = await supabase.from('links').select('*').order('sort_order');
     const table = document.getElementById('link-list-table');
-    table.innerHTML = data.map(l => `
-        <tr>
-            <td class="p-4">${l.title}</td>
-            <td class="p-4 font-bold text-blue-600">${l.clicks} Clicks</td>
-            <td class="p-4"><button onclick="deleteLink(${l.id})" class="text-red-500">Hapus</button></td>
+    const { data } = await kancah.from('links').select('*').order('sort_order', {ascending: true});
+    table.innerHTML = (data || []).map(l => `
+        <tr class="border-b">
+            <td class="py-4 font-bold text-slate-800">${l.title}</td>
+            <td class="py-4 font-bold text-blue-600">${l.clicks || 0} Clicks</td>
+            <td class="py-4 text-right">
+                <button onclick="deleteLink(${l.id})" class="text-red-500 hover:text-red-700"><i class="fa-solid fa-trash-can"></i></button>
+            </td>
         </tr>
     `).join('');
 }
 
-async function addLink() {
+document.getElementById('linkForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
     const title = document.getElementById('link-title').value;
     const url = document.getElementById('link-url').value;
-    await supabase.from('links').insert([{ title, url }]);
+    
+    await kancah.from('links').insert([{ title, url, clicks: 0 }]);
+    showToast('LINK DITAMBAHKAN!');
+    e.target.reset();
     loadLinkAdmin();
+});
+
+async function deleteLink(id) {
+    if(confirm("Yakin hapus link ini?")) {
+        await kancah.from('links').delete().eq('id', id);
+        showToast("LINK DIHAPUS!");
+        loadLinkAdmin();
+    }
 }
+
+// Tambahkan loadLinkAdmin() di dalam fungsi checkSession()
+// agar data otomatis muncul saat admin login.
         function extractYouTubeId(url) {
             const patterns = [
                 /(?:youtube\.com\/watch\?v=)([\w-]{11})/,
