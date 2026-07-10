@@ -80,6 +80,27 @@
         details > summary::-webkit-details-marker { display: none; }
         details[open] summary ~ * { animation: sweep .3s ease-in-out; }
         @keyframes sweep { 0% {opacity: 0; transform: translateY(-10px)} 100% {opacity: 1; transform: translateY(0)} }
+
+        /* Featured Works Card Animation */
+        @keyframes featuredCardIn { to { opacity: 1; transform: translateY(0); } }
+
+        /* Showcase iframe (sama seperti works.html) */
+        #showcase-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+            display: block;
+        }
+        #iframe-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
     </style>
     <!-- FAQ Schema Markup -->
     <script type="application/ld+json">
@@ -761,32 +782,72 @@ async function loadFeaturedData(filter = 'all') {
         }
 
         grid.innerHTML = projects.map((p, i) => {
-            const isWeb = (p.category || '').trim() === 'Web Development';
-            const number = String(i + 1).padStart(2, '0');
-
-            // Logika click: jika web, panggil openShowcase, jika bukan, redirect.
+            const isWeb  = (p.category || '').trim() === 'Web Development';
             const action = isWeb
                 ? `openShowcase('${p.title}', '${p.demo_url}', '${p.slug}')`
                 : `window.location.href='detail-project?id=${p.slug}'`;
+            const idx   = String(i + 1).padStart(2, '0');
+            const delay = (i * 0.06).toFixed(2);
 
             return `
-            <article class="group cursor-pointer" onclick="${action}">
-                <div class="relative overflow-hidden rounded-[1.75rem] bg-slate-100 aspect-[16/10] border border-gray-200 shadow-sm transition-all duration-500 group-hover:border-kancah-blue group-hover:shadow-xl">
-                    <img src="${p.image_url}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="${p.title}">
-                    
-                    <span class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest">${p.category}</span>
+            <div class="group cursor-pointer bg-white border border-gray-200 rounded-2xl overflow-hidden flex flex-col relative
+                        transition-all duration-500 hover:-translate-y-1
+                        hover:border-kancah-blue hover:shadow-[0_0_0_1px_#0006ff,0_12px_32px_rgba(0,6,255,0.1)]"
+                 onclick="${action}"
+                 style="opacity:0; transform:translateY(24px);
+                        animation: featuredCardIn 0.55s cubic-bezier(.23,1,.32,1) ${delay}s forwards;">
 
-                    ${isWeb ? `
-                    <div class="absolute inset-0 bg-kancah-blue/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                        <span class="text-white font-black uppercase tracking-widest text-[10px]">Live Preview</span>
-                    </div>` : ''}
+                <!-- Thumbnail -->
+                <div class="relative overflow-hidden aspect-[16/10] bg-kancah-light">
+                    <img src="${p.image_url}" alt="${p.title}" loading="lazy"
+                         class="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.02]">
+
+                    <!-- Index badge -->
+                    <span class="absolute top-3 left-3 text-[9px] font-bold uppercase tracking-widest
+                                 text-white bg-black/50 backdrop-blur-sm px-2.5 py-1 rounded-full">
+                        ${idx}
+                    </span>
+
+                    <!-- Hover overlay -->
+                    <div class="absolute inset-0 bg-kancah-blue/0 group-hover:bg-kancah-blue/[0.07]
+                                transition-all duration-300 flex items-center justify-center">
+                        ${isWeb ? `
+                        <span class="text-[9px] font-bold uppercase tracking-widest
+                                     bg-kancah-blue text-white px-5 py-2.5 rounded-full
+                                     opacity-0 group-hover:opacity-100
+                                     translate-y-2 group-hover:translate-y-0
+                                     transition-all duration-300
+                                     shadow-lg shadow-kancah-blue/30">
+                            Live Preview
+                        </span>` : ''}
+                    </div>
+
+                    <!-- Arrow icon -->
+                    <div class="absolute top-3 right-3 w-8 h-8 bg-white rounded-full border border-gray-200
+                                flex items-center justify-center
+                                opacity-0 scale-75
+                                group-hover:opacity-100 group-hover:scale-100 group-hover:border-kancah-blue
+                                transition-all duration-300">
+                        <svg viewBox="0 0 12 12" fill="none" stroke="#0006FF" stroke-width="1.8"
+                             style="width:11px;height:11px;">
+                            <path d="M2 10L10 2M10 2H4M10 2v6"/>
+                        </svg>
+                    </div>
                 </div>
-                
-                <div class="p-4 flex justify-between items-center">
-                    <h3 class="text-[15px] font-bold uppercase tracking-tight text-kancah-dark group-hover:text-kancah-blue">${p.title}</h3>
-                    <span class="text-[9px] font-black text-gray-400">${number}</span>
+
+                <!-- Meta -->
+                <div class="p-4 flex flex-col gap-1.5 flex-grow">
+                    <span class="text-[8px] font-bold uppercase tracking-[0.18em]
+                                 text-white bg-kancah-blue px-2.5 py-1 rounded-full w-fit">
+                        ${p.category.toUpperCase()}
+                    </span>
+                    <h3 class="text-[15px] font-bold uppercase tracking-wide
+                               text-kancah-dark group-hover:text-kancah-blue
+                               transition-colors leading-snug line-clamp-2">
+                        ${p.title.toUpperCase()}
+                    </h3>
                 </div>
-            </article>`;
+            </div>`;
         }).join('');
     } catch (error) {
         console.error('Featured works error:', error);
@@ -794,42 +855,83 @@ async function loadFeaturedData(filter = 'all') {
     }
 }
 
-// ── FUNGSI SHOWCASE (dipindah ke top-level scope, bukan nested di dalam loadFeaturedData) ──
+// ── FUNGSI SHOWCASE (top-level scope, identik dengan works.html) ──
 async function openShowcase(title, url, slug) {
     currentDemoUrl = url;
-    currentSlug = slug;
+    currentSlug    = slug;
 
-    // Set judul
     document.getElementById('showcase-title').innerText = title;
-
-    // Tampilkan overlay
-    const showcase = document.getElementById('web-showcase');
-    showcase.classList.remove('hidden');
-    showcase.classList.add('flex');
+    document.getElementById('web-showcase').classList.remove('hidden');
+    document.getElementById('web-showcase').classList.add('flex');
     document.body.style.overflow = 'hidden';
 
-    // Load iframe
     const iframe = document.getElementById('showcase-iframe');
-    iframe.src = url; // Atau gunakan srcdoc jika ingin bypass X-Frame-Options
+    iframe.src    = '';
+    iframe.srcdoc = '';
 
-    // Set link "Open in New Tab"
-    const newTabBtn = document.getElementById('showcase-new-tab');
-    newTabBtn.href = url;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Gagal load demo');
+        const htmlText = await response.text();
+
+        const scriptPenjinak = `
+            <script>
+                document.addEventListener('click', function(e) {
+                    const link = e.target.closest('a');
+                    if (link) { e.preventDefault(); }
+                });
+            <\/script>`;
+
+        iframe.srcdoc = htmlText + scriptPenjinak;
+
+        const newTabBtn   = document.getElementById('showcase-new-tab');
+        newTabBtn.onclick = null;
+        newTabBtn.href    = window.location.origin + '/preview/' + encodeURIComponent(slug);
+        newTabBtn.target  = '_blank';
+
+    } catch (err) {
+        console.error('Error Demo:', err);
+        iframe.srcdoc = `<div style="display:flex;justify-content:center;align-items:center;
+                                     height:100vh;font-family:sans-serif;color:red;">
+                             <h2>❌ Gagal memuat demo.</h2>
+                         </div>`;
+    }
 }
 
 function closeShowcase() {
-    const showcase = document.getElementById('web-showcase');
-    showcase.classList.add('hidden');
-    showcase.classList.remove('flex');
+    document.getElementById('web-showcase').classList.remove('flex');
+    document.getElementById('web-showcase').classList.add('hidden');
+    const iframe  = document.getElementById('showcase-iframe');
+    iframe.src    = '';
+    iframe.srcdoc = '';
     document.body.style.overflow = '';
-    document.getElementById('showcase-iframe').src = '';
 }
 
 function copyDemoLink() {
-    const link = currentDemoUrl;
-    navigator.clipboard.writeText(link).then(() => {
-        alert("Link demo disalin!");
-    });
+    if (!currentSlug) return;
+    const cleanUrl = window.location.origin + '/preview/' + encodeURIComponent(currentSlug);
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(cleanUrl).then(updateCopyButton).catch(() => copyFallback(cleanUrl));
+    } else {
+        copyFallback(cleanUrl);
+    }
+}
+
+function updateCopyButton() {
+    const btn = document.querySelector('[onclick="copyDemoLink()"] i');
+    if (!btn) return;
+    const orig = btn.className;
+    btn.className = 'fa-solid fa-check text-xs text-green-500';
+    setTimeout(() => { btn.className = orig; }, 2000);
+}
+
+function copyFallback(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); updateCopyButton(); } catch (e) { console.error(e); }
+    document.body.removeChild(ta);
 }
 
 // 2. FUNGSI LOGO PARTNER
