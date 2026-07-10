@@ -70,7 +70,9 @@
     </footer>
 
     <script>
-        const kancah = supabase.createClient('URL', 'KEY');
+           const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
+        const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
+        const kancah = supabase.createClient(kancahUrl, kancahKey);
         const slug = new URLSearchParams(window.location.search).get('slug');
 
         async function loadPost() {
