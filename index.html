@@ -908,77 +908,50 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // 1. KONFIGURASI
     const kancah = supabase.createClient('https://hmzwjceomnneiczbpban.supabase.co', 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__');
 
-    // 2. FUNGSI-FUNGSI PENDUKUNG
-    function setFeaturedFilterActive(activeFilter = 'all') {
-        document.querySelectorAll('.featured-filter-btn').forEach(btn => {
-            const isActive = btn.dataset.featuredFilter === activeFilter;
-            btn.className = isActive 
-                ? 'featured-filter-btn px-4 py-2 rounded-full bg-kancah-blue border border-kancah-blue text-[9px] font-black uppercase tracking-widest text-white transition-all shadow-lg shadow-kancah-blue/20' 
-                : 'featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue';
-        });
-    }
+    // FUNGSI LOAD DATA
+    async function loadFeaturedData() { /* Tambahkan logika fetch Anda */ }
+    async function loadPartners() { /* Tambahkan logika fetch Anda */ }
+    function updateClock() { /* Jam */ }
+    async function updateWeather() { /* Cuaca */ }
 
-    // (Masukkan kembali fungsi loadFeaturedData, loadPartners, updateClock, updateWeather, openShowcase, dll milik Anda di sini)
-
-    // 3. EKSEKUSI
     document.addEventListener('DOMContentLoaded', async () => {
-        // Jalankan fungsi tanpa memblokir animasi
-        // Kita pakai try-catch agar kalau data gagal, loader tetap jalan
-        try {
-            await Promise.all([
-                loadFeaturedData(),
-                loadPartners(),
-                updateWeather()
-            ]);
-        } catch (e) {
-            console.error("Data loading failed, continuing animation...", e);
-        }
+        // 1. Jalankan data fetch secara background
+        loadFeaturedData(); loadPartners(); updateWeather();
+        updateClock(); setInterval(updateClock, 1000);
 
-        updateClock();
-        setInterval(updateClock, 1000);
-
-        // LOGIKA ANIMASI LOADER
         const loader = document.getElementById('intro-loader');
         if (!loader) return;
 
+        // 2. CEK SESSION (Biar tidak muncul terus)
         if (sessionStorage.getItem('kancahIntroShown')) {
             loader.remove();
             return;
         }
 
-        // --- MENGAPA ANGKA 0 TERUS? ---
-        // Mungkin fungsi countUpTo tidak terdeteksi atau ada elemen yang hilang.
-        // Kita gunakan logika animasi yang paling sederhana:
-        
+        // 3. ANIMASI SEDERHANA (TANPA countUpTo)
         document.body.style.overflow = 'hidden';
+        const counter = document.getElementById('intro-counter');
+        const bar = document.getElementById('intro-progress-bar');
         
-        // Pemicu Animasi
-        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-        
-        try {
-            // Animasi dimulai
-            document.querySelectorAll('.intro-bracket').forEach(b => b.classList.add('play'));
-            await sleep(1000);
-            
-            // Jika countUpTo tidak jalan, paksa loader hilang setelah 4 detik
-            // Agar user tidak terjebak di angka 0
-            await sleep(3000); 
-            
-            document.getElementById('intro-center-content').classList.add('intro-hide-content');
-            document.getElementById('intro-panel-left').classList.add('open');
-            document.getElementById('intro-panel-right').classList.add('open');
-            
-            await sleep(1000);
-            sessionStorage.setItem('kancahIntroShown', '1');
-            document.body.style.overflow = '';
-            loader.remove();
-        } catch (err) {
-            console.log("Error pada animasi loader:", err);
-            loader.remove(); // Force remove kalau error
+        // Animasi angka sederhana
+        for(let i = 0; i <= 100; i++) {
+            if(counter) counter.innerText = i;
+            if(bar) bar.style.width = i + '%';
+            await new Promise(r => setTimeout(r, 20)); // Kecepatan loading
         }
+
+        // Transisi ke konten utama
+        const content = document.getElementById('intro-center-content');
+        if(content) content.classList.add('intro-hide-content');
+        document.getElementById('intro-panel-left').classList.add('open');
+        document.getElementById('intro-panel-right').classList.add('open');
+        
+        await new Promise(r => setTimeout(r, 1000));
+        sessionStorage.setItem('kancahIntroShown', '1');
+        document.body.style.overflow = '';
+        loader.remove();
     });
 </script>
 </html>
