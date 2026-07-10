@@ -72,67 +72,6 @@
             box-shadow: 0 30px 40px -20px rgba(0,6,255,.25);
         }
 
-        /* ══════════════════════════════════════════════════
-           INTRO / LOGO MOTION OPENER
-        ══════════════════════════════════════════════════ */
-        #intro-loader {
-            transition: opacity .7s ease, visibility .7s ease;
-        }
-        #intro-loader.intro-hide {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        #intro-logo {
-            opacity: 0;
-            filter: blur(10px);
-            transform: scale(.82);
-            animation: introLogoIn 1s cubic-bezier(.16,1,.3,1) .25s forwards;
-        }
-        @keyframes introLogoIn {
-            to { opacity: 1; filter: blur(0); transform: scale(1); }
-        }
-
-        #intro-shine {
-            background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.75) 48%, rgba(0,6,255,.55) 52%, transparent 65%);
-            background-size: 260% 100%;
-            background-position: 140% 0;
-            mix-blend-mode: screen;
-            animation: introShine 1s ease .95s forwards;
-            -webkit-mask-image: url('assets/kancah-logo.png');
-            -webkit-mask-size: contain;
-            -webkit-mask-repeat: no-repeat;
-            -webkit-mask-position: center;
-            mask-image: url('assets/kancah-logo.png');
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            mask-position: center;
-        }
-        @keyframes introShine {
-            to { background-position: -40% 0; }
-        }
-
-        #intro-ring, #intro-ring2 {
-            opacity: 0;
-            transform: scale(.6);
-            animation: introRing 1.7s cubic-bezier(.16,1,.3,1) forwards;
-        }
-        #intro-ring2 { animation-delay: .14s; }
-        @keyframes introRing {
-            0%   { opacity: 0; transform: scale(.6); }
-            35%  { opacity: 1; }
-            100% { opacity: 0; transform: scale(1.2); }
-        }
-
-        #intro-tag {
-            opacity: 0;
-            transform: translateY(8px);
-            animation: introTagIn .7s ease 1.1s forwards;
-        }
-        @keyframes introTagIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         /* ── Showcase iframe ── */
         #showcase-iframe {
             width: 100%;
@@ -153,25 +92,6 @@
     </style>
 </head>
 <body class="bg-white text-kancah-dark overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
-
-<!-- ════════════════════════════════════════
-     INTRO / LOGO MOTION OPENER
-════════════════════════════════════════ -->
-<div id="intro-loader" class="fixed inset-0 z-[999] bg-[#111111] flex flex-col items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 opacity-[0.08] pointer-events-none"
-         style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 26px 26px;"></div>
-
-    <div id="intro-ring" class="absolute w-[150px] h-[150px] sm:w-[230px] sm:h-[230px] rounded-full border border-kancah-blue/30 pointer-events-none"></div>
-    <div id="intro-ring2" class="absolute w-[210px] h-[210px] sm:w-[330px] sm:h-[330px] rounded-full border border-kancah-blue/15 pointer-events-none"></div>
-
-    <div class="relative flex flex-col items-center gap-4">
-        <div class="relative">
-            <img src="assets/kancah-logo.png" alt="Kancah" id="intro-logo" class="h-9 sm:h-14 w-auto object-contain relative z-10">
-            <div id="intro-shine" class="absolute inset-0 z-20 pointer-events-none"></div>
-        </div>
-        <span id="intro-tag" class="text-[#0006ff] font-black text-[9px] sm:text-[10px] uppercase tracking-[0.4em]">Creative Agency</span>
-    </div>
-</div>
 
 <!-- ════════════════════════════════════════
      NAVBAR
@@ -636,33 +556,6 @@ const kancah = supabase.createClient(SB_URL, SB_KEY);
             }
         } catch (e) { console.error('Weather error', e); }
     }
-
-    /* ════════════════════════════════════════
-       INTRO / LOGO MOTION OPENER
-       Muncul cuma sekali per sesi browser biar gak ganggu
-       tiap pindah halaman. Kalau mau tampil TIAP kali halaman
-       dibuka, hapus 2 baris sessionStorage di bawah.
-    ════════════════════════════════════════ */
-    (function initIntroLoader() {
-        const loader = document.getElementById('intro-loader');
-        if (!loader) return;
-
-        if (sessionStorage.getItem('kancahIntroShown')) {
-            loader.remove();
-            return;
-        }
-
-        document.body.style.overflow = 'hidden';
-
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                loader.classList.add('intro-hide');
-                document.body.style.overflow = '';
-                sessionStorage.setItem('kancahIntroShown', '1');
-                setTimeout(() => loader.remove(), 750);
-            }, 1650);
-        });
-    })();
 
     /* ════════════════════════════════════════
        INIT
