@@ -85,12 +85,33 @@
         @keyframes featuredCardIn { to { opacity: 1; transform: translateY(0); } }
 
         /* Featured card image lift-on-hover */
-        .lift-card {
+        /* ══════════════════════════════════════════════════
+           FIX: pisahkan transform (hover lift+rotate) dari
+           elemen yang punya border-radius + overflow:hidden,
+           dan kasih elemen radius-nya compositing layer sendiri.
+           Kalau transform + rounded-clip nempel di elemen yang
+           sama, browser (Chrome/WebKit) bisa "squash" layer-nya
+           pas hover berkali-kali, dan rounded-clip-nya sempat
+           di-rasterize ulang salah sehingga sudut jadi lancip
+           sesaat.
+        ══════════════════════════════════════════════════ */
+        .lift-card-wrap {
             transform-origin: bottom left;
-            transition: transform .4s cubic-bezier(.23,1,.32,1), box-shadow .4s ease;
+            transition: transform .4s cubic-bezier(.23,1,.32,1);
+            will-change: transform;
         }
-        .lift-card:hover {
+        .group:hover .lift-card-wrap {
             transform: translateY(-10px) rotate(-1.5deg);
+        }
+        .lift-card {
+            transition: box-shadow .4s ease, border-color .4s ease;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            isolation: isolate;
+        }
+        .group:hover .lift-card {
             box-shadow: 0 30px 40px -20px rgba(0,6,255,.25);
         }
 
@@ -840,7 +861,8 @@ async function loadFeaturedData(filter = 'all') {
                  style="opacity:0; transform:translateY(24px);
                         animation: featuredCardIn 0.55s cubic-bezier(.23,1,.32,1) ${delay}s forwards;">
 
-                <!-- Thumbnail -->
+                <!-- Thumbnail (wrapper: cuma buat transform lift+rotate saat hover) -->
+                <div class="lift-card-wrap">
                 <div class="lift-card relative overflow-hidden rounded-[1.5rem] aspect-[4/3] bg-kancah-dark border border-gray-200
                             group-hover:border-kancah-blue transition-colors duration-500">
                     <img src="${p.image_url}" alt="${p.title}" loading="lazy"
@@ -876,6 +898,7 @@ async function loadFeaturedData(filter = 'all') {
                                 transition-all duration-300">
                         <i class="fa-solid fa-arrow-right -rotate-45 text-kancah-blue text-[11px]"></i>
                     </div>
+                </div>
                 </div>
 
                 <!-- Meta -->
