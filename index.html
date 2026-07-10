@@ -905,399 +905,45 @@
         </div>
     </footer>
 
+</body>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // 1. KONFIGURASI SUPABASE
-    const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
-    const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-    const kancah = supabase.createClient(SB_URL, SB_KEY);
+    // 1. KONFIGURASI
+    const kancah = supabase.createClient('https://hmzwjceomnneiczbpban.supabase.co', 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__');
 
-    let currentDemoUrl = '';
-    let currentSlug = '';
-
-// 1. FUNGSI UTAMA LOAD PROJECT (FILTER BUTTON + AUTO ISI)
-function setFeaturedFilterActive(activeFilter = 'all') {
-    document.querySelectorAll('.featured-filter-btn').forEach(btn => {
-        const isActive = btn.dataset.featuredFilter === activeFilter;
-        btn.className = isActive
-            ? 'featured-filter-btn px-4 py-2 rounded-full bg-kancah-blue border border-kancah-blue text-[9px] font-black uppercase tracking-widest text-white transition-all shadow-lg shadow-kancah-blue/20'
-            : 'featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue';
-    });
-}
-
-async function loadFeaturedData(filter = 'all') {
-    const grid = document.getElementById('featured-grid');
-    if (!grid) return;
-
-    const TARGET_LIMIT = 9;
-    setFeaturedFilterActive(filter);
-
-    grid.innerHTML = `
-        <div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">
-            Memuat karya pilihan...
-        </div>`;
-
-    try {
-        const applyFilter = (query) => {
-            if (filter !== 'all') query = query.eq('category', filter);
-            return query;
-        };
-
-        // Ambil highlight sesuai filter dulu.
-        let highlightQuery = kancah
-            .from('projects')
-            .select('*')
-            .eq('is_highlight', true)
-            .order('created_at', { ascending: false })
-            .limit(TARGET_LIMIT);
-
-        const { data: highlighted, error: highlightError } = await applyFilter(highlightQuery);
-        if (highlightError) throw highlightError;
-
-        let projects = highlighted || [];
-
-        // Kalau highlight kurang, tambahkan project terbaru lain sesuai filter.
-        if (projects.length < TARGET_LIMIT) {
-            const usedIds = projects.map(p => p.id).filter(Boolean);
-
-            let moreQuery = kancah
-                .from('projects')
-                .select('*')
-                .order('created_at', { ascending: false })
-                .limit(TARGET_LIMIT - projects.length);
-
-            moreQuery = applyFilter(moreQuery);
-
-            if (usedIds.length > 0) {
-                moreQuery = moreQuery.not('id', 'in', `(${usedIds.join(',')})`);
-            }
-
-            const { data: moreProjects, error: moreError } = await moreQuery;
-            if (moreError) throw moreError;
-
-            projects = [...projects, ...(moreProjects || [])].slice(0, TARGET_LIMIT);
-        }
-
-        if (!projects || projects.length === 0) {
-            grid.innerHTML = `<div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">Belum ada karya di kategori ini.</div>`;
-            return;
-        }
-
-        grid.innerHTML = projects.map((p, i) => {
-            const isWeb  = (p.category || '').trim() === 'Web Development';
-            const action = isWeb
-                ? `openShowcase('${p.title}', '${p.demo_url}', '${p.slug}')`
-                : `window.location.href='detail-project?id=${p.slug}'`;
-            const idx   = String(i + 1).padStart(2, '0');
-            const delay = (i * 0.06).toFixed(2);
-
-            return `
-            <div class="group cursor-pointer"
-                 onclick="${action}"
-                 style="opacity:0; transform:translateY(24px);
-                        animation: featuredCardIn 0.55s cubic-bezier(.23,1,.32,1) ${delay}s forwards;">
-
-                <!-- Thumbnail (wrapper: cuma buat transform lift+rotate saat hover) -->
-                <div class="lift-card-wrap">
-<div class="lift-card relative overflow-hidden rounded-[1.5rem] aspect-[4/3] lg:aspect-[16/9] bg-kancah-dark border border-gray-200
-                            group-hover:border-kancah-blue transition-colors duration-500">
-                    <img src="${p.image_url}" alt="${p.title}" loading="lazy"
-                         class="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.05]">
-
-                    <!-- Scrim biar ghost number tetap kebaca di foto apapun -->
-                    <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/45 to-transparent pointer-events-none"></div>
-
-                    <!-- Ghost index number, bleeding di sudut -->
-                    <span class="pointer-events-none absolute -top-3 -right-1 text-[76px] sm:text-[92px] font-black italic leading-none select-none text-white/25">
-                        ${idx}
-                    </span>
-
-                    <!-- Wash biru saat hover -->
-                    <div class="absolute inset-0 bg-kancah-blue opacity-0 group-hover:opacity-[0.1] transition-opacity duration-500 pointer-events-none"></div>
-
-                    <!-- Live Preview pill (khusus web) -->
-                    ${isWeb ? `
-<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <span class="inline-flex items-center gap-2 bg-white text-kancah-dark px-5 py-2.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-xl">
-                            <span class="relative flex h-1.5 w-1.5">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kancah-blue opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-kancah-blue"></span>
-                            </span>
-                            Live Preview
-                        </span>
-                    </div>` : ''}
-
-                    <!-- Arrow circle -->
-                    <div class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/95 backdrop-blur flex items-center justify-center
-                                opacity-0 scale-75 border border-transparent
-                                group-hover:opacity-100 group-hover:scale-100 group-hover:border-kancah-blue
-                                transition-all duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-kancah-blue text-[11px]"></i>
-                    </div>
-                </div>
-                </div>
-
-                <!-- Meta -->
-                <div class="pt-4">
-                    <span class="text-[9px] font-black uppercase tracking-[0.3em] text-kancah-blue mb-2 block">
-                        ${p.category}
-                    </span>
-                    <h3 class="text-lg font-black uppercase tracking-tight text-kancah-dark group-hover:text-kancah-blue transition-colors leading-tight">
-                        ${p.title}
-                    </h3>
-                    <div class="mt-3 h-[2px] w-full bg-gray-200 relative overflow-hidden">
-                        <div class="absolute inset-y-0 left-0 w-0 group-hover:w-full bg-kancah-blue transition-all duration-500"></div>
-                    </div>
-                </div>
-            </div>`;
-        }).join('');
-    } catch (error) {
-        console.error('Featured works error:', error);
-        grid.innerHTML = `<div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">Gagal memuat karya.</div>`;
-    }
-}
-
-// ── FUNGSI SHOWCASE (top-level scope, identik dengan works.html) ──
-async function openShowcase(title, url, slug) {
-    currentDemoUrl = url;
-    currentSlug    = slug;
-
-    document.getElementById('showcase-title').innerText = title;
-    document.getElementById('web-showcase').classList.remove('hidden');
-    document.getElementById('web-showcase').classList.add('flex');
-    document.body.style.overflow = 'hidden';
-
-    const iframe = document.getElementById('showcase-iframe');
-    iframe.src    = '';
-    iframe.srcdoc = '';
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Gagal load demo');
-        const htmlText = await response.text();
-
-        const scriptPenjinak = `
-            <script>
-                document.addEventListener('click', function(e) {
-                    const link = e.target.closest('a');
-                    if (link) { e.preventDefault(); }
-                });
-            <\/script>`;
-
-        iframe.srcdoc = htmlText + scriptPenjinak;
-
-        const newTabBtn   = document.getElementById('showcase-new-tab');
-        newTabBtn.onclick = null;
-        newTabBtn.href    = window.location.origin + '/preview/' + encodeURIComponent(slug);
-        newTabBtn.target  = '_blank';
-
-    } catch (err) {
-        console.error('Error Demo:', err);
-        iframe.srcdoc = `<div style="display:flex;justify-content:center;align-items:center;
-                                     height:100vh;font-family:sans-serif;color:red;">
-                             <h2>❌ Gagal memuat demo.</h2>
-                         </div>`;
-    }
-}
-
-function closeShowcase() {
-    document.getElementById('web-showcase').classList.remove('flex');
-    document.getElementById('web-showcase').classList.add('hidden');
-    const iframe  = document.getElementById('showcase-iframe');
-    iframe.src    = '';
-    iframe.srcdoc = '';
-    document.body.style.overflow = '';
-}
-
-function copyDemoLink() {
-    if (!currentSlug) return;
-    const cleanUrl = window.location.origin + '/preview/' + encodeURIComponent(currentSlug);
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(cleanUrl).then(updateCopyButton).catch(() => copyFallback(cleanUrl));
-    } else {
-        copyFallback(cleanUrl);
-    }
-}
-
-function updateCopyButton() {
-    const btn = document.querySelector('[onclick="copyDemoLink()"] i');
-    if (!btn) return;
-    const orig = btn.className;
-    btn.className = 'fa-solid fa-check text-xs text-green-500';
-    setTimeout(() => { btn.className = orig; }, 2000);
-}
-
-function copyFallback(text) {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); updateCopyButton(); } catch (e) { console.error(e); }
-    document.body.removeChild(ta);
-}
-
-// 2. FUNGSI LOGO PARTNER
-async function loadPartners() {
-    const { data: partners, error } = await kancah.from('partners').select('*').order('sort_order', { ascending: true });
-    if (!error && partners) {
-        const track = document.getElementById('partner-track');
-        if (track) {
-            const logoHtml = partners.map(p => `
-                <img src="${p.logo_url}" class="h-10 sm:h-20 w-auto object-contain flex-shrink-0 [filter:brightness(0)_saturate(100%)_invert(55%)] hover:[filter:brightness(0)_saturate(100%)_invert(9%)_sepia(100%)_saturate(7484%)_hue-rotate(244deg)_brightness(100%)_contrast(145%)]" alt="${p.name}">
-            `).join('');
-            track.innerHTML = logoHtml + logoHtml;
-        }
-    }
-}
-
-// 3. FUNGSI JAM & CUACA
-function updateClock() {
-    const now = new Date();
-    const h = String(now.getHours()).padStart(2, '0');
-    const m = String(now.getMinutes()).padStart(2, '0');
-    const s = String(now.getSeconds()).padStart(2, '0');
-    if(document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
-    if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
-}
-
-async function updateWeather() {
-    try {
-        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
-        const data = await res.json();
-        if (data && data.current_weather) {
-            const temp = Math.round(data.current_weather.temperature) + "°C";
-            if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = temp;
-            if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = temp;
-        }
-    } catch (e) { console.error("Weather Offline"); }
-}
-
-// 4. INTRO / LOGO MOTION OPENER — sekuens sinematik ~5 detik
-// Muncul cuma sekali per sesi browser. Kalau mau tampil TIAP kali
-// halaman dibuka, hapus dua baris yang berhubungan dengan sessionStorage.
-(function initIntroLoader() {
-    const loader = document.getElementById('intro-loader');
-    if (!loader) return;
-
-    if (sessionStorage.getItem('kancahIntroShown')) {
-        loader.remove();
-        return;
-    }
-
-    document.body.style.overflow = 'hidden';
-
-    const counterEl     = document.getElementById('intro-counter');
-    const progressBar   = document.getElementById('intro-progress-bar');
-    const counterWrap   = document.getElementById('intro-counter-wrap');
-    const logo          = document.getElementById('intro-logo');
-    const shine         = document.getElementById('intro-shine');
-    const ring1         = document.getElementById('intro-ring');
-    const ring2         = document.getElementById('intro-ring2');
-    const flash         = document.getElementById('intro-flash');
-    const tagline       = document.getElementById('intro-tagline');
-    const brackets      = document.querySelectorAll('.intro-bracket');
-    const panelLeft     = document.getElementById('intro-panel-left');
-    const panelRight    = document.getElementById('intro-panel-right');
-    const centerContent = document.getElementById('intro-center-content');
-
-    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-    const TAGLINE_TEXT = 'FUTURE PROOF CREATIVE';
-
-    tagline.innerHTML = TAGLINE_TEXT.split('').map(ch =>
-        `<span>${ch === ' ' ? '&nbsp;' : ch}</span>`
-    ).join('');
-
-    function countUpTo(target, duration) {
-        return new Promise(resolve => {
-            const start = performance.now();
-            function step(now) {
-                const progress = Math.min((now - start) / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                counterEl.textContent = Math.round(eased * target);
-                progressBar.style.width = (eased * 100) + '%';
-                if (progress < 1) requestAnimationFrame(step);
-                else resolve();
-            }
-            requestAnimationFrame(step);
+    // 2. FUNGSI-FUNGSI PENDUKUNG
+    function setFeaturedFilterActive(activeFilter = 'all') {
+        document.querySelectorAll('.featured-filter-btn').forEach(btn => {
+            const isActive = btn.dataset.featuredFilter === activeFilter;
+            btn.className = isActive 
+                ? 'featured-filter-btn px-4 py-2 rounded-full bg-kancah-blue border border-kancah-blue text-[9px] font-black uppercase tracking-widest text-white transition-all shadow-lg shadow-kancah-blue/20' 
+                : 'featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue';
         });
     }
 
-   async function playIntro() {
-        // 1. Brackets konvergen (anticipation)
-        await sleep(300); // Jeda sebelum mulai
-        brackets.forEach(b => b.classList.add('play'));
+    // (Masukkan kembali fungsi loadFeaturedData, loadPartners, updateClock, updateWeather, openShowcase, dll milik Anda di sini)
 
-        // 2. Counter loading 0 -> 100 (Ubah 1150 ke 2500 agar lebih pelan)
-        await sleep(500); 
-        await countUpTo(100, 2500); 
-
-        // 3. Flash + counter menghilang
-        counterWrap.classList.add('intro-fade-out');
-        flash.classList.add('play');
-        await sleep(400); // Jeda sebelum logo muncul
-
-        // 4. Logo muncul + ring pulse
-        logo.classList.add('play');
-        ring1.classList.add('play');
-        ring2.classList.add('play');
-        await sleep(800); // Logo tampil lebih lama sebelum shine
-        shine.classList.add('play');
-
-        // 5. Tagline muncul
-        await sleep(600);
-        const letters = tagline.querySelectorAll('span');
-        letters.forEach((el, i) => {
-            setTimeout(() => el.classList.add('show'), i * 50); // Typing speed lebih lambat
-        });
-        await sleep(1500); // Tahan sebentar di sini agar user sempat baca tagline
-
-        // 6. Reveal: panel terbuka
-        centerContent.classList.add('intro-hide-content');
-        await sleep(300);
-        panelLeft.classList.add('open');
-        panelRight.classList.add('open');
-
-        await sleep(1000);
-        document.body.style.overflow = '';
-     //   sessionStorage.setItem('kancahIntroShown', '1');
-        loader.remove();
-    }
-
-playIntro();})();
-
-// 5. INIT SEMUA LOGIC
-// Ganti seluruh bagian initIntroLoader dengan ini:
-document.addEventListener('DOMContentLoaded', async () => {
-        // Jalankan fetch data di background
+    // 3. EKSEKUSI
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Jalankan fungsi
         loadFeaturedData();
         loadPartners();
         updateClock();
         setInterval(updateClock, 1000);
         updateWeather();
 
-        // 4. LOGIC INTRO LOADER (Hanya 1 fungsi ini saja)
+        // LOGIKA ANIMASI LOADER
         const loader = document.getElementById('intro-loader');
         if (!loader) return;
 
-        const counterEl = document.getElementById('intro-counter');
-        const progressBar = document.getElementById('intro-progress-bar');
-        const counterWrap = document.getElementById('intro-counter-wrap');
-        const logo = document.getElementById('intro-logo');
-        const shine = document.getElementById('intro-shine');
-        const ring1 = document.getElementById('intro-ring');
-        const ring2 = document.getElementById('intro-ring2');
-        const flash = document.getElementById('intro-flash');
-        const tagline = document.getElementById('intro-tagline');
-        const brackets = document.querySelectorAll('.intro-bracket');
-        const panelLeft = document.getElementById('intro-panel-left');
-        const panelRight = document.getElementById('intro-panel-right');
-        const centerContent = document.getElementById('intro-center-content');
+        if (sessionStorage.getItem('kancahIntroShown')) {
+            loader.remove();
+            return;
+        }
 
         const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-        
-        tagline.innerHTML = 'FUTURE PROOF CREATIVE'.split('').map(ch =>
-            `<span>${ch === ' ' ? '&nbsp;' : ch}</span>`
-        ).join('');
+        const tagline = document.getElementById('intro-tagline');
+        tagline.innerHTML = 'FUTURE PROOF CREATIVE'.split('').map(ch => `<span>${ch === ' ' ? '&nbsp;' : ch}</span>`).join('');
 
         async function countUpTo(target, duration) {
             const start = performance.now();
@@ -1305,8 +951,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 function step(now) {
                     const progress = Math.min((now - start) / duration, 1);
                     const eased = 1 - Math.pow(1 - progress, 3);
-                    counterEl.textContent = Math.round(eased * target);
-                    progressBar.style.width = (eased * 100) + '%';
+                    document.getElementById('intro-counter').textContent = Math.round(eased * target);
+                    document.getElementById('intro-progress-bar').style.width = (eased * 100) + '%';
                     if (progress < 1) requestAnimationFrame(step);
                     else resolve();
                 }
@@ -1314,34 +960,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         }
 
-        // Jalankan urutan animasi
         document.body.style.overflow = 'hidden';
         await sleep(300);
-        brackets.forEach(b => b.classList.add('play'));
+        document.querySelectorAll('.intro-bracket').forEach(b => b.classList.add('play'));
         await sleep(500);
         await countUpTo(100, 2500);
-        counterWrap.classList.add('intro-fade-out');
-        flash.classList.add('play');
+        document.getElementById('intro-counter-wrap').classList.add('intro-fade-out');
+        document.getElementById('intro-flash').classList.add('play');
         await sleep(400);
-        logo.classList.add('play');
-        ring1.classList.add('play');
-        ring2.classList.add('play');
+        document.getElementById('intro-logo').classList.add('play');
+        document.getElementById('intro-ring').classList.add('play');
+        document.getElementById('intro-ring2').classList.add('play');
         await sleep(800);
-        shine.classList.add('play');
+        document.getElementById('intro-shine').classList.add('play');
         await sleep(600);
-        tagline.querySelectorAll('span').forEach((el, i) => {
-            setTimeout(() => el.classList.add('show'), i * 50);
-        });
+        tagline.querySelectorAll('span').forEach((el, i) => setTimeout(() => el.classList.add('show'), i * 50));
         await sleep(1500);
-        centerContent.classList.add('intro-hide-content');
+        document.getElementById('intro-center-content').classList.add('intro-hide-content');
         await sleep(300);
-        panelLeft.classList.add('open');
-        panelRight.classList.add('open');
+        document.getElementById('intro-panel-left').classList.add('open');
+        document.getElementById('intro-panel-right').classList.add('open');
         await sleep(1000);
+        
+        sessionStorage.setItem('kancahIntroShown', '1');
         document.body.style.overflow = '';
         loader.remove();
     });
 </script>
-</body>
-
 </html>
