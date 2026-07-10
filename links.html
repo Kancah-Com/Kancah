@@ -16,12 +16,7 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
-                    colors: { 
-                        kancah: { 
-                            blue: '#0006ff', 
-                            dark: '#111111'
-                        } 
-                    }
+                    colors: { kancah: { blue: '#0006ff', dark: '#111111' } }
                 }
             }
         }
@@ -29,9 +24,10 @@
     <style>
         body { 
             font-family: 'Ubuntu', sans-serif; 
-            /* Gradient Biru kanan-atas ke kiri-bawah */
-            background: linear-gradient(135deg, #0006ff 0%, #111111 60%, #000000 100%);
+            /* Gradient 3 titik: Biru (Kanan Atas) -> Hitam (Tengah) -> Biru (Kiri Bawah) */
+            background: linear-gradient(135deg, #0006ff 0%, #111111 40%, #111111 60%, #0006ff 100%);
             background-attachment: fixed;
+            min-height: 100vh;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .animate-fade-up { animation: fadeUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
@@ -39,12 +35,12 @@
     </style>
 </head>
 
-<body class="text-white selection:bg-kancah-blue selection:text-white overflow-hidden relative min-h-screen flex flex-col items-center justify-center">
+<body class="text-white selection:bg-kancah-blue selection:text-white overflow-hidden relative flex flex-col items-center justify-center">
 
-    <!-- Tech Pattern -->
+    <!-- Tech Pattern Tipis -->
     <div class="fixed inset-0 z-0 pointer-events-none opacity-20" style="background-image: radial-gradient(#ffffff 1px, transparent 0); background-size: 30px 30px;"></div>
 
-    <div class="w-full max-w-[550px] px-6 py-12 relative z-10 flex flex-col items-center h-screen overflow-y-auto no-scrollbar">
+    <div class="w-full max-w-[550px] px-6 py-12 relative z-10 flex flex-col items-center min-h-screen overflow-y-auto no-scrollbar">
         
         <!-- Status -->
         <div class="mb-8 opacity-0 animate-fade-up">
@@ -102,14 +98,12 @@
                         return `
                         <a href="${l.url}" target="_blank" 
                            class="group relative w-full flex items-center bg-white py-5 px-8 rounded-full hover:bg-kancah-blue transition-all duration-500 shadow-xl hover:-translate-y-1">
-                            <!-- Nomor Biru -->
                             <span class="absolute left-6 text-3xl font-black italic text-kancah-blue group-hover:text-white/20 transition-colors">
                                 ${num}
                             </span>
                             <span class="font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] text-kancah-dark group-hover:text-white transition-colors text-center w-full mx-8">
                                 ${l.title}
                             </span>
-                            <!-- Panah BG Biru, Icon Putih (Dibalik saat hover) -->
                             <div class="absolute right-3 w-10 h-10 rounded-full bg-kancah-blue flex items-center justify-center group-hover:bg-white transition-all duration-300">
                                 <i class="fa-solid fa-arrow-right -rotate-45 text-white group-hover:text-kancah-blue group-hover:rotate-0 transition-all duration-300 text-xs"></i>
                             </div>
