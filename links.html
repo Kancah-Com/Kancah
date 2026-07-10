@@ -3,234 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Links • Kancah Creative</title>
+    <title>@kancahcom | Links</title>
     <link rel="icon" type="image/png" href="./assets/logowh.png">
     
-    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Tailwind Config (Sesuai Konsep Kancah) -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
                     colors: { 
-                        kancah: { blue: '#0006ff', dark: '#111111', light: '#f4f4f5' } 
-                    },
-                    backgroundImage: {
-                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
+                        // Warna disesuaikan persis dengan gambar referensi
+                        kancah: { 
+                            bg: '#E9ECF1', // Background abu-abu terang
+                            blue: '#0025D4', // Biru terang teks
+                            darkblue: '#050B3D' // Biru gelap logo
+                        } 
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Ubuntu', sans-serif; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #E9ECF1; }
         
-        /* Checkbox Customization */
+        /* Hilangkan scrollbar bawaan untuk tampilan mobile-like */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        
+        /* Animasi hover tombol */
+        .link-btn:hover { transform: scale(1.02); }
+        
+        /* Custom Checkbox Form */
         input[type="checkbox"]:checked + div {
-            border-color: #0006ff;
-            background-color: rgba(0, 6, 255, 0.05);
+            border-color: #0025D4;
+            background-color: rgba(0, 37, 212, 0.05);
         }
-        input[type="checkbox"]:checked + div i {
-            color: #0006ff;
-            opacity: 1;
-        }
+        input[type="checkbox"]:checked + div i { opacity: 1; }
     </style>
 </head>
 
-<body class="bg-gray-50 text-kancah-dark selection:bg-kancah-blue selection:text-white bg-tech-pattern bg-[length:24px_24px] min-h-screen py-16 px-4 flex flex-col items-center">
+<body class="text-kancah-blue min-h-screen flex justify-center pb-20 relative">
 
-    <!-- Header & Profile -->
-    <div class="max-w-md w-full text-center mb-10 relative z-10">
-        <!-- Profile Picture (Logo) -->
-        <div class="w-24 h-24 mx-auto mb-6 bg-white rounded-3xl border border-gray-200 shadow-[0_0_30px_-10px_rgba(0,6,255,0.2)] p-4 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-            <img src="./assets/kancah-logo.png" alt="Kancah Logo" class="w-full h-auto object-contain" onerror="this.src='https://via.placeholder.com/150?text=KANCAH'">
-        </div>
-        
-        <h1 class="text-3xl font-black uppercase tracking-tighter text-kancah-dark">Kancah Creative</h1>
-        <p class="text-[10px] font-bold uppercase tracking-[0.4em] text-kancah-blue mt-2 flex items-center justify-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-kancah-blue animate-pulse"></span>
-            Digital & Creative Agency
-        </p>
-    </div>
+    <div class="w-full max-w-[600px] px-4 pt-6 relative">
 
-    <!-- Tautan Utama (Dinamic dari Supabase) -->
-    <div id="links-container" class="max-w-md w-full space-y-3 mb-16 relative z-10">
-        <!-- Akan diisi otomatis oleh JavaScript -->
-        <div class="text-center text-xs text-gray-400 font-bold uppercase tracking-widest animate-pulse">
-            Memuat tautan...
-        </div>
-    </div>
-
-    <!-- Form Lead (Lengkap) -->
-    <div class="max-w-md w-full bg-white/80 backdrop-blur-xl rounded-[2rem] border border-kancah-blue/10 overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,6,255,0.1)] relative z-10">
-        
-        <div class="p-8 border-b border-gray-100 bg-white/50">
-            <h2 class="text-2xl font-black uppercase tracking-tight text-kancah-dark">Mulai Proyek</h2>
-            <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-2">Ceritakan kebutuhan brand Anda</p>
-        </div>
-
-        <form id="leadForm" class="p-8 space-y-5">
-            
-            <!-- Nama & Instansi -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Nama Lengkap</label>
-                    <input type="text" id="nama" class="w-full p-4 bg-gray-50 rounded-2xl border border-gray-200 focus:border-kancah-blue focus:bg-white outline-none transition-all text-sm font-medium" placeholder="Cth: Budi Santoso" required>
-                </div>
-                <div>
-                    <label class="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Instansi / Brand</label>
-                    <input type="text" id="instansi" class="w-full p-4 bg-gray-50 rounded-2xl border border-gray-200 focus:border-kancah-blue focus:bg-white outline-none transition-all text-sm font-medium" placeholder="Cth: PT Kancah Media">
-                </div>
-            </div>
-
-            <!-- Email & WA -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Email</label>
-                    <input type="email" id="email" class="w-full p-4 bg-gray-50 rounded-2xl border border-gray-200 focus:border-kancah-blue focus:bg-white outline-none transition-all text-sm font-medium" placeholder="hello@brand.com" required>
-                </div>
-                <div>
-                    <label class="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1.5">WhatsApp</label>
-                    <input type="tel" id="wa" class="w-full p-4 bg-gray-50 rounded-2xl border border-gray-200 focus:border-kancah-blue focus:bg-white outline-none transition-all text-sm font-medium" placeholder="08123456789" required>
-                </div>
-            </div>
-
-            <!-- Pilihan Layanan -->
-            <div>
-                <label class="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-2">Layanan yang dibutuhkan</label>
-                <div class="grid grid-cols-2 gap-2">
-                    <label class="relative cursor-pointer">
-                        <input type="checkbox" name="services" value="Brand Design" class="peer sr-only">
-                        <div class="p-3 border border-gray-200 rounded-xl hover:border-kancah-blue/50 transition-all flex items-center justify-between">
-                            <span class="text-[11px] font-bold text-gray-700">Brand Design</span>
-                            <i class="fa-solid fa-circle-check text-[14px] text-gray-200 opacity-0 transition-all"></i>
-                        </div>
-                    </label>
-                    <label class="relative cursor-pointer">
-                        <input type="checkbox" name="services" value="Promotion Design" class="peer sr-only">
-                        <div class="p-3 border border-gray-200 rounded-xl hover:border-kancah-blue/50 transition-all flex items-center justify-between">
-                            <span class="text-[11px] font-bold text-gray-700">Promotion</span>
-                            <i class="fa-solid fa-circle-check text-[14px] text-gray-200 opacity-0 transition-all"></i>
-                        </div>
-                    </label>
-                    <label class="relative cursor-pointer">
-                        <input type="checkbox" name="services" value="Tech Development" class="peer sr-only">
-                        <div class="p-3 border border-gray-200 rounded-xl hover:border-kancah-blue/50 transition-all flex items-center justify-between">
-                            <span class="text-[11px] font-bold text-gray-700">Tech Dev</span>
-                            <i class="fa-solid fa-circle-check text-[14px] text-gray-200 opacity-0 transition-all"></i>
-                        </div>
-                    </label>
-                    <label class="relative cursor-pointer">
-                        <input type="checkbox" name="services" value="Social Media" class="peer sr-only">
-                        <div class="p-3 border border-gray-200 rounded-xl hover:border-kancah-blue/50 transition-all flex items-center justify-between">
-                            <span class="text-[11px] font-bold text-gray-700">Social Media</span>
-                            <i class="fa-solid fa-circle-check text-[14px] text-gray-200 opacity-0 transition-all"></i>
-                        </div>
-                    </label>
-                    <label class="relative cursor-pointer col-span-2">
-                        <input type="checkbox" name="services" value="Audio Visual" class="peer sr-only">
-                        <div class="p-3 border border-gray-200 rounded-xl hover:border-kancah-blue/50 transition-all flex items-center justify-between">
-                            <span class="text-[11px] font-bold text-gray-700">Audio Visual (Video/Foto)</span>
-                            <i class="fa-solid fa-circle-check text-[14px] text-gray-200 opacity-0 transition-all"></i>
-                        </div>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Pesan Singkat -->
-            <div>
-                <label class="block text-[9px] font-black text-gray-500 uppercase tracking-widest mb-1.5">Ceritakan Singkat (Opsional)</label>
-                <textarea id="pesan" rows="3" class="w-full p-4 bg-gray-50 rounded-2xl border border-gray-200 focus:border-kancah-blue focus:bg-white outline-none transition-all text-sm font-medium resize-none" placeholder="Target audiens, preferensi warna, atau ide campaign..."></textarea>
-            </div>
-            
-            <button type="submit" id="btn-submit" class="w-full bg-kancah-dark text-white p-5 rounded-2xl font-black uppercase text-[11px] tracking-[0.2em] hover:bg-kancah-blue transition-all active:scale-[0.98] flex justify-center items-center gap-2 group">
-                Kirim Permintaan
-                <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform"></i>
+        <div class="flex justify-between items-center w-full mb-8">
+            <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black shadow-sm hover:bg-gray-50 transition-colors">
+                <i class="fa-solid fa-asterisk text-lg"></i>
             </button>
-        </form>
-    </div>
+            <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black shadow-sm hover:bg-gray-50 transition-colors">
+                <i class="fa-solid fa-arrow-up-from-bracket text-lg"></i>
+            </button>
+        </div>
 
-    <!-- Copyright -->
-    <div class="mt-12 text-center relative z-10">
-        <p class="text-[9px] font-bold text-gray-400 uppercase tracking-[0.2em]">© 2026 Kancah Creative.</p>
-    </div>
+        <div class="flex flex-col items-center text-center mb-8">
+            <div class="w-[104px] h-[104px] rounded-full bg-[#05062C] border-4 border-kancah-bg flex items-center justify-center shadow-[0_0_20px_rgba(0,37,212,0.3)] mb-4 overflow-hidden relative">
+                <img src="./assets/kancah-logo.png" alt="Logo" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
+                <div id="logo-fallback" class="hidden absolute inset-0 bg-gradient-to-br from-[#0025D4] to-[#05062C] flex items-center justify-center text-white text-4xl font-black">
+                    <i class="fa-solid fa-infinity"></i>
+                </div>
+            </div>
+            
+            <h1 class="text-2xl font-bold tracking-tight mb-1">@kancahcom</h1>
+            <p class="text-[15px] font-medium">Dream. Play. Create.</p>
 
-    <!-- Background Decoration -->
-    <div class="fixed top-[-20%] left-[-10%] w-[50%] h-[50%] bg-kancah-blue/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
-    <div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-kancah-blue/5 blur-[100px] rounded-full pointer-events-none z-0"></div>
+            <div class="flex items-center gap-5 mt-4 text-[26px]">
+                <a href="#" class="hover:opacity-80 transition-opacity"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:opacity-80 transition-opacity"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" class="hover:opacity-80 transition-opacity"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <div id="links-container" class="space-y-3 mb-16">
+            <div class="text-center text-sm font-semibold animate-pulse opacity-70">
+                Memuat tautan...
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2rem] shadow-sm overflow-hidden mt-10">
+            <div class="p-8 text-center border-b border-gray-100">
+                <h2 class="text-xl font-bold">Kirim Penawaran</h2>
+                <p class="text-sm font-medium opacity-80 mt-1">Isi detail untuk diskusi proyek dengan Kancah</p>
+            </div>
+
+            <form id="leadForm" class="p-6 space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <input type="text" id="nama" class="w-full p-4 bg-[#F5F7FA] text-gray-800 rounded-2xl outline-none focus:ring-2 focus:ring-kancah-blue/20 transition-all font-medium text-sm placeholder-gray-400" placeholder="Nama Lengkap" required>
+                    </div>
+                    <div>
+                        <input type="text" id="instansi" class="w-full p-4 bg-[#F5F7FA] text-gray-800 rounded-2xl outline-none focus:ring-2 focus:ring-kancah-blue/20 transition-all font-medium text-sm placeholder-gray-400" placeholder="Instansi / Brand">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <input type="email" id="email" class="w-full p-4 bg-[#F5F7FA] text-gray-800 rounded-2xl outline-none focus:ring-2 focus:ring-kancah-blue/20 transition-all font-medium text-sm placeholder-gray-400" placeholder="Alamat Email" required>
+                    </div>
+                    <div>
+                        <input type="tel" id="wa" class="w-full p-4 bg-[#F5F7FA] text-gray-800 rounded-2xl outline-none focus:ring-2 focus:ring-kancah-blue/20 transition-all font-medium text-sm placeholder-gray-400" placeholder="No. WhatsApp" required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold mb-2 opacity-80">Layanan yang dibutuhkan:</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <label class="relative cursor-pointer text-gray-700">
+                            <input type="checkbox" name="services" value="Brand Design" class="peer sr-only">
+                            <div class="p-3 border-2 border-transparent bg-[#F5F7FA] rounded-xl transition-all flex items-center justify-between">
+                                <span class="text-[12px] font-semibold">Brand Design</span>
+                                <i class="fa-solid fa-circle-check text-kancah-blue opacity-0 transition-opacity"></i>
+                            </div>
+                        </label>
+                        <label class="relative cursor-pointer text-gray-700">
+                            <input type="checkbox" name="services" value="Promotion" class="peer sr-only">
+                            <div class="p-3 border-2 border-transparent bg-[#F5F7FA] rounded-xl transition-all flex items-center justify-between">
+                                <span class="text-[12px] font-semibold">Promotion</span>
+                                <i class="fa-solid fa-circle-check text-kancah-blue opacity-0 transition-opacity"></i>
+                            </div>
+                        </label>
+                        <label class="relative cursor-pointer text-gray-700">
+                            <input type="checkbox" name="services" value="Tech Dev" class="peer sr-only">
+                            <div class="p-3 border-2 border-transparent bg-[#F5F7FA] rounded-xl transition-all flex items-center justify-between">
+                                <span class="text-[12px] font-semibold">Tech Dev</span>
+                                <i class="fa-solid fa-circle-check text-kancah-blue opacity-0 transition-opacity"></i>
+                            </div>
+                        </label>
+                        <label class="relative cursor-pointer text-gray-700">
+                            <input type="checkbox" name="services" value="Audio Visual" class="peer sr-only">
+                            <div class="p-3 border-2 border-transparent bg-[#F5F7FA] rounded-xl transition-all flex items-center justify-between">
+                                <span class="text-[12px] font-semibold">Audio Visual</span>
+                                <i class="fa-solid fa-circle-check text-kancah-blue opacity-0 transition-opacity"></i>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <textarea id="pesan" rows="3" class="w-full p-4 bg-[#F5F7FA] text-gray-800 rounded-2xl outline-none focus:ring-2 focus:ring-kancah-blue/20 transition-all font-medium text-sm placeholder-gray-400 resize-none" placeholder="Ceritakan singkat kebutuhan Anda..."></textarea>
+                </div>
+                
+                <button type="submit" id="btn-submit" class="w-full bg-kancah-blue text-white p-4 rounded-full font-bold text-sm hover:bg-opacity-90 transition-all active:scale-[0.98]">
+                    Kirim Permintaan
+                </button>
+            </form>
+        </div>
+
+    </div>
 
     <script>
+        // Supabase Init
         const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
         const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
         const kancah = supabase.createClient(kancahUrl, kancahKey);
 
-        // Fungsi Load Tautan dari Supabase
+        // Fetch Links from DB
         async function loadLinks() {
             const container = document.getElementById('links-container');
             
             try {
                 const { data, error } = await kancah.from('links').select('*').order('sort_order', {ascending: true});
-                
                 if (error) throw error;
 
                 if (data.length === 0) {
-                    container.innerHTML = '<p class="text-xs text-gray-400 font-bold uppercase tracking-widest text-center">Belum ada tautan aktif.</p>';
+                    container.innerHTML = '<p class="text-sm font-semibold opacity-70 text-center">Belum ada tautan aktif.</p>';
                     return;
                 }
 
+                // Render tombol sesuai desain referensi (Putih, Teks Tengah, Icon 3 titik di kanan)
                 container.innerHTML = data.map(l => `
                     <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" 
-                       class="group flex items-center justify-between bg-white border border-gray-100 py-4 px-6 rounded-2xl hover:border-kancah-blue hover:shadow-[0_8px_30px_rgb(0,6,255,0.12)] transition-all duration-300 transform hover:-translate-y-1">
-                        <span class="font-bold uppercase text-[11px] tracking-[0.2em] text-kancah-dark group-hover:text-kancah-blue transition-colors">${l.title}</span>
-                        <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-kancah-blue transition-colors">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-gray-400 group-hover:text-white transition-colors text-[10px]"></i>
-                        </div>
+                       class="link-btn relative w-full flex items-center justify-center bg-white py-[18px] px-6 rounded-full shadow-sm transition-transform">
+                        <span class="font-semibold text-[15px]">${l.title}</span>
+                        <i class="fa-solid fa-ellipsis-vertical absolute right-6 text-kancah-blue/40 text-lg"></i>
                     </a>
                 `).join('');
             } catch (err) {
-                console.error("Error loading links:", err);
-                container.innerHTML = '<p class="text-xs text-red-400 font-bold uppercase tracking-widest text-center">Gagal memuat tautan.</p>';
+                console.error("Error:", err);
+                container.innerHTML = '<p class="text-sm font-semibold text-red-500 text-center">Gagal memuat tautan.</p>';
             }
         }
 
-        // Fungsi Tracking Klik
+        // Track Click
         async function trackClick(id) {
             try {
                 const { data } = await kancah.from('links').select('clicks').eq('id', id).single();
-                if(data) {
-                    await kancah.from('links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', id);
-                }
-            } catch (err) {
-                console.error("Tracking error:", err);
-            }
+                if(data) await kancah.from('links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', id);
+            } catch (err) {}
         }
 
-        // Fungsi Kirim Form Penawaran
+        // Form Submit
         document.getElementById('leadForm').onsubmit = async (e) => {
             e.preventDefault();
-            
             const btn = document.getElementById('btn-submit');
-            const originalHTML = btn.innerHTML;
+            const originalText = btn.innerText;
             
-            // Set Loading State
             btn.innerHTML = 'MENGIRIM... <i class="fa-solid fa-spinner fa-spin ml-2"></i>';
             btn.disabled = true;
-            btn.classList.add('opacity-75', 'cursor-not-allowed');
 
-            // Ambil semua layanan yang dicentang
-            const services = Array.from(document.querySelectorAll('input[name="services"]:checked'))
-                                  .map(c => c.value)
-                                  .join(', ');
+            const services = Array.from(document.querySelectorAll('input[name="services"]:checked')).map(c => c.value).join(', ');
 
             try {
                 const { error } = await kancah.from('leads').insert([{
@@ -243,22 +219,17 @@
                 }]);
 
                 if (error) throw error;
-
                 alert('Pesan terkirim! Tim Kancah Creative akan segera menghubungi Anda.');
-                e.target.reset(); // Reset form jika berhasil
-                
+                e.target.reset(); 
             } catch (err) {
-                console.error("Error submitting lead:", err);
-                alert('Terjadi kesalahan saat mengirim. Silakan coba lagi atau hubungi via WhatsApp langsung.');
+                alert('Terjadi kesalahan. Coba hubungi via WhatsApp.');
             } finally {
-                // Kembalikan tombol ke state awal
-                btn.innerHTML = originalHTML;
+                btn.innerText = originalText;
                 btn.disabled = false;
-                btn.classList.remove('opacity-75', 'cursor-not-allowed');
             }
         };
 
-        // Inisialisasi
+        // Init
         loadLinks();
     </script>
 </body>
