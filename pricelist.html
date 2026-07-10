@@ -1,494 +1,636 @@
-
-
-
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kancah Creative | Pricelist Service</title>
-  <meta name="description" content="Pricelist layanan Kancah Creative untuk Brand Design, Promotion Design, Tech Development, Social Media Management, dan Audio Visual." />
-  <link rel="icon" type="image/png" href="./assets/logowh.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricelist • Kancah</title>
+    <meta name="description" content="Pricelist layanan Kancah Creative untuk Brand Design, Promotion Design, Tech Development, Social Media Management, dan Audio Visual.">
+    <link rel="icon" type="image/png" href="./assets/logowh.png">
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
-          colors: { kancah: { blue: '#0006ff', dark: '#111111', light: '#f4f4f5' } },
-          backgroundImage: {
-            'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
-          }
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Ubuntu', 'sans-serif']
+                    },
+                    colors: {
+                        kancah: {
+                            blue: '#0006ff',
+                            dark: '#111111',
+                            gray: '#393939',
+                            light: '#f4f4f5'
+                        }
+                    },
+                    screens: {
+                        'xs': '475px',
+                        '3xl': '1920px'
+                    },
+                    backgroundImage: {
+                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
+    </script>
+    
+    <style>
+        body { font-family: 'Ubuntu', sans-serif; }
+        
+        /* Animasi Marquee Footer */
+        .footer-marquee-content {
+            display: flex;
+            width: max-content;
+            animation: footer-marquee 20s linear infinite;
+        }
+        @keyframes footer-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .footer-marquee-content span { white-space: nowrap; }
 
-  <style>
-    body { font-family: 'Ubuntu', sans-serif; }
-    .footer-marquee-content { display:flex; width:max-content; animation:footer-marquee 20s linear infinite; }
-    @keyframes footer-marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-    .card-hover { transition: all .35s cubic-bezier(.16,1,.3,1); }
-    .card-hover:hover { transform: translateY(-8px); }
-    .service-btn.active { background:#0006ff; color:#fff; border-color:#0006ff; box-shadow:0 16px 35px rgba(0,6,255,.22); }
-    .service-btn:not(.active) { background:#fff; color:#6b7280; border-color:#e5e7eb; }
-    .service-btn:not(.active):hover { color:#0006ff; border-color:#0006ff; }
+        /* Utilitas Scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Mobile Menu */
+        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .menu-open { overflow: hidden; }
+
+        /* Pricelist Cards & Buttons */
+        .card-hover { transition: all .35s cubic-bezier(.16,1,.3,1); }
+        .card-hover:hover { transform: translateY(-8px); }
+        
+        .service-btn.active { 
+            background: #0006ff; 
+            color: #fff; 
+            border-color: #0006ff; 
+            box-shadow: 0 16px 35px rgba(0,6,255,.22); 
+        }
+        .service-btn:not(.active) { 
+            background: #fff; 
+            color: #6b7280; 
+            border-color: #e5e7eb; 
+        }
+        .service-btn:not(.active):hover { 
+            color: #0006ff; 
+            border-color: #0006ff; 
+        }
   
-    .tier-card { min-height: 560px; display:flex; flex-direction:column; }
-    .tier-features { flex:1; }
-    .arrow-move { animation: arrowMove 1.4s ease-in-out infinite; }
-    @keyframes arrowMove { 0%,100%{ transform:translateX(0);} 50%{ transform:translateX(6px);} }
-    .cta-glow { background: radial-gradient(circle at 85% 20%, rgba(255,255,255,.28), transparent 30%), linear-gradient(135deg, #0006ff 0%, #111 62%, #000 100%); }
-    .service-hero-card { background: radial-gradient(circle at 85% 10%, rgba(0,6,255,.28), transparent 34%), linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.025)); }
-    .tier-info-card { transition: all .35s cubic-bezier(.16,1,.3,1); }
-    .tier-info-card:hover { transform: translateY(-6px); border-color:#0006ff; box-shadow:0 22px 50px rgba(0,6,255,.10); }
-</style>
+        .tier-card { min-height: 560px; display:flex; flex-direction:column; }
+        .tier-features { flex:1; }
+        
+        .arrow-move { animation: arrowMove 1.4s ease-in-out infinite; }
+        @keyframes arrowMove { 
+            0%, 100% { transform:translateX(0); } 
+            50% { transform:translateX(6px); } 
+        }
+        
+        .cta-glow { 
+            background: radial-gradient(circle at 85% 20%, rgba(255,255,255,.28), transparent 30%), linear-gradient(135deg, #0006ff 0%, #111 62%, #000 100%); 
+        }
+        
+        .tier-info-card { transition: all .35s cubic-bezier(.16,1,.3,1); }
+        .tier-info-card:hover { 
+            transform: translateY(-6px); 
+            border-color: #0006ff; 
+            box-shadow: 0 22px 50px rgba(0,6,255,.10); 
+        }
+    </style>
 </head>
 
-<body class="bg-white text-[#111] selection:bg-[#0006ff] selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
+<body class="bg-gray-50 text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
 
-<nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
-  <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
-
-    <div class="flex-none">
-      <a href="/">
-        <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
-      </a>
-    </div>
-
-    <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
-      <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
-      <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
-      <a href="works" class="hover:text-kancah-blue transition-colors">Work</a>
-      <a href="pricelist" class="text-kancah-blue font-black transition-colors">Pricelist</a>
-      <a href="careers" class="hover:text-kancah-blue transition-colors">Careers</a>
-    </div>
-
-    <div class="flex items-center gap-2 sm:gap-4 h-8">
-      <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
-        Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
-      </a>
-
-      <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
-        <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
-      </button>
-    </div>
-  </div>
-</nav>
-
-<div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full transition-transform duration-500 lg:hidden">
-  <button class="absolute top-6 right-6 text-3xl" id="close-menu">
-    <i class="fa-solid fa-xmark"></i>
-  </button>
-
-  <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-    <a href="about" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
-    <a href="services" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
-    <a href="works" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
-    <a href="pricelist" class="mobile-link text-kancah-blue font-black transition-colors">Pricelist</a>
-    <a href="careers" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
-    <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
-  </div>
-</div>
-
-  <header class="relative min-h-screen flex items-center pt-28 pb-20 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden">
-    <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]" style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 30px 30px;"></div>
-
-    <div class="relative z-10 w-full">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="relative flex h-2.5 w-2.5">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0006ff] opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0006ff]"></span>
-        </span>
-        <span class="text-[#0006ff] font-bold text-xs uppercase tracking-[0.4em]">Kancah Creative Pricing</span>
-      </div>
-
-      <h1 class="text-[16vw] sm:text-[12vw] lg:text-[8.5vw] font-black uppercase leading-[.84] tracking-tighter max-w-6xl">
-        PILIH<br>
-        <span class="text-[#0006ff] italic">PAKET</span><br>
-        KREATIF.
-      </h1>
-
-      <p class="text-gray-500 text-base sm:text-xl font-light leading-relaxed max-w-2xl mt-8">
-        Pricelist layanan kreatif dan digital Kancah Creative. Pilih service, lalu sesuaikan tier dengan kebutuhan brand kamu.
-      </p>
-
-      <div class="flex flex-wrap gap-3 mt-8">
-        <a href="#pricelist" class="bg-[#0006ff] text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111] transition-all">
-          Cek Paket
-        </a>
-        <a href="#compare" class="border-2 border-[#111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111] hover:text-white transition-all">
-          Bedanya Apa?
-        </a>
-      </div>
-    </div>
-  </header>
-
-  <section id="compare" class="py-20 bg-white text-[#111] overflow-hidden">
-    <div class="max-w-[1500px] mx-auto px-4 sm:px-6">
-      <div class="text-left mb-10">
-        <span class="block text-left text-[#0006ff] font-black text-[10px] uppercase tracking-[.32em]">Kenali Tier</span>
-        <h2 class="text-left text-4xl sm:text-6xl font-black uppercase tracking-tighter mt-3">
-          PILIH SESUAI <span class="text-[#0006ff] italic">LEVEL</span>.
-        </h2>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-5">
-        <div class="tier-info-card group p-7 rounded-[2rem] border border-gray-100 bg-gray-50 relative overflow-hidden">
-          <div class="relative z-10">
-            <b class="text-[#0006ff] text-4xl font-black">01</b>
-          </div>
-          <h3 class="font-black text-2xl mt-5 uppercase tracking-tight">Starter</h3>
-          <p class="text-gray-500 mt-3 leading-relaxed text-sm">Cocok untuk UMKM atau personal brand yang baru mulai dan butuh tampilan digital yang lebih rapi.</p>
-        </div>
-
-        <div class="tier-info-card group p-7 rounded-[2rem] border-2 border-[#0006ff] bg-[#0006ff] text-white shadow-xl shadow-[#0006ff]/20 relative overflow-hidden">
-          <div class="absolute top-5 right-5 px-3 py-1 rounded-full bg-white text-[#0006ff] text-[8px] font-black uppercase tracking-widest">Most Picked</div>
-          <div class="relative z-10">
-            <b class="text-white text-4xl font-black">02</b>
-          </div>
-          <h3 class="font-black text-2xl mt-5 uppercase tracking-tight">Pro</h3>
-          <p class="text-white/75 mt-3 leading-relaxed text-sm">Cocok untuk bisnis yang mulai aktif promosi, butuh output lebih lengkap, dan ingin tampil lebih profesional.</p>
-        </div>
-
-        <div class="tier-info-card group p-7 rounded-[2rem] border border-gray-900 bg-[#111] text-white relative overflow-hidden">
-          <div class="relative z-10">
-            <b class="text-[#0006ff] text-4xl font-black">03</b>
-          </div>
-          <h3 class="font-black text-2xl mt-5 uppercase tracking-tight">Ultimate</h3>
-          <p class="text-gray-400 mt-3 leading-relaxed text-sm">Cocok untuk brand yang mau eksekusi serius, butuh arahan strategi, aset lengkap, dan support lebih intens.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="pricelist" class="py-20 bg-[#111] text-white">
-    <div class="max-w-[1500px] mx-auto px-4 sm:px-6">
-      <div class="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-10">
-        <div>
-          <span class="text-[#0006ff] font-bold text-xs uppercase tracking-widest">Pricelist Service</span>
-          <h2 class="text-4xl sm:text-6xl font-black uppercase tracking-tighter mt-3">
-            PILIH <span class="text-[#0006ff] italic">SERVICE</span>.
-          </h2>
-        </div>
-        <p class="text-gray-400 max-w-md">
-          Klik service di bawah untuk melihat paket Starter, Pro, dan Ultimate sesuai kebutuhan.
-        </p>
-      </div>
-
-      <div id="service-tabs" class="flex flex-wrap gap-3 mb-10">
-        <button class="service-btn active px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('brand')">Brand Design</button>
-        <button class="service-btn px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('promotion')">Promotion Design</button>
-        <button class="service-btn px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('tech')">Tech Development</button>
-        <button class="service-btn px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('smm')">Social Media Management</button>
-        <button class="service-btn px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('av')">Audio Visual</button>
-      </div>
-
-      <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
-    </div>
-  </section>
-
-  <section class="py-14 bg-white text-[#111] overflow-hidden">
-    <div class="max-w-[1500px] mx-auto px-4 sm:px-6">
-      <div class="cta-glow rounded-[2rem] text-white p-6 sm:p-8 lg:p-8 flex flex-col lg:flex-row justify-between gap-7 items-start lg:items-center overflow-hidden relative shadow-2xl shadow-[#0006ff]/20">
-        <div class="absolute right-0 top-0 w-[420px] h-full opacity-20 pointer-events-none">
-          <div class="absolute right-10 top-8 w-44 h-44 rounded-full border border-white/30"></div>
-          <div class="absolute right-28 bottom-8 w-24 h-24 rounded-full border border-white/20"></div>
-          <div class="absolute right-0 bottom-0 w-72 h-72 bg-white/10 blur-3xl rounded-full"></div>
-        </div>
-
-        <div class="relative z-10 max-w-2xl">
-          <span class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[.3em] text-white/60">
-            <i class="fa-regular fa-comments"></i> Custom Need?
-          </span>
-          <h2 class="text-4xl sm:text-5xl font-black uppercase tracking-tighter mt-3 leading-[.9]">
-            Bingung Pilih<br><span class="italic">Paket yang Pas?</span>
-          </h2>
-          <p class="text-white/75 mt-4 leading-relaxed max-w-2xl">
-            Ceritain dulu kebutuhan brand kamu. Nanti kita bantu arahin paket paling masuk akal, tanpa harus ambil yang paling mahal.
-          </p>
-        </div>
-
-        <a href="contact" class="group relative z-10 bg-white text-[#0006ff] px-6 py-3 rounded-full font-black uppercase tracking-[.2em] text-[10px] hover:bg-[#111] hover:text-white transition-all flex items-center gap-3 shadow-xl">
-          Konsultasi Dulu
-          <span class="w-7 h-7 rounded-full bg-[#0006ff] text-white group-hover:bg-white group-hover:text-[#111] flex items-center justify-center transition-all">
-            <i class="fa-solid fa-arrow-right arrow-move text-[10px]"></i>
-          </span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="bg-[#111] text-white overflow-hidden border-t border-white/10 text-sm" id="contact">
-    <div class="w-full py-3 border-b border-white/10 bg-white/5">
-      <div class="footer-marquee-content gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
-        <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> •
-        <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-      </div>
-    </div>
-
-    <div class="max-w-[1500px] mx-auto px-4 sm:px-6 pt-10 pb-8">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <div class="lg:col-span-5">
-          <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] mb-5">
-            PUNYA IDE?<br><span class="text-[#0006ff] italic">OBROLIN AJA.</span>
-          </h2>
-          <a href="mailto:kancahcreative@gmail.com" class="inline-flex bg-[#0006ff] text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-white hover:text-[#111] transition-all">Ayo Ngobrol</a>
-        </div>
-
-        <div class="lg:col-span-3">
-          <h4 class="font-black uppercase tracking-widest text-xs text-gray-500 mb-4">Office</h4>
-          <p class="text-gray-300 leading-relaxed">Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
-          <p class="mt-4 text-gray-300">hello@kancah.agency<br>+62 812-3456-7890</p>
-        </div>
-
-        <div class="lg:col-span-2">
-          <h4 class="font-black uppercase tracking-widest text-xs text-gray-500 mb-4">Menu</h4>
-          <div class="flex flex-col gap-2 text-gray-300">
-            <a href="#pricelist">Pricelist</a>
-            <a href="#compare">Tier</a>
-            <a href="#contact">Contact</a>
-          </div>
-        </div>
-
-        <div class="lg:col-span-2">
-          <h4 class="font-black uppercase tracking-widest text-xs text-gray-500 mb-4">Socials</h4>
-          <div class="flex flex-col gap-2 text-gray-300">
-            <a href="#">Instagram</a>
-            <a href="#">LinkedIn</a>
-            <a href="#">Behance</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row justify-between gap-4 text-gray-500 text-xs">
-        <p>© 2026 Kancah Creative.</p>
-        <div class="flex gap-5">
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    const services = {
-      brand: {
-        kicker: 'Brand Design',
-        title: 'Bangun Identitas Brand',
-        icon: 'fa-solid fa-pen-nib',
-        desc: 'Untuk brand yang ingin punya identitas visual lebih kuat, konsisten, dan mudah dikenali audiens.',
-        tiers: [
-          {
-            name: 'Starter',
-            price: 'Rp650.000',
-            desc: 'Cocok untuk UMKM yang baru memulai perjalanan digitalnya dan butuh tampilan brand lebih rapi.',
-            features: ['Brief & arahan visual dasar', 'Logo simple / refresh visual', 'Palet warna & font recommendation', '1 konsep utama', '2x revisi minor']
-          },
-          {
-            name: 'Pro',
-            price: 'Rp1.500.000',
-            badge: 'Paling Aman',
-            desc: 'Untuk bisnis yang mulai serius membangun identitas dan butuh brand kit yang lebih konsisten.',
-            features: ['Logo utama + alternatif', 'Mini brand guideline', 'Color & typography system', 'Template feed basic', '3x revisi']
-          },
-          {
-            name: 'Ultimate',
-            price: 'Rp3.500.000',
-            desc: 'Untuk brand yang ingin punya identitas lengkap, matang, dan siap dipakai di banyak kebutuhan.',
-            features: ['Full identity system', 'Brand guideline lengkap', 'Logo suite lengkap', 'Stationery basic', 'Support implementasi visual']
-          }
-        ]
-      },
-      promotion: {
-        kicker: 'Promotion Design',
-        title: 'Materi Promosi yang Siap Jalan',
-        icon: 'fa-solid fa-bullhorn',
-        desc: 'Untuk kebutuhan promo campaign, event, diskon, launching, dan visual iklan offline maupun digital.',
-        tiers: [
-          {
-            name: 'Starter',
-            price: 'Rp350.000',
-            desc: 'Cocok untuk promo singkat yang butuh desain cepat, rapi, dan langsung bisa diposting.',
-            features: ['3 desain promosi', 'Format feed/story', 'Copy headline sederhana', '1 style visual', '1x revisi']
-          },
-          {
-            name: 'Pro',
-            price: 'Rp850.000',
-            badge: 'Best Value',
-            desc: 'Untuk campaign yang butuh beberapa materi turunan agar promosi lebih konsisten.',
-            features: ['8 desain promosi', 'Feed, story, banner digital', 'Adaptasi ukuran', 'Copywriting basic', '2x revisi']
-          },
-          {
-            name: 'Ultimate',
-            price: 'Rp1.750.000',
-            desc: 'Untuk campaign yang lebih besar dan butuh konsep visual yang kuat dari awal sampai akhir.',
-            features: ['15 desain promosi', 'Campaign visual direction', 'Multi-format output', 'Key visual utama', 'Priority revision']
-          }
-        ]
-      },
-      tech: {
-        kicker: 'Tech Development',
-        title: 'Website & Digital Product',
-        icon: 'fa-solid fa-code',
-        desc: 'Untuk brand yang butuh website, landing page, company profile, atau sistem digital yang gampang dipakai.',
-        tiers: [
-          {
-            name: 'Starter',
-            price: 'Rp599.000',
-            desc: 'Cocok untuk personal, UMKM, atau campaign yang butuh landing page sederhana namun tetap proper.',
-            features: ['1 landing page', 'Responsive mobile & desktop', 'Section basic', 'CTA WhatsApp', 'Deploy basic']
-          },
-          {
-            name: 'Pro',
-            price: 'Rp1.500.000',
-            badge: 'Rekomendasi',
-            desc: 'Untuk bisnis yang butuh website lebih lengkap, profesional, dan siap dipakai untuk presentasi brand.',
-            features: ['Company profile 3-5 section', 'UI lebih custom', 'SEO basic', 'Form/contact integration', '2x revisi']
-          },
-          {
-            name: 'Ultimate',
-            price: 'Rp5.500.000+',
-            desc: 'Untuk kebutuhan website custom atau web app dengan fitur yang lebih kompleks.',
-            features: ['Custom website / web app', 'Dashboard basic opsional', 'Integrasi database/API', 'Performance check', 'Support after launch']
-          }
-        ]
-      },
-      smm: {
-        kicker: 'Social Media Management',
-        title: 'Konten Konsisten, Brand Tetap Hidup',
-        icon: 'fa-solid fa-hashtag',
-        desc: 'Untuk brand yang ingin sosial medianya lebih aktif, rapi, dan punya arah konten yang jelas.',
-        tiers: [
-          {
-            name: 'Starter',
-            price: 'Rp750.000/bln',
-            desc: 'Cocok untuk akun yang baru mulai aktif dan butuh bantuan konten basic secara konsisten.',
-            features: ['8 konten feed/bulan', 'Caption basic', 'Content calendar sederhana', 'Design template', 'Monthly recap']
-          },
-          {
-            name: 'Pro',
-            price: 'Rp1.750.000/bln',
-            badge: 'Paling Pas',
-            desc: 'Untuk bisnis yang ingin sosial media lebih aktif dengan konten yang lebih variatif.',
-            features: ['15 konten/bulan', 'Caption & hashtag', 'Content planning', 'Story template', 'Monthly report']
-          },
-          {
-            name: 'Ultimate',
-            price: 'Rp3.500.000/bln',
-            desc: 'Untuk brand yang ingin pengelolaan sosial media lebih serius dari strategi sampai laporan.',
-            features: ['25 konten/bulan', 'Strategi konten bulanan', 'Visual direction', 'Basic engagement support', 'Report & evaluasi']
-          }
-        ]
-      },
-      av: {
-        kicker: 'Audio Visual',
-        title: 'Foto & Video yang Bikin Brand Hidup',
-        icon: 'fa-solid fa-video',
-        desc: 'Untuk kebutuhan konten foto, video promosi, reels, dokumentasi, dan visual campaign.',
-        tiers: [
-          {
-            name: 'Starter',
-            price: 'Rp850.000',
-            desc: 'Cocok untuk kebutuhan konten singkat seperti reels simple atau foto produk basic.',
-            features: ['1 konsep sederhana', '1 output video pendek / foto basic', 'Basic editing', 'Color correction', '1x revisi']
-          },
-          {
-            name: 'Pro',
-            price: 'Rp2.000.000',
-            badge: 'Paling Fleksibel',
-            desc: 'Untuk brand yang butuh konten lebih proper dengan konsep dan eksekusi lebih matang.',
-            features: ['Konsep & shotlist', '3-5 output konten', 'Editing lebih detail', 'Subtitle/basic motion', '2x revisi']
-          },
-          {
-            name: 'Ultimate',
-            price: 'Rp5.000.000+',
-            desc: 'Untuk campaign visual yang butuh produksi lebih niat, storytelling, dan output premium.',
-            features: ['Creative concept', 'Production planning', 'Multiple content output', 'Motion/graphic support', 'Priority editing']
-          }
-        ]
-      }
-    };
-
-    function renderPricing(key) {
-      const data = services[key];
-      document.getElementById('pricing-grid').innerHTML = data.tiers.map((tier, index) => {
-        const isPro = index === 1;
-        const isUltimate = index === 2;
-        return `
-          <article class="tier-card relative rounded-[2rem] border-2 ${isPro ? 'border-[#0006ff] bg-[#0006ff] text-white scale-[1.02]' : isUltimate ? 'border-white/10 bg-white text-[#111]' : 'border-gray-200 bg-white text-[#111]'} p-7 shadow-sm card-hover">
-            ${tier.badge ? `<div class="absolute -top-4 left-8 bg-[#111] text-white px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest">${tier.badge}</div>` : ''}
-
-            <div class="flex flex-wrap items-center gap-2">
-              <span class="inline-flex px-3 py-1 rounded-full ${isPro ? 'bg-white text-[#0006ff]' : 'bg-[#0006ff] text-white'} text-[9px] font-black uppercase tracking-widest">
-                ${tier.name}
-              </span>
-              <span class="inline-flex px-3 py-1 rounded-full ${isPro ? 'bg-white/15 text-white' : isUltimate ? 'bg-[#111] text-white' : 'bg-gray-100 text-[#111]'} text-[9px] font-black uppercase tracking-widest">
-                ${data.kicker}
-              </span>
+    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
+            
+            <div class="flex-none">
+                <a href="/">
+                    <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
+                </a>
             </div>
 
-            <h3 class="text-4xl font-black uppercase tracking-tight mt-6">${tier.name}</h3>
-            <p class="text-5xl font-black mt-4 tracking-tighter">${tier.price}</p>
+            <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
+                <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
+                <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
+                <a href="works" class="hover:text-kancah-blue transition-colors">Work</a>
+                <a href="pricelist" class="text-kancah-blue font-black transition-colors">Pricelist</a>
+                <a href="careers" class="hover:text-kancah-blue transition-colors">Careers</a>
+            </div>
 
-            <p class="${isPro ? 'text-white/75' : isUltimate ? 'text-gray-500' : 'text-gray-500'} mt-4 leading-relaxed min-h-[96px]">
-              ${tier.desc}
+            <div class="flex items-center gap-2 sm:gap-4 h-8">
+                <div id="weather-module-desktop" class="relative group hidden sm:block">
+                    <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-kancah-blue rounded-full select-none transition-all duration-300">
+                        <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
+                            <span id="nav-time">00:00:00</span>
+                            <span class="text-kancah-blue font-black">|</span>
+                            <span id="nav-temp">--°C</span>
+                        </div>
+                        <div class="flex items-center justify-center gap-2 mt-1.5 leading-none">
+                            <div class="relative flex h-1 w-1">
+                                <span class="animate-ping absolute h-full w-full rounded-full bg-kancah-blue opacity-40"></span>
+                                <span class="h-1 w-1 rounded-full bg-kancah-blue"></span>
+                            </div>
+                            <span class="text-kancah-blue font-black text-[8px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative sm:hidden">
+                    <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-kancah-blue text-kancah-blue text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">
+                        Kancah HQ, Yogyakarta
+                    </div>
+                    <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-kancah-blue border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
+                        <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
+                            <span id="nav-time-mobile">00:00</span>
+                            <span class="text-kancah-blue font-black">|</span>
+                            <span id="nav-temp-mobile">--°C</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
+                    Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
+                </a>
+
+                <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
+                    <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full transition-transform duration-500 lg:hidden">
+        <button class="absolute top-6 right-6 text-3xl" id="close-menu">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
+            <a href="about" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
+            <a href="services" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
+            <a href="works" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
+            <a href="pricelist" class="mobile-link text-kancah-blue font-black transition-colors">Pricelist</a>
+            <a href="careers" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
+            <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
+        </div>
+    </div>
+
+    <header class="relative min-h-screen flex items-center pt-28 pb-20 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden">
+        <div class="relative z-10 w-full">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0006ff] opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0006ff]"></span>
+                </span>
+                <span class="text-[#0006ff] font-bold text-xs uppercase tracking-[0.4em]">Kancah Creative Pricing</span>
+            </div>
+
+            <h1 class="text-[16vw] sm:text-[12vw] lg:text-[8.5vw] font-black uppercase leading-[.84] tracking-tighter max-w-6xl">
+                PILIH<br>
+                <span class="text-[#0006ff] italic">PAKET</span><br>
+                KREATIF.
+            </h1>
+
+            <p class="text-gray-500 text-base sm:text-xl font-light leading-relaxed max-w-2xl mt-8">
+                Pricelist layanan kreatif dan digital Kancah Creative. Pilih service, lalu sesuaikan tier dengan kebutuhan brand kamu.
             </p>
 
-            <div class="tier-features mt-6 space-y-2.5 text-[13px] font-bold">
-              ${tier.features.map(feature => `
-                <div class="flex items-start gap-3">
-                  <i class="fa-solid fa-check ${isPro ? 'text-white' : 'text-[#0006ff]'} mt-1"></i>
-                  <span>${feature}</span>
-                </div>
-              `).join('')}
+            <div class="flex flex-wrap gap-3 mt-8">
+                <a href="#pricelist" class="bg-[#0006ff] text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111] transition-all">
+                    Cek Paket
+                </a>
+                <a href="#compare" class="border-2 border-[#111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111] hover:text-white transition-all">
+                    Bedanya Apa?
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="compare" class="py-20 bg-white text-[#111] overflow-hidden">
+        <div class="max-w-[1500px] mx-auto px-4 sm:px-6">
+            <div class="text-left mb-10">
+                <span class="block text-left text-[#0006ff] font-black text-[10px] uppercase tracking-[.32em]">Kenali Tier</span>
+                <h2 class="text-left text-4xl sm:text-6xl font-black uppercase tracking-tighter mt-3">
+                    PILIH SESUAI <span class="text-[#0006ff] italic">LEVEL</span>.
+                </h2>
             </div>
 
-            <a href="contact" class="mt-6 w-full py-3.5 rounded-full font-black uppercase tracking-[.18em] text-[10px] transition-all flex justify-center items-center gap-3 group ${isPro ? 'bg-white text-[#0006ff] hover:bg-[#111] hover:text-white' : isUltimate ? 'bg-[#111] text-white hover:bg-[#0006ff]' : 'bg-[#0006ff] text-white hover:bg-white hover:text-[#111]'}">
-              Konsultasi Paket <i class="fa-solid fa-arrow-right -rotate-45 group-hover:translate-x-1 transition-transform"></i>
-            </a>
-          </article>
-        `;
-      }).join('');
-    }
+            <div class="grid md:grid-cols-3 gap-5">
+                <div class="tier-info-card group p-7 rounded-[2rem] border border-gray-100 bg-gray-50 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <b class="text-[#0006ff] text-4xl font-black">01</b>
+                    </div>
+                    <h3 class="font-black text-2xl mt-5 uppercase tracking-tight">Starter</h3>
+                    <p class="text-gray-500 mt-3 leading-relaxed text-sm">Cocok untuk UMKM atau personal brand yang baru mulai dan butuh tampilan digital yang lebih rapi.</p>
+                </div>
 
-    function setService(key) {
-      document.querySelectorAll('.service-btn').forEach(btn => btn.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-      renderPricing(key);
-    }
+                <div class="tier-info-card group p-7 rounded-[2rem] border-2 border-[#0006ff] bg-[#0006ff] text-white shadow-xl shadow-[#0006ff]/20 relative overflow-hidden">
+                    <div class="absolute top-5 right-5 px-3 py-1 rounded-full bg-white text-[#0006ff] text-[8px] font-black uppercase tracking-widest">Most Picked</div>
+                    <div class="relative z-10">
+                        <b class="text-white text-4xl font-black">02</b>
+                    </div>
+                    <h3 class="font-black text-2xl mt-5 uppercase tracking-tight">Pro</h3>
+                    <p class="text-white/75 mt-3 leading-relaxed text-sm">Cocok untuk bisnis yang mulai aktif promosi, butuh output lebih lengkap, dan ingin tampil lebih profesional.</p>
+                </div>
 
-    renderPricing('brand');
+                <div class="tier-info-card group p-7 rounded-[2rem] border border-gray-900 bg-[#111] text-white relative overflow-hidden">
+                    <div class="relative z-10">
+                        <b class="text-[#0006ff] text-4xl font-black">03</b>
+                    </div>
+                    <h3 class="font-black text-2xl mt-5 uppercase tracking-tight">Ultimate</h3>
+                    <p class="text-gray-400 mt-3 leading-relaxed text-sm">Cocok untuk brand yang mau eksekusi serius, butuh arahan strategi, aset lengkap, dan support lebih intens.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    document.querySelectorAll('nav a[href^="#"], header a[href^="#"]').forEach(link => {
-      link.addEventListener('click', e => {
-        const target = document.querySelector(link.getAttribute('href'));
-        if (!target) return;
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-    const mobileMenuBtn = document.getElementById('mobile-menu-button');
-const mobileMenu = document.getElementById('mobile-menu');
-const closeMenuBtn = document.getElementById('close-menu');
+    <section id="pricelist" class="py-20 bg-[#111] text-white">
+        <div class="max-w-[1500px] mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row justify-between md:items-end gap-6 mb-10">
+                <div>
+                    <span class="text-[#0006ff] font-bold text-xs uppercase tracking-widest">Pricelist Service</span>
+                    <h2 class="text-4xl sm:text-6xl font-black uppercase tracking-tighter mt-3">
+                        PILIH <span class="text-[#0006ff] italic">SERVICE</span>.
+                    </h2>
+                </div>
+                <p class="text-gray-400 max-w-md">
+                    Klik service di bawah untuk melihat paket Starter, Pro, dan Ultimate sesuai kebutuhan.
+                </p>
+            </div>
 
-if (mobileMenuBtn && mobileMenu && closeMenuBtn) {
-  mobileMenuBtn.addEventListener('click', () => {
-    mobileMenu.classList.remove('translate-x-full');
-    mobileMenu.classList.add('translate-x-0');
-    document.body.classList.add('menu-open');
-  });
+            <div id="service-tabs" class="flex flex-wrap gap-3 mb-10">
+                <button class="service-btn active px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('brand')">Brand Design</button>
+                <button class="service-btn px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('promotion')">Promotion Design</button>
+                <button class="service-btn px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('tech')">Tech Development</button>
+                <button class="service-btn px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('smm')">Social Media Management</button>
+                <button class="service-btn px-5 py-3 rounded-full border text-[10px] font-black uppercase tracking-[.18em] transition-all" onclick="setService('av')">Audio Visual</button>
+            </div>
 
-  closeMenuBtn.addEventListener('click', () => {
-    mobileMenu.classList.remove('translate-x-0');
-    mobileMenu.classList.add('translate-x-full');
-    document.body.classList.remove('menu-open');
-  });
-}
-  </script>
+            <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                </div>
+        </div>
+    </section>
+
+    <section class="py-14 bg-white text-[#111] overflow-hidden">
+        <div class="max-w-[1500px] mx-auto px-4 sm:px-6">
+            <div class="cta-glow rounded-[2rem] text-white p-6 sm:p-8 lg:p-8 flex flex-col lg:flex-row justify-between gap-7 items-start lg:items-center overflow-hidden relative shadow-2xl shadow-[#0006ff]/20">
+                <div class="absolute right-0 top-0 w-[420px] h-full opacity-20 pointer-events-none">
+                    <div class="absolute right-10 top-8 w-44 h-44 rounded-full border border-white/30"></div>
+                    <div class="absolute right-28 bottom-8 w-24 h-24 rounded-full border border-white/20"></div>
+                    <div class="absolute right-0 bottom-0 w-72 h-72 bg-white/10 blur-3xl rounded-full"></div>
+                </div>
+
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[.3em] text-white/60">
+                        <i class="fa-regular fa-comments"></i> Custom Need?
+                    </span>
+                    <h2 class="text-4xl sm:text-5xl font-black uppercase tracking-tighter mt-3 leading-[.9]">
+                        Bingung Pilih<br><span class="italic">Paket yang Pas?</span>
+                    </h2>
+                    <p class="text-white/75 mt-4 leading-relaxed max-w-2xl">
+                        Ceritain dulu kebutuhan brand kamu. Nanti kita bantu arahin paket paling masuk akal, tanpa harus ambil yang paling mahal.
+                    </p>
+                </div>
+
+                <a href="contact" class="group relative z-10 bg-white text-[#0006ff] px-6 py-3 rounded-full font-black uppercase tracking-[.2em] text-[10px] hover:bg-[#111] hover:text-white transition-all flex items-center gap-3 shadow-xl">
+                    Konsultasi Dulu
+                    <span class="w-7 h-7 rounded-full bg-[#0006ff] text-white group-hover:bg-white group-hover:text-[#111] flex items-center justify-center transition-all">
+                        <i class="fa-solid fa-arrow-right arrow-move text-[10px]"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#111111] text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
+        
+        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
+            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> •
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+            </div>
+        </div>
+
+        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
+                
+                <div class="lg:col-span-5 flex flex-col justify-start items-start">
+                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
+                        PUNYA IDE? <br> <span class="text-[#0006ff] italic">OBROLIN AJA.</span>
+                    </h2>
+                    
+                    <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-[#111111] px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-[#0006ff] hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
+                        Ayo Diskusi
+                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                    </a>
+                </div>
+
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    <div>
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
+                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
+                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
+                        </address>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <a href="mailto:kancahcreative@gmail.com" class="text-sm font-bold text-white hover:text-[#0006ff] transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-regular fa-envelope"></i> kancahcreative@gmail.com
+                        </a>
+                        <a href="https://wa.me/6289524687866" class="text-sm font-bold text-white hover:text-[#0006ff] transition-colors flex items-center gap-2 w-max">
+                            <i class="fa-brands fa-whatsapp"></i> +62 895-2468-7866
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="services" class="text-white hover:text-[#0006ff] transition-colors">Services</a></li>
+                            <li><a href="works" class="text-white hover:text-[#0006ff] transition-colors">Work</a></li>
+                            <li><a href="pricelist" class="text-white hover:text-[#0006ff] transition-colors">Pricelist</a></li>
+                            <li><a href="about" class="text-white hover:text-[#0006ff] transition-colors">About</a></li>
+                            <li><a href="careers" class="text-white hover:text-[#0006ff] transition-colors">Careers</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="flex flex-col gap-4">
+                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
+                        <ul class="flex flex-col gap-3 font-medium text-sm">
+                            <li><a href="#" class="text-white hover:text-[#0006ff] transition-colors">Instagram</a></li>
+                            <li><a href="#" class="text-white hover:text-[#0006ff] transition-colors">LinkedIn</a></li>
+                            <li><a href="#" class="text-white hover:text-[#0006ff] transition-colors">Behance</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
+                <p class="text-center md:text-left">&copy; 2026 PT. Kancah Media Sejahtera.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 1. DATA LAYANAN LENGKAP (BRAND, PROMO, TECH, SMM, AV)
+        const services = {
+            brand: {
+                kicker: 'Brand Design',
+                tiers: [
+                    {
+                        name: 'Starter', price: 'Rp650.000',
+                        desc: 'Cocok untuk UMKM yang baru memulai perjalanan digitalnya dan butuh tampilan brand lebih rapi.',
+                        features: ['Brief & arahan visual dasar', 'Logo simple / refresh visual', 'Palet warna & font recommendation', '1 konsep utama', '2x revisi minor']
+                    },
+                    {
+                        name: 'Pro', price: 'Rp1.500.000', badge: 'Paling Aman',
+                        desc: 'Untuk bisnis yang mulai serius membangun identitas dan butuh brand kit yang lebih konsisten.',
+                        features: ['Logo utama + alternatif', 'Mini brand guideline', 'Color & typography system', 'Template feed basic', '3x revisi']
+                    },
+                    {
+                        name: 'Ultimate', price: 'Rp3.500.000',
+                        desc: 'Untuk brand yang ingin punya identitas lengkap, matang, dan siap dipakai di banyak kebutuhan.',
+                        features: ['Full identity system', 'Brand guideline lengkap', 'Logo suite lengkap', 'Stationery basic', 'Support implementasi visual']
+                    }
+                ]
+            },
+            promotion: {
+                kicker: 'Promotion Design',
+                tiers: [
+                    {
+                        name: 'Starter', price: 'Rp350.000',
+                        desc: 'Cocok untuk promo singkat yang butuh desain cepat, rapi, dan langsung bisa diposting.',
+                        features: ['3 desain promosi', 'Format feed/story', 'Copy headline sederhana', '1 style visual', '1x revisi']
+                    },
+                    {
+                        name: 'Pro', price: 'Rp850.000', badge: 'Best Value',
+                        desc: 'Untuk campaign yang butuh beberapa materi turunan agar promosi lebih konsisten.',
+                        features: ['8 desain promosi', 'Feed, story, banner digital', 'Adaptasi ukuran', 'Copywriting basic', '2x revisi']
+                    },
+                    {
+                        name: 'Ultimate', price: 'Rp1.750.000',
+                        desc: 'Untuk campaign yang lebih besar dan butuh konsep visual yang kuat dari awal sampai akhir.',
+                        features: ['15 desain promosi', 'Campaign visual direction', 'Multi-format output', 'Key visual utama', 'Priority revision']
+                    }
+                ]
+            },
+            tech: {
+                kicker: 'Tech Development',
+                tiers: [
+                    {
+                        name: 'Starter', price: 'Rp599.000',
+                        desc: 'Cocok untuk personal, UMKM, atau campaign yang butuh landing page sederhana namun tetap proper.',
+                        features: ['1 landing page', 'Responsive mobile & desktop', 'Section basic', 'CTA WhatsApp', 'Deploy basic']
+                    },
+                    {
+                        name: 'Pro', price: 'Rp1.500.000', badge: 'Rekomendasi',
+                        desc: 'Untuk bisnis yang butuh website lebih lengkap, profesional, dan siap dipakai untuk presentasi brand.',
+                        features: ['Company profile 3-5 section', 'UI lebih custom', 'SEO basic', 'Form/contact integration', '2x revisi']
+                    },
+                    {
+                        name: 'Ultimate', price: 'Rp5.500.000+',
+                        desc: 'Untuk kebutuhan website custom atau web app dengan fitur yang lebih kompleks.',
+                        features: ['Custom website / web app', 'Dashboard basic opsional', 'Integrasi database/API', 'Performance check', 'Support after launch']
+                    }
+                ]
+            },
+            smm: {
+                kicker: 'Social Media Management',
+                tiers: [
+                    {
+                        name: 'Starter', price: 'Rp750.000/bln',
+                        desc: 'Cocok untuk akun yang baru mulai aktif dan butuh bantuan konten basic secara konsisten.',
+                        features: ['8 konten feed/bulan', 'Caption basic', 'Content calendar sederhana', 'Design template', 'Monthly recap']
+                    },
+                    {
+                        name: 'Pro', price: 'Rp1.750.000/bln', badge: 'Paling Pas',
+                        desc: 'Untuk bisnis yang ingin sosial media lebih aktif dengan konten yang lebih variatif.',
+                        features: ['15 konten/bulan', 'Caption & hashtag', 'Content planning', 'Story template', 'Monthly report']
+                    },
+                    {
+                        name: 'Ultimate', price: 'Rp3.500.000/bln',
+                        desc: 'Untuk brand yang ingin pengelolaan sosial media lebih serius dari strategi sampai laporan.',
+                        features: ['25 konten/bulan', 'Strategi konten bulanan', 'Visual direction', 'Basic engagement support', 'Report & evaluasi']
+                    }
+                ]
+            },
+            av: {
+                kicker: 'Audio Visual',
+                tiers: [
+                    {
+                        name: 'Starter', price: 'Rp850.000',
+                        desc: 'Cocok untuk kebutuhan konten singkat seperti reels simple atau foto produk basic.',
+                        features: ['1 konsep sederhana', '1 output video pendek / foto basic', 'Basic editing', 'Color correction', '1x revisi']
+                    },
+                    {
+                        name: 'Pro', price: 'Rp2.000.000', badge: 'Paling Fleksibel',
+                        desc: 'Untuk brand yang butuh konten lebih proper dengan konsep dan eksekusi lebih matang.',
+                        features: ['Konsep & shotlist', '3-5 output konten', 'Editing lebih detail', 'Subtitle/basic motion', '2x revisi']
+                    },
+                    {
+                        name: 'Ultimate', price: 'Rp5.000.000+',
+                        desc: 'Untuk campaign visual yang butuh produksi lebih niat, storytelling, dan output premium.',
+                        features: ['Creative concept', 'Production planning', 'Multiple content output', 'Motion/graphic support', 'Priority editing']
+                    }
+                ]
+            }
+        };
+
+        // 2. LOGIKA RENDER PRICELIST
+        function renderPricing(key) {
+            const data = services[key];
+            document.getElementById('pricing-grid').innerHTML = data.tiers.map((tier, index) => {
+                const isPro = index === 1;
+                const isUltimate = index === 2;
+                
+                // Variasi style berdasar tier
+                const cardClass = isPro 
+                    ? 'border-[#0006ff] bg-[#0006ff] text-white scale-[1.02]' 
+                    : isUltimate 
+                        ? 'border-white/10 bg-white text-[#111]' 
+                        : 'border-gray-200 bg-white text-[#111]';
+                        
+                const badgeHtml = tier.badge 
+                    ? `<div class="absolute -top-4 left-8 bg-[#111] text-white px-4 py-2 rounded-full text-[9px] font-black uppercase tracking-widest">${tier.badge}</div>` 
+                    : '';
+                    
+                const btnClass = isPro 
+                    ? 'bg-white text-[#0006ff] hover:bg-[#111] hover:text-white' 
+                    : isUltimate 
+                        ? 'bg-[#111] text-white hover:bg-[#0006ff]' 
+                        : 'bg-[#0006ff] text-white hover:bg-white hover:text-[#111]';
+
+                const featuresHtml = tier.features.map(feature => `
+                    <div class="flex items-start gap-3">
+                        <i class="fa-solid fa-check ${isPro ? 'text-white' : 'text-[#0006ff]'} mt-1"></i>
+                        <span>${feature}</span>
+                    </div>
+                `).join('');
+
+                return `
+                    <article class="tier-card relative rounded-[2rem] border-2 ${cardClass} p-7 shadow-sm card-hover">
+                        ${badgeHtml}
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="inline-flex px-3 py-1 rounded-full ${isPro ? 'bg-white text-[#0006ff]' : 'bg-[#0006ff] text-white'} text-[9px] font-black uppercase tracking-widest">
+                                ${tier.name}
+                            </span>
+                            <span class="inline-flex px-3 py-1 rounded-full ${isPro ? 'bg-white/15 text-white' : isUltimate ? 'bg-[#111] text-white' : 'bg-gray-100 text-[#111]'} text-[9px] font-black uppercase tracking-widest">
+                                ${data.kicker}
+                            </span>
+                        </div>
+                        <h3 class="text-4xl font-black uppercase tracking-tight mt-6">${tier.name}</h3>
+                        <p class="text-5xl font-black mt-4 tracking-tighter">${tier.price}</p>
+                        <p class="${isPro ? 'text-white/75' : 'text-gray-500'} mt-4 leading-relaxed min-h-[96px]">
+                            ${tier.desc}
+                        </p>
+                        <div class="tier-features mt-6 space-y-2.5 text-[13px] font-bold">
+                            ${featuresHtml}
+                        </div>
+                        <a href="contact" class="mt-6 w-full py-3.5 rounded-full font-black uppercase tracking-[.18em] text-[10px] transition-all flex justify-center items-center gap-3 group ${btnClass}">
+                            Konsultasi Paket <i class="fa-solid fa-arrow-right -rotate-45 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // Logic pergantian service
+        function setService(key) {
+            document.querySelectorAll('.service-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            renderPricing(key);
+        }
+
+        // 3. LOGIKA JAM & CUACA
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            
+            if(document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
+            if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
+        }
+
+        async function updateWeather() {
+            try {
+                // Koordinat Jogja
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+                const data = await res.json();
+                if (data && data.current_weather) {
+                    const temp = Math.round(data.current_weather.temperature) + "°C";
+                    if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = temp;
+                    if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = temp;
+                }
+            } catch (e) { 
+                console.error("Gagal mengambil data cuaca"); 
+            }
+        }
+
+        // 4. EVENT LISTENERS UTAMA
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render layanan default saat pertama load
+            renderPricing('brand');
+
+            // Jalankan Jam & Cuaca
+            updateClock();
+            setInterval(updateClock, 1000);
+            updateWeather();
+            setInterval(updateWeather, 1800000); // Update cuaca tiap 30 menit
+
+            // Logika Mobile Menu
+            const mobileMenuBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMenuBtn = document.getElementById('close-menu');
+            
+            if (mobileMenuBtn && mobileMenu && closeMenuBtn) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.remove('translate-x-full');
+                    document.body.classList.add('menu-open');
+                });
+                closeMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('translate-x-full');
+                    document.body.classList.remove('menu-open');
+                });
+            }
+
+            // Logika Location Popup (Mobile)
+            const trigger = document.getElementById('weather-mobile-trigger');
+            const popup = document.getElementById('location-popup');
+            if (trigger && popup) {
+                trigger.addEventListener('click', () => {
+                    popup.classList.toggle('opacity-0');
+                    popup.classList.toggle('scale-90');
+                    popup.classList.toggle('pointer-events-none');
+                    // Auto close after 3 seconds
+                    setTimeout(() => {
+                        popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+                    }, 3000);
+                });
+            }
+
+            // Smooth Scroll untuk Anchor Links
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', e => {
+                    const targetId = link.getAttribute('href');
+                    if(targetId === "#") return;
+                    
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
