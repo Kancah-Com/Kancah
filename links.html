@@ -19,11 +19,10 @@
                 extend: {
                     fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
                     colors: { 
-                        // Warna disesuaikan persis dengan gambar referensi
                         kancah: { 
-                            bg: '#E9ECF1', // Background abu-abu terang
-                            blue: '#0025D4', // Biru terang teks
-                            darkblue: '#050B3D' // Biru gelap logo
+                            bg: '#E9ECF1',
+                            blue: '#0025D4',
+                            darkblue: '#050B3D'
                         } 
                     }
                 }
@@ -33,7 +32,7 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #E9ECF1; }
         
-        /* Hilangkan scrollbar bawaan untuk tampilan mobile-like */
+        /* Hilangkan scrollbar bawaan */
         ::-webkit-scrollbar { width: 0px; background: transparent; }
         
         /* Animasi hover tombol */
@@ -50,23 +49,11 @@
 
 <body class="text-kancah-blue min-h-screen flex justify-center pb-20 relative">
 
-    <div class="w-full max-w-[600px] px-4 pt-6 relative">
-
-        <div class="flex justify-between items-center w-full mb-8">
-            <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black shadow-sm hover:bg-gray-50 transition-colors">
-                <i class="fa-solid fa-asterisk text-lg"></i>
-            </button>
-            <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-black shadow-sm hover:bg-gray-50 transition-colors">
-                <i class="fa-solid fa-arrow-up-from-bracket text-lg"></i>
-            </button>
-        </div>
+    <div class="w-full max-w-[600px] px-4 pt-12 relative">
 
         <div class="flex flex-col items-center text-center mb-8">
-            <div class="w-[104px] h-[104px] rounded-full bg-[#05062C] border-4 border-kancah-bg flex items-center justify-center shadow-[0_0_20px_rgba(0,37,212,0.3)] mb-4 overflow-hidden relative">
-                <img src="./assets/kancah-logo.png" alt="Logo" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
-                <div id="logo-fallback" class="hidden absolute inset-0 bg-gradient-to-br from-[#0025D4] to-[#05062C] flex items-center justify-center text-white text-4xl font-black">
-                    <i class="fa-solid fa-infinity"></i>
-                </div>
+            <div class="mb-5 flex justify-center">
+                <img src="./assets/kancah-logo.png" alt="Kancah Logo" class="w-36 h-auto object-contain" onerror="this.src='https://via.placeholder.com/150?text=KANCAH'">
             </div>
             
             <h1 class="text-2xl font-bold tracking-tight mb-1">@kancahcom</h1>
@@ -175,12 +162,11 @@
                     return;
                 }
 
-                // Render tombol sesuai desain referensi (Putih, Teks Tengah, Icon 3 titik di kanan)
+                // Render tombol (Tanpa titik tiga)
                 container.innerHTML = data.map(l => `
                     <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" 
                        class="link-btn relative w-full flex items-center justify-center bg-white py-[18px] px-6 rounded-full shadow-sm transition-transform">
                         <span class="font-semibold text-[15px]">${l.title}</span>
-                        <i class="fa-solid fa-ellipsis-vertical absolute right-6 text-kancah-blue/40 text-lg"></i>
                     </a>
                 `).join('');
             } catch (err) {
