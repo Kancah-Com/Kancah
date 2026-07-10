@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Konfigurasi Tailwind (Kancah Style) -->
+    <!-- Konfigurasi Tailwind -->
     <script>
         tailwind.config = {
             theme: {
@@ -32,28 +32,18 @@
                     },
                     backgroundImage: {
                         'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.05) 1px, transparent 0)"
-                    },
-                    animation: {
-                        'blob': 'blob 10s infinite',
-                        'marquee-bg': 'marqueeBg 30s linear infinite',
-                    },
-                    keyframes: {
-                        blob: {
-                            '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
-                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
-                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
-                        },
-                        marqueeBg: {
-                            '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' }
-                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Ubuntu', sans-serif; }
+        body { 
+            font-family: 'Ubuntu', sans-serif; 
+            /* Gradient: 70% Hitam, 30% Biru memancar dari kanan atas seperti desain referensi */
+            background: radial-gradient(circle at 85% 15%, #00048a 0%, #111111 40%, #111111 100%);
+            background-attachment: fixed;
+        }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         
         /* Animasi masuk elemen */
@@ -70,31 +60,21 @@
     </style>
 </head>
 
-<!-- BACKGROUND GRADIENT HITAM KE BIRU -->
-<body class="bg-gradient-to-br from-kancah-dark via-[#07071a] to-[#00048a] text-white selection:bg-kancah-blue selection:text-white overflow-hidden relative min-h-screen flex flex-col items-center justify-center">
+<body class="text-white selection:bg-kancah-blue selection:text-white overflow-x-hidden relative min-h-screen flex flex-col items-center justify-center">
 
     <!-- ==========================================
-         BACKGROUND DINAMIS (Anti-Sepi)
+         BACKGROUND PATTERN (Sangat tipis/elegan)
     =========================================== -->
-    <!-- 1. Tech Dots -->
-    <div class="fixed inset-0 bg-tech-pattern bg-[length:30px_30px] z-0 pointer-events-none opacity-40"></div>
-    
-    <!-- 2. Giant Scrolling Text (Watermark) -->
-    <div class="fixed inset-0 z-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-5 -rotate-12 scale-150">
-        <div class="whitespace-nowrap font-black text-[15vw] uppercase tracking-tighter animate-marquee-bg flex w-max text-white">
-            <span>FUTURE PROOF CREATIVE AGENCY • CREATIVE LOGIC SYSTEMS • FUTURE PROOF CREATIVE AGENCY • CREATIVE LOGIC SYSTEMS • </span>
-            <span>FUTURE PROOF CREATIVE AGENCY • CREATIVE LOGIC SYSTEMS • FUTURE PROOF CREATIVE AGENCY • CREATIVE LOGIC SYSTEMS • </span>
-        </div>
-    </div>
+    <div class="fixed inset-0 bg-tech-pattern bg-[length:30px_30px] z-0 pointer-events-none opacity-50"></div>
 
     <!-- ==========================================
          MAIN CONTENT CONTAINER
     =========================================== -->
-    <div class="w-full max-w-[550px] px-6 py-12 relative z-10 flex flex-col items-center h-screen overflow-y-auto no-scrollbar">
+    <div class="w-full max-w-[550px] px-6 py-12 relative z-10 flex flex-col items-center min-h-screen overflow-y-auto no-scrollbar">
         
         <!-- Tech Pill (Status) -->
         <div class="mb-8 opacity-0 animate-fade-up">
-            <div class="flex items-center justify-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 px-5 py-2 rounded-full shadow-sm">
+            <div class="flex items-center justify-center gap-3 bg-[#111111]/80 backdrop-blur-md border border-white/10 px-5 py-2 rounded-full shadow-sm">
                 <div class="relative flex h-2 w-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kancah-blue opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-kancah-blue"></span>
@@ -107,9 +87,9 @@
             </div>
         </div>
 
-        <!-- Profile Area (Logo Clean) -->
+        <!-- Profile Area -->
         <div class="w-full text-center flex flex-col items-center opacity-0 animate-fade-up delay-100">
-            <!-- LOGO DIPERBAIKI: Tanpa background putih/lingkaran tambahan -->
+            <!-- Logo Tanpa Lingkaran Putih -->
             <div class="mb-5 flex justify-center">
                 <img src="./assets/kancah png.png" alt="Kancah Logo" class="h-28 w-auto object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/150?text=KANCAH'">
             </div>
@@ -126,17 +106,20 @@
             </div>
         </div>
 
+        <!-- Spacer -->
+        <div class="flex-grow"></div>
+
         <!-- Social Media Floating Pill -->
         <div class="mt-12 mb-8 opacity-0 animate-fade-up delay-300">
-            <div class="bg-white/5 backdrop-blur-xl border border-white/10 rounded-full px-8 py-4 flex items-center justify-center gap-8 text-2xl shadow-lg">
-                <a href="https://www.instagram.com/kancahcom" target="_blank" class="text-gray-300 hover:text-white hover:scale-110 transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
-                <a href="https://www.linkedin.com/company/kancah/" target="_blank" class="text-gray-300 hover:text-white hover:scale-110 transition-all duration-300"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://wa.me/628924687866" target="_blank" class="text-gray-300 hover:text-white hover:scale-110 transition-all duration-300"><i class="fa-brands fa-whatsapp"></i></a>
+            <div class="bg-[#111111]/80 backdrop-blur-xl border border-white/10 rounded-full px-8 py-4 flex items-center justify-center gap-8 text-2xl shadow-lg">
+                <a href="https://www.instagram.com/kancahcom" target="_blank" class="text-gray-400 hover:text-kancah-blue hover:scale-110 transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/kancah/" target="_blank" class="text-gray-400 hover:text-kancah-blue hover:scale-110 transition-all duration-300"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://wa.me/628924687866" target="_blank" class="text-gray-400 hover:text-kancah-blue hover:scale-110 transition-all duration-300"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
         </div>
         
         <!-- Footer -->
-        <div class="mt-auto pt-6 pb-4 text-center opacity-0 animate-fade-up delay-300">
+        <div class="pb-4 text-center opacity-0 animate-fade-up delay-300">
             <a href="/" class="inline-flex items-center justify-center gap-2 group">
                 <span class="text-[9px] font-bold text-gray-500 uppercase tracking-widest group-hover:text-white transition-colors">Creative Logic Systems</span>
             </a>
@@ -174,26 +157,26 @@
                     return;
                 }
 
-                // Render tombol Links (Dark Theme Glassmorphism)
+                // Render tombol Links: Putih Solid, Teks Hitam, Hover Biru
                 container.innerHTML = data.map((l, index) => {
                     const num = String(index + 1).padStart(2, '0');
                     return `
                     <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" 
-                       class="group relative w-full flex items-center bg-white/5 backdrop-blur-lg border border-white/10 py-5 px-8 rounded-full hover:border-kancah-blue hover:bg-kancah-blue transition-all duration-500 overflow-hidden shadow-lg hover:-translate-y-1">
+                       class="group relative w-full flex items-center bg-white border border-transparent py-5 px-8 rounded-full hover:bg-kancah-blue transition-all duration-500 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.15)] hover:shadow-[0_15px_30px_rgba(0,6,255,0.4)] hover:-translate-y-1">
                         
                         <!-- Ghost Number -->
-                        <span class="absolute left-6 text-3xl font-black italic text-white/5 group-hover:text-white/20 transition-colors pointer-events-none select-none">
+                        <span class="absolute left-6 text-3xl font-black italic text-gray-100 group-hover:text-white/20 transition-colors pointer-events-none select-none">
                             ${num}
                         </span>
                         
                         <!-- Teks Utama -->
-                        <span class="font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] text-white relative z-10 transition-colors text-center w-full mx-8 line-clamp-1 drop-shadow-sm">
+                        <span class="font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] text-kancah-dark group-hover:text-white relative z-10 transition-colors text-center w-full mx-8 line-clamp-1">
                             ${l.title}
                         </span>
                         
                         <!-- Arrow Icon Circle -->
-                        <div class="absolute right-3 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:scale-95 transition-all duration-300">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-gray-300 group-hover:text-kancah-blue group-hover:rotate-0 transition-all duration-300 text-xs"></i>
+                        <div class="absolute right-3 w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-white group-hover:scale-95 transition-all duration-300">
+                            <i class="fa-solid fa-arrow-right -rotate-45 text-kancah-dark group-hover:text-kancah-blue group-hover:rotate-0 transition-all duration-300 text-xs"></i>
                         </div>
                     </a>
                 `}).join('');
