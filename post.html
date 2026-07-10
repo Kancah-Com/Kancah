@@ -58,7 +58,57 @@
     <script>
         const kancah = supabase.createClient('https://hmzwjceomnneiczbpban.supabase.co', 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__');
         const slug = new URLSearchParams(window.location.search).get('slug');
+function getSlug() {
+    // 1. Coba ambil dari ?slug= (untuk jaga-jaga)
+    const urlParams = new URLSearchParams(window.location.search);
+    const slugParam = urlParams.get('slug');
+    if (slugParam) return slugParam;
 
+    // 2. Jika tidak ada ?, ambil dari pathname (kancah.com/BG -> ambil "BG")
+    const path = window.location.pathname; // hasilnya "/BG"
+    const slugPath = path.split('/').filter(Boolean).pop(); 
+    return slugPath;
+}
+
+const slug = getSlug();
+console.log("Slug yang terdeteksi:", slug); // Cek di console F12
+
+async function loadPost() {
+    if (!slug || slug === 'post' || slug === 'post.html') {
+        // Jika slug tidak valid, balikkan ke blog
+        window.location.href = 'blog'; 
+        return;
+    }
+    
+    // Gunakan .ilike agar tidak masalah huruf besar/kecil (BG atau bg tetap ketemu)
+    const { data, error } = await kancah
+        .from('posts') 
+        .select('*')
+        .ilike('slug', slug) 
+        .single();
+    
+    if (error || !data) {
+        document.body.innerHTML = `
+            <div class="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+                <h1 class="text-6xl mb-4">❌</h1>
+                <h2 class="text-2xl font-bold uppercase italic">404 - Post Tidak Ditemukan</h2>
+                <p class="text-gray-500 mt-2">Slug "${slug}" tidak ada di database.</p>
+                <a href="/blog" class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-full font-bold uppercase text-xs">Kembali ke Blog</a>
+            </div>
+        `;
+        return;
+    }
+
+    // --- SISA KODE RENDER KAMU (Title, Content, Image, dll) ---
+    document.title = data.title + ' • Kancah Creative';
+    document.getElementById('post-title').innerText = data.title;
+    document.getElementById('post-date').innerText = new Date(data.created_at).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'});
+    document.getElementById('post-image').src = data.image_url;
+    document.getElementById('post-content').innerHTML = data.content_html;
+    document.getElementById('article-container').classList.add('opacity-100');
+}
+
+loadPost();
         async function loadPost() {
             if (!slug) { window.location.href = 'blog.html'; return; }
             
