@@ -244,6 +244,9 @@
                 <button onclick="showTab('portfolio')" id="btn-portfolio" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
                     <i class="fa-solid fa-briefcase w-5"></i> Portfolio
                 </button>
+                <button onclick="showTab('blog')" id="btn-blog" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
+    <i class="fa-solid fa-pen-nib w-5"></i> Blog
+</button>
                 <button onclick="showTab('clients')" id="btn-clients" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
                     <i class="fa-solid fa-handshake w-5"></i> Clients
                 </button>
@@ -256,6 +259,7 @@
                 <button onclick="showTab('links')" id="btn-links" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left">
     <i class="fa-solid fa-link w-5"></i> Link-in-Bio
 </button>
+                
                 <button onclick="showTab('users')" id="btn-users" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all text-left" style="display: none;">
                     <i class="fa-solid fa-users-gear w-5"></i> Admins
                 </button>
@@ -499,6 +503,19 @@
             <tbody id="link-list-table"></tbody>
         </table>
     </div>
+    <section id="tab-blog" class="tab-content hidden space-y-8">
+    <div class="bg-white p-8 rounded-[2.5rem] border shadow-sm">
+        <h2 class="text-xl font-bold italic uppercase mb-6">Manage Blog Posts</h2>
+        <form id="blogForm" class="space-y-4">
+            <input type="text" id="b-title" class="w-full p-4 bg-slate-50 border rounded-2xl" placeholder="Judul Blog" required>
+            <input type="text" id="b-slug" class="w-full p-4 bg-slate-50 border rounded-2xl" placeholder="Slug (url-friendly-title)" required>
+            <textarea id="b-excerpt" class="w-full p-4 bg-slate-50 border rounded-2xl" placeholder="Ringkasan singkat (SEO)"></textarea>
+            <input type="file" id="b-image" class="w-full p-3 border border-dashed rounded-2xl text-xs">
+            <div id="blog-editor" class="h-64 mb-10"></div>
+            <button type="submit" class="w-full bg-[#0006ff] text-white py-4 rounded-2xl font-bold uppercase text-xs hover:bg-black">Publish Post</button>
+        </form>
+    </div>
+</section>
 </section>
             <section id="tab-users" class="tab-content hidden space-y-8">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -574,7 +591,16 @@
             ['blockquote', 'link', 'image', 'video'],
             ['clean']
         ];
+// Inisialisasi editor untuk blog
+const blogQuill = new Quill('#blog-editor', { theme: 'snow' });
 
+document.getElementById('blogForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    // 1. Upload Gambar Hero ke storage 'blog-images'
+    // 2. Simpan ke tabel 'posts'
+    // 3. showToast('Blog Published!');
+    // 4. loadBlogList();
+});
         const quill = new Quill('#p-content-editor', {
             theme: 'snow',
             modules: {
