@@ -375,19 +375,7 @@ footer {
     }
 
         /* --- SCRIPT PEMBUNUH WHITE SPACE MUTLAK --- */
-        function exterminateGhostSpaces() {
-            const container = document.getElementById('p-content');
-            if (!container) return;
-
-            // 1. Lepas tinggi kontainer sementara buat ngukur ukuran aslinya
-            container.style.height = 'auto';
-
-            // 2. Sembunyikan semua <p> atau <div> kosong sisa enter di admin
-            container.querySelectorAll('p, div').forEach(el => {
-                if (el.innerHTML.replace(/<br>|&nbsp;|\s/g, '') === '' && el.querySelectorAll('img, iframe, video').length === 0) {
-                    el.style.display = 'none';
-                }
-            });
+        
 
             const containerRect = container.getBoundingClientRect();
             let maxBottomPixel = 0;
@@ -422,28 +410,12 @@ footer {
             if (typeof syncNavSpacer === 'function') syncNavSpacer();
         }
 
-        function renderFreeformContent(project) {
-            const container = document.getElementById('p-content');
-            if (project.content_html && project.content_html.trim() !== '') {
-                container.innerHTML = project.content_html;
-                
-                // Triger hitungan saat gambar sudah ter-load di layar user
-                const imgs = container.getElementsByTagName('img');
-                for (let i = 0; i < imgs.length; i++) {
-                    imgs[i].addEventListener('load', exterminateGhostSpaces);
-                }
-
-                // Triger paksa berkali-kali di 3 detik pertama buat mastiin gak ada frame yg lolos
-                let checkCount = 0;
-                const layoutInterval = setInterval(() => {
-                    exterminateGhostSpaces();
-                    checkCount++;
-                    if (checkCount > 15) clearInterval(layoutInterval);
-                }, 200);
-
-                exterminateGhostSpaces();
-            }
-        }
+function renderFreeformContent(project) {
+    const container = document.getElementById('p-content');
+    if (project.content_html && project.content_html.trim() !== '') {
+        container.innerHTML = project.content_html;
+    }
+}
 
         async function loadAdjacentProjects(currentSlug) {
             const { data: list } = await kancah.from('projects').select('slug, title').order('id', { ascending: true });
@@ -523,7 +495,6 @@ updateWeather();
             // Setiap layarnya diputar/di-resize, ukur ulang!
             window.addEventListener('resize', () => {
                 syncNavSpacer();
-                exterminateGhostSpaces();
             });
         });
     </script>
