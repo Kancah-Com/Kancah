@@ -110,6 +110,13 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             isolation: isolate;
+            /* FIX 3: clip-path sebagai jalur clipping UTAMA, terpisah dari
+               overflow:hidden. clip-path dirender lewat pipeline compositing
+               yang beda di Chromium (bukan lewat rounded-rect-clip-cache
+               yang suka salah rasterize itu), jadi walau layer-nya sempat
+               di-squash lagi pas hover berkali-kali, sudutnya tetap rounded. */
+            clip-path: inset(0 round 1.5rem);
+            -webkit-clip-path: inset(0 round 1.5rem);
         }
         .group:hover .lift-card {
             box-shadow: 0 30px 40px -20px rgba(0,6,255,.25);
