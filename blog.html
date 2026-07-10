@@ -99,27 +99,24 @@
            const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
         const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
         const kancah = supabase.createClient(kancahUrl, kancahKey);
-        async function fetchPosts() {
-            const grid = document.getElementById('blog-grid');
-            const { data } = await kancah.from('posts').select('*').order('created_at', {ascending: false});
-            
-            if(!data || data.length === 0) {
-                grid.innerHTML = '<div class="col-span-full py-20 text-center font-bold">Belum ada insight.</div>';
-                return;
-            }
+       async function fetchPosts() {
+    const grid = document.getElementById('blog-grid');
+    // Tambahkan error ke destructuring
+    const { data, error } = await kancah.from('posts').select('*').order('created_at', {ascending: false});
+    
+    if (error) {
+        console.error("Error Supabase:", error);
+        grid.innerHTML = '<div class="col-span-full py-20 text-center font-bold text-red-500">Gagal memuat insight. Coba refresh lagi.</div>';
+        return;
+    }
+    
+    if(!data || data.length === 0) {
+        grid.innerHTML = '<div class="col-span-full py-20 text-center font-bold">Belum ada insight.</div>';
+        return;
+    }
 
-            grid.innerHTML = data.map(post => `
-                <article class="group hover:-translate-y-2 transition-all duration-300">
-<a href="/${post.slug}">
-<div class="overflow-hidden rounded-3xl mb-6 bg-slate-100 aspect-[3/2]">
-                            <img src="${post.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        </div>
-                        <h3 class="text-xl font-bold uppercase tracking-tight mb-2 group-hover:text-kancah-blue">${post.title}</h3>
-                        <p class="text-gray-500 text-sm leading-relaxed">${post.excerpt}</p>
-                    </a>
-                </article>
-            `).join('');
-        }
+    grid.innerHTML = data.map(post => `...`).join('');
+}
         fetchPosts();
     </script>
 </body>
