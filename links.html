@@ -130,8 +130,8 @@
             <!-- Identity / bio -->
             <div class="flex flex-col items-center text-center mb-10 sm:mb-14 fade-up">
                 <div class="relative mb-6">
-                    <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-kancah-dark border-4 border-kancah-blue flex items-center justify-center overflow-hidden shadow-xl shadow-kancah-blue/20">
-                        <img src="assets/logowh.png" alt="Kancah Creative" class="w-12 sm:w-14 h-auto object-contain">
+                    <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden shadow-xl shadow-kancah-blue/20">
+                        <img src="assets/logowh.png" alt="Kancah Creative" class="w-full h-full object-cover">
                     </div>
                     <span class="absolute bottom-1 right-1 flex h-4 w-4">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kancah-blue opacity-75"></span>
@@ -194,14 +194,14 @@
 
                 container.innerHTML = data.map((l, i) => `
                     <a href="${l.url}" target="_blank" rel="noopener"
-                       class="link-card-in group relative flex items-center justify-between gap-4 bg-white border-2 border-kancah-dark rounded-2xl py-4 sm:py-5 px-5 sm:px-6 overflow-hidden transition-all duration-300 hover:border-kancah-blue hover:-translate-y-1 active:scale-[0.98] hover:shadow-xl hover:shadow-kancah-blue/20"
+                       class="link-card-in group relative flex items-center justify-between gap-4 bg-kancah-blue rounded-2xl py-4 sm:py-5 px-5 sm:px-6 overflow-hidden transition-all duration-300 hover:-translate-y-1 active:scale-[0.98] hover:shadow-xl hover:shadow-black/30"
                        style="animation-delay:${(i * 0.08).toFixed(2)}s">
                         <span class="relative z-10 flex items-center gap-3 min-w-0">
-                            ${l.icon ? `<i class="${l.icon} text-kancah-blue text-lg group-hover:text-white transition-colors duration-300 w-5 text-center flex-shrink-0"></i>` : ''}
-                            <span class="font-bold uppercase tracking-[0.12em] text-sm sm:text-base text-kancah-dark group-hover:text-white transition-colors duration-300 truncate">${l.title}</span>
+                            ${l.icon ? `<i class="${l.icon} text-white text-lg w-5 text-center flex-shrink-0"></i>` : ''}
+                            <span class="font-bold uppercase tracking-[0.12em] text-sm sm:text-base text-white truncate">${l.title}</span>
                         </span>
-                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 text-kancah-dark group-hover:text-white transition-all duration-300 relative z-10 flex-shrink-0"></i>
-                        <div class="absolute inset-0 bg-kancah-blue translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 text-white relative z-10 flex-shrink-0"></i>
+                        <div class="absolute inset-0 bg-kancah-dark translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                     </a>
                 `).join('');
             } catch (err) {
