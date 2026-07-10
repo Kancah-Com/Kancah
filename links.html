@@ -4,72 +4,259 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Links • Kancah Creative</title>
+    <meta name="description" content="Semua link penting Kancah Creative — Instagram, WhatsApp, portfolio, dan lainnya, dalam satu halaman.">
+    <link rel="icon" type="image/png" href="./assets/logowh.png">
+
+    <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
+    <!-- Tailwind Config — samain persis dengan design guide kancah.com -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
+                    colors: {
+                        kancah: {
+                            blue: '#0006ff',
+                            dark: '#111111',
+                            gray: '#393939',
+                            light: '#f4f4f5'
+                        }
+                    },
+                    backgroundImage: {
+                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.06) 1px, transparent 0)"
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { 
-            font-family: 'Ubuntu', sans-serif; 
-            /* Gradient presisi 3 titik */
-            background: linear-gradient(135deg, #0006ff 0%, #000000 40%, #000000 60%, #0006ff 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-            margin: 0;
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            background-color: #ffffff;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Fade-up masuk, identik dengan animasi di kancah.com */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up { animation: fadeUp 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-150 { animation-delay: 0.15s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+
+        @keyframes linkCardIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer marquee — sama seperti footer di halaman lain */
+        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
+        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Radial blue glow ambient, konsisten dengan hero section web utama */
+        .glow-blob {
+            position: absolute;
+            border-radius: 9999px;
+            filter: blur(120px);
+            pointer-events: none;
         }
     </style>
 </head>
 
-<body class="text-white flex flex-col items-center justify-center p-6">
+<body class="text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px] relative min-h-screen flex flex-col items-center">
 
-    <div class="w-full max-w-[500px] flex flex-col items-center">
-        
-        <!-- Logo -->
-        <div class="mb-8">
-            <img src="./assets/kancah png.png" alt="Kancah Logo" class="h-24 w-auto object-contain drop-shadow-2xl">
+    <!-- Ambient glow, senada dengan hero & CTA section kancah.com -->
+    <div class="glow-blob w-[500px] h-[500px] bg-kancah-blue/10 -top-40 -right-40"></div>
+    <div class="glow-blob w-[400px] h-[400px] bg-kancah-blue/5 top-[60vh] -left-40"></div>
+
+    <!-- ==========================================
+         MAIN CONTENT CONTAINER
+    =========================================== -->
+    <div class="w-full max-w-[560px] px-5 sm:px-6 pt-10 pb-6 relative z-10 flex flex-col items-center min-h-screen overflow-y-auto no-scrollbar">
+
+        <!-- Status Pill — replika weather/time module navbar kancah.com -->
+        <div class="mb-10 opacity-0 animate-fade-up">
+            <div class="flex items-center justify-center gap-3 sm:gap-4 bg-white/80 backdrop-blur-md border border-kancah-blue rounded-full px-5 sm:px-7 py-2.5 shadow-sm">
+                <div class="relative flex h-1.5 w-1.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kancah-blue opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-kancah-blue"></span>
+                </div>
+                <div class="flex items-center gap-2 sm:gap-3 tabular-nums font-black text-[11px] sm:text-xs text-kancah-dark tracking-[0.05em]">
+                    <span id="live-time">00:00:00</span>
+                    <span class="text-kancah-blue">|</span>
+                    <span id="live-temp">--°C</span>
+                    <span class="text-kancah-blue hidden xs:inline">|</span>
+                    <span class="hidden xs:inline text-gray-400 font-bold uppercase tracking-[0.2em] text-[9px]">Kancah HQ, Yogyakarta</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Area -->
+        <div class="w-full text-center flex flex-col items-center opacity-0 animate-fade-up delay-100">
+            <div class="mb-6 flex justify-center">
+                <img src="assets/kancah-logo.png" alt="Kancah Creative Logo" class="h-12 sm:h-14 w-auto object-contain hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/220x60/111111/ffffff?text=KANCAH'">
+            </div>
+
+            <h1 class="leading-[0.85] tracking-tighter uppercase">
+                <span class="block text-[13vw] sm:text-6xl font-black text-kancah-dark">@KANCAH<span class="italic text-kancah-blue">COM</span></span>
+            </h1>
+            <p class="text-gray-400 text-[10px] sm:text-[11px] uppercase tracking-[0.35em] mt-4 font-bold">Dream. Play. Create.</p>
+
+            <p class="text-gray-500 text-xs sm:text-sm font-light leading-relaxed mt-4 max-w-xs sm:max-w-sm">
+                Digital &amp; creative agency di Yogyakarta. Semua link penting kita, kumpul di satu tempat ini.
+            </p>
         </div>
 
         <!-- Links Container -->
-        <div id="links-container" class="w-full space-y-4">
-            <div class="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
-                Memuat...
+        <div id="links-container" class="w-full space-y-3.5 sm:space-y-4 mt-10 opacity-0 animate-fade-up delay-200">
+            <div class="text-center py-6 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">
+                Menghubungkan <i class="fa-solid fa-circle-notch fa-spin ml-2"></i>
             </div>
+        </div>
+
+        <!-- Spacer -->
+        <div class="flex-grow min-h-8"></div>
+
+        <!-- Social Media Pill -->
+        <div class="mt-10 mb-8 opacity-0 animate-fade-up delay-300">
+            <div class="bg-white border border-gray-200 rounded-full px-7 sm:px-8 py-3.5 sm:py-4 flex items-center justify-center gap-6 sm:gap-8 text-lg sm:text-xl shadow-sm">
+                <a href="https://www.instagram.com/kancahcom" target="_blank" rel="noopener" aria-label="Instagram Kancah" class="w-9 h-9 rounded-full flex items-center justify-center text-kancah-dark hover:bg-kancah-blue hover:text-white transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/company/kancah/" target="_blank" rel="noopener" aria-label="LinkedIn Kancah" class="w-9 h-9 rounded-full flex items-center justify-center text-kancah-dark hover:bg-kancah-blue hover:text-white transition-all duration-300"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://wa.me/6289524687866" target="_blank" rel="noopener" aria-label="WhatsApp Kancah" class="w-9 h-9 rounded-full flex items-center justify-center text-kancah-dark hover:bg-kancah-blue hover:text-white transition-all duration-300"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="mailto:kancahcreative@gmail.com" aria-label="Email Kancah" class="w-9 h-9 rounded-full flex items-center justify-center text-kancah-dark hover:bg-kancah-blue hover:text-white transition-all duration-300"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+        </div>
+
+        <!-- CTA mini, senada dengan CTA glow di homepage -->
+        <div class="w-full mb-10 opacity-0 animate-fade-up delay-400">
+            <a href="https://kancah.com/contact" target="_blank" rel="noopener" class="group relative flex items-center justify-between gap-4 rounded-[1.75rem] p-6 sm:p-7 overflow-hidden text-white shadow-xl shadow-kancah-blue/10"
+               style="background: radial-gradient(circle at 85% 20%, rgba(255,255,255,.25), transparent 30%), linear-gradient(135deg, #0006ff 0%, #111111 65%, #000000 100%);">
+                <div class="relative z-10">
+                    <span class="text-[9px] font-black uppercase tracking-[0.3em] text-white/60">Punya Ide?</span>
+                    <p class="text-lg sm:text-xl font-black uppercase tracking-tight leading-tight mt-1">Ayo Ngobrol Bareng Kancah</p>
+                </div>
+                <span class="relative z-10 shrink-0 w-11 h-11 rounded-full bg-white text-kancah-blue flex items-center justify-center group-hover:bg-kancah-dark group-hover:text-white transition-all duration-300">
+                    <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300 text-sm"></i>
+                </span>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="w-full border-t border-gray-100 pt-6 pb-2 flex flex-col items-center gap-3 opacity-0 animate-fade-up delay-400">
+            <a href="https://kancah.com" target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 group">
+                <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-kancah-blue transition-colors">&copy; 2026 PT. Kancah Media Sejahtera</span>
+            </a>
+            <span class="text-[9px] font-bold text-gray-300 uppercase tracking-widest">Jalan Anggajaya 2, Condongcatur, Sleman, Yogyakarta</span>
+        </div>
+
+    </div>
+
+    <!-- Marquee strip bawah, identik dengan strip footer kancah.com -->
+    <div class="w-full py-3 border-t border-gray-100 bg-white relative z-10">
+        <div class="footer-marquee-content flex gap-12 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.25em] text-gray-300">
+            <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> •
+            <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
         </div>
     </div>
 
     <script>
+        // ── Real-time clock ──
+        function updateTime() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            const el = document.getElementById('live-time');
+            if (el) el.innerText = `${h}:${m}:${s}`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // ── Real-time weather (Open-Meteo), sama seperti navbar kancah.com ──
+        async function updateWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
+                const data = await res.json();
+                if (data && data.current_weather) {
+                    const temp = Math.round(data.current_weather.temperature) + "°C";
+                    const el = document.getElementById('live-temp');
+                    if (el) el.innerText = temp;
+                }
+            } catch (e) { console.error("Weather offline"); }
+        }
+        updateWeather();
+        setInterval(updateWeather, 1800000);
+
+        // ── Supabase Init ──
         const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
         const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
         const kancah = supabase.createClient(kancahUrl, kancahKey);
 
+        // ── Fetch & render links, gaya kartu senada dengan Featured Works kancah.com ──
         async function loadLinks() {
             const container = document.getElementById('links-container');
-            const { data } = await kancah.from('links').select('*').order('sort_order', {ascending: true});
-            
-            if (data) {
+
+            try {
+                const { data, error } = await kancah.from('links').select('*').order('sort_order', { ascending: true });
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    container.innerHTML = '<p class="text-center text-[10px] font-bold uppercase tracking-widest text-gray-400 py-6">Belum ada tautan aktif.</p>';
+                    return;
+                }
+
                 container.innerHTML = data.map((l, index) => {
                     const num = String(index + 1).padStart(2, '0');
+                    const delay = (index * 0.07).toFixed(2);
                     return `
-                    <a href="${l.url}" target="_blank" 
-                       class="group relative w-full flex items-center bg-white py-5 px-8 rounded-full hover:bg-kancah-blue transition-all duration-300 shadow-lg">
-                        <!-- Nomor: Awal Biru, Hover Putih -->
-                        <span class="absolute left-6 text-3xl font-black italic text-blue-700 group-hover:text-white transition-colors">
+                    <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" rel="noopener"
+                       style="opacity:0; transform:translateY(16px); animation: linkCardIn 0.5s cubic-bezier(.23,1,.32,1) ${delay}s forwards;"
+                       class="group relative w-full flex items-center bg-white border border-gray-200 py-4 sm:py-5 px-6 sm:px-7 rounded-full hover:border-kancah-blue hover:shadow-[0_15px_30px_-10px_rgba(0,6,255,0.25)] hover:-translate-y-0.5 transition-all duration-400 overflow-hidden">
+
+                        <!-- Ghost Number -->
+                        <span class="shrink-0 text-2xl sm:text-3xl font-black italic text-kancah-blue/10 group-hover:text-kancah-blue/25 transition-colors pointer-events-none select-none w-10 sm:w-12">
                             ${num}
                         </span>
-                        <!-- Teks -->
-                        <span class="font-bold text-[11px] uppercase tracking-[0.2em] text-black group-hover:text-white transition-colors text-center w-full mx-8">
+
+                        <!-- Judul Link -->
+                        <span class="font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] text-kancah-dark group-hover:text-kancah-blue relative z-10 transition-colors flex-1 text-center px-2 line-clamp-1">
                             ${l.title}
                         </span>
-                        <!-- Panah -->
-                        <div class="absolute right-3 w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center group-hover:bg-white transition-all duration-300">
-                            <i class="fa-solid fa-arrow-right -rotate-45 text-white group-hover:text-blue-700 transition-all duration-300 text-xs"></i>
+
+                        <!-- Arrow Icon Circle -->
+                        <div class="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-kancah-light flex items-center justify-center group-hover:bg-kancah-blue transition-all duration-300">
+                            <i class="fa-solid fa-arrow-right -rotate-45 text-kancah-dark group-hover:text-white group-hover:rotate-0 transition-all duration-300 text-xs"></i>
                         </div>
                     </a>
-                    `;
-                }).join('');
+                `}).join('');
+            } catch (err) {
+                console.error("Error:", err);
+                container.innerHTML = '<p class="text-center text-[10px] font-bold uppercase tracking-widest text-red-500 py-6">Gagal memuat tautan.</p>';
             }
         }
+
+        // ── Track click count ──
+        async function trackClick(id) {
+            try {
+                const { data } = await kancah.from('links').select('clicks').eq('id', id).single();
+                if (data) await kancah.from('links').update({ clicks: (data.clicks || 0) + 1 }).eq('id', id);
+            } catch (err) {}
+        }
+
         loadLinks();
     </script>
 </body>
