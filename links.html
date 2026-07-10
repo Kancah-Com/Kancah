@@ -4,64 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Links • Kancah Creative</title>
+    <link rel="icon" type="image/png" href="./assets/logowh.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script>
+        tailwind.config = {
+            theme: { extend: { fontFamily: { sans: ['Ubuntu', 'sans-serif'] }, colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } } } }
+        }
+    </script>
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #09090b; color: white; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .hover-lift { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .hover-lift:hover { transform: translateY(-4px) scale(1.01); background: rgba(255, 255, 255, 0.08); border-color: rgba(0, 6, 255, 0.5); }
+        body { font-family: 'Ubuntu', sans-serif; }
+        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
+        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col items-center py-16 px-4 selection:bg-blue-600">
+<body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white">
 
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
-        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-purple-900/20 rounded-full blur-[120px]"></div>
-    </div>
-
-    <div class="flex flex-col items-center text-center mb-10 animate-in fade-in zoom-in duration-700">
-      <div class="w-24 h-24 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 p-[2px] mb-6 shadow-2xl shadow-blue-500/20">
-    <img src="assets/logowh.png" class="w-full h-full rounded-full object-cover bg-black" ...>
-</div>
-        <h1 class="text-3xl font-extrabold tracking-tight">Kancah Creative</h1>
-        <p class="text-zinc-400 mt-2 text-sm max-w-xs">Digital & creative agency based in Yogyakarta. Turning ideas into digital reality.</p>
-    </div>
-
-    <div id="links-container" class="w-full max-w-[400px] space-y-4">
-        <div class="text-center py-10 text-zinc-600">
-            <i class="fa-solid fa-circle-notch fa-spin"></i>
+    <!-- HEADER (Copied from contact.html) -->
+    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
+            <a href="/"><img src="assets/kancah-logo.png" class="h-6 sm:h-9 w-auto object-contain"></a>
+            <div class="flex items-center gap-4">
+                <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-kancah-dark transition-all">
+                    Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
+                </a>
+            </div>
         </div>
-    </div>
+    </nav>
 
-    <div class="flex gap-6 mt-12">
-        <a href="https://instagram.com/kancahcom" class="text-zinc-400 hover:text-white text-xl transition-colors"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://linkedin.com/company/kancah/" class="text-zinc-400 hover:text-white text-xl transition-colors"><i class="fa-brands fa-linkedin"></i></a>
-        <a href="https://wa.me/6289524687866" class="text-zinc-400 hover:text-white text-xl transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
-    </div>
+    <!-- MAIN CONTENT -->
+    <main class="pt-32 pb-20 max-w-[600px] mx-auto px-6">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-black uppercase tracking-tighter mb-4">Kancah <span class="text-kancah-blue italic">Creative</span></h1>
+            <p class="text-gray-500 text-sm">Digital & creative agency. Akses cepat ke semua kanal kami.</p>
+        </div>
+
+        <div id="links-container" class="space-y-4">
+            <!-- Loading -->
+            <div class="text-center py-10">
+                <i class="fa-solid fa-circle-notch fa-spin text-kancah-blue text-2xl"></i>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER (Copied from contact.html) -->
+    <footer class="bg-kancah-dark text-white pt-10">
+        <div class="w-full py-3 border-b border-white/10 bg-white/5">
+            <div class="footer-marquee-content flex gap-12 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+            </div>
+        </div>
+        <div class="max-w-[1400px] mx-auto px-6 py-8 text-center text-[10px] font-bold tracking-widest uppercase">
+            © 2026 PT. Kancah Media Sejahtera.
+        </div>
+    </footer>
 
     <script>
         const kancah = supabase.createClient('https://hmzwjceomnneiczbpban.supabase.co', 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__');
-
+        
         async function loadLinks() {
             const container = document.getElementById('links-container');
             const { data } = await kancah.from('links').select('*').order('sort_order', { ascending: true });
 
             if (!data) return;
 
-            container.innerHTML = data.map((l, i) => `
-                <a href="${l.url}" target="_blank" 
-                   class="glass hover-lift flex items-center justify-between p-4 rounded-2xl group transition-all duration-300">
-                    <span class="font-semibold text-sm tracking-wide uppercase">${l.title}</span>
-                    <i class="fa-solid fa-arrow-right text-xs opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+            container.innerHTML = data.map(l => `
+                <a href="${l.url}" target="_blank" class="group flex items-center justify-between border-2 border-kancah-dark py-5 px-6 font-bold uppercase tracking-[0.2em] text-sm hover:bg-kancah-blue hover:text-white hover:border-kancah-blue transition-all duration-300">
+                    <span>${l.title}</span>
+                    <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform"></i>
                 </a>
             `).join('');
         }
-
         loadLinks();
     </script>
 </body>
