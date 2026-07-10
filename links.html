@@ -42,10 +42,15 @@
         .delay-200 { animation-delay: .12s; }
         .delay-300 { animation-delay: .18s; }
         .delay-400 { animation-delay: .24s; }
+        .delay-500 { animation-delay: .3s; }
 
         @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
 
         .glow-blob { position: absolute; border-radius: 9999px; filter: blur(110px); pointer-events: none; }
+
+        /* Footer marquee — sama seperti works.html / about.html */
+        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
+        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
 </head>
 
@@ -60,17 +65,30 @@
              PROFILE — avatar, nama, bio
         =========================================== -->
         <div class="flex flex-col items-center text-center opacity-0 animate-fade-up">
-            <div class="w-24 h-24 rounded-full bg-kancah-dark ring-4 ring-white shadow-xl flex items-center justify-center overflow-hidden mb-4">
-                <img src="assets/logowh.png" alt="Kancah Creative" class="h-9 w-auto object-contain" onerror="this.parentElement.innerHTML='<span class=\'text-white font-black text-2xl\'>K</span>'">
+            <div class="relative mb-4">
+                <div class="absolute inset-0 scale-125 bg-kancah-blue/25 blur-2xl rounded-full pointer-events-none"></div>
+                <div class="relative w-24 h-24 rounded-full bg-kancah-dark ring-4 ring-white shadow-xl flex items-center justify-center overflow-hidden">
+                    <img src="assets/logowh.png" alt="Kancah Creative" class="h-9 w-auto object-contain" onerror="this.parentElement.innerHTML='<span class=\'text-white font-black text-2xl\'>K</span>'">
+                </div>
             </div>
 
-            <h1 class="font-black text-lg uppercase tracking-tight">Kancah Creative</h1>
+            <h1 class="font-black text-2xl uppercase tracking-tighter leading-none">
+                KANCAH <span class="text-kancah-blue italic">CREATIVE</span>
+            </h1>
 
-            <a href="https://www.instagram.com/kancahcom" target="_blank" rel="noopener" class="text-kancah-blue font-bold text-xs mt-1 hover:underline">@kancahcom</a>
+            <a href="https://www.instagram.com/kancahcom" target="_blank" rel="noopener" class="text-kancah-blue font-bold text-xs mt-2 hover:underline">@kancahcom</a>
 
             <p class="text-gray-500 text-xs sm:text-sm font-light leading-relaxed mt-3 max-w-[320px]">
                 Digital &amp; creative agency. Semua akses ke sosial media, layanan, dan kontak kami, dalam satu halaman.
             </p>
+
+            <div class="flex items-center gap-2 mt-4">
+                <span class="relative flex h-1.5 w-1.5">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kancah-blue opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-kancah-blue"></span>
+                </span>
+                <span class="text-kancah-blue font-black text-[9px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
+            </div>
         </div>
 
         <!-- ==========================================
@@ -78,9 +96,10 @@
         =========================================== -->
         <div class="w-full mt-7 opacity-0 animate-fade-up delay-100">
             <a href="https://kancah.com/contact" target="_blank" rel="noopener"
-               class="w-full flex items-center justify-center gap-2 bg-kancah-blue hover:bg-kancah-dark text-white font-black uppercase tracking-wide text-sm rounded-full py-4 px-6 transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-kancah-blue/20">
+               class="group w-full flex items-center justify-center gap-2 bg-kancah-blue hover:bg-kancah-dark text-white font-black uppercase tracking-wide text-sm rounded-full py-4 px-6 transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-kancah-blue/20">
                 <i class="fa-regular fa-comments text-sm"></i>
                 <span>Jadwalkan Konsultasi Gratis</span>
+                <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300 text-xs"></i>
             </a>
         </div>
 
@@ -97,16 +116,27 @@
              SOCIAL ICONS
         =========================================== -->
         <div class="flex items-center justify-center gap-5 mt-8 opacity-0 animate-fade-up delay-400">
-            <a href="https://www.instagram.com/kancahcom" target="_blank" rel="noopener" aria-label="Instagram Kancah" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-kancah-dark hover:bg-kancah-blue hover:text-white hover:border-kancah-blue transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://www.linkedin.com/company/kancah/" target="_blank" rel="noopener" aria-label="LinkedIn Kancah" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-kancah-dark hover:bg-kancah-blue hover:text-white hover:border-kancah-blue transition-all duration-300"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="https://wa.me/6289524687866" target="_blank" rel="noopener" aria-label="WhatsApp Kancah" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-kancah-dark hover:bg-kancah-blue hover:text-white hover:border-kancah-blue transition-all duration-300"><i class="fa-brands fa-whatsapp"></i></a>
-            <a href="mailto:kancahcreative@gmail.com" aria-label="Email Kancah" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-kancah-dark hover:bg-kancah-blue hover:text-white hover:border-kancah-blue transition-all duration-300"><i class="fa-regular fa-envelope"></i></a>
+            <a href="https://www.instagram.com/kancahcom" target="_blank" rel="noopener" aria-label="Instagram Kancah" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-kancah-dark hover:bg-kancah-blue hover:text-white hover:border-kancah-blue hover:-translate-y-1 hover:shadow-lg hover:shadow-kancah-blue/20 transition-all duration-300"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/kancah/" target="_blank" rel="noopener" aria-label="LinkedIn Kancah" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-kancah-dark hover:bg-kancah-blue hover:text-white hover:border-kancah-blue hover:-translate-y-1 hover:shadow-lg hover:shadow-kancah-blue/20 transition-all duration-300"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://wa.me/6289524687866" target="_blank" rel="noopener" aria-label="WhatsApp Kancah" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-kancah-dark hover:bg-kancah-blue hover:text-white hover:border-kancah-blue hover:-translate-y-1 hover:shadow-lg hover:shadow-kancah-blue/20 transition-all duration-300"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="mailto:kancahcreative@gmail.com" aria-label="Email Kancah" class="w-10 h-10 rounded-full flex items-center justify-center border border-gray-200 text-kancah-dark hover:bg-kancah-blue hover:text-white hover:border-kancah-blue hover:-translate-y-1 hover:shadow-lg hover:shadow-kancah-blue/20 transition-all duration-300"><i class="fa-regular fa-envelope"></i></a>
         </div>
 
-        <!-- Footer -->
-        <div class="mt-8 flex flex-col items-center gap-1.5 opacity-0 animate-fade-up delay-400">
-            <span class="text-[9px] font-bold text-gray-300 uppercase tracking-widest text-center">Jalan Anggajaya 2, Condongcatur, Sleman, Yogyakarta 55281</span>
-            <a href="https://kancah.com" target="_blank" rel="noopener" class="text-[9px] font-bold text-gray-400 hover:text-kancah-blue uppercase tracking-widest transition-colors">&copy; 2026 PT. Kancah Media Sejahtera</a>
+        <!-- ==========================================
+             FOOTER — marquee + alamat + copyright
+        =========================================== -->
+        <div class="w-full mt-10 opacity-0 animate-fade-up delay-400">
+            <div class="w-full py-2.5 border-y border-gray-100 overflow-hidden">
+                <div class="footer-marquee-content flex gap-8 text-[8px] font-bold uppercase tracking-[0.25em] text-gray-300">
+                    <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> •
+                    <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
+                </div>
+            </div>
+
+            <div class="mt-5 flex flex-col items-center gap-1.5">
+                <span class="text-[9px] font-bold text-gray-300 uppercase tracking-widest text-center">Jalan Anggajaya 2, Condongcatur, Sleman, Yogyakarta 55281</span>
+                <a href="https://kancah.com" target="_blank" rel="noopener" class="text-[9px] font-bold text-gray-400 hover:text-kancah-blue uppercase tracking-widest transition-colors">&copy; 2026 PT. Kancah Media Sejahtera</a>
+            </div>
         </div>
 
     </div>
@@ -134,7 +164,7 @@
             return 'fa-solid fa-link';
         }
 
-        // ── Render Links dari Supabase (gaya tombol standar shortlink) ──
+        // ── Render Links dari Supabase (gaya kartu bernomor, konsisten sama works.html) ──
         async function loadLinks() {
             const container = document.getElementById('links-container');
 
@@ -148,14 +178,19 @@
                 }
 
                 container.innerHTML = data.map((l, index) => {
-                    const icon = getLinkIcon(l.url);
+                    const icon  = getLinkIcon(l.url);
                     const delay = (index * 0.06).toFixed(2);
+                    const idx   = String(index + 1).padStart(2, '0');
                     return `
                     <a href="${l.url}" onclick="trackClick(${l.id})" target="_blank" rel="noopener"
                        style="opacity:0; transform:translateY(12px); animation: cardIn 0.5s cubic-bezier(.23,1,.32,1) ${delay}s forwards;"
-                       class="w-full flex items-center justify-center gap-2 bg-kancah-dark hover:bg-kancah-blue text-white font-bold uppercase tracking-wide text-sm rounded-full py-4 px-6 transition-all duration-300 hover:-translate-y-0.5 shadow-sm">
-                        <i class="${icon} text-sm"></i>
-                        <span>${l.title}</span>
+                       class="group relative w-full flex items-center justify-between gap-3 bg-kancah-dark hover:bg-kancah-blue text-white font-bold uppercase tracking-wide text-sm rounded-full py-4 pl-6 pr-5 transition-all duration-300 hover:-translate-y-1 shadow-sm hover:shadow-lg hover:shadow-kancah-blue/25 overflow-hidden">
+                        <span class="pointer-events-none absolute -right-1 -top-4 text-5xl font-black italic text-white/10 select-none">${idx}</span>
+                        <span class="relative z-10 flex items-center gap-3 min-w-0">
+                            <i class="${icon} text-sm shrink-0"></i>
+                            <span class="truncate">${l.title}</span>
+                        </span>
+                        <i class="relative z-10 fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300 text-xs shrink-0"></i>
                     </a>
                 `}).join('');
             } catch (err) {
