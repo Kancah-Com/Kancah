@@ -1,6 +1,12 @@
 RewriteEngine On
 
-# Hilangkan .html dari URL secara internal
+# 1. Arahkan semua request slug ke satu file template (misal: detail.html)
+# Kecuali kalau file fisiknya benar-benar ada (seperti asset, css, atau file html lain)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ detail.html?slug=$1 [L,QSA]
+
+# 2. Aturan kamu yang lama (Tetap biarkan di bawahnya)
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.html -f
 RewriteRule ^(.*)$ $1.html [NC,L]
