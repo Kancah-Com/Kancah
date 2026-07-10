@@ -1060,7 +1060,7 @@ window.cleanEmptyParagraphs = function () {
                     document.getElementById('login-section').classList.add('hidden'); document.getElementById('dashboard-section').classList.remove('hidden');
                     document.body.style.backgroundColor = document.documentElement.classList.contains('dark') ? '#09090b' : '#f8fafc';
                     document.getElementById('btn-users').style.display = (profile.role === 'super_admin') ? 'flex' : 'none';
-                    applyTheme(); loadProjectList(); loadClientList(); loadCareerList(); loadBazarList(); loadBazarOrders(); loadPackageList(); loadBlogList();
+                    applyTheme(); loadProjectList(); loadClientList(); loadCareerList(); loadBazarList(); loadBazarOrders(); loadPackageList(); loadBlogList(); loadLinkAdmin()
                     
                     if(profile.role === 'super_admin') loadAdminList();
                 }
