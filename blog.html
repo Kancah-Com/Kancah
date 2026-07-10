@@ -4,59 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insights • Kancah Creative</title>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Kumpulan pemikiran, strategi, dan cerita di balik layar Kancah Creative.">
+    <link rel="icon" type="image/png" href="./assets/logowh.png">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
+                    colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Ubuntu', sans-serif; }
+        body { font-family: 'Ubuntu', sans-serif; background-color: #ffffff; }
         .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
         @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .fade-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
+        .fade-up.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="bg-white text-kancah-dark">
+<body class="text-kancah-dark overflow-x-hidden">
 
-    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 flex justify-between items-center px-6">
-        <a href="/"><img src="assets/kancah-logo.png" class="h-6 sm:h-9 w-auto"></a>
-        <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white font-black uppercase tracking-[0.2em] rounded-full hover:bg-kancah-dark transition-all">Talk</a>
+    <!-- Navbar -->
+    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-20 flex justify-between items-center px-6 md:px-12">
+        <a href="/"><img src="assets/kancah-logo.png" class="h-8 w-auto"></a>
+        <div class="hidden lg:flex gap-8 text-[11px] font-bold uppercase tracking-[0.2em]">
+            <a href="about" class="hover:text-kancah-blue">Agency</a>
+            <a href="services" class="hover:text-kancah-blue">Capabilities</a>
+            <a href="works" class="hover:text-kancah-blue">Work</a>
+            <a href="blog" class="text-kancah-blue">Insights</a>
+        </div>
+        <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-black transition-all">Talk</a>
     </nav>
 
-    <main class="pt-32 pb-20 max-w-[1200px] mx-auto px-6">
-        <div class="mb-16">
-            <span class="text-kancah-blue font-bold text-xs uppercase tracking-[0.3em]">Insights & Stories</span>
-            <h1 class="text-6xl sm:text-7xl font-bold tracking-tighter uppercase mt-4">Kancah <span class="text-kancah-blue italic">Journal</span></h1>
-        </div>
+    <!-- Content -->
+    <main class="pt-40 pb-24 max-w-[1440px] mx-auto px-6 md:px-12">
+        <header class="mb-20 fade-up active">
+            <span class="text-kancah-blue font-bold text-xs uppercase tracking-[0.3em] block mb-4">The Journal</span>
+            <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter italic">Kancah <span class="text-kancah-blue not-italic">Insights</span></h1>
+        </header>
 
-        <div id="blog-list" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <section id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <!-- Loader -->
+            <div class="col-span-full py-20 text-center text-gray-400">
+                <i class="fa-solid fa-circle-notch fa-spin text-2xl"></i>
             </div>
+        </section>
     </main>
 
-    <footer class="bg-kancah-dark text-white pt-10 border-t border-white/10">
-        <div class="w-full py-3 border-b border-white/10 bg-white/5">
+    <!-- Footer -->
+    <footer class="bg-kancah-dark text-white border-t border-white/10">
+        <div class="w-full py-4 border-b border-white/10 bg-white/5">
             <div class="footer-marquee-content flex gap-12 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
+                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
                 <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
             </div>
         </div>
-        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8 text-center text-[10px] font-bold tracking-widest uppercase text-gray-500">
-            © 2026 PT. Kancah Media Sejahtera.
+        <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-5xl font-bold tracking-tighter mb-6">Punya ide kreatif?</h2>
+                    <a href="contact" class="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all">Hubungi Kami <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                <div class="grid grid-cols-2 gap-8 text-sm">
+                    <div>
+                        <h4 class="text-gray-500 mb-4 font-bold text-[10px] uppercase">Agency</h4>
+                        <ul class="space-y-2">
+                            <li><a href="about">About Us</a></li>
+                            <li><a href="services">Capabilities</a></li>
+                            <li><a href="careers">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-gray-500 mb-4 font-bold text-[10px] uppercase">Socials</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#">Instagram</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Behance</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
         const kancah = supabase.createClient('URL', 'KEY');
-        async function loadPosts() {
+        async function fetchPosts() {
+            const grid = document.getElementById('blog-grid');
             const { data } = await kancah.from('posts').select('*').order('created_at', {ascending: false});
-            const container = document.getElementById('blog-list');
-            container.innerHTML = data.map(post => `
-                <a href="post.html?slug=${post.slug}" class="group space-y-4">
-                    <div class="overflow-hidden rounded-2xl aspect-[4/3] bg-slate-100">
-                        <img src="${post.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    </div>
-                    <h2 class="text-xl font-bold uppercase tracking-tight group-hover:text-kancah-blue transition-colors">${post.title}</h2>
-                    <p class="text-gray-500 text-sm font-light">${post.excerpt}</p>
-                </a>
+            
+            if(!data || data.length === 0) {
+                grid.innerHTML = '<div class="col-span-full py-20 text-center font-bold">Belum ada insight.</div>';
+                return;
+            }
+
+            grid.innerHTML = data.map(post => `
+                <article class="group hover:-translate-y-2 transition-all duration-300">
+                    <a href="post.html?slug=${post.slug}">
+                        <div class="overflow-hidden rounded-3xl mb-6 bg-slate-100 aspect-[3/2]">
+                            <img src="${post.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <h3 class="text-xl font-bold uppercase tracking-tight mb-2 group-hover:text-kancah-blue">${post.title}</h3>
+                        <p class="text-gray-500 text-sm leading-relaxed">${post.excerpt}</p>
+                    </a>
+                </article>
             `).join('');
         }
-        loadPosts();
+        fetchPosts();
     </script>
 </body>
 </html>
