@@ -620,11 +620,24 @@ document.getElementById('blogForm').addEventListener('submit', async (e) => {
 });
 
 async function loadBlogList() {
-    const { data } = await kancah.from('posts').select('*').order('created_at', {ascending: false});
-    document.getElementById('blog-list-table').innerHTML = (data || []).map(p => `
+    const table = document.getElementById('blog-list-table');
+    if (!table) return; // Mencegah error kalau elemen tidak ada
+    
+    const { data, error } = await kancah.from('posts').select('*').order('created_at', {ascending: false});
+    
+    if (error) {
+        showToast("Gagal load blog: " + error.message, true);
+        return;
+    }
+    
+    table.innerHTML = (data || []).map(p => `
         <tr class="border-b">
-            <td class="py-4 font-bold">${p.title}</td>
-            <td class="py-4 text-right"><button onclick="deletePost('${p.id}')" class="text-red-500"><i class="fa-solid fa-trash"></i></button></td>
+            <td class="py-4 font-bold text-slate-800">${p.title}</td>
+            <td class="py-4 text-right">
+                <button onclick="deletePost('${p.id}')" class="text-red-500 hover:text-red-700">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </td>
         </tr>
     `).join('');
 }
