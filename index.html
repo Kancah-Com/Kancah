@@ -85,16 +85,6 @@
         @keyframes featuredCardIn { to { opacity: 1; transform: translateY(0); } }
 
         /* Featured card image lift-on-hover */
-        /* ══════════════════════════════════════════════════
-           FIX: pisahkan transform (hover lift+rotate) dari
-           elemen yang punya border-radius + overflow:hidden,
-           dan kasih elemen radius-nya compositing layer sendiri.
-           Kalau transform + rounded-clip nempel di elemen yang
-           sama, browser (Chrome/WebKit) bisa "squash" layer-nya
-           pas hover berkali-kali, dan rounded-clip-nya sempat
-           di-rasterize ulang salah sehingga sudut jadi lancip
-           sesaat.
-        ══════════════════════════════════════════════════ */
         .lift-card-wrap {
             transform-origin: bottom left;
             transition: transform .4s cubic-bezier(.23,1,.32,1);
@@ -110,11 +100,6 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             isolation: isolate;
-            /* FIX 3: clip-path sebagai jalur clipping UTAMA, terpisah dari
-               overflow:hidden. clip-path dirender lewat pipeline compositing
-               yang beda di Chromium (bukan lewat rounded-rect-clip-cache
-               yang suka salah rasterize itu), jadi walau layer-nya sempat
-               di-squash lagi pas hover berkali-kali, sudutnya tetap rounded. */
             clip-path: inset(0 round 1.5rem);
             -webkit-clip-path: inset(0 round 1.5rem);
         }
@@ -138,6 +123,104 @@
             height: 100%;
             overflow: hidden;
             transition: all 0.5s ease;
+        }
+
+        /* ══════════════════════════════════════════════════
+           INTRO / LOGO MOTION OPENER — cinematic version
+        ══════════════════════════════════════════════════ */
+        #intro-loader { position: fixed; inset: 0; z-index: 999; pointer-events: none; }
+
+        #intro-panel-left, #intro-panel-right {
+            position: absolute; top: 0; bottom: 0; width: 50%;
+            background: #0a0a0f; overflow: hidden;
+            transition: transform 1s cubic-bezier(.76,0,.24,1);
+        }
+        #intro-panel-left  { left: 0; }
+        #intro-panel-right { right: 0; }
+        #intro-panel-left.open  { transform: translateX(-102%) skewX(-3deg); }
+        #intro-panel-right.open { transform: translateX(102%) skewX(-3deg); }
+
+        #intro-center-content { position: absolute; inset: 0; }
+        #intro-center-content.intro-hide-content {
+            opacity: 0; transform: scale(.92);
+            transition: opacity .45s ease, transform .45s ease;
+        }
+
+        #intro-counter-wrap, #intro-logo-stage {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        #intro-counter-wrap { transition: opacity .35s ease, transform .35s ease; }
+        #intro-counter-wrap.intro-fade-out { opacity: 0; transform: translateY(-14px) scale(.92); }
+        #intro-progress-bar { transition: width .08s linear; }
+
+        .intro-bracket {
+            position: absolute; width: 30px; height: 30px;
+            opacity: 0; transform: scale(2.2);
+        }
+        .intro-bracket.play { animation: introBracket 1s cubic-bezier(.16,1,.3,1) forwards; }
+        @keyframes introBracket {
+            0%   { opacity: 0; transform: scale(2.2); }
+            45%  { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(.85); }
+        }
+
+        #intro-flash {
+            position: absolute; width: 200px; height: 200px; border-radius: 9999px;
+            background: radial-gradient(circle, rgba(255,255,255,.95), rgba(0,6,255,.45) 40%, transparent 70%);
+            opacity: 0;
+        }
+        #intro-flash.play { animation: introFlash .6s ease-out forwards; }
+        @keyframes introFlash {
+            0%   { opacity: 0; transform: scale(.3); }
+            25%  { opacity: 1; }
+            100% { opacity: 0; transform: scale(2.4); }
+        }
+
+        #intro-logo {
+            opacity: 0; filter: blur(14px); transform: scale(.7);
+            position: relative; z-index: 10;
+        }
+        #intro-logo.play { animation: introLogoIn 1s cubic-bezier(.16,1,.3,1) forwards; }
+        @keyframes introLogoIn { to { opacity: 1; filter: blur(0); transform: scale(1); } }
+
+        #intro-shine {
+            position: absolute; inset: 0; z-index: 20; pointer-events: none; opacity: 0;
+            background: linear-gradient(100deg, transparent 35%, rgba(255,255,255,.8) 48%, rgba(0,6,255,.6) 52%, transparent 65%);
+            background-size: 260% 100%;
+            background-position: 140% 0;
+            mix-blend-mode: screen;
+            -webkit-mask-image: url('assets/kancah-logo.png');
+            -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center;
+            mask-image: url('assets/kancah-logo.png');
+            mask-size: contain; mask-repeat: no-repeat; mask-position: center;
+        }
+        #intro-shine.play { opacity: 1; animation: introShine .9s ease forwards; }
+        @keyframes introShine { to { background-position: -40% 0; } }
+
+        #intro-ring, #intro-ring2 {
+            position: absolute; border-radius: 9999px; border: 1px solid rgba(0,6,255,.3);
+            opacity: 0; transform: scale(.6);
+        }
+        #intro-ring  { width: 150px; height: 150px; }
+        #intro-ring2 { width: 210px; height: 210px; border-color: rgba(0,6,255,.15); }
+        #intro-ring.play, #intro-ring2.play { animation: introRing 1.6s cubic-bezier(.16,1,.3,1) forwards; }
+        #intro-ring2.play { animation-delay: .12s; }
+        @keyframes introRing {
+            0%   { opacity: 0; transform: scale(.6); }
+            35%  { opacity: 1; }
+            100% { opacity: 0; transform: scale(1.3); }
+        }
+
+        #intro-tagline span {
+            opacity: 0; transform: translateY(6px); display: inline-block;
+            transition: opacity .25s ease, transform .25s ease;
+        }
+        #intro-tagline span.show { opacity: 1; transform: translateY(0); }
+
+        @media (min-width: 640px) {
+            #intro-ring  { width: 230px; height: 230px; }
+            #intro-ring2 { width: 330px; height: 330px; }
         }
     </style>
     <!-- FAQ Schema Markup -->
@@ -183,6 +266,53 @@
 </script>
 </head>
 <body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
+
+<!-- ════════════════════════════════════════
+     INTRO / LOGO MOTION OPENER
+════════════════════════════════════════ -->
+<div id="intro-loader">
+
+    <!-- Split curtain panels -->
+    <div id="intro-panel-left">
+        <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 26px 26px;"></div>
+        <div class="absolute -right-24 top-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full" style="background:radial-gradient(circle, rgba(0,6,255,.3), transparent 70%); filter:blur(70px);"></div>
+    </div>
+    <div id="intro-panel-right">
+        <div class="absolute inset-0 opacity-[0.07]" style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 26px 26px;"></div>
+        <div class="absolute -left-24 top-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full" style="background:radial-gradient(circle, rgba(0,6,255,.3), transparent 70%); filter:blur(70px);"></div>
+    </div>
+
+    <!-- Center content -->
+    <div id="intro-center-content">
+
+        <!-- Converging focus brackets -->
+        <div class="intro-bracket" id="intro-bracket-tl" style="top:calc(50% - 76px); left:calc(50% - 76px); border-top:2px solid rgba(0,6,255,.6); border-left:2px solid rgba(0,6,255,.6);"></div>
+        <div class="intro-bracket" id="intro-bracket-tr" style="top:calc(50% - 76px); left:calc(50% + 46px); border-top:2px solid rgba(0,6,255,.6); border-right:2px solid rgba(0,6,255,.6);"></div>
+        <div class="intro-bracket" id="intro-bracket-bl" style="top:calc(50% + 46px); left:calc(50% - 76px); border-bottom:2px solid rgba(0,6,255,.6); border-left:2px solid rgba(0,6,255,.6);"></div>
+        <div class="intro-bracket" id="intro-bracket-br" style="top:calc(50% + 46px); left:calc(50% + 46px); border-bottom:2px solid rgba(0,6,255,.6); border-right:2px solid rgba(0,6,255,.6);"></div>
+
+        <!-- Counter -->
+        <div id="intro-counter-wrap">
+            <span id="intro-counter" class="text-white font-black text-6xl sm:text-8xl tabular-nums tracking-tighter">0</span>
+            <div class="w-40 sm:w-56 h-[2px] bg-white/10 overflow-hidden rounded-full mt-4">
+                <div id="intro-progress-bar" class="h-full bg-kancah-blue w-0"></div>
+            </div>
+            <span class="text-white/40 text-[9px] font-bold uppercase tracking-[0.4em] mt-4">Loading Experience</span>
+        </div>
+
+        <!-- Logo stage -->
+        <div id="intro-logo-stage">
+            <div class="relative flex items-center justify-center">
+                <div id="intro-flash"></div>
+                <div id="intro-ring"></div>
+                <div id="intro-ring2"></div>
+                <img src="assets/kancah-logo.png" alt="Kancah" id="intro-logo" class="h-10 sm:h-16 w-auto object-contain">
+                <div id="intro-shine"></div>
+            </div>
+            <div id="intro-tagline" class="mt-5"></div>
+        </div>
+    </div>
+</div>
 
    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
     <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
@@ -1043,7 +1173,104 @@ async function updateWeather() {
     } catch (e) { console.error("Weather Offline"); }
 }
 
-// 4. INIT SEMUA LOGIC
+// 4. INTRO / LOGO MOTION OPENER — sekuens sinematik ~5 detik
+// Muncul cuma sekali per sesi browser. Kalau mau tampil TIAP kali
+// halaman dibuka, hapus dua baris yang berhubungan dengan sessionStorage.
+(function initIntroLoader() {
+    const loader = document.getElementById('intro-loader');
+    if (!loader) return;
+
+    if (sessionStorage.getItem('kancahIntroShown')) {
+        loader.remove();
+        return;
+    }
+
+    document.body.style.overflow = 'hidden';
+
+    const counterEl     = document.getElementById('intro-counter');
+    const progressBar   = document.getElementById('intro-progress-bar');
+    const counterWrap   = document.getElementById('intro-counter-wrap');
+    const logo          = document.getElementById('intro-logo');
+    const shine         = document.getElementById('intro-shine');
+    const ring1         = document.getElementById('intro-ring');
+    const ring2         = document.getElementById('intro-ring2');
+    const flash         = document.getElementById('intro-flash');
+    const tagline       = document.getElementById('intro-tagline');
+    const brackets      = document.querySelectorAll('.intro-bracket');
+    const panelLeft     = document.getElementById('intro-panel-left');
+    const panelRight    = document.getElementById('intro-panel-right');
+    const centerContent = document.getElementById('intro-center-content');
+
+    const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+    const TAGLINE_TEXT = 'FUTURE PROOF CREATIVE';
+
+    tagline.innerHTML = TAGLINE_TEXT.split('').map(ch =>
+        `<span>${ch === ' ' ? '&nbsp;' : ch}</span>`
+    ).join('');
+
+    function countUpTo(target, duration) {
+        return new Promise(resolve => {
+            const start = performance.now();
+            function step(now) {
+                const progress = Math.min((now - start) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                counterEl.textContent = Math.round(eased * target);
+                progressBar.style.width = (eased * 100) + '%';
+                if (progress < 1) requestAnimationFrame(step);
+                else resolve();
+            }
+            requestAnimationFrame(step);
+        });
+    }
+
+    async function playIntro() {
+        // 1. Brackets konvergen (anticipation)
+        await sleep(150);
+        brackets.forEach(b => b.classList.add('play'));
+
+        // 2. Counter loading 0 -> 100
+        await sleep(250);
+        await countUpTo(100, 1150);
+
+        // 3. Flash + counter menghilang
+        counterWrap.classList.add('intro-fade-out');
+        flash.classList.add('play');
+        await sleep(220);
+
+        // 4. Logo muncul + ring pulse
+        logo.classList.add('play');
+        ring1.classList.add('play');
+        ring2.classList.add('play');
+        await sleep(550);
+        shine.classList.add('play');
+
+        // 5. Tagline mengetik huruf demi huruf
+        await sleep(350);
+        const letters = tagline.querySelectorAll('span');
+        letters.forEach((el, i) => {
+            setTimeout(() => el.classList.add('show'), i * 34);
+        });
+        await sleep(letters.length * 34 + 300);
+
+        // 6. Jeda menahan komposisi penuh
+        await sleep(500);
+
+        // 7. Reveal: panel kiri-kanan terbuka seperti pintu
+        centerContent.classList.add('intro-hide-content');
+        await sleep(150);
+        panelLeft.classList.add('open');
+        panelRight.classList.add('open');
+
+        await sleep(1050);
+        document.body.style.overflow = '';
+        sessionStorage.setItem('kancahIntroShown', '1');
+        loader.remove();
+    }
+
+    window.addEventListener('load', () => { playIntro(); });
+})();
+
+// 5. INIT SEMUA LOGIC
 document.addEventListener('DOMContentLoaded', () => {
     loadFeaturedData();
     loadPartners();
