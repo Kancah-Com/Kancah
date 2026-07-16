@@ -122,6 +122,10 @@
                         </div>
                         <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Email Aktif</label><input type="email" id="app-email" required placeholder="Masukkan email anda" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
                         <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Link Portofolio</label><input type="url" id="app-portfolio" required placeholder="Masukkan link portfolio anda" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
+                        <div>
+                            <label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Upload CV (PDF, maks 5MB)</label>
+                            <input type="file" id="app-cv" accept="application/pdf" required class="w-full bg-white border border-gray-100 rounded-xl px-4 py-3 outline-none focus:border-kancah-blue transition-all text-sm font-medium file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-kancah-blue file:text-white file:cursor-pointer cursor-pointer">
+                        </div>
                         <button type="submit" id="apply-submit-btn" class="w-full bg-kancah-blue text-white py-4 rounded-full font-black uppercase tracking-widest text-[10px] shadow-xl shadow-kancah-blue/10 hover:bg-kancah-dark transition-all transform hover:-translate-y-1 disabled:opacity-60 disabled:hover:translate-y-0 disabled:cursor-not-allowed">
                             <span id="apply-submit-btn-label">Kirim Lamaran <i class="fa-solid fa-paper-plane ml-1"></i></span>
                         </button>
@@ -309,18 +313,33 @@
             btn.disabled = true;
             btnLabel.innerHTML = 'Mengirim...';
 
-            const payload = {
-                career_id: window.currentJobId || null,
-                job_title: (document.getElementById('form-job-title').value || window.currentJobTitle || '').trim(),
-                full_name: document.getElementById('app-name').value.trim(),
-                email: document.getElementById('app-email').value.trim(),
-                whatsapp: document.getElementById('app-whatsapp').value.trim(),
-                instagram: document.getElementById('app-instagram').value.trim(),
-                portfolio: document.getElementById('app-portfolio').value.trim(),
-                status: 'New'
-            };
-
             try {
+                const cvFile = document.getElementById('app-cv').files[0];
+                if (cvFile && cvFile.size > 5 * 1024 * 1024) {
+                    throw new Error('Ukuran CV maksimal 5MB ya.');
+                }
+
+                let cvUrl = null;
+                if (cvFile) {
+                    const safeName = (document.getElementById('app-name').value || 'pelamar').trim().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                    const fileName = `cv/${Date.now()}_${safeName}.pdf`;
+                    const { error: uploadError } = await kancah.storage.from('applicant-cv').upload(fileName, cvFile, { contentType: 'application/pdf' });
+                    if (uploadError) throw uploadError;
+                    cvUrl = kancah.storage.from('applicant-cv').getPublicUrl(fileName).data.publicUrl;
+                }
+
+                const payload = {
+                    career_id: window.currentJobId || null,
+                    job_title: (document.getElementById('form-job-title').value || window.currentJobTitle || '').trim(),
+                    full_name: document.getElementById('app-name').value.trim(),
+                    email: document.getElementById('app-email').value.trim(),
+                    whatsapp: document.getElementById('app-whatsapp').value.trim(),
+                    instagram: document.getElementById('app-instagram').value.trim(),
+                    portfolio: document.getElementById('app-portfolio').value.trim(),
+                    cv_url: cvUrl,
+                    status: 'New'
+                };
+
                 const { error } = await kancah.from('applications').insert([payload]);
                 if (error) throw error;
                 showToast('LAMARAN BERHASIL DIKIRIM! Tim kami akan segera menghubungi kamu.');
