@@ -32,6 +32,8 @@
     </style>
 </head>
 <body class="bg-white text-kancah-dark overflow-x-hidden selection:bg-kancah-blue selection:text-white">
+
+    <div id="toast" class="fixed top-6 left-1/2 -translate-x-1/2 px-8 py-4 bg-[#111111] text-white rounded-full z-[210] text-[10px] font-bold uppercase tracking-[0.2em] shadow-2xl opacity-0 -translate-y-5 transition-all duration-500 pointer-events-none text-center min-w-[240px] max-w-[90vw]">Notification</div>
    
     
     <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
@@ -113,14 +115,16 @@
                     <h2 class="text-3xl font-bold mb-6 uppercase tracking-tighter italic leading-[1]">Apply for <br> <span class="text-kancah-blue not-italic">This Role.</span></h2>
                     <form id="apply-form" class="space-y-4">
                         <input type="hidden" id="form-job-title">
-                        <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Nama Lengkap</label><input type="text" required placeholder="Masukkan nama anda" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
+                        <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Nama Lengkap</label><input type="text" id="app-name" required placeholder="Masukkan nama anda" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
                         <div class="grid grid-cols-2 gap-3">
-                            <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">WhatsApp</label><input type="tel" required placeholder="08 brp kak" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
-                            <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Instagram</label><input type="text" required placeholder="@" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
+                            <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">WhatsApp</label><input type="tel" id="app-whatsapp" required placeholder="08 brp kak" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
+                            <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Instagram</label><input type="text" id="app-instagram" required placeholder="@" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
                         </div>
-                        <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Email Aktif</label><input type="email" required placeholder="Masukkan email anda" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
-                        <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Link Portofolio</label><input type="url" required placeholder="Masukkan link portfolio anda" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
-                        <button type="submit" class="w-full bg-kancah-blue text-white py-4 rounded-full font-black uppercase tracking-widest text-[10px] shadow-xl shadow-kancah-blue/10 hover:bg-kancah-dark transition-all transform hover:-translate-y-1">Kirim Lamaran <i class="fa-solid fa-paper-plane ml-1"></i></button>
+                        <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Email Aktif</label><input type="email" id="app-email" required placeholder="Masukkan email anda" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
+                        <div><label class="block text-[8px] font-black uppercase tracking-[0.2em] text-gray-400 mb-1.5 ml-1">Link Portofolio</label><input type="url" id="app-portfolio" required placeholder="Masukkan link portfolio anda" class="w-full bg-white border border-gray-100 rounded-xl px-5 py-3.5 outline-none focus:border-kancah-blue transition-all text-sm font-medium"></div>
+                        <button type="submit" id="apply-submit-btn" class="w-full bg-kancah-blue text-white py-4 rounded-full font-black uppercase tracking-widest text-[10px] shadow-xl shadow-kancah-blue/10 hover:bg-kancah-dark transition-all transform hover:-translate-y-1 disabled:opacity-60 disabled:hover:translate-y-0 disabled:cursor-not-allowed">
+                            <span id="apply-submit-btn-label">Kirim Lamaran <i class="fa-solid fa-paper-plane ml-1"></i></span>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -205,6 +209,23 @@
         const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
         const kancah = supabase.createClient(SB_URL, SB_KEY);
 
+        window.currentJobId = null;
+        window.currentJobTitle = '';
+
+        function showToast(msg, isErr = false) {
+            const t = document.getElementById('toast');
+            if (!t) return;
+            t.innerText = msg;
+            t.style.background = isErr ? '#ef4444' : '#111111';
+            t.classList.remove('opacity-0', '-translate-y-5');
+            t.classList.add('opacity-100', 'translate-y-0');
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(() => {
+                t.classList.remove('opacity-100', 'translate-y-0');
+                t.classList.add('opacity-0', '-translate-y-5');
+            }, 3800);
+        }
+
         async function updateWeather() {
             try {
                 const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
@@ -266,9 +287,11 @@
             const params = new URLSearchParams(window.location.search);
             const jobId = params.get('id');
             if (!jobId) { window.location.href = 'careers'; return; }
+            window.currentJobId = jobId;
             try {
                 const { data: job, error } = await kancah.from('careers').select('*').eq('id', jobId).single();
                 if (error || !job) throw error;
+                window.currentJobTitle = job.title || '';
                 renderJob(job);
             } catch (err) {
                 const skeleton = document.getElementById('loading-skeleton');
@@ -276,7 +299,67 @@
             }
         }
 
+        // --- SUBMIT LAMARAN KE SUPABASE ---
+        const applyFormEl = document.getElementById('apply-form');
+        if (applyFormEl) applyFormEl.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('apply-submit-btn');
+            const btnLabel = document.getElementById('apply-submit-btn-label');
+            const originalLabel = btnLabel.innerHTML;
+            btn.disabled = true;
+            btnLabel.innerHTML = 'Mengirim...';
+
+            const payload = {
+                career_id: window.currentJobId || null,
+                job_title: (document.getElementById('form-job-title').value || window.currentJobTitle || '').trim(),
+                full_name: document.getElementById('app-name').value.trim(),
+                email: document.getElementById('app-email').value.trim(),
+                whatsapp: document.getElementById('app-whatsapp').value.trim(),
+                instagram: document.getElementById('app-instagram').value.trim(),
+                portfolio: document.getElementById('app-portfolio').value.trim(),
+                status: 'New'
+            };
+
+            try {
+                const { error } = await kancah.from('applications').insert([payload]);
+                if (error) throw error;
+                showToast('LAMARAN BERHASIL DIKIRIM! Tim kami akan segera menghubungi kamu.');
+                applyFormEl.reset();
+                if (document.getElementById('form-job-title')) document.getElementById('form-job-title').value = window.currentJobTitle || '';
+            } catch (err) {
+                showToast(err.message || 'Gagal mengirim lamaran, coba lagi ya.', true);
+            } finally {
+                btn.disabled = false;
+                btnLabel.innerHTML = originalLabel;
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
+            const trigger = document.getElementById('weather-mobile-trigger');
+const popup = document.getElementById('location-popup');
+
+if (trigger && popup) {
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = popup.classList.contains('opacity-100');
+        if (isOpen) {
+            popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+            popup.classList.remove('opacity-100', 'scale-100');
+        } else {
+            popup.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
+            popup.classList.add('opacity-100', 'scale-100');
+            setTimeout(() => {
+                popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+                popup.classList.remove('opacity-100', 'scale-100');
+            }, 3000);
+        }
+    });
+
+    document.addEventListener('click', () => {
+        popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
+        popup.classList.remove('opacity-100', 'scale-100');
+    });
+}
             fetchJobDetail(); updateWeather(); updateClock(); setInterval(updateClock, 1000);
             
             const btn = document.getElementById('mobile-menu-button'), 
