@@ -543,7 +543,7 @@
         <h2 class="text-xl font-bold italic uppercase mb-6">Manage Quick Links</h2>
         <form id="linkForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
             <input type="text" id="link-title" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="Judul Link" required>
-            <input type="url" id="link-url" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="URL (https://...)" required>
+            <input type="text" id="link-url" class="p-4 bg-slate-50 border rounded-2xl focus:outline-none" placeholder="URL (boleh tanpa https://, otomatis ditambahin)" required>
             <button type="submit" class="md:col-span-2 bg-[#0006ff] text-white py-5 rounded-2xl font-bold uppercase text-[11px] hover:bg-black transition-all">Publish Link</button>
         </form>
     </div>
@@ -720,7 +720,8 @@ async function loadLinkAdmin() {
 document.getElementById('linkForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = document.getElementById('link-title').value;
-    const url = document.getElementById('link-url').value;
+    let url = document.getElementById('link-url').value.trim();
+    if (url && !/^https?:\/\//i.test(url)) url = 'https://' + url;
     
     await kancah.from('links').insert([{ title, url, clicks: 0 }]);
     showToast('LINK DITAMBAHKAN!');
@@ -1364,6 +1365,7 @@ window.cleanEmptyParagraphs = function () {
                         <a href="https://wa.me/${formatWA(a.whatsapp)}" target="_blank" class="text-xs font-bold text-slate-600 hover:text-[#0006ff] flex items-center gap-2"><i class="fa-brands fa-whatsapp w-4"></i> ${a.whatsapp || '-'}</a>
                         <p class="text-xs font-bold text-slate-600 flex items-center gap-2"><i class="fa-brands fa-instagram w-4"></i> ${a.instagram || '-'}</p>
                         ${a.portfolio ? `<a href="${a.portfolio}" target="_blank" class="text-xs font-bold text-[#0006ff] hover:underline flex items-center gap-2 truncate"><i class="fa-solid fa-link w-4"></i> Lihat Portfolio</a>` : '<p class="text-xs font-bold text-slate-300">Tanpa portfolio</p>'}
+                        ${a.cv_url ? `<a href="${a.cv_url}" target="_blank" class="text-xs font-bold text-[#0006ff] hover:underline flex items-center gap-2 truncate"><i class="fa-solid fa-file-pdf w-4"></i> Download CV</a>` : '<p class="text-xs font-bold text-slate-300">Tanpa CV</p>'}
                     </div>
                     ${a.notes ? `<p class="text-xs text-slate-500 mt-3 italic">"${a.notes}"</p>` : ''}
                     <div class="flex flex-wrap items-center gap-2 mt-5 pt-4 border-t border-slate-200">
