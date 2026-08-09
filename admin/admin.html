@@ -1267,7 +1267,7 @@ if (categoryVal === 'Web Development') {
         btn.innerText = 'Publish Work'; 
     }
 });
-
+setDemoMode('file');
         // --- CLIENT LOGIC ---
         async function loadClientList() {
             const { data } = await kancah.from('partners').select('*').order('sort_order', {ascending: true}); const grid = document.getElementById('client-list-grid');
