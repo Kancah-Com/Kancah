@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#05060f">
+<meta name="theme-color" content="#000">
 <title>Kancah Creative | Digital & Creative Agency Yogyakarta</title>
 <meta name="description" content="Kancah Creative adalah partner digital dan creative agency di Yogyakarta: Brand Design, Tech Development (website &amp; aplikasi), Social Media Management, dan Audio Visual.">
 <link rel="canonical" href="https://kancah.com/">
@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500;1,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root{--b:#0006ff;--ink:#05060f;--w:#fff;--pad:clamp(20px,4.5vw,64px);--hc:#fff;--ease:cubic-bezier(.2,.8,.2,1);--blue:#0006ff;--ov:clamp(34px,4.2vw,60px);--hh:68px;--mono:Ubuntu,sans-serif}
+:root{--b:#0006ff;--ink:#000;--w:#fff;--pad:clamp(20px,4.5vw,64px);--hc:#fff;--ease:cubic-bezier(.2,.8,.2,1);--blue:#0006ff;--ov:clamp(34px,4.2vw,60px);--hh:68px;--mono:Ubuntu,sans-serif}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:76px;overflow-x:clip}
 body{font:300 16px/1.55 'Ubuntu',system-ui,sans-serif;background:var(--ink);color:#fff;overflow-x:clip}
@@ -58,7 +58,7 @@ nav a:not(.btn):hover{color:var(--b)}nav .btn{padding:10px 18px}
 .draw{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len,900);stroke-dashoffset:var(--len,900)}
 .in .draw,.draw.go{animation:draw 1.2s .6s cubic-bezier(.6,.1,.2,1) forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
-.hero{min-height:calc(100svh + var(--ov));padding:calc(var(--hh) + 12px) var(--pad) calc(var(--ov) + clamp(22px,5vh,52px));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#00007a 38%,#000 76%);overflow:hidden;position:relative;isolation:isolate}
+.hero{min-height:calc(100svh + var(--ov));padding:calc(var(--hh) + 12px) var(--pad) calc(var(--ov) + clamp(22px,5vh,52px));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#000 76%);overflow:hidden;position:relative;isolation:isolate}
 .floor{position:absolute;left:-10%;right:-10%;bottom:0;height:44%;perspective:420px;pointer-events:none;opacity:.5;z-index:-1}
 .floor div{position:absolute;inset:0;transform:rotateX(62deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:64px 64px;animation:run 3s linear infinite}
 @keyframes run{to{background-position:0 64px}}
@@ -123,7 +123,7 @@ nav a:not(.btn):hover{color:var(--b)}nav .btn{padding:10px 18px}
 @media(max-width:860px){.ab-g{grid-template-columns:1fr}}
 body.lock{overflow:hidden}
 /* slides sticky */
-.stack{background:var(--ink)}.sl{position:sticky;top:var(--hh);min-height:calc(100svh - var(--hh));display:flex;border-top:2px solid #fff;background:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(160deg,#0a0c8f,#05060f 75%);overflow:hidden}
+.stack{background:var(--ink)}.sl{position:sticky;top:var(--hh);min-height:calc(100svh - var(--hh));display:flex;border-top:2px solid #fff;background:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(160deg,#0006ff,#000 75%);overflow:hidden}
 .sl.bl{background:var(--b)}.sl.wh{background:#fff;color:var(--ink);--hc:var(--b)}.sl .wrap{width:100%;display:flex;flex-direction:column;justify-content:space-between;padding-block:24px 40px}
 .sl-bar{font-family:var(--mono);text-transform:uppercase;font-weight:400;display:flex;justify-content:space-between;font-weight:500;font-size:13px;letter-spacing:.04em}.sl-bar span{display:inline-flex;align-items:center;gap:8px}.sl-bar svg{width:20px;height:20px;fill:currentColor}
 .sl h2{font-size:clamp(44px,9.4vw,150px);line-height:1.02;margin:auto 0;padding-block:30px;max-width:12em}
@@ -146,7 +146,7 @@ body.lock{overflow:hidden}
 .sv p{grid-column:2/4;max-height:0;opacity:0;overflow:hidden;transition:max-height .5s var(--ease),opacity .4s;max-width:50ch}.sv.on p{max-height:280px;opacity:1;margin-top:10px}
 @media(max-width:700px){.sv{grid-template-columns:34px 1fr 30px}.sv .tg{display:none}.sv p{grid-column:2/4}}
 #peek{position:fixed;left:0;top:0;pointer-events:none;z-index:40}
-.pk{position:absolute;left:0;top:0;width:clamp(150px,14vw,220px);aspect-ratio:4/5;border:3px solid #fff;background:#0a0c8f;box-shadow:7px 7px 0 var(--ink);opacity:0;scale:.2;transition:opacity .25s,scale .55s var(--ease)}
+.pk{position:absolute;left:0;top:0;width:clamp(150px,14vw,220px);aspect-ratio:4/5;border:3px solid #fff;background:#0006ff;box-shadow:7px 7px 0 var(--ink);opacity:0;scale:.2;transition:opacity .25s,scale .55s var(--ease)}
 #peek.show .pk{opacity:1;scale:1;transition-delay:calc(var(--i)*60ms)}.pk img{width:100%;height:100%;object-fit:cover;object-position:top}
 .pk b{position:absolute;left:-3px;bottom:12px;max-width:92%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;background:var(--b);color:#fff;font-size:11px;padding:3px 9px 4px;border:2px solid #fff}
 #peek{display:none}@media(min-width:701px) and (hover:hover) and (pointer:fine){#peek{display:block}}
@@ -158,12 +158,12 @@ body.lock{overflow:hidden}
 .hs.h .hs-pin{position:sticky;top:var(--hh);height:calc(100svh - var(--hh));overflow:hidden;display:flex;align-items:center}
 .hs:not(.h) .hs-pin{overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px}.hs:not(.h) .wk{scroll-snap-align:start}.hs:not(.h) .fr{height:auto;width:72vw;max-width:340px}
 .wk{flex:none;display:flex;flex-direction:column}
-.fr{position:relative;overflow:hidden;background:#0a0c8f;height:min(58svh,540px);aspect-ratio:4/5;clip-path:inset(0 0 100% 0);transition:clip-path .9s var(--ease);transform:skewX(var(--sk,0deg))}.wk.in .fr{clip-path:inset(0)}
+.fr{position:relative;overflow:hidden;background:#0006ff;height:min(58svh,540px);aspect-ratio:4/5;clip-path:inset(0 0 100% 0);transition:clip-path .9s var(--ease);transform:skewX(var(--sk,0deg))}.wk.in .fr{clip-path:inset(0)}
 .fr img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .8s var(--ease)}.wk:hover img{transform:scale(1.07)}
 .fr .ix{position:absolute;left:12px;top:10px;font-family:var(--mono);font-size:12px;mix-blend-mode:difference;color:#fff;z-index:2}
 .fr .vw{position:absolute;right:12px;bottom:12px;width:64px;height:64px;border-radius:50%;background:#fff;color:var(--b);display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:400;scale:0;transition:scale .4s var(--ease)}.wk:hover .vw{scale:1}
 .ct{width:0;min-width:100%;display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-top:12px}.ct b{font-size:clamp(16px,1.5vw,22px);letter-spacing:-.03em;line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ct span{flex:none;opacity:.8;max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.wk.sk .fr{background:linear-gradient(100deg,#0a0c8f 30%,#2a2fff 50%,#0a0c8f 70%) 0 0/250% 100%;animation:shim 1.3s linear infinite}@keyframes shim{to{background-position:-150% 0}}
+.wk.sk .fr{background:linear-gradient(100deg,#0006ff 30%,#000 50%,#0006ff 70%) 0 0/250% 100%;animation:shim 1.3s linear infinite}@keyframes shim{to{background-position:-150% 0}}
 .hs-ui{display:none;position:absolute;left:var(--pad);right:var(--pad);bottom:16px;align-items:center;gap:18px}.hs.h .hs-ui{display:flex}.hs-ui i{flex:1;height:2px;background:rgba(255,255,255,.3)}.hs-ui b{display:block;height:100%;width:0;background:#fff}
 .msg{padding:40px var(--pad);font-weight:500}.more{padding:28px var(--pad) 70px;display:flex}
 /* proses: pinned scramble */
@@ -188,9 +188,9 @@ footer h2{font-size:clamp(48px,10vw,160px);margin:28px 0 36px}
 .giant{font-weight:500;font-size:clamp(90px,26vw,420px);letter-spacing:-.035em;line-height:.8;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.7);margin:0 -1vw;white-space:nowrap;background:linear-gradient(#fff,#fff) 0 100%/100% 0 no-repeat;-webkit-background-clip:text;background-clip:text;transition:background-size .9s var(--ease)}.giant:hover{background-size:100% 100%}
 .bot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;font-weight:500;margin-top:30px}.bot button{font-weight:500}
 
-.blue.works{background:radial-gradient(120% 70% at 50% 108%,var(--blue) 0%,#00007a 42%,#000 80%)}
+.blue.works{background:radial-gradient(120% 70% at 50% 108%,var(--blue) 0%,#0006ff 42%,#000 80%)}
 .fr{border:2px solid #fff}
-.px{--hc:#fff}.px-pin{background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#00007a 38%,#000 76%)}
+.px{--hc:#fff}.px-pin{background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#000 76%)}
 .px-floor{position:absolute;left:-10%;right:-10%;bottom:0;height:46%;perspective:420px;opacity:.5;pointer-events:none}.px-floor::before{content:"";position:absolute;inset:0;transform:rotateX(62deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:64px 64px;animation:run 3s linear infinite}
 .px-word{color:#fff;-webkit-text-stroke:0;background:var(--b);-webkit-background-clip:border-box;background-clip:border-box;font-size:clamp(64px,18vw,290px);letter-spacing:-.04em;padding:.04em .14em .14em;transform:rotate(-2deg)}
 .pxd{position:absolute;z-index:1;width:clamp(56px,9vw,130px);fill:var(--b);stroke:#fff;stroke-width:2;stroke-linejoin:round;opacity:.22;scale:.8;transition:opacity .4s,scale .5s var(--ease);animation:flt 5s ease-in-out infinite}
@@ -215,9 +215,9 @@ footer h2{font-size:clamp(48px,10vw,160px);margin:28px 0 36px}
 .giant{color:rgba(255,255,255,.14);-webkit-text-stroke:0;background:none;transition:color .6s}.giant:hover{color:#fff}
 footer h2{font-size:clamp(40px,7vw,112px)}
 .px{border-top:2px solid #fff}
-.pt{background:#fff;color:var(--ink);--hc:var(--b)}.pt-row{border-block-color:rgba(5,6,15,.2)}#ptr img{filter:brightness(0);border-right-color:rgba(5,6,15,.2)}
+.pt{background:#fff;color:var(--ink);--hc:var(--b)}.pt-row{border-block-color:rgba(0,0,0,.2)}#ptr img{filter:brightness(0);border-right-color:rgba(0,0,0,.2)}
 /* footer: creative agency */
-footer{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#00007a 38%,#000 76%);--hc:#fff;padding:clamp(72px,10vw,140px) 0 28px}
+footer{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#000 76%);--hc:#fff;padding:clamp(72px,10vw,140px) 0 28px}
 .ft-floor{position:absolute;left:-10%;right:-10%;bottom:0;height:42%;perspective:420px;opacity:.4;pointer-events:none;z-index:-1}.ft-floor::before{content:"";position:absolute;inset:0;transform:rotateX(62deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:64px 64px;animation:run 3s linear infinite}
 .ft-cta{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:clamp(56px,8vw,110px)}
 .ft-h{display:block}.ft-h h2{font-size:clamp(44px,9.5vw,150px);line-height:1.02;margin:0}.ft-cta .intro{max-width:44ch;margin-top:28px;font-size:clamp(15px,1.3vw,18px);opacity:.85}
@@ -283,7 +283,7 @@ h2{font-size:clamp(36px,5.2vw,84px)}
 .sh .intro{font-size:clamp(15px,1.25vw,18px);opacity:.75;max-width:44ch}
 
 /* header */
-header{background:rgba(5,6,15,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
+header{background:rgba(0,0,0,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
 header .klogo{--txt:#fff}header :focus-visible{outline-color:#fff}
 nav{font-weight:400;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
 nav a:not(.btn):hover{color:#fff;opacity:.65}
@@ -294,19 +294,19 @@ nav .btn{padding:9px 18px;font-size:12px;letter-spacing:.12em}
 /* buttons: pill outline with travelling glow border */
 .btn{--bg:transparent;--fg:#fff;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);overflow:visible;font-weight:400;letter-spacing:.02em;padding:13px 24px}
 .btn::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;transform:none;z-index:-1;opacity:.85;
-  background:linear-gradient(160deg,transparent 0%,#fff 15%,#7a7dff 20%,transparent 35%,transparent 40%,#fff 55%,#7a7dff 60%,transparent 75%,transparent 80%,#fff 95%,#7a7dff 100%);background-size:300% 300%;animation:glow 3s linear infinite;
+  background:linear-gradient(160deg,transparent 0%,#fff 15%,#0006ff 20%,transparent 35%,transparent 40%,#fff 55%,#0006ff 60%,transparent 75%,transparent 80%,#fff 95%,#0006ff 100%);background-size:300% 300%;animation:glow 3s linear infinite;
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 @keyframes glow{0%{background-position:15% 15%}100%{background-position:75% 75%}}
 .btn:hover::before,.btn:focus-visible::before{transform:none;border-radius:inherit;opacity:1}
 .btn:hover,.btn:focus-visible{background:rgba(255,255,255,.1);color:#fff}
 .btn.w,.btn.ghost{--bg:transparent;--fg:#fff;background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
 .btn.w:hover,.btn.ghost:hover{color:#fff;background:rgba(255,255,255,.1)}
-.light .btn,.about .btn{color:var(--ink);border-color:rgba(5,6,15,.35)}
-.light .btn::before,.about .btn::before{background:linear-gradient(160deg,transparent 0%,var(--b) 15%,#7a7dff 20%,transparent 35%,transparent 40%,var(--b) 55%,#7a7dff 60%,transparent 75%,transparent 80%,var(--b) 95%);background-size:300% 300%}
+.light .btn,.about .btn{color:var(--ink);border-color:rgba(0,0,0,.35)}
+.light .btn::before,.about .btn::before{background:linear-gradient(160deg,transparent 0%,var(--b) 15%,#0006ff 20%,transparent 35%,transparent 40%,var(--b) 55%,#0006ff 60%,transparent 75%,transparent 80%,var(--b) 95%);background-size:300% 300%}
 .light .btn:hover,.about .btn:hover{color:var(--ink);background:rgba(0,6,255,.06)}
 
 /* hero */
-.hero{background:radial-gradient(95% 60% at 50% 112%,rgba(0,6,255,.6) 0%,rgba(0,6,122,.38) 40%,var(--ink) 78%);align-items:stretch;justify-content:flex-end;text-align:left;gap:clamp(18px,3.5vh,40px)}
+.hero{background:radial-gradient(95% 60% at 50% 112%,rgba(0,6,255,.6) 0%,rgba(0,6,255,.25) 40%,var(--ink) 78%);align-items:stretch;justify-content:flex-end;text-align:left;gap:clamp(18px,3.5vh,40px)}
 .floor,.orb,.deco,.cue{display:none}
 .hero-top{position:absolute;left:var(--pad);right:var(--pad);top:calc(var(--hh) + 22px);display:flex;justify-content:space-between;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;opacity:.8;z-index:2}
 .hero-top b{font-weight:400;font-variant-numeric:tabular-nums}
@@ -330,9 +330,9 @@ nav .btn{padding:9px 18px;font-size:12px;letter-spacing:.12em}
 .mani .w.on{font-weight:300}
 .mani .w:not(.pill)::after{display:none}
 .mani .pill{background:none;color:var(--b);font-family:var(--serif);font-style:italic;font-size:1.12em;letter-spacing:-.02em;padding:0;transform:none;border-radius:0}
-.nums{border-top:1px solid rgba(5,6,15,.25)}
+.nums{border-top:1px solid rgba(0,0,0,.25)}
 .nums b{font-family:var(--serif);font-style:italic;font-weight:300;letter-spacing:-.03em}
-.facts span{box-shadow:inset 0 0 0 1px rgba(5,6,15,.5);font-weight:400}
+.facts span{box-shadow:inset 0 0 0 1px rgba(0,0,0,.5);font-weight:400}
 
 /* values */
 .vgrid{border-top:1px solid rgba(255,255,255,.4);border-left:1px solid rgba(255,255,255,.4)}
@@ -341,7 +341,7 @@ nav .btn{padding:9px 18px;font-size:12px;letter-spacing:.12em}
 .vd{stroke-width:2.5}
 
 /* services */
-.sv{border-top:1px solid rgba(5,6,15,.25)}.sv:last-child{border-bottom:1px solid rgba(5,6,15,.25)}
+.sv{border-top:1px solid rgba(0,0,0,.25)}.sv:last-child{border-bottom:1px solid rgba(0,0,0,.25)}
 .sv b{font-weight:400;letter-spacing:-.045em}
 .sv .n{font-family:var(--serif);font-style:italic;font-size:22px}
 .sv .tg{letter-spacing:.1em}
@@ -370,8 +370,8 @@ nav .btn{padding:9px 18px;font-size:12px;letter-spacing:.12em}
 /* footer: soft floating blobs */
 .ft-floor{display:none}
 footer::before,footer::after{content:"";position:absolute;border-radius:50%;filter:blur(100px);z-index:-1;pointer-events:none}
-footer::before{width:700px;height:700px;background:#7a7dff;opacity:.35;left:-200px;bottom:-260px;animation:fb1 4s ease-in-out infinite}
-footer::after{width:800px;height:800px;background:#00007a;opacity:.55;right:-220px;bottom:-280px;animation:fb2 5s ease-in-out infinite}
+footer::before{width:700px;height:700px;background:#0006ff;opacity:.35;left:-200px;bottom:-260px;animation:fb1 4s ease-in-out infinite}
+footer::after{width:800px;height:800px;background:#0006ff;opacity:.55;right:-220px;bottom:-280px;animation:fb2 5s ease-in-out infinite}
 @keyframes fb1{0%,100%{transform:translate(0,0) scale(.9)}50%{transform:translate(0,-30%) scale(1.25)}}
 @keyframes fb2{0%,100%{transform:translate(0,-20%) scale(1.2)}50%{transform:translate(0,5%) scale(.85)}}
 .ft-grid{border-top:1px solid rgba(255,255,255,.4)}
@@ -381,7 +381,7 @@ footer::after{width:800px;height:800px;background:#00007a;opacity:.55;right:-220
 .ft-h h2{font-weight:400}
 
 /* cursor label */
-.vcur{position:fixed;left:0;top:0;pointer-events:none;z-index:260;background:rgba(5,6,15,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.18);padding:8px 16px;border-radius:4px;font-size:12px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .3s;white-space:nowrap;display:none;align-items:center;gap:8px}
+.vcur{position:fixed;left:0;top:0;pointer-events:none;z-index:260;background:rgba(0,0,0,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.18);padding:8px 16px;border-radius:4px;font-size:12px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .3s;white-space:nowrap;display:none;align-items:center;gap:8px}
 .vcur::before{content:"•";font-size:16px;line-height:1}
 @media(hover:hover) and (pointer:fine){.vcur{display:flex}}
 
@@ -393,7 +393,7 @@ h1,h2,h3{letter-spacing:-.03em}
 
 /* ---- Values: clean card grid ---- */
 .vals .vgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;border:0;height:auto;counter-reset:v}
-.vals .vc{counter-increment:v;position:relative;display:flex;flex-direction:column;justify-content:flex-start;gap:0;min-height:clamp(300px,26vw,380px);padding:clamp(22px,2.2vw,32px);background:linear-gradient(180deg,#000 0%,#00001f 30%,#0003a8 70%,#0006ff 100%);color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:20px;overflow:hidden;cursor:default;transition:background .35s,color .35s,transform .45s var(--ease),border-color .35s}
+.vals .vc{counter-increment:v;position:relative;display:flex;flex-direction:column;justify-content:flex-start;gap:0;min-height:clamp(300px,26vw,380px);padding:clamp(22px,2.2vw,32px);background:linear-gradient(180deg,#000 0%,#000 30%,#0006ff 100%);color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:20px;overflow:hidden;cursor:default;transition:background .35s,color .35s,transform .45s var(--ease),border-color .35s}
 .vals .vc::before{display:none}
 .vals .vc::after{content:"0" counter(v);position:absolute;right:clamp(22px,2.2vw,32px);top:clamp(26px,2.4vw,36px);font-family:var(--serif);font-style:italic;font-size:22px;opacity:.7}
 .vals .vc:hover{border-color:#fff;transform:translateY(-6px);box-shadow:0 22px 50px rgba(0,6,255,.45)}
@@ -407,15 +407,15 @@ h1,h2,h3{letter-spacing:-.03em}
 .ab-g .ab-t .btn{margin-top:18px}
 @media(min-width:861px){
  .ab-g{align-items:center}
- .ab-g .nums{grid-template-columns:1fr;margin-top:0;border-top:1px solid rgba(5,6,15,.25)}
- .ab-g .nums div{display:flex;align-items:baseline;justify-content:flex-start;gap:20px;padding:16px 0;border-bottom:1px solid rgba(5,6,15,.25)}
+ .ab-g .nums{grid-template-columns:1fr;margin-top:0;border-top:1px solid rgba(0,0,0,.25)}
+ .ab-g .nums div{display:flex;align-items:baseline;justify-content:flex-start;gap:20px;padding:16px 0;border-bottom:1px solid rgba(0,0,0,.25)}
  .ab-g .nums b{line-height:1}
  .ab-g .nums div[hidden]{display:none}
  .ab-g .nums b{font-size:clamp(44px,5vw,76px)}
  .ab-g .nums span{font-size:clamp(15px,1.3vw,18px);text-align:left;line-height:1}
 }
 
-/* tombol Lihat Semua Karya di tengah */
+/* tombol Explore All Projects di tengah */
 .more{justify-content:center}
 
 /* ---- Works: vertical grid ---- */
@@ -443,8 +443,8 @@ h1,h2,h3{letter-spacing:-.03em}
 /* garis gelap di bawah card values: gradient ke-repeat di area border */
 .vals .vc{background-origin:border-box;background-clip:border-box;background-repeat:no-repeat}
 /* partner baris 2: geser ke kanan */
-#ptr2{display:flex;width:max-content;animation:sl2 46s linear infinite;border-top:1px solid rgba(5,6,15,.2)}
-#ptr2 img{height:44px;width:auto;box-sizing:content-box;padding:30px 52px;border-right:1px solid rgba(5,6,15,.2);filter:brightness(0);opacity:.75;transition:opacity .3s}
+#ptr2{display:flex;width:max-content;animation:sl2 46s linear infinite;border-top:1px solid rgba(0,0,0,.2)}
+#ptr2 img{height:44px;width:auto;box-sizing:content-box;padding:30px 52px;border-right:1px solid rgba(0,0,0,.2);filter:brightness(0);opacity:.75;transition:opacity .3s}
 #ptr2 img:hover{opacity:1}
 @keyframes sl2{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 /* hierarki ketebalan: judul > subjudul > label > isi */
@@ -472,7 +472,7 @@ h3,.sv b,.ct b{font-weight:400}
  .burger i:first-child{top:17px}.burger i:last-child{top:25px}
  .burger[aria-expanded=true] i:first-child{transform:translateY(4px) rotate(45deg)}
  .burger[aria-expanded=true] i:last-child{transform:translateY(-4px) rotate(-45deg)}
- nav{counter-reset:n;height:calc(100svh - 68px);overflow-y:auto;justify-content:flex-start;padding:12px var(--pad) 40px;background:linear-gradient(180deg,#000 0%,#00001f 30%,#0003a8 72%,#0006ff 100%);background-origin:border-box;border-bottom:0;font-size:clamp(30px,9vw,44px);font-weight:300;letter-spacing:-.03em;line-height:1.1;text-transform:none;transform:translateY(-110%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s}
+ nav{counter-reset:n;height:calc(100svh - 68px);overflow-y:auto;justify-content:flex-start;padding:12px var(--pad) 40px;background:linear-gradient(180deg,#000 0%,#000 30%,#0006ff 100%);background-origin:border-box;border-bottom:0;font-size:clamp(30px,9vw,44px);font-weight:300;letter-spacing:-.03em;line-height:1.1;text-transform:none;transform:translateY(-110%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s}
  nav.open{transform:none;visibility:visible;transition-delay:0s}
  nav a:not(.btn){display:flex;align-items:baseline;justify-content:space-between;width:100%;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.2);font-weight:300;opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease),transform .5s var(--ease),color .3s}
  nav a:not(.btn)::after{counter-increment:n;content:"0" counter(n);font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;letter-spacing:0;opacity:.6}
@@ -490,6 +490,214 @@ h3,.sv b,.ct b{font-weight:400}
 .px-info{flex-direction:column;align-items:center;justify-content:center;gap:22px;width:100%}
 .px-info p{max-width:30ch;margin-inline:auto;font-size:17px;line-height:1.55}
 }
+
+/* ===== MOBILE SYSTEM (<=820px): teks dulu, hierarki jelas, semua section rata kiri & konsisten ===== */
+@media(max-width:820px){
+  :root{--m-sec:56px;--m-gap:28px}
+  section,.pt{padding:var(--m-sec) 0}
+  .svc{padding-top:var(--m-sec)}
+  footer{padding-top:var(--m-sec)}
+
+  /* skala tipografi */
+  h2{font-size:clamp(32px,9.2vw,44px);line-height:1.08}
+  .stitle{font-size:11px;margin-bottom:20px;gap:14px}
+  .sh{grid-template-columns:1fr;gap:12px;margin-bottom:var(--m-gap)}
+  .sh .intro{font-size:15px;line-height:1.6;opacity:.72;max-width:38ch}
+  .btn{padding:13px 22px;font-size:13px}
+
+  /* HERO: label > headline > deskripsi > CTA > wordmark (dekor) */
+  .hero{justify-content:flex-start;align-items:stretch;text-align:left;gap:0;padding:calc(var(--hh) + 20px) var(--pad) calc(var(--ov) + 24px)}
+  .hero-top{order:2;display:flex;position:static;justify-content:flex-start;font-size:11px;letter-spacing:.14em;opacity:.65;margin:14px 0 0}
+  .hero-top span:last-child{display:none}
+  .hero-in{order:3;flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding:clamp(40px,9svh,72px) 0 0;margin-top:auto;width:100%}
+  .hero h1{font-size:clamp(34px,10.4vw,52px);line-height:1.06;text-align:left;margin:0;text-wrap:balance}
+  .hero h1 .ln{display:block;white-space:normal}
+  .hero p.lead{max-width:36ch;margin:0;text-align:left;font-size:15.5px;line-height:1.6;opacity:.75}
+  .hero .cta{flex-direction:column;align-items:stretch;justify-content:flex-start;width:100%;gap:10px;margin:10px 0 0}
+  .hero .cta .btn{width:100%}
+  .hp{order:1;flex:none;width:100%;margin:0;padding:0}
+
+  /* strip */
+  .strip .row{font-size:18px;padding:12px 0}
+
+  /* ABOUT */
+  .mani{font-size:clamp(26px,7.4vw,34px);line-height:1.18;letter-spacing:-.03em;max-width:none}
+  .mani .in{margin:0 .08em}
+  .ab-g{gap:28px;margin-top:32px}
+  .ab-g p{font-size:15.5px;line-height:1.65;max-width:none;margin-bottom:12px}
+  .ab-g .nums{grid-template-columns:1fr;margin-top:0}
+  .ab-g .nums div{display:flex;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.25)}
+  .ab-g .nums b{font-size:44px;line-height:1}
+  .ab-g .nums span{font-size:14px;line-height:1.2}
+
+  /* VALUES */
+  .vals .vgrid{grid-template-columns:1fr;gap:12px}
+  .vals .vc{min-height:0;padding:22px;border-radius:16px}
+  .vals .vd{width:48px;height:48px;padding:13px}
+  .vals .vc::after{font-size:18px;top:26px;right:22px}
+  .vals .vc h3{margin-top:32px;font-size:32px}
+  .vals .vc p{font-size:15px;margin-top:8px}
+  .vals .vc:hover{transform:none;box-shadow:none}
+
+  /* SERVICES */
+  .sv{grid-template-columns:30px 1fr 36px;padding:18px 0}
+  .sv .n{font-size:16px}
+  .sv b{font-size:clamp(24px,7vw,32px);line-height:1.1}
+  .sv .ar{width:36px;height:36px;font-size:28px}
+  .sv.on{padding-inline:14px}
+  .sv p{font-size:15px;line-height:1.55}
+
+  /* WORKS */
+  .hs .hs-track{gap:28px}
+  .hs .fr,.hs:not(.h) .fr{aspect-ratio:16/10;border-radius:12px}
+  .ct b{font-size:17px}
+  .more{padding:8px var(--pad) 0}
+  .blue.works{padding-bottom:var(--m-sec)}
+
+  /* PARTNERS */
+  #ptr img,#ptr2 img{height:30px;padding:22px 30px}
+
+  /* FOOTER */
+  .ft-cta{align-items:flex-start;gap:24px;margin-bottom:36px}
+  .ft-h h2{font-size:clamp(38px,11.5vw,52px)}
+  .ft-cta .intro{font-size:15px;margin-top:16px}
+  .ft-stk{width:104px}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:28px 20px;padding-top:24px}
+  .ft-grid .ft-c:first-child{grid-column:1/-1}
+  .ft-c p,.ft-c a{font-size:15px;max-width:none}
+  .ft-logo{margin-top:36px}.ft-logo .klogo{width:clamp(160px,50vw,240px)}
+  .bot{flex-direction:column;align-items:flex-start;gap:12px;font-size:12px}
+}
+
+/* ===== scroll reveal teks: abu -> solid (konsep manifesto Kancah) ===== */
+.sw{opacity:.2;transition:opacity .4s}
+.sw.on{opacity:1}
+
+/* ===== footer v3: compact, on-theme ===== */
+footer{padding:clamp(44px,5.5vw,76px) 0 22px}
+footer .ft-cta{margin-bottom:clamp(28px,3.6vw,48px);gap:24px;align-items:flex-end}
+footer .ft-h h2{font-size:clamp(34px,6.2vw,92px);line-height:1.06}
+footer .ft-cta .intro{margin-top:16px;max-width:42ch;font-size:clamp(14px,1.15vw,16px);opacity:.75}
+footer .ft-stk{width:clamp(96px,10vw,140px)}
+footer .ft-stk text{font-size:14px}
+footer .ft-grid{grid-template-columns:1.5fr 1.2fr .8fr 1.1fr;gap:24px clamp(24px,3vw,48px);padding-top:24px;border-top:1px solid rgba(255,255,255,.35)}
+footer .ft-c b{margin-bottom:12px;font-size:11px;letter-spacing:.14em;opacity:.6}
+footer .ft-c p,footer .ft-c a{font-size:clamp(14px,1.1vw,16px);line-height:1.5;margin-bottom:6px;opacity:.92}
+footer .ft-c .ft-t{font-size:13px;opacity:.65;margin-top:10px}
+footer .bot{margin-top:clamp(28px,3.6vw,44px);padding-top:18px;border-top:1px solid rgba(255,255,255,.35);display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px 24px;font-size:12px;font-weight:400}
+footer .bot-l,footer .bot-r{display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap}
+footer .bot-l .klogo{height:22px;width:auto;margin:0;flex:none;--mk:#fff;--txt:#fff}
+footer .bot-l span,footer .bot-l span span{color:#fff;opacity:1}
+footer .bot .tag{font-family:var(--serif);font-style:italic;font-size:15px;opacity:.9}
+footer .bot button{padding:7px 16px;font-size:12px;letter-spacing:.04em}
+@media(max-width:900px){footer .ft-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){
+  footer{padding:40px 0 20px}
+  footer .ft-cta{margin-bottom:28px;gap:18px;align-items:flex-start}
+  footer .ft-h h2{font-size:clamp(34px,10.5vw,48px)}
+  footer .ft-stk{width:84px}
+  footer .ft-grid{gap:22px 16px;padding-top:20px}
+  footer .ft-grid .ft-c:first-child{grid-column:1/-1}
+  footer .bot{flex-direction:column;align-items:flex-start;margin-top:28px;gap:12px}
+  footer .bot-r{width:100%;justify-content:space-between}
+}
+@media(max-width:520px){footer .ft-grid{grid-template-columns:1fr 1fr}}
+/* hero: tagline tetap tampil di mobile */
+@media(max-width:820px){.hero-top span:last-child{display:inline}}
+
+/* ===== tombol kembali ke atas: floating, muncul saat scroll naik ===== */
+.totop{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:45;width:46px;height:46px;padding:0;border:0;border-radius:50%;background:rgba(0,0,0,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;display:grid;place-items:center;cursor:pointer;opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;transition:opacity .3s,transform .4s var(--ease),background .3s}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{background:var(--b)}
+.totop .trg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.totop .tr{stroke:rgba(255,255,255,.2)}.totop .pg{stroke:#fff;stroke-dasharray:125.66;stroke-dashoffset:125.66}
+.totop .tar{width:16px;height:16px}
+
+
+
+/* ===== section masalah -> solusi ===== */
+.pb{position:relative;background:radial-gradient(90% 45% at 50% 100%,rgba(0,6,255,.4),transparent 70%),#000;color:#fff;padding:clamp(72px,9vw,140px) 0;overflow:hidden}
+.pb-h{font-size:clamp(40px,7.2vw,116px);line-height:1.02;max-width:15ch;margin:0}
+.pb-row{--g:clamp(14px,2vw,28px);position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--g);margin-top:clamp(40px,5vw,72px)}
+.pb-c{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:clamp(40px,6vw,96px);min-height:clamp(240px,25vw,380px);padding:clamp(20px,2.2vw,32px);border:1px solid rgba(255,255,255,.3);border-radius:clamp(18px,1.8vw,28px);background:linear-gradient(180deg,#000 35%,rgba(0,6,255,.45));opacity:0;will-change:transform}
+.pb-c.b{background:#0006ff;border-color:#0006ff}
+.pb-top{display:flex;justify-content:space-between;align-items:flex-start;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.pb-n{font-family:var(--serif);font-style:italic;font-size:clamp(56px,6vw,96px);line-height:.8;letter-spacing:-.03em;text-transform:none}
+.pb-t{margin:0;max-width:14ch;font-size:clamp(22px,2.3vw,36px);line-height:1.1;letter-spacing:-.03em;font-weight:400}
+.pb-t em{font-family:var(--serif);font-style:italic;font-weight:300;font-size:1.14em;letter-spacing:-.02em;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.14em}
+.pb-c+.pb-c::before{content:"+";position:absolute;left:calc(var(--g)/-2);top:50%;translate:-50% -50%;width:40px;height:40px;border-radius:50%;background:#000;border:1px solid rgba(255,255,255,.5);display:grid;place-items:center;font-size:22px;font-weight:300;line-height:1;z-index:2;opacity:var(--k,0)}
+.pb-so{margin-top:clamp(56px,7vw,110px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:clamp(16px,2vw,28px)}
+.pb-ar{width:48px;height:48px;border:1px solid rgba(255,255,255,.5);border-radius:50%;display:grid;place-items:center;opacity:0}
+.pb-sol{margin:0;max-width:22ch;font-size:clamp(30px,4.6vw,76px);line-height:1.06;letter-spacing:-.035em;font-weight:400}
+.pb-u{font-family:var(--serif);font-style:italic;font-size:1.1em;padding-bottom:.04em;background:linear-gradient(#fff,#fff) 0 100%/calc(var(--u,0)*100%) 1px no-repeat}
+@media(max-width:700px){.pb-row{grid-template-columns:1fr}.pb-c{min-height:190px;gap:36px}.pb-c+.pb-c::before{left:50%;top:calc(var(--g)/-2)}.pb-t{max-width:none}}
+
+/* ===== hero: konten terpusat vertikal & proporsional ===== */
+.hero{justify-content:center;gap:clamp(28px,6vh,72px)}
+@media(max-width:820px){.hero{justify-content:center;gap:clamp(24px,5vh,40px)}.hero-in{margin-top:0;padding-top:0}}
+
+/* ===== masalah: responsif + animasi aktif ===== */
+.pb{overflow:clip}
+.pb-h .wm{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .06em .16em 0;margin:0 -.06em -.16em 0}
+.pb-h .wi{display:inline-block;transform:translateY(112%);transition:transform .95s var(--ease)}
+.pb.in .pb-h .wi{transform:none}
+.pb-c{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .3s ease-out,border-color .3s;transform-style:preserve-3d}
+.pb-c::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.18),transparent 46%);opacity:0;transition:opacity .3s}
+.pb-c:hover::after{opacity:1}.pb-c:hover{border-color:rgba(255,255,255,.7)}
+.pb-top,.pb-t{position:relative;z-index:1}
+.pb-c.b{background:linear-gradient(115deg,#0006ff 40%,rgba(255,255,255,.3) 50%,#0006ff 60%) 0 0/260% 100%;animation:pbsheen 5s ease-in-out infinite}
+@keyframes pbsheen{0%,55%{background-position:100% 0}100%{background-position:-60% 0}}
+.pb-n{display:inline-block;opacity:0;transform:translateY(40%);transition:opacity .7s .2s,transform .9s .2s var(--ease)}
+.pb-c.in .pb-n{opacity:1;transform:none;animation:pbbob 5s 1.2s ease-in-out infinite}
+@keyframes pbbob{50%{transform:translateY(-6px)}}
+.pb-t em{text-decoration:none;background:linear-gradient(#fff,#fff) 0 100%/0 1px no-repeat;padding-bottom:.06em;transition:background-size .9s .45s var(--ease)}
+.pb-c.in .pb-t em{background-size:100% 1px}
+.pb-c+.pb-c::before{scale:calc(.4 + var(--k,0)*.6);rotate:calc(var(--k,0)*180deg)}
+.pb-ar svg{animation:pbar 1.6s ease-in-out infinite}
+@keyframes pbar{50%{transform:translateY(5px)}}
+@media(max-width:1000px){.pb-t{font-size:clamp(19px,2.6vw,30px)}.pb-n{font-size:clamp(48px,6.4vw,72px)}.pb-c{min-height:clamp(220px,28vw,300px)}}
+@media(max-width:700px){
+  .pb-row{display:block}
+  .pb-c{position:sticky;top:calc(var(--hh) + 14px + var(--i)*14px);margin-bottom:18px;min-height:min(44svh,280px);transform:none;transform-origin:50% 0}
+  .pb-c+.pb-c::before{display:none}
+  .pb-t{font-size:clamp(24px,7vw,32px)}
+  .pb-row{padding-bottom:6px}
+}
+@media(prefers-reduced-motion:reduce){.pb *,.pb *::before,.pb *::after{animation:none!important;transition:none!important}.pb-h .wi{transform:none}.pb-n{opacity:1;transform:none}.pb-t em{background-size:100% 1px}}
+
+/* ===== masalah v3: kartu digantung di tali, miring, squiggle ===== */
+.pb-row{--rope:clamp(48px,5vw,72px);padding-top:var(--rope)}
+.pb-rope{position:absolute;left:0;top:0;width:100%;height:40px;overflow:visible;pointer-events:none}
+.pb-rope path{fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.5s var(--ease)}
+.pb.in .pb-rope path{stroke-dashoffset:0}
+.pb-c{transform-origin:50% calc(8px - var(--rope))}
+.pb-c.b{background:#0006ff;animation:none}
+.pb-st{position:absolute;left:50%;top:calc(8px - var(--rope));width:1.5px;height:calc(var(--rope) - 8px);margin-left:-.75px;background:#fff;transform:scaleY(0);transform-origin:50% 0;pointer-events:none}
+.pb-st::before{content:"";position:absolute;left:50%;top:-3px;width:7px;height:7px;margin-left:-3.5px;border-radius:50%;background:#fff}
+.pb-st::after{content:"";position:absolute;left:50%;bottom:-6px;width:11px;height:11px;margin-left:-5.5px;box-sizing:border-box;border-radius:50%;border:1.5px solid #fff;background:#000}
+.pb-c.in .pb-st{transform:scaleY(1);transition:transform .7s calc(var(--i)*.14s) cubic-bezier(.34,1.56,.64,1)}
+.pb-t{transform-origin:0 100%;rotate:-1.8deg;transition:rotate .5s var(--ease)}
+.pb-c:nth-of-type(2) .pb-t{rotate:1.5deg}.pb-c:nth-of-type(3) .pb-t{rotate:-1.2deg}
+.pb-c:hover .pb-t{rotate:0deg}
+.pb-top span:first-child::before{content:"";display:inline-block;width:6px;height:6px;margin-right:8px;border-radius:50%;background:#fff;vertical-align:middle;animation:pbdot 2s ease-out infinite}
+@keyframes pbdot{0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}70%,100%{box-shadow:0 0 0 8px rgba(255,255,255,0)}}
+.pb-c+.pb-c::before{display:none}
+.pb-t em,.pb-c.in .pb-t em{background:none}
+.pb-t .uw,.pb-u{position:relative;display:inline-block}
+.pb-t .uw::after,.pb-u::after{content:"";position:absolute;left:0;right:0;bottom:-.1em;height:.26em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 8'%3E%3Cpath d='M0 4Q3 .5 6 4T12 4T18 4T24 4' fill='none' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x 0 0/auto 100%;clip-path:inset(0 100% 0 0);animation:pbwave 1.4s linear infinite}
+.pb-t .uw::after{transition:clip-path .7s calc(.55s + var(--d,0ms)) var(--ease)}
+.pb-c.in .pb-t .uw::after{clip-path:inset(0 0 0 0)}
+.pb-u{background:none}
+.pb-u::after{clip-path:inset(0 calc((1 - var(--u,0))*100%) 0 0)}
+@keyframes pbwave{to{background-position-x:.78em}}
+@media(max-width:700px){.pb-row{padding-top:0}.pb-rope,.pb-st{display:none}.pb-c{transform-origin:50% 0}}
+.pb-row{--g:clamp(22px,3.2vw,48px)}
+
+/* garis bawah: brush stroke kuas tinta, draw-in kiri ke kanan */
+.pb-t .uw::after,.pb-u::after{background:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20500%2032'%20preserveAspectRatio='none'%3E%3Cpath%20d='M%204%2022%20C%2018%2022%2040%2016%2070%2012%20C%20110%207%20155%205%20200%205%20C%20255%205%20310%207%20360%2010%20C%20400%2013%20440%2016%20488%2017%20L%20496%2017%20C%20496%2019%20492%2020%20488%2020%20C%20440%2022%20390%2024%20330%2025%20C%20265%2026%20200%2026%20140%2025%20C%2090%2024%2050%2025%2018%2024%20C%2010%2024%204%2023%202%2022%20Z'%20fill='%23fff'%20opacity='.92'/%3E%3Cpath%20d='M%206%2020%20C%2030%2017%2065%2013%20100%2010%20C%20140%207%20185%205%20230%205%20C%20290%205%20345%208%20400%2012%20C%20440%2015%20468%2017%20490%2017'%20fill='none'%20stroke='%23fff'%20stroke-width='1.5'%20stroke-linecap='round'%20opacity='.35'/%3E%3Cpath%20d='M%208%2021%20C%2040%2018%2080%2014%20130%2011%20C%20180%208%20240%206%20300%208%20C%20350%2010%20400%2013%20460%2016'%20fill='none'%20stroke='%23fff'%20stroke-width='0.8'%20stroke-linecap='round'%20opacity='.15'/%3E%3C/svg%3E") no-repeat left center/100% 100%;height:.52em;bottom:-.28em;animation:none}
+.pb-t .uw::after{transition:clip-path 1.3s calc(.45s + var(--d,0ms)) cubic-bezier(.2,.8,.2,1)}
+/* garis bawah: versi tipis */
+.pb-t .uw::after,.pb-u::after{background:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20500%2012'%20preserveAspectRatio='none'%3E%3Cpath%20d='M3%208%20C60%205.5%20140%204.5%20240%204.8%20C340%205%20420%206%20497%207.2'%20fill='none'%20stroke='%23fff'%20stroke-width='2'%20stroke-linecap='round'%20vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") no-repeat left center/100% 100%;height:.2em;bottom:-.12em;opacity:.9}
 </style>
 </head>
 <body><div class="sp" id="sp"></div><div class="cur" id="cur" aria-hidden="true"></div>
@@ -497,8 +705,8 @@ h3,.sv b,.ct b{font-weight:400}
 <header>
   <a href="/" aria-label="Kancah beranda"><svg class="klogo" data-loop viewBox="30 38 1385 346" role="img" aria-label="Kancah"><path class="mk" fill-rule="evenodd" d="M272.5 378.1C271.4 377.6 268.2 377.0 265.5 376.6C260.5 375.9 257.1 374.9 251.3 372.4C249.6 371.6 248.0 371.0 247.7 371.0C247.4 371.0 242.6 368.3 237.1 364.9C227.6 359.2 224.9 356.6 193.7 324.8C175.5 306.1 156.5 286.9 151.6 282.1C136.2 267.2 120.7 249.6 116.4 242.4C109.2 230.2 106.3 212.0 109.5 199.7C110.3 196.5 111.0 193.2 111.0 192.3C111.0 189.9 115.7 180.5 120.0 174.2C122.2 171.1 132.3 160.1 142.6 149.8C159.7 132.5 161.4 131.1 163.3 132.2C166.4 133.8 190.0 158.3 190.0 159.8C190.0 160.5 186.3 164.8 181.7 169.3C156.6 194.2 152.6 199.0 151.1 206.0C148.7 216.8 151.2 222.2 165.3 236.3C171.5 242.5 194.5 265.8 216.6 288.1C264.3 336.4 263.2 335.6 281.0 335.4C294.9 335.2 300.5 333.1 308.2 325.3C320.8 312.4 324.6 298.7 320.1 282.9C317.3 273.2 315.6 270.4 305.8 260.3C295.5 249.6 295.6 249.8 300.4 236.7C306.3 220.9 306.9 198.3 301.7 188.3C299.4 183.9 296.0 174.7 296.0 173.0C296.0 172.1 300.1 167.4 305.1 162.5C327.1 140.7 328.1 117.5 308.1 96.7C300.7 89.0 294.7 86.8 281.5 86.7C267.4 86.6 262.4 88.8 250.6 100.0C237.9 112.1 240.0 112.3 225.2 96.9C218.2 89.7 212.2 83.2 211.7 82.5C209.7 79.0 231.5 59.3 244.6 52.7C266.3 41.8 294.9 41.3 315.3 51.7C329.0 58.6 341.5 68.9 347.9 78.5C368.0 108.6 369.3 140.5 351.6 171.4C348.2 177.4 331.7 196.5 322.1 205.4C316.5 210.7 317.3 212.4 332.3 227.8C348.7 244.8 356.1 255.9 359.9 269.0C360.6 271.5 361.6 274.8 362.1 276.5C365.0 285.7 363.9 310.7 360.4 318.9C353.6 334.6 347.3 345.5 341.3 351.5C330.9 361.9 314.9 371.6 302.5 374.8C287.2 378.9 277.2 379.9 272.5 378.1ZM112.0 377.1C110.6 376.6 107.9 376.1 106.0 376.1C95.3 375.7 73.1 363.8 61.6 352.3C34.0 324.7 29.7 282.2 51.0 249.6C55.0 243.5 62.6 234.9 80.8 216.1C83.1 213.6 84.9 211.3 84.8 210.9C84.6 210.5 78.2 203.6 70.5 195.5C52.3 176.3 47.2 169.0 42.2 155.0C36.4 139.0 35.9 114.9 41.0 103.5C41.5 102.4 42.9 99.0 44.0 95.9C56.2 62.3 99.7 38.2 134.3 45.9C145.7 48.4 155.9 52.8 165.8 59.5C174.3 65.2 273.3 165.1 280.3 175.1C287.8 185.7 292.9 203.4 291.7 214.5C290.6 224.6 287.5 235.6 284.2 240.9C277.5 251.9 273.5 256.7 257.3 273.0L239.0 291.5L225.0 277.5C217.3 269.8 211.0 263.1 211.0 262.6C211.0 262.1 219.0 253.8 228.8 244.1C240.5 232.5 247.0 225.3 247.9 223.0C248.6 221.1 249.6 218.7 250.1 217.8C252.4 213.3 249.7 199.9 245.3 194.6C244.4 193.5 221.1 169.9 193.6 142.3C154.6 103.2 142.4 91.5 138.5 89.5C117.0 79.0 93.4 87.2 82.0 109.2C78.9 115.3 78.7 115.9 78.8 127.0C78.8 144.0 80.0 146.7 95.2 163.3C104.0 173.0 103.8 172.1 100.0 182.5C95.0 196.1 93.2 216.4 96.1 227.4C98.7 237.4 99.5 239.8 101.7 244.2C103.0 246.8 104.0 249.2 104.0 249.5C104.0 249.9 99.7 254.6 94.5 260.1C81.0 274.2 78.8 278.8 78.8 294.0C78.8 303.7 79.1 306.3 80.9 310.5C89.7 330.5 111.0 341.1 130.8 335.4C139.6 332.9 141.8 331.4 152.2 321.2L162.0 311.6L175.2 325.5C182.5 333.1 188.6 339.8 188.8 340.4C189.1 341.9 172.8 357.9 166.5 362.2C156.2 369.3 143.6 374.7 134.0 376.2C124.9 377.6 114.7 378.0 112.0 377.1Z"/><g class="wm"><path class="L" d="M416.2 215.8L416.5 95.5L438.5 91.8C450.6 89.8 461.3 88.1 462.2 88.1C463.9 88.0 464.0 92.2 464.2 158.2L464.5 228.3L477.5 213.9C484.7 206.0 496.5 192.4 503.9 183.8L517.3 168.0L545.8 168.0L574.2 168.0L567.4 175.8C550.2 195.2 533.4 213.6 520.3 227.0L506.1 241.7L511.1 246.6C525.9 260.9 550.6 292.4 563.9 313.9C571.2 325.7 576.0 334.2 576.0 335.5C576.0 335.8 563.6 336.0 548.5 336.0C533.4 336.0 521.0 335.6 521.0 335.2C521.0 333.8 498.6 300.5 491.4 291.2C484.3 282.1 466.3 263.0 464.8 263.0C464.4 263.0 464.0 279.4 464.0 299.5L464.0 336.0L440.0 336.0L416.0 336.0L416.2 215.8Z"/><path class="L" d="M641.5 338.9C601.2 336.3 581.5 318.3 581.6 284.0C581.6 253.0 601.4 235.8 641.6 231.9C652.3 230.9 671.9 231.8 678.9 233.7C684.1 235.1 679.6 216.8 673.2 210.3C664.9 202.1 638.8 200.7 612.0 207.1C607.4 208.1 603.5 208.8 603.3 208.6C602.6 207.9 596.9 171.7 597.4 171.2C598.4 170.3 613.8 167.0 624.3 165.5C683.4 157.2 716.2 171.4 724.6 209.0C727.3 220.8 728.0 330.4 725.4 331.4C720.4 333.3 687.0 338.2 676.0 338.6C669.1 338.8 661.2 339.2 658.5 339.3C655.8 339.5 648.1 339.3 641.5 338.9ZM680.2 301.3C680.7 301.1 681.0 292.8 681.0 283.0L681.0 265.1L675.2 264.4C665.7 263.1 649.9 263.6 643.7 265.4C633.1 268.5 628.5 274.7 629.2 285.0C629.9 294.5 635.5 299.9 647.1 301.9C652.2 302.8 678.6 302.4 680.2 301.3Z"/><path class="L" d="M762.0 255.0C762.0 174.0 762.0 174.0 764.6 173.0C768.1 171.6 789.3 167.4 800.5 165.8C814.9 163.7 851.8 164.1 860.5 166.4C884.3 172.6 898.9 187.2 905.2 211.1C907.3 219.2 907.4 221.6 907.7 277.8L908.1 336.0L884.1 336.0L860.1 336.0L859.8 281.8C859.4 232.4 859.2 227.0 857.6 221.8C855.1 214.2 850.3 208.6 844.3 206.6C839.5 204.9 821.4 204.4 813.8 205.6L810.0 206.3L810.0 271.1L810.0 336.0L786.0 336.0L762.0 336.0L762.0 255.0Z"/><path class="L" d="M1004.7 339.0C964.7 331.8 941.8 305.4 938.0 262.2C931.7 190.7 990.7 146.4 1061.8 169.2C1069.3 171.6 1071.0 172.4 1070.6 173.8C1070.3 174.7 1068.2 182.9 1065.9 192.0C1063.6 201.1 1061.4 208.9 1061.0 209.3C1060.6 209.8 1057.2 209.2 1053.4 208.1C1012.7 195.5 986.6 212.6 986.6 252.0C986.6 275.6 994.0 290.4 1008.8 296.1C1019.7 300.3 1046.3 299.8 1060.7 295.0C1063.9 294.0 1066.6 293.3 1066.9 293.5C1067.3 294.0 1074.0 331.3 1073.7 331.6C1071.9 332.9 1067.3 334.5 1058.8 336.6C1047.6 339.5 1015.2 340.9 1004.7 339.0Z"/><path class="L" d="M1140.5 338.9C1100.2 336.3 1080.5 318.3 1080.6 284.0C1080.6 253.0 1100.4 235.8 1140.6 231.9C1151.3 230.9 1170.9 231.8 1177.9 233.7C1183.1 235.1 1178.6 216.8 1172.2 210.3C1163.9 202.1 1137.8 200.7 1111.0 207.1C1106.4 208.1 1102.5 208.8 1102.3 208.6C1101.6 207.9 1095.9 171.7 1096.4 171.2C1097.4 170.3 1112.8 167.0 1123.3 165.5C1182.4 157.2 1215.2 171.4 1223.6 209.0C1226.3 220.8 1227.0 330.4 1224.4 331.4C1219.4 333.3 1186.0 338.2 1175.0 338.6C1168.1 338.8 1160.2 339.2 1157.5 339.3C1154.8 339.5 1147.1 339.3 1140.5 338.9ZM1179.2 301.3C1179.7 301.1 1180.0 292.8 1180.0 283.0L1180.0 265.1L1174.2 264.4C1164.7 263.1 1148.9 263.6 1142.7 265.4C1132.1 268.5 1127.5 274.7 1128.2 285.0C1128.9 294.5 1134.5 299.9 1146.1 301.9C1151.2 302.8 1177.6 302.4 1179.2 301.3Z"/><path class="L" d="M1262.2 215.8L1262.5 95.5L1284.5 91.8C1296.6 89.8 1307.3 88.1 1308.2 88.1C1309.9 88.0 1310.0 90.6 1310.0 128.1C1310.0 168.2 1310.0 168.2 1312.2 167.6C1328.6 163.2 1349.7 162.9 1364.0 167.0C1383.4 172.5 1396.0 184.2 1402.7 202.8C1407.4 215.8 1408.0 224.3 1408.0 282.2L1408.0 336.0L1384.0 336.0L1360.1 336.0L1359.8 281.2C1359.5 231.4 1359.3 226.0 1357.6 221.0C1355.2 213.9 1349.2 207.7 1343.0 206.0C1337.8 204.6 1319.6 205.2 1313.8 207.0L1310.0 208.1L1310.0 272.0L1310.0 336.0L1286.0 336.0L1262.0 336.0L1262.2 215.8Z"/></g></svg></a>
   <nav id="nav" aria-label="Navigasi utama">
-    <a href="about">About</a><a href="services">Services</a><a href="works">Portfolio</a><a href="pricelist">Pricing</a><a href="careers">Careers</a>
-    <a class="btn" href="https://wa.me/6289524687866">Contact Us</a>
+    <a href="about">Tentang</a><a href="services">Layanan</a><a href="works">Karya</a><a href="pricelist">Harga</a><a href="careers">Karier</a>
+    <a class="btn" href="https://wa.me/6289524687866">Mulai Proyek</a>
   </nav>
   <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="nav"><i></i><i></i></button>
 </header>
@@ -507,13 +715,12 @@ h3,.sv b,.ct b{font-weight:400}
   <div class="orb a" aria-hidden="true"></div><div class="orb b" aria-hidden="true"></div>
   <div class="floor" aria-hidden="true"><div></div></div>
 
-  <div class="hero-top"><span>Yogyakarta <b id="hclk">--:--</b> WIB</span><span>Digital &amp; Creative Agency</span></div>
-  <div class="hp" aria-hidden="true"><canvas id="hp-c"></canvas></div>
+    <div class="hp" aria-hidden="true"><canvas id="hp-c"></canvas></div>
   <div class="hero-in">
-    <h1 class="rv"><span class="ln">Creative &amp; <em class="it">Digital</em></span><span class="ln">Agency <em class="it">dari Yogyakarta.</em></span></h1>
-    <p class="lead rv">Kancah Creative adalah agensi kreatif dan digital di Yogyakarta. Kami menangani brand design, tech development, social media management, dan audio visual dalam satu tim.</p>
+    <h1 class="rv"><span class="ln">Creative &amp; <em class="it">Digital</em></span><span class="ln">Agency for <em class="it">Growing Brands.</em></span></h1>
+    <p class="lead rv">Kami membantu bisnis membangun brand, berkomunikasi dengan audiens, dan mengembangkan pengalaman digital melalui strategi serta eksekusi kreatif.</p>
     <div class="cta rv">
-      <a class="btn w" href="https://wa.me/6289524687866">Hubungi Kami <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+      <a class="btn w" href="https://wa.me/6289524687866">Diskusikan Proyek <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
       <a class="btn ghost" href="#karya">Lihat Portofolio</a>
     </div>
   </div>
@@ -527,26 +734,33 @@ h3,.sv b,.ct b{font-weight:400}
 
 <section class="about" id="tentang">
   <div class="wrap">
-    <div class="stitle"><span>01 — Tentang Kami</span><i></i></div><p class="mani">Kancah itu gelanggang <svg class="in ring" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="30" fill="none" stroke="#0006ff" stroke-width="10"/><circle cx="40" cy="40" r="8" fill="#0006ff"/></svg> buat ide-ide <span class="in pill">gila</span> jadi nyata <svg class="in mk" viewBox="29 37 342 344" aria-hidden="true"><use href="#kmark" x="29" y="37" width="342" height="344"/></svg> langsung dari Yogyakarta <svg class="in sq" viewBox="0 0 120 30" aria-hidden="true"><path d="M5 18c10-14 20-14 25 0s15 14 25 0 15-14 25 0 15 14 30 0"/></svg></p>
+    <p class="mani">Kami membantu bisnis <span class="in pill">membangun brand</span> dan pengalaman digital yang relevan, konsisten, serta siap berkembang.</p>
     <div class="ab-g">
-      <div class="ab-t"><p>Kancah Creative adalah agensi kreatif dan digital yang berbasis di Yogyakarta. Dalam bahasa Indonesia, kancah berarti gelanggang: tempat orang berkumpul, bermain, dan beradu gagasan. Suasana itulah yang kami bangun dalam setiap proyek.</p>
-      <p>Dalam satu tim, kami menangani brand design, promosi, pengembangan website dan aplikasi, pengelolaan konten, hingga produksi video, sehingga seluruh pekerjaan terhubung dari strategi sampai eksekusi. Kami tidak hanya mengerjakan brief, tetapi juga memahami persoalan bisnis di baliknya.</p><a class="btn" href="about">Tentang Kami <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div>
+      <div class="ab-t"><p>Kancah Creative adalah creative agency berbasis di Yogyakarta yang membantu brand dan bisnis membangun komunikasi visual serta pengalaman digital yang kuat. Kami menggabungkan strategi, kreativitas, dan teknologi untuk menjawab kebutuhan nyata setiap proyek.</p>
+      <p>Mulai dari identitas brand dan materi promosi hingga website, social media, dan produksi audiovisual, kami mengelola proses secara terarah agar setiap elemen bekerja sebagai satu kesatuan. Fokus kami adalah memahami tujuan, menemukan pendekatan yang tepat, lalu menghasilkan karya yang efektif dan relevan.</p><a class="btn" href="about">Profil Agency <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div>
       <div class="nums"><div id="n-proj" hidden><b data-n>0</b><span>Proyek di portofolio</span></div><div id="n-part" hidden><b data-n>0</b><span>Klien dan partner</span></div><div><b data-n="5">5</b><span>Bidang layanan</span></div></div>
     </div>
   </div>
 </section>
 
-<section class="vals" id="values"><div class="wrap"><div class="stitle"><span>02 — Nilai Kami</span><i></i></div><div class="sh"><h2>Our <span class="sel inv">Values</span></h2><p class="intro">Empat nilai yang menjadi landasan cara kami bekerja dan berhubungan dengan klien.</p></div><div class="vgrid"><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="34"/><circle cx="50" cy="50" r="7" fill="currentColor"/></svg><h3>Creativity</h3><p>Kami mendorong gagasan yang berani dan orisinal, dengan tetap memastikan relevansinya bagi tujuan bisnis klien.</p></article><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><path d="M6 55c10-28 20-28 25 0s15 28 25 0 15-28 25 0 10 20 13 0"/></svg><h3>Collaboration</h3><p>Strategi, desain, teknologi, dan produksi dikerjakan dalam satu tim agar komunikasi efisien dan hasil selaras.</p></article><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 8l9 31 31 11-31 11-9 31-9-31-31-11 31-11z"/></svg><h3>Consistency</h3><p>Setiap karya menjaga identitas brand tetap seragam di seluruh titik temu dengan audiens.</p></article><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><path d="M18 52l20 20 44-48"/><rect x="8" y="8" width="84" height="84"/></svg><h3>Integrity</h3><p>Kami bekerja secara transparan, menepati tenggat, dan bertanggung jawab atas kualitas hasil akhir.</p></article></div></div></section>
-<section class="light svc" id="layanan"><div class="wrap"><div class="stitle"><span>03 — Layanan</span><i></i></div><div class="sh"><h2>Our <span class="sel">Services</span></h2><p class="intro">Lima bidang layanan terintegrasi yang ditangani oleh satu tim, dari strategi hingga eksekusi.</p></div><div id="rows"></div></div></section>
+<section class="vals" id="values"><div class="wrap"><div class="sh"><h2>Nilai <span class="sel inv">Kami</span></h2><p class="intro">Empat nilai yang menjadi landasan cara kami bekerja dan berkolaborasi dengan klien.</p></div><div class="vgrid"><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="34"/><circle cx="50" cy="50" r="7" fill="currentColor"/></svg><h3>Kreativitas</h3><p>Kami menghadirkan gagasan yang segar dan relevan untuk menjawab kebutuhan brand serta tujuan bisnis.</p></article><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><path d="M6 55c10-28 20-28 25 0s15 28 25 0 15-28 25 0 10 20 13 0"/></svg><h3>Kolaborasi</h3><p>Kami bekerja bersama klien dan lintas bidang agar proses berjalan jelas dan hasil tetap selaras.</p></article><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 8l9 31 31 11-31 11-9 31-9-31-31-11 31-11z"/></svg><h3>Konsistensi</h3><p>Kami menjaga identitas dan kualitas brand tetap konsisten di setiap kanal dan materi komunikasi.</p></article><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><path d="M18 52l20 20 44-48"/><rect x="8" y="8" width="84" height="84"/></svg><h3>Integritas</h3><p>Kami mengutamakan komunikasi terbuka, komitmen yang jelas, dan tanggung jawab atas hasil kerja.</p></article></div></div></section>
+<section class="pb" id="masalah"><div class="wrap">
+<h2 class="pb-h">Masalah klasik yang <span class="sel">sering kejadian.</span></h2>
+<div class="pb-row"><svg class="pb-rope" aria-hidden="true"><path pathLength="1" d=""/></svg><article style="--i:0" class="pb-c"><i class="pb-st"></i><div class="pb-top"><span>Masalah</span><span class="pb-n">01</span></div><p class="pb-t">Desainnya sih cakep. Tapi yang lama <em>revisinya.</em></p></article><article style="--i:1" class="pb-c b"><i class="pb-st"></i><div class="pb-top"><span>Masalah</span><span class="pb-n">02</span></div><p class="pb-t">Iklan udah gacor, tapi <em>konversi belum maksimal.</em></p></article><article style="--i:2" class="pb-c"><i class="pb-st"></i><div class="pb-top"><span>Masalah</span><span class="pb-n">03</span></div><p class="pb-t">Brand lo <em>bagus..</em> tapi kok nggak ada yang inget?</p></article></div>
+<div class="pb-so"><span class="pb-ar" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg></span>
+<p class="pb-sol">Kami menyatukan strategi, desain, dan digital <span class="pb-u">dalam satu arah</span> agar brand tampil konsisten dan bekerja lebih efektif.</p></div>
+</div></section>
+
+<section class="light svc" id="layanan"><div class="wrap"><div class="sh"><h2>Apa yang <span class="sel">kami lakukan</span></h2><p class="intro">Kami menyediakan layanan kreatif dan digital untuk membantu brand membangun identitas, menjangkau audiens, dan berkembang.</p></div><div id="rows"></div></div></section>
 <div id="peek" aria-hidden="true"></div>
 
-<section class="blue works" id="karya"><div class="wrap"><div class="stitle"><span>04 — Portofolio</span><i></i></div><div class="sh"><h2>Selected <span class="sel inv">Works</span></h2><p class="intro">Sebagian proyek yang telah kami kerjakan bersama klien dari berbagai industri.</p></div><div class="filters" id="filters" role="group" aria-label="Filter kategori"></div></div>
+<section class="blue works" id="karya"><div class="wrap"><div class="sh"><h2><span class="sel inv">Proyek Pilihan</span></h2><p class="intro">Pilihan proyek dari berbagai kebutuhan brand, komunikasi, dan digital.</p></div><div class="filters" id="filters" role="group" aria-label="Filter kategori"></div></div>
 <div class="hs" id="hs"><div class="hs-pin"><div class="hs-track" id="featured-grid" aria-busy="true"></div><div class="hs-ui mono"><span id="hs-c">01</span><i><b id="hs-p"></b></i><span id="hs-t">00</span></div></div></div>
-<div class="more"><a class="btn w" href="works">Lihat Semua Karya <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div></section>
+<div class="more"><a class="btn w" href="works">Lihat Semua Proyek <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div></section>
 
-<section class="px" id="proses"><div class="px-pin"><div class="px-bar mono"><span>[05] Our Process</span><span id="px-s">01/03</span></div><div class="px-st"><i class="px-floor"></i><svg class="pxd a" viewBox="0 0 48 48" aria-hidden="true"><path d="M30 8a16 16 0 1 0 10 28A14 14 0 0 1 30 8z"/></svg><svg class="pxd b" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M20 16l13 8-13 8z" fill="#fff"/></svg><svg class="pxd c" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l4.5 15.5L44 24l-15.5 4.5L24 44l-4.5-15.5L4 24l15.5-4.5z"/></svg><div class="px-word sel" id="px-w" aria-live="polite">Dream</div><div class="px-rail mono"><span>01 Dream</span><span>02 Play</span><span>03 Create</span></div></div><div class="px-info"><p id="px-p"></p><span class="o mono" id="px-o"></span></div></div></section>
+<section class="px" id="proses"><div class="px-pin"><div class="px-bar mono"><span>[05] Proses Kami</span><span id="px-s">01/03</span></div><div class="px-st"><i class="px-floor"></i><svg class="pxd a" viewBox="0 0 48 48" aria-hidden="true"><path d="M30 8a16 16 0 1 0 10 28A14 14 0 0 1 30 8z"/></svg><svg class="pxd b" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M20 16l13 8-13 8z" fill="#fff"/></svg><svg class="pxd c" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l4.5 15.5L44 24l-15.5 4.5L24 44l-4.5-15.5L4 24l15.5-4.5z"/></svg><div class="px-word sel" id="px-w" aria-live="polite">Dream</div><div class="px-rail mono"><span>01 Dream</span><span>02 Play</span><span>03 Create</span></div></div><div class="px-info"><p id="px-p"></p><span class="o mono" id="px-o"></span></div></div></section>
 
-<div class="pt"><div class="wrap"><div class="stitle"><span>05 — Partner</span><i></i></div><div class="sh"><h2>Our <span class="sel">Partners</span></h2><p class="intro">Brand dan institusi yang telah mempercayakan kebutuhan kreatif dan digital mereka kepada kami.</p></div></div><div class="pt-row"><div id="ptr"></div><div id="ptr2"></div></div></div>
+<div class="pt"><div class="wrap"><div class="sh"><h2><span class="sel">Dipercaya Oleh</span></h2><p class="intro">Kami berkolaborasi dengan bisnis dan organisasi dari berbagai industri.</p></div></div><div class="pt-row"><div id="ptr"></div><div id="ptr2"></div></div></div>
 
 <footer id="contact">
   <i class="ft-floor" aria-hidden="true"></i>
@@ -554,27 +768,30 @@ h3,.sv b,.ct b{font-weight:400}
     
     <div class="ft-cta">
       <div>
-        <a class="ft-h" href="https://wa.me/6289524687866" aria-label="Mulai proyek via WhatsApp"><h2>Let&rsquo;s work<br><span class="sel inv">together.</span></h2></a>
-        <p class="intro">Sampaikan kebutuhan brand atau bisnis Anda, dan tim kami akan membantu menyusun solusinya.</p>
+        <a class="ft-h" href="https://wa.me/6289524687866" aria-label="Mulai proyek via WhatsApp"><h2>Mari berkarya<br><span class="sel inv">bersama.</span></h2></a>
+        <p class="intro">Punya proyek atau kebutuhan kreatif dan digital? Ceritakan kepada kami. Kami akan membantu menentukan langkah berikutnya.</p>
       </div>
-      <a class="ft-stk" href="https://wa.me/6289524687866" aria-label="Start a project">
-        <svg class="rg" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring2" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs><circle cx="100" cy="100" r="98" fill="#fff"/><text><textPath href="#ring2" textLength="455" lengthAdjust="spacing">START A PROJECT &bull; START A PROJECT &bull;</textPath></text></svg>
+      <a class="ft-stk" href="https://wa.me/6289524687866" aria-label="Mulai proyek">
+        <svg class="rg" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring2" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs><circle cx="100" cy="100" r="98" fill="#fff"/><text><textPath href="#ring2" textLength="455" lengthAdjust="spacing">MULAI PROYEK &bull; MULAI PROYEK &bull;</textPath></text></svg>
         <svg class="go" viewBox="0 0 24 24" fill="none" stroke="#0006ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10"/></svg>
       </a>
     </div>
     <div class="ft-grid">
       <div class="ft-c"><b>Office</b><p>Jalan Anggajaya 2, Condongcatur, Depok, Sleman, Yogyakarta 55281</p><p class="ft-t"><span id="clk">--:--:--</span> WIB</p></div>
       <div class="ft-c"><b>Contact</b><a href="mailto:kancahcreative@gmail.com">kancahcreative@gmail.com</a><a href="tel:+6289524687866">+62 895-2468-7866</a><a href="https://wa.me/6289524687866" target="_blank" rel="noopener">WhatsApp</a></div>
-      <div class="ft-c"><b>Menu</b><a href="services">Services</a><a href="works">Portfolio</a><a href="pricelist">Pricing</a><a href="about">About</a><a href="careers">Careers</a></div>
+      <div class="ft-c"><b>Menu</b><a href="services">Layanan</a><a href="works">Portfolio</a><a href="pricelist">Harga</a><a href="about">Tentang</a><a href="careers">Karier</a></div>
       <div class="ft-c"><b>Services</b><a href="services">Brand Design</a><a href="services">Promotion Design</a><a href="services">Tech Development</a><a href="services">Social Media Management</a><a href="services">Audio Visual</a></div>
     </div>
   </div>
-  <div class="wrap ft-logo"><svg class="klogo" id="foot-logo" viewBox="30 38 1385 346" role="img" aria-label="Kancah"><path class="mk" fill-rule="evenodd" d="M272.5 378.1C271.4 377.6 268.2 377.0 265.5 376.6C260.5 375.9 257.1 374.9 251.3 372.4C249.6 371.6 248.0 371.0 247.7 371.0C247.4 371.0 242.6 368.3 237.1 364.9C227.6 359.2 224.9 356.6 193.7 324.8C175.5 306.1 156.5 286.9 151.6 282.1C136.2 267.2 120.7 249.6 116.4 242.4C109.2 230.2 106.3 212.0 109.5 199.7C110.3 196.5 111.0 193.2 111.0 192.3C111.0 189.9 115.7 180.5 120.0 174.2C122.2 171.1 132.3 160.1 142.6 149.8C159.7 132.5 161.4 131.1 163.3 132.2C166.4 133.8 190.0 158.3 190.0 159.8C190.0 160.5 186.3 164.8 181.7 169.3C156.6 194.2 152.6 199.0 151.1 206.0C148.7 216.8 151.2 222.2 165.3 236.3C171.5 242.5 194.5 265.8 216.6 288.1C264.3 336.4 263.2 335.6 281.0 335.4C294.9 335.2 300.5 333.1 308.2 325.3C320.8 312.4 324.6 298.7 320.1 282.9C317.3 273.2 315.6 270.4 305.8 260.3C295.5 249.6 295.6 249.8 300.4 236.7C306.3 220.9 306.9 198.3 301.7 188.3C299.4 183.9 296.0 174.7 296.0 173.0C296.0 172.1 300.1 167.4 305.1 162.5C327.1 140.7 328.1 117.5 308.1 96.7C300.7 89.0 294.7 86.8 281.5 86.7C267.4 86.6 262.4 88.8 250.6 100.0C237.9 112.1 240.0 112.3 225.2 96.9C218.2 89.7 212.2 83.2 211.7 82.5C209.7 79.0 231.5 59.3 244.6 52.7C266.3 41.8 294.9 41.3 315.3 51.7C329.0 58.6 341.5 68.9 347.9 78.5C368.0 108.6 369.3 140.5 351.6 171.4C348.2 177.4 331.7 196.5 322.1 205.4C316.5 210.7 317.3 212.4 332.3 227.8C348.7 244.8 356.1 255.9 359.9 269.0C360.6 271.5 361.6 274.8 362.1 276.5C365.0 285.7 363.9 310.7 360.4 318.9C353.6 334.6 347.3 345.5 341.3 351.5C330.9 361.9 314.9 371.6 302.5 374.8C287.2 378.9 277.2 379.9 272.5 378.1ZM112.0 377.1C110.6 376.6 107.9 376.1 106.0 376.1C95.3 375.7 73.1 363.8 61.6 352.3C34.0 324.7 29.7 282.2 51.0 249.6C55.0 243.5 62.6 234.9 80.8 216.1C83.1 213.6 84.9 211.3 84.8 210.9C84.6 210.5 78.2 203.6 70.5 195.5C52.3 176.3 47.2 169.0 42.2 155.0C36.4 139.0 35.9 114.9 41.0 103.5C41.5 102.4 42.9 99.0 44.0 95.9C56.2 62.3 99.7 38.2 134.3 45.9C145.7 48.4 155.9 52.8 165.8 59.5C174.3 65.2 273.3 165.1 280.3 175.1C287.8 185.7 292.9 203.4 291.7 214.5C290.6 224.6 287.5 235.6 284.2 240.9C277.5 251.9 273.5 256.7 257.3 273.0L239.0 291.5L225.0 277.5C217.3 269.8 211.0 263.1 211.0 262.6C211.0 262.1 219.0 253.8 228.8 244.1C240.5 232.5 247.0 225.3 247.9 223.0C248.6 221.1 249.6 218.7 250.1 217.8C252.4 213.3 249.7 199.9 245.3 194.6C244.4 193.5 221.1 169.9 193.6 142.3C154.6 103.2 142.4 91.5 138.5 89.5C117.0 79.0 93.4 87.2 82.0 109.2C78.9 115.3 78.7 115.9 78.8 127.0C78.8 144.0 80.0 146.7 95.2 163.3C104.0 173.0 103.8 172.1 100.0 182.5C95.0 196.1 93.2 216.4 96.1 227.4C98.7 237.4 99.5 239.8 101.7 244.2C103.0 246.8 104.0 249.2 104.0 249.5C104.0 249.9 99.7 254.6 94.5 260.1C81.0 274.2 78.8 278.8 78.8 294.0C78.8 303.7 79.1 306.3 80.9 310.5C89.7 330.5 111.0 341.1 130.8 335.4C139.6 332.9 141.8 331.4 152.2 321.2L162.0 311.6L175.2 325.5C182.5 333.1 188.6 339.8 188.8 340.4C189.1 341.9 172.8 357.9 166.5 362.2C156.2 369.3 143.6 374.7 134.0 376.2C124.9 377.6 114.7 378.0 112.0 377.1Z"/><g class="wm"><path class="L" d="M416.2 215.8L416.5 95.5L438.5 91.8C450.6 89.8 461.3 88.1 462.2 88.1C463.9 88.0 464.0 92.2 464.2 158.2L464.5 228.3L477.5 213.9C484.7 206.0 496.5 192.4 503.9 183.8L517.3 168.0L545.8 168.0L574.2 168.0L567.4 175.8C550.2 195.2 533.4 213.6 520.3 227.0L506.1 241.7L511.1 246.6C525.9 260.9 550.6 292.4 563.9 313.9C571.2 325.7 576.0 334.2 576.0 335.5C576.0 335.8 563.6 336.0 548.5 336.0C533.4 336.0 521.0 335.6 521.0 335.2C521.0 333.8 498.6 300.5 491.4 291.2C484.3 282.1 466.3 263.0 464.8 263.0C464.4 263.0 464.0 279.4 464.0 299.5L464.0 336.0L440.0 336.0L416.0 336.0L416.2 215.8Z"/><path class="L" d="M641.5 338.9C601.2 336.3 581.5 318.3 581.6 284.0C581.6 253.0 601.4 235.8 641.6 231.9C652.3 230.9 671.9 231.8 678.9 233.7C684.1 235.1 679.6 216.8 673.2 210.3C664.9 202.1 638.8 200.7 612.0 207.1C607.4 208.1 603.5 208.8 603.3 208.6C602.6 207.9 596.9 171.7 597.4 171.2C598.4 170.3 613.8 167.0 624.3 165.5C683.4 157.2 716.2 171.4 724.6 209.0C727.3 220.8 728.0 330.4 725.4 331.4C720.4 333.3 687.0 338.2 676.0 338.6C669.1 338.8 661.2 339.2 658.5 339.3C655.8 339.5 648.1 339.3 641.5 338.9ZM680.2 301.3C680.7 301.1 681.0 292.8 681.0 283.0L681.0 265.1L675.2 264.4C665.7 263.1 649.9 263.6 643.7 265.4C633.1 268.5 628.5 274.7 629.2 285.0C629.9 294.5 635.5 299.9 647.1 301.9C652.2 302.8 678.6 302.4 680.2 301.3Z"/><path class="L" d="M762.0 255.0C762.0 174.0 762.0 174.0 764.6 173.0C768.1 171.6 789.3 167.4 800.5 165.8C814.9 163.7 851.8 164.1 860.5 166.4C884.3 172.6 898.9 187.2 905.2 211.1C907.3 219.2 907.4 221.6 907.7 277.8L908.1 336.0L884.1 336.0L860.1 336.0L859.8 281.8C859.4 232.4 859.2 227.0 857.6 221.8C855.1 214.2 850.3 208.6 844.3 206.6C839.5 204.9 821.4 204.4 813.8 205.6L810.0 206.3L810.0 271.1L810.0 336.0L786.0 336.0L762.0 336.0L762.0 255.0Z"/><path class="L" d="M1004.7 339.0C964.7 331.8 941.8 305.4 938.0 262.2C931.7 190.7 990.7 146.4 1061.8 169.2C1069.3 171.6 1071.0 172.4 1070.6 173.8C1070.3 174.7 1068.2 182.9 1065.9 192.0C1063.6 201.1 1061.4 208.9 1061.0 209.3C1060.6 209.8 1057.2 209.2 1053.4 208.1C1012.7 195.5 986.6 212.6 986.6 252.0C986.6 275.6 994.0 290.4 1008.8 296.1C1019.7 300.3 1046.3 299.8 1060.7 295.0C1063.9 294.0 1066.6 293.3 1066.9 293.5C1067.3 294.0 1074.0 331.3 1073.7 331.6C1071.9 332.9 1067.3 334.5 1058.8 336.6C1047.6 339.5 1015.2 340.9 1004.7 339.0Z"/><path class="L" d="M1140.5 338.9C1100.2 336.3 1080.5 318.3 1080.6 284.0C1080.6 253.0 1100.4 235.8 1140.6 231.9C1151.3 230.9 1170.9 231.8 1177.9 233.7C1183.1 235.1 1178.6 216.8 1172.2 210.3C1163.9 202.1 1137.8 200.7 1111.0 207.1C1106.4 208.1 1102.5 208.8 1102.3 208.6C1101.6 207.9 1095.9 171.7 1096.4 171.2C1097.4 170.3 1112.8 167.0 1123.3 165.5C1182.4 157.2 1215.2 171.4 1223.6 209.0C1226.3 220.8 1227.0 330.4 1224.4 331.4C1219.4 333.3 1186.0 338.2 1175.0 338.6C1168.1 338.8 1160.2 339.2 1157.5 339.3C1154.8 339.5 1147.1 339.3 1140.5 338.9ZM1179.2 301.3C1179.7 301.1 1180.0 292.8 1180.0 283.0L1180.0 265.1L1174.2 264.4C1164.7 263.1 1148.9 263.6 1142.7 265.4C1132.1 268.5 1127.5 274.7 1128.2 285.0C1128.9 294.5 1134.5 299.9 1146.1 301.9C1151.2 302.8 1177.6 302.4 1179.2 301.3Z"/><path class="L" d="M1262.2 215.8L1262.5 95.5L1284.5 91.8C1296.6 89.8 1307.3 88.1 1308.2 88.1C1309.9 88.0 1310.0 90.6 1310.0 128.1C1310.0 168.2 1310.0 168.2 1312.2 167.6C1328.6 163.2 1349.7 162.9 1364.0 167.0C1383.4 172.5 1396.0 184.2 1402.7 202.8C1407.4 215.8 1408.0 224.3 1408.0 282.2L1408.0 336.0L1384.0 336.0L1360.1 336.0L1359.8 281.2C1359.5 231.4 1359.3 226.0 1357.6 221.0C1355.2 213.9 1349.2 207.7 1343.0 206.0C1337.8 204.6 1319.6 205.2 1313.8 207.0L1310.0 208.1L1310.0 272.0L1310.0 336.0L1286.0 336.0L1262.0 336.0L1262.2 215.8Z"/></g></svg></div>
   <div class="wrap">
-    <div class="bot"><span>&copy; <span id="yr">2026</span> PT. Kancah Media Sejahtera. All rights reserved.</span><span>#DreamPlayCreate</span><button id="totop" type="button">Kembali ke atas &uarr;</button></div>
+    <div class="bot">
+      <div class="bot-l"><svg class="klogo" id="foot-logo" viewBox="30 38 1385 346" role="img" aria-label="Kancah"><path class="mk" fill-rule="evenodd" d="M272.5 378.1C271.4 377.6 268.2 377.0 265.5 376.6C260.5 375.9 257.1 374.9 251.3 372.4C249.6 371.6 248.0 371.0 247.7 371.0C247.4 371.0 242.6 368.3 237.1 364.9C227.6 359.2 224.9 356.6 193.7 324.8C175.5 306.1 156.5 286.9 151.6 282.1C136.2 267.2 120.7 249.6 116.4 242.4C109.2 230.2 106.3 212.0 109.5 199.7C110.3 196.5 111.0 193.2 111.0 192.3C111.0 189.9 115.7 180.5 120.0 174.2C122.2 171.1 132.3 160.1 142.6 149.8C159.7 132.5 161.4 131.1 163.3 132.2C166.4 133.8 190.0 158.3 190.0 159.8C190.0 160.5 186.3 164.8 181.7 169.3C156.6 194.2 152.6 199.0 151.1 206.0C148.7 216.8 151.2 222.2 165.3 236.3C171.5 242.5 194.5 265.8 216.6 288.1C264.3 336.4 263.2 335.6 281.0 335.4C294.9 335.2 300.5 333.1 308.2 325.3C320.8 312.4 324.6 298.7 320.1 282.9C317.3 273.2 315.6 270.4 305.8 260.3C295.5 249.6 295.6 249.8 300.4 236.7C306.3 220.9 306.9 198.3 301.7 188.3C299.4 183.9 296.0 174.7 296.0 173.0C296.0 172.1 300.1 167.4 305.1 162.5C327.1 140.7 328.1 117.5 308.1 96.7C300.7 89.0 294.7 86.8 281.5 86.7C267.4 86.6 262.4 88.8 250.6 100.0C237.9 112.1 240.0 112.3 225.2 96.9C218.2 89.7 212.2 83.2 211.7 82.5C209.7 79.0 231.5 59.3 244.6 52.7C266.3 41.8 294.9 41.3 315.3 51.7C329.0 58.6 341.5 68.9 347.9 78.5C368.0 108.6 369.3 140.5 351.6 171.4C348.2 177.4 331.7 196.5 322.1 205.4C316.5 210.7 317.3 212.4 332.3 227.8C348.7 244.8 356.1 255.9 359.9 269.0C360.6 271.5 361.6 274.8 362.1 276.5C365.0 285.7 363.9 310.7 360.4 318.9C353.6 334.6 347.3 345.5 341.3 351.5C330.9 361.9 314.9 371.6 302.5 374.8C287.2 378.9 277.2 379.9 272.5 378.1ZM112.0 377.1C110.6 376.6 107.9 376.1 106.0 376.1C95.3 375.7 73.1 363.8 61.6 352.3C34.0 324.7 29.7 282.2 51.0 249.6C55.0 243.5 62.6 234.9 80.8 216.1C83.1 213.6 84.9 211.3 84.8 210.9C84.6 210.5 78.2 203.6 70.5 195.5C52.3 176.3 47.2 169.0 42.2 155.0C36.4 139.0 35.9 114.9 41.0 103.5C41.5 102.4 42.9 99.0 44.0 95.9C56.2 62.3 99.7 38.2 134.3 45.9C145.7 48.4 155.9 52.8 165.8 59.5C174.3 65.2 273.3 165.1 280.3 175.1C287.8 185.7 292.9 203.4 291.7 214.5C290.6 224.6 287.5 235.6 284.2 240.9C277.5 251.9 273.5 256.7 257.3 273.0L239.0 291.5L225.0 277.5C217.3 269.8 211.0 263.1 211.0 262.6C211.0 262.1 219.0 253.8 228.8 244.1C240.5 232.5 247.0 225.3 247.9 223.0C248.6 221.1 249.6 218.7 250.1 217.8C252.4 213.3 249.7 199.9 245.3 194.6C244.4 193.5 221.1 169.9 193.6 142.3C154.6 103.2 142.4 91.5 138.5 89.5C117.0 79.0 93.4 87.2 82.0 109.2C78.9 115.3 78.7 115.9 78.8 127.0C78.8 144.0 80.0 146.7 95.2 163.3C104.0 173.0 103.8 172.1 100.0 182.5C95.0 196.1 93.2 216.4 96.1 227.4C98.7 237.4 99.5 239.8 101.7 244.2C103.0 246.8 104.0 249.2 104.0 249.5C104.0 249.9 99.7 254.6 94.5 260.1C81.0 274.2 78.8 278.8 78.8 294.0C78.8 303.7 79.1 306.3 80.9 310.5C89.7 330.5 111.0 341.1 130.8 335.4C139.6 332.9 141.8 331.4 152.2 321.2L162.0 311.6L175.2 325.5C182.5 333.1 188.6 339.8 188.8 340.4C189.1 341.9 172.8 357.9 166.5 362.2C156.2 369.3 143.6 374.7 134.0 376.2C124.9 377.6 114.7 378.0 112.0 377.1Z"/><g class="wm"><path class="L" d="M416.2 215.8L416.5 95.5L438.5 91.8C450.6 89.8 461.3 88.1 462.2 88.1C463.9 88.0 464.0 92.2 464.2 158.2L464.5 228.3L477.5 213.9C484.7 206.0 496.5 192.4 503.9 183.8L517.3 168.0L545.8 168.0L574.2 168.0L567.4 175.8C550.2 195.2 533.4 213.6 520.3 227.0L506.1 241.7L511.1 246.6C525.9 260.9 550.6 292.4 563.9 313.9C571.2 325.7 576.0 334.2 576.0 335.5C576.0 335.8 563.6 336.0 548.5 336.0C533.4 336.0 521.0 335.6 521.0 335.2C521.0 333.8 498.6 300.5 491.4 291.2C484.3 282.1 466.3 263.0 464.8 263.0C464.4 263.0 464.0 279.4 464.0 299.5L464.0 336.0L440.0 336.0L416.0 336.0L416.2 215.8Z"/><path class="L" d="M641.5 338.9C601.2 336.3 581.5 318.3 581.6 284.0C581.6 253.0 601.4 235.8 641.6 231.9C652.3 230.9 671.9 231.8 678.9 233.7C684.1 235.1 679.6 216.8 673.2 210.3C664.9 202.1 638.8 200.7 612.0 207.1C607.4 208.1 603.5 208.8 603.3 208.6C602.6 207.9 596.9 171.7 597.4 171.2C598.4 170.3 613.8 167.0 624.3 165.5C683.4 157.2 716.2 171.4 724.6 209.0C727.3 220.8 728.0 330.4 725.4 331.4C720.4 333.3 687.0 338.2 676.0 338.6C669.1 338.8 661.2 339.2 658.5 339.3C655.8 339.5 648.1 339.3 641.5 338.9ZM680.2 301.3C680.7 301.1 681.0 292.8 681.0 283.0L681.0 265.1L675.2 264.4C665.7 263.1 649.9 263.6 643.7 265.4C633.1 268.5 628.5 274.7 629.2 285.0C629.9 294.5 635.5 299.9 647.1 301.9C652.2 302.8 678.6 302.4 680.2 301.3Z"/><path class="L" d="M762.0 255.0C762.0 174.0 762.0 174.0 764.6 173.0C768.1 171.6 789.3 167.4 800.5 165.8C814.9 163.7 851.8 164.1 860.5 166.4C884.3 172.6 898.9 187.2 905.2 211.1C907.3 219.2 907.4 221.6 907.7 277.8L908.1 336.0L884.1 336.0L860.1 336.0L859.8 281.8C859.4 232.4 859.2 227.0 857.6 221.8C855.1 214.2 850.3 208.6 844.3 206.6C839.5 204.9 821.4 204.4 813.8 205.6L810.0 206.3L810.0 271.1L810.0 336.0L786.0 336.0L762.0 336.0L762.0 255.0Z"/><path class="L" d="M1004.7 339.0C964.7 331.8 941.8 305.4 938.0 262.2C931.7 190.7 990.7 146.4 1061.8 169.2C1069.3 171.6 1071.0 172.4 1070.6 173.8C1070.3 174.7 1068.2 182.9 1065.9 192.0C1063.6 201.1 1061.4 208.9 1061.0 209.3C1060.6 209.8 1057.2 209.2 1053.4 208.1C1012.7 195.5 986.6 212.6 986.6 252.0C986.6 275.6 994.0 290.4 1008.8 296.1C1019.7 300.3 1046.3 299.8 1060.7 295.0C1063.9 294.0 1066.6 293.3 1066.9 293.5C1067.3 294.0 1074.0 331.3 1073.7 331.6C1071.9 332.9 1067.3 334.5 1058.8 336.6C1047.6 339.5 1015.2 340.9 1004.7 339.0Z"/><path class="L" d="M1140.5 338.9C1100.2 336.3 1080.5 318.3 1080.6 284.0C1080.6 253.0 1100.4 235.8 1140.6 231.9C1151.3 230.9 1170.9 231.8 1177.9 233.7C1183.1 235.1 1178.6 216.8 1172.2 210.3C1163.9 202.1 1137.8 200.7 1111.0 207.1C1106.4 208.1 1102.5 208.8 1102.3 208.6C1101.6 207.9 1095.9 171.7 1096.4 171.2C1097.4 170.3 1112.8 167.0 1123.3 165.5C1182.4 157.2 1215.2 171.4 1223.6 209.0C1226.3 220.8 1227.0 330.4 1224.4 331.4C1219.4 333.3 1186.0 338.2 1175.0 338.6C1168.1 338.8 1160.2 339.2 1157.5 339.3C1154.8 339.5 1147.1 339.3 1140.5 338.9ZM1179.2 301.3C1179.7 301.1 1180.0 292.8 1180.0 283.0L1180.0 265.1L1174.2 264.4C1164.7 263.1 1148.9 263.6 1142.7 265.4C1132.1 268.5 1127.5 274.7 1128.2 285.0C1128.9 294.5 1134.5 299.9 1146.1 301.9C1151.2 302.8 1177.6 302.4 1179.2 301.3Z"/><path class="L" d="M1262.2 215.8L1262.5 95.5L1284.5 91.8C1296.6 89.8 1307.3 88.1 1308.2 88.1C1309.9 88.0 1310.0 90.6 1310.0 128.1C1310.0 168.2 1310.0 168.2 1312.2 167.6C1328.6 163.2 1349.7 162.9 1364.0 167.0C1383.4 172.5 1396.0 184.2 1402.7 202.8C1407.4 215.8 1408.0 224.3 1408.0 282.2L1408.0 336.0L1384.0 336.0L1360.1 336.0L1359.8 281.2C1359.5 231.4 1359.3 226.0 1357.6 221.0C1355.2 213.9 1349.2 207.7 1343.0 206.0C1337.8 204.6 1319.6 205.2 1313.8 207.0L1310.0 208.1L1310.0 272.0L1310.0 336.0L1286.0 336.0L1262.0 336.0L1262.2 215.8Z"/></g></svg><span>&copy; <span id="yr">2026</span> Kancah Creative. All rights reserved.</span></div>
+      <div class="bot-r"><span class="tag">#DreamPlayCreate</span></div>
+    </div>
   </div>
 </footer>
 </main>
+<button id="totop" class="totop" type="button" aria-label="Kembali ke atas"><svg class="trg" viewBox="0 0 46 46" aria-hidden="true"><circle class="tr" cx="23" cy="23" r="20" fill="none" stroke-width="2"/><circle class="pg" cx="23" cy="23" r="20" fill="none" stroke-width="2" stroke-linecap="round"/></svg><svg class="tar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -648,7 +865,7 @@ addEventListener('resize',layout);
 const wio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');wio.unobserve(e.target)}}),{threshold:.12});
 const skel=()=>{track.innerHTML='<div class="wk sk in"><div class="fr"></div><div class="ct"><b>Memuat</b></div></div>'.repeat(5);layout()};skel();
 /* proses */
-const PX=[['Dream','Kami memulai dengan memahami tujuan bisnis, target audiens, dan lanskap kompetitor untuk menentukan arah strategi yang jelas.','Output: Brief & riset'],['Play','Tim kreatif mengeksplorasi konsep, moodboard, dan arah visual hingga menemukan pendekatan yang paling tepat.','Output: Konsep kreatif'],['Create','Konsep terpilih dieksekusi menjadi desain, website, konten, dan video dengan standar kualitas yang konsisten.','Output: Aset final']];
+const PX=[['Dream','Kami menggali kebutuhan bisnis, memahami audiens, dan merumuskan tujuan serta arah proyek bersama.','Hasil: Brief dan arah proyek'],['Play','Kami mengeksplorasi strategi dan berbagai konsep kreatif, lalu menyepakati pendekatan yang paling relevan.','Hasil: Strategi dan konsep'],['Create','Kami mewujudkan konsep menjadi solusi dan aset akhir, dengan komunikasi serta evaluasi di setiap tahap.','Hasil: Solusi dan aset akhir']];
 const pxs=$('#proses'),pw=$('#px-w'),rail=$$('.px-rail span');let pi=-1,tm;
 function scr(t){pw.textContent=t;pw.classList.remove('pop');void pw.offsetWidth;pw.classList.add('pop')}
 function pxTick(){const r=pxs.getBoundingClientRect(),p=Math.min(.999,Math.max(0,(68-r.top)/(r.height-innerHeight+68))),i=Math.floor(p*3);if(i!==pi){pi=i;scr(PX[i][0]);$('#px-p').textContent=PX[i][1];$('#px-o').textContent=PX[i][2];$('#px-s').textContent='0'+(i+1)+'/03';rail.forEach((x,k)=>x.classList.toggle('on',k===i))}pxs.dataset.i=i;pw.style.setProperty('--fill',Math.min(100,(p*3-i)*140))}
@@ -688,6 +905,41 @@ async function loadPartners(){
   const h=data.map(p=>`<img src="${esc(p.logo_url)}" alt="${esc(p.name||'Partner Kancah')}" loading="lazy">`).join('');t.innerHTML=h+h+h+h;const t2=$('#ptr2');if(t2){const h2=data.slice().reverse().map(p=>`<img src="${esc(p.logo_url)}" alt="${esc(p.name||'Partner Kancah')}" loading="lazy">`).join('');t2.innerHTML=h2+h2+h2+h2}setNum('#n-part',data.length);
 }
 if(kancah){loadWorks();loadPartners().catch(console.error)}else{track.innerHTML='<div class="msg">Portofolio belum dapat dimuat. Silakan muat ulang halaman.</div>'}
+
+/* ===== scroll reveal: teks About saja (abu -> solid) ===== */
+(function(){
+  const els=$$('.ab-g .ab-t p');
+  els.forEach(el=>{
+    const tw=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),nodes=[];
+    while(tw.nextNode())nodes.push(tw.currentNode);
+    el._w=[];el._n=-1;
+    nodes.forEach(n=>{
+      if(!n.nodeValue.trim())return;
+      const f=document.createDocumentFragment();
+      n.nodeValue.split(/(\s+)/).forEach(s=>{
+        if(!s)return;
+        if(/^\s+$/.test(s))f.append(s);
+        else{const w=document.createElement('span');w.className='sw';w.textContent=s;el._w.push(w);f.append(w)}
+      });
+      n.replaceWith(f);
+    });
+  });
+  let tk=false;
+  function upd(){
+    tk=false;const H=innerHeight;
+    els.forEach(el=>{
+      const w=el._w;if(!w.length)return;
+      let p=1;
+      if(!reduce){const r=el.getBoundingClientRect();p=Math.min(1,Math.max(0,(H*.92-r.top)/(H*.35+r.height*.6)))}
+      const n=Math.round(p*w.length);
+      if(n===el._n)return;el._n=n;
+      w.forEach((s,i)=>s.classList.toggle('on',i<n));
+    });
+  }
+  addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(upd)}},{passive:true});
+  addEventListener('resize',upd);
+  upd();
+})();
 </script>
 <script>
 /* ===== V2: hero "+" particle wordmark, header clock, cursor label ===== */
@@ -699,7 +951,7 @@ if(kancah){loadWorks();loadPartners().catch(console.error)}else{track.innerHTML=
 
   /* hover label on portfolio cards */
   if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!reduceM){
-    const c=document.createElement('div');c.className='vcur';c.textContent='Lihat Karya';document.body.append(c);
+    const c=document.createElement('div');c.className='vcur';c.textContent='Lihat Portofolio';document.body.append(c);
     let x=0,y=0,tick=false;
     addEventListener('mousemove',e=>{x=e.clientX+15;y=e.clientY+15;if(!tick){tick=true;requestAnimationFrame(()=>{c.style.transform=`translate(${x}px,${y}px)`;tick=false})}},{passive:true});
     document.addEventListener('mouseover',e=>{c.style.opacity=e.target.closest&&e.target.closest('.wk')?'1':'0'});
@@ -711,18 +963,26 @@ if(kancah){loadWorks();loadPartners().catch(console.error)}else{track.innerHTML=
     const box=$('.hp'),cv=$('#hp-c');if(!box||!cv)return;
     const ctx=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2);
     const mobile=innerWidth<=600,touch='ontouchstart' in window||navigator.maxTouchPoints>0;
-    const CFG={step:mobile?8:(innerWidth>1400?10:8),size:mobile?2.6:2.6,final:mobile?.8:.5,fade:2200,stagger:1600,drift:14,hover:!touch&&!mobile,r2:110*110,out2:220*220};
+    const COLS=150;
+    const CFG={step:8,ms:8,lw:1,size:2.6,final:mobile?.8:.5,fade:2200,stagger:1600,drift:14,hover:!touch&&!mobile,r2:110*110,out2:220*220};
     const MARK=(()=>{const e=document.querySelector('#kmark path');return e?new Path2D(e.getAttribute('d')):null})();let P=[],W=0,H=0,t0=null,raf=null,vis=true,mx=-9999,my=-9999,cxm=-9999,cym=-9999,tm;
     function build(){
       W=box.clientWidth;
       const off=document.createElement('canvas'),o=off.getContext('2d');
       const font=s=>`700 ${s}px "Ubuntu",system-ui,sans-serif`;
-      let fs=200;o.font=font(fs);fs=fs*W/o.measureText('KANCAH').width;
-      const sy=mobile?1.7:1;H=Math.round(fs*.76*sy);
+      /* semua ukuran layar: jumlah kolom "+" sama (COLS), ukuran "+" ikut mengecil proporsional */
+      let fs=200;o.font=font(fs);
+      const m=o.measureText('KANCAH'),bw=m.actualBoundingBoxLeft+m.actualBoundingBoxRight;
+      fs=fs*(W-4)/bw;o.font=font(fs);
+      const x0=2+o.measureText('KANCAH').actualBoundingBoxLeft;
+      const st=W/COLS;
+      CFG.step=st;CFG.size=st*.29;CFG.drift=st*1.5;CFG.r2=Math.pow(W*.076,2);CFG.ms=st*.9;CFG.lw=Math.max(.5,st*.11);
+      H=Math.round(fs*.76);
       cv.style.height=H+'px';cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
-      off.width=W;off.height=H;o.font=font(fs);o.fillStyle='#fff';o.textBaseline='alphabetic';o.scale(1,sy);o.fillText('KANCAH',0,(H/sy)*.985);
+      off.width=W;off.height=H;o.font=font(fs);o.fillStyle='#fff';o.textBaseline='alphabetic';
+      o.fillText('KANCAH',x0,H*.985);
       const d=o.getImageData(0,0,W,H).data;P=[];
-      for(let y=0;y<H;y+=CFG.step)for(let x=0;x<W;x+=CFG.step){
+      for(let y=st/2;y<H;y+=st)for(let x=st/2;x<W;x+=st){
         if(d[((y|0)*W+(x|0))*4+3]>100)P.push({x,y,ox:(Math.random()-.5)*CFG.drift*2,oy:(Math.random()-.5)*CFG.drift*2,dl:reduceM?0:Math.random()*CFG.stagger,ph:Math.random()*6.28,ch:'+',ls:0,gl:0});
       }
     }
@@ -748,9 +1008,9 @@ if(kancah){loadWorks();loadPartners().catch(console.error)}else{track.innerHTML=
         if(p.ch==='+'){const k=Math.round(fo*40)/40;let b=buckets.get(k);if(!b){b=[];buckets.set(k,b)}b.push(x,y,CFG.size*e)}
         else digits.push(x,y,fo,p.ch);
       }
-      ctx.lineWidth=1;ctx.lineCap='square';
+      ctx.lineWidth=CFG.lw;ctx.lineCap='square';
       buckets.forEach((a,k)=>{ctx.strokeStyle=`rgba(255,255,255,${k})`;ctx.beginPath();for(let i=0;i<a.length;i+=3){const x=a[i],y=a[i+1],s=a[i+2];ctx.moveTo(x-s,y);ctx.lineTo(x+s,y);ctx.moveTo(x,y-s);ctx.lineTo(x,y+s)}ctx.stroke()});
-      if(digits.length&&MARK){const ms=mobile?5:8;for(let i=0;i<digits.length;i+=4){ctx.save();ctx.translate(digits[i]-ms/2,digits[i+1]-ms/2);ctx.scale(ms/342,ms/344);ctx.translate(-29,-37);ctx.fillStyle=`rgba(255,255,255,${Math.min(.55,digits[i+2])})`;ctx.fill(MARK,'evenodd');ctx.restore()}}
+      if(digits.length&&MARK){const ms=CFG.ms;for(let i=0;i<digits.length;i+=4){ctx.save();ctx.translate(digits[i]-ms/2,digits[i+1]-ms/2);ctx.scale(ms/342,ms/344);ctx.translate(-29,-37);ctx.fillStyle=`rgba(255,255,255,${Math.min(.55,digits[i+2])})`;ctx.fill(MARK,'evenodd');ctx.restore()}}
       if(!reduceM)raf=requestAnimationFrame(frame);
     }
     const run=()=>{if(!raf){t0=null;raf=requestAnimationFrame(frame)}};
@@ -759,12 +1019,68 @@ if(kancah){loadWorks();loadPartners().catch(console.error)}else{track.innerHTML=
     new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis&&!reduceM&&!raf)raf=requestAnimationFrame(frame)}).observe(cv);
     addEventListener('mousemove',e=>{cxm=e.clientX;cym=e.clientY},{passive:true});
     const leave=()=>{cxm=cym=-9999};document.addEventListener('mouseleave',leave);document.documentElement.addEventListener('mouseleave',leave);addEventListener('blur',leave);
-    addEventListener('resize',()=>{clearTimeout(tm);tm=setTimeout(()=>{if(raf){cancelAnimationFrame(raf);raf=null}go()},200)});
+    let lastW=innerWidth;
+    addEventListener('resize',()=>{if(innerWidth===lastW)return;lastW=innerWidth;clearTimeout(tm);tm=setTimeout(()=>{if(raf){cancelAnimationFrame(raf);raf=null}go()},200)});
   };
 })();
 
 
 </script>
 
+
+<script>
+/* section masalah: kartu digantung di tali (fisika ayunan), tilt/spotlight, squiggle, stacking di mobile, solusi */
+(function(){
+  const s=document.querySelector('#masalah');if(!s)return;
+  const row=s.querySelector('.pb-row'),cs=[...row.querySelectorAll('.pb-c')],rp=row.querySelector('.pb-rope path'),ar=s.querySelector('.pb-ar'),sol=s.querySelector('.pb-sol'),h=s.querySelector('.pb-h');
+  const rd=matchMedia('(prefers-reduced-motion:reduce)').matches,fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const split=(el,fn)=>{const tw=document.createTreeWalker(el,NodeFilter.SHOW_TEXT),ns=[];while(tw.nextNode())ns.push(tw.currentNode);
+    ns.forEach(n=>{if(!n.nodeValue.trim())return;const f=document.createDocumentFragment();n.nodeValue.split(/(\s+)/).forEach(x=>{if(!x)return;/^\s+$/.test(x)?f.append(x):f.append(fn(x))});n.replaceWith(f)})};
+  const ws=[];split(sol,x=>{const w=document.createElement('span');w.className='sw';w.textContent=x;ws.push(w);return w});
+  let hi=0;split(h,x=>{const m=document.createElement('span'),w=document.createElement('span');m.className='wm';w.className='wi';w.style.transitionDelay=(hi++*70)+'ms';w.textContent=x;m.append(w);return m});
+  cs.forEach(c=>{let k=0;split(c.querySelector('.pb-t em'),x=>{const u=document.createElement('span');u.className='uw';u.style.setProperty('--d',(k++*160)+'ms');u.textContent=x;return u})});
+  if(rd)s.classList.add('in');else new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){s.classList.add('in');o.disconnect()}},{threshold:.25}).observe(h);
+  const cl=v=>Math.min(1,Math.max(0,v)),ez=t=>1-Math.pow(1-t,3);
+  const REST=[-4,3,-3],ang=[...REST],vel=[0,0,0],hov=[0,0,0],ent=[0,0,0];let ra=0,rv=0,raf=0,last=0,tk=false,ly=scrollY,m=1;
+  function rope(){if(!rp||getComputedStyle(rp.parentNode).display==='none')return;const W=row.offsetWidth,sag=16+ra,xs=cs.map(c=>c.offsetLeft+c.offsetWidth/2);
+    let d=`M -160 -4 Q ${(-160+xs[0])/2} ${8+sag*1.2} ${xs[0]} 8`;for(let i=0;i<xs.length-1;i++)d+=` Q ${(xs[i]+xs[i+1])/2} ${8+sag} ${xs[i+1]} 8`;
+    d+=` Q ${(xs[xs.length-1]+W+160)/2} ${8+sag*1.2} ${W+160} -4`;rp.setAttribute('d',d)}
+  function apply(){cs.forEach((c,i)=>c.style.rotate=(ang[i]+ent[i])+'deg');rope()}
+  function step(ts){const dt=Math.min(2,(ts-last)/16.7||1);last=ts;let act=0;
+    cs.forEach((c,i)=>{const tg=hov[i]?0:REST[i]*m;vel[i]+=(tg-ang[i])*.06*dt;vel[i]*=Math.pow(.92,dt);ang[i]+=vel[i]*dt;if(Math.abs(vel[i])>.01||Math.abs(tg-ang[i])>.02)act=1});
+    rv+=-ra*.05*dt;rv*=Math.pow(.88,dt);ra+=rv*dt;if(Math.abs(ra)>.05||Math.abs(rv)>.05)act=1;
+    apply();raf=act?requestAnimationFrame(step):0}
+  const kick=()=>{if(!raf&&!rd){last=performance.now();raf=requestAnimationFrame(step)}};
+  function upd(){tk=false;const H=innerHeight,wide=cs[0].offsetTop===cs[1].offsetTop,hh=68;m=wide?1:.5;
+    cs.forEach((c,i)=>{const r=c.getBoundingClientRect(),a=rd?1:ez(cl((H*.95-r.top)/(H*.5)-(wide?i*.14:0)));
+      c.style.opacity=a;c.style.translate=`0 ${(1-a)*60}px`;ent[i]=rd?0:((wide?i-1:(i%2?1:-1)*.6)*(1-a)*8);
+      if(a>.55&&!c.classList.contains('in')){c.classList.add('in');vel[i]+=(i%2?-1:1)*(rd?0:1.6);kick()}
+      if(!wide){const nx=cs[i+1];let q=0;if(nx)q=cl(1-(nx.getBoundingClientRect().top-(hh+14+(i+1)*14))/(H*.5));c.style.scale=1-.06*q}else c.style.scale=''});
+    apply();
+    const q=rd?1:cl((H*.92-sol.getBoundingClientRect().top)/(H*.4));
+    ar.style.opacity=cl(q*3);const n=Math.round(q*ws.length);ws.forEach((w,i)=>w.classList.toggle('on',i<n));
+    sol.style.setProperty('--u',cl((q-.8)/.2));}
+  addEventListener('scroll',()=>{const dy=scrollY-ly;ly=scrollY;
+    if(!rd&&dy){const v=Math.max(-40,Math.min(40,dy));cs.forEach((c,i)=>vel[i]+=-v*.008*(1+i*.1));rv+=v*.03;kick()}
+    if(!tk){tk=true;requestAnimationFrame(upd)}},{passive:true});
+  addEventListener('resize',upd);upd();
+  cs.forEach((c,i)=>{
+    c.addEventListener('pointerenter',()=>{hov[i]=1;kick()});c.addEventListener('pointerleave',()=>{hov[i]=0;kick()});
+    if(fine&&!rd){
+      c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+        c.style.setProperty('--mx',x+'px');c.style.setProperty('--my',y+'px');
+        c.style.setProperty('--rx',((y/r.height-.5)*-8).toFixed(2)+'deg');c.style.setProperty('--ry',((x/r.width-.5)*8).toFixed(2)+'deg')});
+      c.addEventListener('pointerleave',()=>{c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')});
+    }});
+})();
+/* tombol kembali ke atas: hanya muncul saat scroll naik dan sudah jauh dari atas */
+(function(){
+  const b=document.querySelector('#totop');if(!b)return;const pg=b.querySelector('.pg');let ly=scrollY,up=false,tk=false;
+  function upd(){tk=false;const y=scrollY,H=innerHeight;if(Math.abs(y-ly)>4){up=y<ly;ly=y}
+    b.classList.toggle('show',y>H*1.2&&up);
+    const m=document.documentElement.scrollHeight-H;pg.style.strokeDashoffset=125.66*(1-(m>0?Math.min(1,y/m):0))}
+  addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(upd)}},{passive:true});upd();
+})();
+</script>
 </body>
 </html>
