@@ -1180,16 +1180,83 @@ footer .bot .tag{font-family:'Ubuntu',system-ui,sans-serif;font-style:normal;fon
 
 
 <style id="footer-logo-copyright-final">
-/* Footer final: logo first, copyright below, no hashtag */
-footer .bot-r{display:none!important}
-footer .bot{justify-content:flex-start;align-items:flex-start}
-@media(max-width:820px){
-  footer .bot{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:14px;text-align:left}
-  footer .bot-l{display:flex;flex-direction:column;align-items:flex-start;gap:10px;width:100%}
-  footer .bot-l .klogo{display:block;width:clamp(140px,42vw,190px);height:auto;max-width:100%;margin:0}
-  footer .bot-l>span{display:block;text-align:left;max-width:100%;font-size:11px;line-height:1.5;overflow-wrap:anywhere;opacity:.8}
+/* Final footer layout: stacked brand block on the left, serif hashtag on desktop right */
+footer .bot{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  text-align:left;
 }
-@media(max-width:360px){footer .bot{gap:12px}footer .bot-l .klogo{width:140px}footer .bot-l>span{font-size:10px}}
+footer .bot-l{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px;
+  min-width:0;
+}
+footer .bot-l .klogo{
+  display:block;
+  width:clamp(160px,18vw,230px);
+  height:auto;
+  max-width:100%;
+  margin:0;
+}
+footer .bot-l>span{
+  display:block;
+  font-size:12px;
+  line-height:1.5;
+  text-align:left;
+  overflow-wrap:anywhere;
+  opacity:.8;
+}
+footer .bot-r{
+  display:flex!important;
+  width:auto;
+  align-items:flex-end;
+  justify-content:flex-end;
+  margin:0 0 2px auto;
+  padding:0;
+  border:0;
+  white-space:nowrap;
+}
+footer .bot .tag{
+  display:inline-block;
+  font-family:'Instrument Serif',Georgia,serif;
+  font-style:normal;
+  font-weight:400;
+  font-size:clamp(28px,3.4vw,48px);
+  line-height:1;
+  letter-spacing:-.025em;
+  text-transform:none;
+  opacity:1;
+  padding:0;
+  border:0;
+  border-radius:0;
+}
+@media(max-width:820px){
+  footer .bot{
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:flex-start;
+    gap:14px;
+    margin-top:24px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.28);
+  }
+  footer .bot-l{width:100%;gap:10px}
+  footer .bot-l .klogo{
+    width:clamp(140px,42vw,190px);
+    height:auto;
+  }
+  footer .bot-l>span{font-size:11px}
+  footer .bot-r{display:none!important}
+}
+@media(max-width:360px){
+  footer .bot{gap:12px}
+  footer .bot-l .klogo{width:140px}
+  footer .bot-l>span{font-size:10px}
+}
 </style>
 
 </body>
