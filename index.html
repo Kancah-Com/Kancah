@@ -698,6 +698,68 @@ footer .bot button{padding:7px 16px;font-size:12px;letter-spacing:.04em}
 .pb-t .uw::after{transition:clip-path 1.3s calc(.45s + var(--d,0ms)) cubic-bezier(.2,.8,.2,1)}
 /* garis bawah: versi tipis */
 .pb-t .uw::after,.pb-u::after{background:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20500%2012'%20preserveAspectRatio='none'%3E%3Cpath%20d='M3%208%20C60%205.5%20140%204.5%20240%204.8%20C340%205%20420%206%20497%207.2'%20fill='none'%20stroke='%23fff'%20stroke-width='2'%20stroke-linecap='round'%20vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") no-repeat left center/100% 100%;height:.2em;bottom:-.12em;opacity:.9}
+
+/* ===== refinement: mobile hero, editorial statement, footer spacing ===== */
+.statement{background:#f3f1ed;color:#262522;padding:clamp(76px,11vw,150px) 0}
+.statement .wrap{max-width:1360px}
+.statement h2{max-width:19ch;margin:0 auto;text-align:center;font-size:clamp(38px,6.2vw,88px);line-height:1.08;font-weight:400;letter-spacing:-.045em}
+.statement h2 em{font-family:var(--serif);font-weight:400;font-size:1.12em;letter-spacing:-.025em}
+.statement-founders{display:flex;align-items:center;justify-content:center;gap:clamp(10px,1.5vw,22px);flex-wrap:wrap;margin:clamp(38px,5vw,68px) auto 0;color:#77756f}
+.founder-lead{font-size:clamp(20px,3.3vw,44px);letter-spacing:-.04em;color:#34332f}
+.founder{display:inline-flex;align-items:center;gap:12px;font-family:var(--serif);font-size:clamp(24px,3.5vw,46px);letter-spacing:-.025em;white-space:nowrap}
+.founder img{width:clamp(54px,7.4vw,94px);height:clamp(54px,7.4vw,94px);object-fit:cover;border-radius:50%;background:#dedbd4;filter:saturate(.75)}
+.founder-amp{font-family:var(--serif);font-style:italic;font-size:clamp(28px,4vw,52px);color:#aaa8a1}
+.statement-copy{max-width:58ch;text-align:center;margin:clamp(28px,4vw,48px) auto 0;font-size:clamp(15px,1.35vw,19px);line-height:1.65;opacity:.72}
+footer .bot{display:flex;justify-content:space-between;align-items:center;gap:18px 28px;flex-wrap:wrap}
+footer .bot-l{min-width:0;display:flex;align-items:center;gap:12px 18px;flex-wrap:wrap}
+footer .bot-l .klogo{display:block;width:88px;height:22px;max-width:100%;flex:0 0 auto}
+footer .bot-l>span{min-width:0;overflow-wrap:anywhere}
+footer .bot-r{flex:0 0 auto;margin-left:auto;white-space:nowrap}
+@media(max-width:820px){
+  .hp{display:none!important}
+   .hero{min-height:calc(100svh - var(--hh));padding-top:calc(var(--hh) + 36px);padding-bottom:44px;justify-content:center}
+  .hero-in{gap:18px}
+  .hero h1{font-size:clamp(38px,10.5vw,64px);line-height:1.04;letter-spacing:-.045em}
+  .hero p.lead{font-size:14px;line-height:1.6;max-width:36ch}
+  .hero .cta{gap:10px;margin-top:6px}
+  .hero .cta .btn{font-size:12px;padding:12px 15px;white-space:normal}
+  .statement{padding:64px 0}
+  .statement h2{font-size:clamp(34px,9.3vw,48px);line-height:1.08;text-align:left;max-width:18ch}
+  .statement-founders{justify-content:flex-start;gap:10px;margin-top:30px}
+  .founder-lead{width:100%;font-size:20px}
+  .founder{font-size:28px;gap:8px}
+  .founder img{width:54px;height:54px}
+  .founder-amp{font-size:30px}
+  .statement-copy{text-align:left;margin-top:24px;font-size:15px}
+  footer .bot{flex-direction:column;align-items:flex-start;gap:16px;margin-top:24px}
+  footer .bot-l{width:100%;gap:12px 14px}
+  footer .bot-r{width:100%;margin-left:0;padding-top:12px;border-top:1px solid rgba(255,255,255,.22);white-space:normal}
+  footer .bot .tag{display:inline-block;font-size:16px}
+}
+@media(max-width:390px){
+  footer .bot-l{align-items:flex-start}
+  footer .bot-l .klogo{width:78px}
+  footer .bot-l>span{font-size:11px}
+}
+
+/* Final mobile hero marquee: pinned to the bottom edge of the hero viewport */
+.hero-mobile-marquee{display:none}
+@media(max-width:820px){
+  .hero{position:relative;height:100svh;height:100dvh;min-height:0;padding-bottom:clamp(66px,12svh,88px);overflow:hidden}
+  .hero-mobile-marquee{display:block;position:absolute;left:0;right:0;bottom:0;z-index:5;width:100%;overflow:hidden;padding:0 0 env(safe-area-inset-bottom,0px);background:rgba(0,0,0,.18)}
+  .hero-mobile-marquee .strip{transform:none;border-block:1px solid rgba(255,255,255,.55);background:var(--blue)}
+  .hero-mobile-marquee .strip .row{font-size:clamp(15px,4vw,21px);padding:10px 0;animation-duration:22s}
+  .strip-wrap{display:none}
+}
+@media(max-height:560px) and (max-width:820px){
+  .hero{padding-top:calc(var(--hh) + 14px);padding-bottom:58px}
+  .hero-in{gap:12px}
+  .hero h1{font-size:clamp(29px,7.8vw,42px);line-height:1.02}
+  .hero p.lead{font-size:12px;line-height:1.4}
+  .hero .cta{flex-direction:row;flex-wrap:wrap;width:100%;margin-top:0}
+  .hero .cta .btn{width:auto;flex:1;padding:9px 10px;font-size:11px}
+}
+
 </style>
 </head>
 <body><div class="sp" id="sp"></div><div class="cur" id="cur" aria-hidden="true"></div>
@@ -723,6 +785,9 @@ footer .bot button{padding:7px 16px;font-size:12px;letter-spacing:.04em}
       <a class="btn w" href="https://wa.me/6289524687866">Diskusikan Proyek <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
       <a class="btn ghost" href="#karya">Lihat Portofolio</a>
     </div>
+  </div>
+  <div class="hero-mobile-marquee" aria-hidden="true">
+    <div class="strip"><div class="row" data-marq></div></div>
   </div>
   <a class="cue" href="#layanan" aria-label="Scroll ke layanan"><i></i>Scroll</a>
 </div>
@@ -754,13 +819,13 @@ footer .bot button{padding:7px 16px;font-size:12px;letter-spacing:.04em}
 <section class="light svc" id="layanan"><div class="wrap"><div class="sh"><h2>Apa yang <span class="sel">kami lakukan</span></h2><p class="intro">Kami menyediakan layanan kreatif dan digital untuk membantu brand membangun identitas, menjangkau audiens, dan berkembang.</p></div><div id="rows"></div></div></section>
 <div id="peek" aria-hidden="true"></div>
 
-<section class="blue works" id="karya"><div class="wrap"><div class="sh"><h2><span class="sel inv">Proyek Pilihan</span></h2><p class="intro">Pilihan proyek dari berbagai kebutuhan brand, komunikasi, dan digital.</p></div><div class="filters" id="filters" role="group" aria-label="Filter kategori"></div></div>
+<section class="blue works" id="karya"><div class="wrap"><div class="sh"><h2>Portfolio <span class="sel inv">Kami</span></h2><p class="intro">Pilihan proyek dari berbagai kebutuhan brand, komunikasi, dan digital.</p></div><div class="filters" id="filters" role="group" aria-label="Filter kategori"></div></div>
 <div class="hs" id="hs"><div class="hs-pin"><div class="hs-track" id="featured-grid" aria-busy="true"></div><div class="hs-ui mono"><span id="hs-c">01</span><i><b id="hs-p"></b></i><span id="hs-t">00</span></div></div></div>
 <div class="more"><a class="btn w" href="works">Lihat Semua Proyek <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div></section>
 
 <section class="px" id="proses"><div class="px-pin"><div class="px-bar mono"><span>[05] Proses Kami</span><span id="px-s">01/03</span></div><div class="px-st"><i class="px-floor"></i><svg class="pxd a" viewBox="0 0 48 48" aria-hidden="true"><path d="M30 8a16 16 0 1 0 10 28A14 14 0 0 1 30 8z"/></svg><svg class="pxd b" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M20 16l13 8-13 8z" fill="#fff"/></svg><svg class="pxd c" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l4.5 15.5L44 24l-15.5 4.5L24 44l-4.5-15.5L4 24l15.5-4.5z"/></svg><div class="px-word sel" id="px-w" aria-live="polite">Dream</div><div class="px-rail mono"><span>01 Dream</span><span>02 Play</span><span>03 Create</span></div></div><div class="px-info"><p id="px-p"></p><span class="o mono" id="px-o"></span></div></div></section>
 
-<div class="pt"><div class="wrap"><div class="sh"><h2><span class="sel">Dipercaya Oleh</span></h2><p class="intro">Kami berkolaborasi dengan bisnis dan organisasi dari berbagai industri.</p></div></div><div class="pt-row"><div id="ptr"></div><div id="ptr2"></div></div></div>
+<div class="pt"><div class="wrap"><div class="sh"><h2>Dipercaya <span class="sel">Oleh</span></h2><p class="intro">Kami berkolaborasi dengan bisnis dan organisasi dari berbagai industri.</p></div></div><div class="pt-row"><div id="ptr"></div><div id="ptr2"></div></div></div>
 
 <footer id="contact">
   <i class="ft-floor" aria-hidden="true"></i>
@@ -959,7 +1024,7 @@ if(kancah){loadWorks();loadPartners().catch(console.error)}else{track.innerHTML=
 
   let started=false;
   window.heroParticles=function(){
-    if(started)return;started=true;
+    if(started||matchMedia("(max-width: 820px)").matches)return;started=true;
     const box=$('.hp'),cv=$('#hp-c');if(!box||!cv)return;
     const ctx=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2);
     const mobile=innerWidth<=600,touch='ontouchstart' in window||navigator.maxTouchPoints>0;
@@ -1082,5 +1147,50 @@ if(kancah){loadWorks();loadPartners().catch(console.error)}else{track.innerHTML=
   addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(upd)}},{passive:true});upd();
 })();
 </script>
+
+<style id="portfolio-footer-final-refinement">
+/* Portfolio: sans-serif for Dipercaya, editorial serif italic for Oleh */
+#karya .sh h2{font-family:'Ubuntu',system-ui,sans-serif;font-weight:400;letter-spacing:-.04em}
+#karya .sh h2 .sel{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.025em}
+/* Trusted-by heading: keep the first word sans, emphasize only Oleh */
+.pt .sh h2{font-family:'Ubuntu',system-ui,sans-serif;font-weight:400;letter-spacing:-.04em}
+.pt .sh h2 .sel{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.025em}
+/* Footer desktop: logo, copyright and hashtag stay on one deliberate baseline */
+footer .bot{align-items:center;gap:18px 28px}
+footer .bot-l{gap:12px 16px;min-width:0}
+footer .bot-l .klogo{width:88px;height:22px;object-fit:contain}
+footer .bot-l>span{font-size:12px;line-height:1.5}
+footer .bot-r{white-space:nowrap;margin-left:auto}
+footer .bot .tag{font-family:'Ubuntu',system-ui,sans-serif;font-style:normal;font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.9}
+@media(max-width:820px){
+  /* Remove the large footer logo on phones; let the information breathe */
+  footer .bot{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:12px;margin-top:24px;padding-top:18px;text-align:left;border-top:1px solid rgba(255,255,255,.28)}
+  footer .bot-l{width:100%;display:block;min-width:0}
+  footer .bot-l .klogo{display:none}
+  footer .bot-l>span{display:block;max-width:100%;font-size:11px;line-height:1.5;text-align:left;overflow-wrap:anywhere;opacity:.8}
+  footer .bot-r{width:100%;display:flex;justify-content:flex-start;align-items:center;margin:0;padding:0;border:0;white-space:normal}
+  footer .bot .tag{display:inline-block;font-size:11px;line-height:1.4;padding:0;border:0;border-radius:0;letter-spacing:.14em;opacity:1}
+}
+@media(max-width:360px){
+  footer .bot{gap:10px;padding-top:16px}
+  footer .bot-l>span{font-size:10px}
+  footer .bot .tag{font-size:10px;letter-spacing:.12em}
+}
+</style>
+
+
+<style id="footer-logo-copyright-final">
+/* Footer final: logo first, copyright below, no hashtag */
+footer .bot-r{display:none!important}
+footer .bot{justify-content:flex-start;align-items:flex-start}
+@media(max-width:820px){
+  footer .bot{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:14px;text-align:left}
+  footer .bot-l{display:flex;flex-direction:column;align-items:flex-start;gap:10px;width:100%}
+  footer .bot-l .klogo{display:block;width:clamp(140px,42vw,190px);height:auto;max-width:100%;margin:0}
+  footer .bot-l>span{display:block;text-align:left;max-width:100%;font-size:11px;line-height:1.5;overflow-wrap:anywhere;opacity:.8}
+}
+@media(max-width:360px){footer .bot{gap:12px}footer .bot-l .klogo{width:140px}footer .bot-l>span{font-size:10px}}
+</style>
+
 </body>
 </html>
