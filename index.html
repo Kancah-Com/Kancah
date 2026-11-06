@@ -1,1078 +1,810 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="google-adsense-account" content="ca-pub-6133782160601858">
-    <script async
-    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6133782160601858"
-    crossorigin="anonymous"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <!-- SEO Title & Meta Description -->
-    <title>Kancah Creative | Digital & Creative Agency Yogyakarta</title>
-    <meta name="description" content="Kancah Creative adalah partner digital dan creative agency di Yogyakarta. Kami ahli dalam Brand Design, Web Development, Social Media Management, dan Audio Visual.">
-    <meta name="keywords" content="creative agency yogyakarta, digital agency yogyakarta, jasa pembuatan website yogyakarta, web development yogyakarta, branding agency yogyakarta, social media management yogyakarta, kancah creative">
-    <link rel="canonical" href="https://kancah.com/" />
-    <!-- Open Graph (Untuk share di Sosmed/WA) -->
-    <meta property="og:title" content="Kancah Creative | Future Proof Creative Agency">
-    <meta property="og:description" content="Teman debat dan eksekutor andalan buat ide-ide 'nggak mungkin' brand kamu. Mari ngobrol!">
-    <meta property="og:image" content="./assets/logowh.png"> <!-- Nanti ganti dengan URL banner web yang ukurannya lebih besar -->
-    <meta property="og:url" content="https://kancah.com/">
-    <meta property="og:type" content="website">
-     <link rel="icon" type="image/png" href="./assets/logowh.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#05060f">
+<title>Kancah Creative | Digital & Creative Agency Yogyakarta</title>
+<meta name="description" content="Kancah Creative adalah partner digital dan creative agency di Yogyakarta: Brand Design, Tech Development (website &amp; aplikasi), Social Media Management, dan Audio Visual.">
+<link rel="canonical" href="https://kancah.com/">
+<link rel="icon" type="image/png" href="./assets/logowh.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--b:#0006ff;--ink:#05060f;--w:#fff;--pad:clamp(20px,4.5vw,64px);--hc:#fff;--ease:cubic-bezier(.2,.8,.2,1);--blue:#0006ff;--ov:clamp(34px,4.2vw,60px);--hh:68px;--mono:Ubuntu,sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px;overflow-x:clip}
+body{font:300 16px/1.55 'Ubuntu',system-ui,sans-serif;background:var(--ink);color:#fff;overflow-x:clip}
+a{color:inherit;text-decoration:none}img,svg{max-width:100%;display:block}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--hc);outline-offset:3px}
+.wrap{padding:0 var(--pad);max-width:1440px;margin:0 auto}
+section{position:relative;padding:clamp(72px,10vw,140px) 0}
+h1,h2,h3{font-weight:500;letter-spacing:-.03em;line-height:1}
+h2{font-size:clamp(34px,5.4vw,80px)}
+.light{background:#fff;color:var(--ink);--hc:var(--b)}
+.blue{background:var(--b);color:#fff}
+/* selection box = bahasa visual IG Kancah */
+.sel{position:relative;display:inline-block;background:var(--b);color:#fff;padding:.02em .14em .06em;margin:0 .06em;font-style:normal}
+.sel.inv{background:#fff;color:var(--b)}.blue .sel{--hc:#fff}
+/* logo */
+.klogo{--mk:var(--blue);--txt:#fff;height:var(--lh,30px);width:auto;overflow:visible;display:block;user-select:none}
+.klogo .mk{fill:var(--mk);transform-box:fill-box;transform-origin:center;transform:scale(0) rotate(-140deg);transition:transform .75s cubic-bezier(.3,1.5,.5,1);}
+.klogo .L{fill:var(--txt);opacity:0;transform:translateY(90px);transition:transform .3s,opacity .3s}
+.klogo.on .mk{transform:none}
+.klogo.on .L{opacity:1;transform:none;transition:transform .6s var(--ease),opacity .4s;transition-delay:calc(.9s + var(--n)*.08s)}
+.klogo.off .mk{transform:scale(0) rotate(140deg);transition-duration:.45s}
+.klogo.off .L{opacity:0;transform:translateY(-90px);transition-delay:0s}
+.klogo .L:nth-child(1){--n:0}.klogo .L:nth-child(2){--n:1}.klogo .L:nth-child(3){--n:2}.klogo .L:nth-child(4){--n:3}.klogo .L:nth-child(5){--n:4}.klogo .L:nth-child(6){--n:5}
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
-                    colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } },
-                    screens: { 'xs': '475px' },
-                    backgroundImage: {
-                        'tech-pattern': "radial-gradient(circle at 2px 2px, rgba(0, 6, 255, 0.05) 1px, transparent 0)"
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .cta-glow {
-  background:
-    radial-gradient(circle at 85% 20%, rgba(255,255,255,.28), transparent 30%),
-    linear-gradient(135deg, #0006ff 0%, #111 62%, #000 100%);
+footer .klogo{--mk:#fff;--txt:#fff;--lh:clamp(54px,9vw,112px);margin-bottom:8px}.logo-link{display:inline-flex}
+/* header */
+header{position:fixed;inset:0 0 auto 0;z-index:50;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);background:#fff;color:#000;border-bottom:1px solid rgba(0,0,0,.12)}header .klogo{--txt:#000}header :focus-visible{outline-color:#000}
+nav{display:flex;align-items:center;gap:clamp(16px,2.6vw,36px);font-weight:500;font-size:15px}
+nav a:not(.btn):hover{color:var(--b)}nav .btn{padding:10px 18px}
+.burger{display:none;width:44px;height:44px;position:relative}.burger i{position:absolute;left:10px;right:10px;height:3px;background:#000;transition:transform .3s}.burger i:first-child{top:16px}.burger i:last-child{top:25px}
+.burger[aria-expanded=true] i:first-child{transform:translateY(4.5px) rotate(45deg)}.burger[aria-expanded=true] i:last-child{transform:translateY(-4.5px) rotate(-45deg)}
+@media(max-width:820px){.burger{display:block}nav{position:fixed;inset:68px 0 auto 0;flex-direction:column;align-items:flex-start;gap:0;background:#fff;padding:8px var(--pad) 28px;font-size:28px;font-weight:500;transform:translateY(-130%);transition:transform .45s var(--ease)}nav.open{transform:none}nav a{padding:10px 0}nav .btn{margin-top:14px;font-size:16px;padding:14px 22px}}
+/* original btn, draw, hero, strip */
+.btn{--bg:var(--blue);--fg:#fff;--fill:#fff;--hc:var(--blue);display:inline-flex;align-items:center;justify-content:center;gap:.55em;background:var(--bg);color:var(--fg);font-weight:500;font-size:15px;padding:14px 26px;border-radius:999px;border:2px solid var(--bg);position:relative;overflow:hidden;isolation:isolate;transition:color .3s,translate .3s;white-space:nowrap}
+.btn::before{content:"";position:absolute;inset:0;background:var(--fill);transform:translateY(101%);border-radius:50% 50% 0 0/100% 100% 0 0;transition:transform .5s var(--ease),border-radius .5s;z-index:-1}
+.btn:hover::before,.btn:focus-visible::before{transform:none;border-radius:0}
+.btn:hover,.btn:focus-visible{color:var(--hc)}
+.btn.w{--bg:#fff;--fg:#000;--fill:#000;--hc:#fff}
+.btn.ghost{--bg:transparent;--fg:#fff;--fill:#fff;--hc:#000;border-color:#fff}
+.btn svg{width:1.1em;height:1.1em;transition:transform .35s var(--ease)}
+.split.in .w>span{transform:none}
+.draw{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len,900);stroke-dashoffset:var(--len,900)}
+.in .draw,.draw.go{animation:draw 1.2s .6s cubic-bezier(.6,.1,.2,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero{min-height:calc(100svh + var(--ov));padding:calc(var(--hh) + 12px) var(--pad) calc(var(--ov) + clamp(22px,5vh,52px));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#00007a 38%,#000 76%);overflow:hidden;position:relative;isolation:isolate}
+.floor{position:absolute;left:-10%;right:-10%;bottom:0;height:44%;perspective:420px;pointer-events:none;opacity:.5;z-index:-1}
+.floor div{position:absolute;inset:0;transform:rotateX(62deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:64px 64px;animation:run 3s linear infinite}
+@keyframes run{to{background-position:0 64px}}
+.orb{position:absolute;width:55vmax;height:55vmax;border-radius:50%;background:radial-gradient(circle,rgba(0,6,255,.55),transparent 65%);filter:blur(20px);z-index:-1;pointer-events:none;animation:drift 14s ease-in-out infinite alternate}
+.orb.a{left:-25vmax;top:-20vmax}.orb.b{right:-28vmax;top:10vmax;animation-delay:-6s}
+@keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+.hero-in{width:100%;max-width:1200px;padding-inline:clamp(0px,9vw,150px);display:flex;flex-direction:column;align-items:center;position:relative;z-index:2}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:500;font-size:13px;border:1.5px solid rgba(255,255,255,.6);border-radius:999px;padding:7px 16px;backdrop-filter:blur(6px);background:rgba(255,255,255,.06)}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 0 rgba(255,255,255,.7);animation:ping 1.8s infinite}
+@keyframes ping{to{box-shadow:0 0 0 10px rgba(255,255,255,0)}}
+.hero h1{font-weight:500;font-size:clamp(28px,min(6.8vw,11vh),112px);line-height:1.04;letter-spacing:-.03em;margin:0 0 clamp(12px,2.6vh,26px);text-wrap:balance}
+.hero h1{line-height:1.2}.ln{display:block}@media(min-width:700px){.ln{white-space:nowrap}}
+.chip{display:inline-block;background:var(--blue);color:#fff;padding:.03em .12em .1em;line-height:.95;transform:rotate(-1deg);outline:2px solid #fff;outline-offset:-2px;margin:.14em .12em 0}
+.chip.alt{transform:rotate(.8deg);background:#fff;color:var(--blue);outline:0}
+.circled{position:relative;display:inline-block;font-style:italic;padding:0 .1em;margin:0 .22em 0 .1em}
+.circled svg{position:absolute;left:-12%;top:-14%;width:124%;height:128%;overflow:visible;pointer-events:none}
+.circled .draw{stroke-width:3.5}
+.hero p.lead{max-width:46ch;font-size:clamp(14px,min(1.6vw,2.6vh),20px);opacity:.92}
+.cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:clamp(14px,3vh,28px)}
+.deco{position:absolute;pointer-events:none;z-index:1;translate:var(--px,0) var(--py,0);transition:translate .4s ease-out}
+.deco svg{width:100%;height:100%;overflow:visible}
+.deco.d1{left:3vw;top:19%;width:clamp(60px,7vw,110px)}.deco.d1 svg{rotate:18deg}.deco.d2{right:2.5vw;top:22%;width:clamp(60px,8vw,130px)}
+.deco.d3{left:3vw;bottom:20%;width:clamp(44px,5.5vw,84px)}
+.deco.d4{right:2vw;bottom:15%;width:clamp(76px,9vw,140px)}
+.deco .spin{animation:spin 16s linear infinite}
+.deco .flt{animation:flt 5s ease-in-out infinite}
+.deco .wig{animation:wig 4s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes flt{50%{transform:translateY(-16px) rotate(8deg)}}
+@keyframes wig{50%{transform:rotate(-12deg) scale(1.08)}}
+.deco .sq{fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round;stroke-dasharray:300;animation:sqd 3.4s ease-in-out infinite}
+@keyframes sqd{0%{stroke-dashoffset:300}50%,70%{stroke-dashoffset:0}100%{stroke-dashoffset:-300}}
+.sticker text{font-weight:500;font-size:15px;fill:#fff;letter-spacing:.14em}
+@media(max-width:899px){.deco{display:none}.hero-in{padding-inline:0}}
+.cue{position:absolute;left:50%;bottom:calc(var(--ov) + 16px);translate:-50% 0;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;opacity:.8}
+.cue i{width:22px;height:36px;border:2px solid #fff;border-radius:99px;position:relative}
+.cue i::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:8px;margin-left:-2px;background:#fff;border-radius:9px;animation:wheel 1.6s infinite}
+@media(max-height:820px){.cue{display:none}}
+@keyframes wheel{0%{transform:translateY(0);opacity:1}100%{transform:translateY(12px);opacity:0}}
+.strip-wrap{padding:clamp(14px,2vw,30px) 0 clamp(22px,3.4vw,46px);margin-top:calc(-1 * (var(--ov) - clamp(10px,1.6vw,24px) + clamp(14px,2vw,30px)));overflow:hidden;--cut:calc(var(--ov) - clamp(10px,1.6vw,24px) + clamp(14px,2vw,30px));background:linear-gradient(to bottom,transparent var(--cut),#fff var(--cut));position:relative;z-index:3}
+.strip{background:var(--blue);transform:rotate(-1.6deg) scale(1.04);border-block:2px solid #fff;overflow:hidden}
+.strip .row{display:flex;width:max-content;animation:slide 26s linear infinite;font-weight:500;font-size:clamp(22px,3.6vw,46px);padding:12px 0;white-space:nowrap}
+.strip .row.rev{animation-direction:reverse;animation-duration:32s;color:transparent;-webkit-text-stroke:1.5px #fff;border-top:2px solid #fff}
+.strip span{padding:0 .5em;display:inline-flex;align-items:center}
+.strip svg{width:.7em;height:.7em;margin-left:1em;fill:#fff;animation:spin 6s linear infinite}
+.strip .rev svg{fill:none;stroke:#fff;stroke-width:1.5}
+@keyframes slide{to{transform:translateX(-50%)}}
+/* about */
+.about{background:#fff;color:var(--ink);--hc:var(--b)}
+.mani{font-weight:500;font-size:clamp(34px,6.6vw,104px);letter-spacing:-.035em;line-height:1.06;max-width:17em}
+.mani{font-weight:300}.mani .w{opacity:.16;font-weight:300;transition:opacity .35s,font-weight .45s}.mani .w.on{opacity:1;font-weight:500}
+.mani .w:not(.pill){display:inline-block}.mani .w:not(.pill)::after{content:attr(data-t);display:block;height:0;overflow:hidden;visibility:hidden;font-weight:500}
+.mani .in{display:inline-block;vertical-align:middle;margin:0 .12em}
+.mani .pill{background:var(--b);color:#fff;font-size:.55em;letter-spacing:-.02em;padding:.2em .7em .26em;border-radius:99px;transform:rotate(-4deg)}
+.mani .ring{width:.85em;height:.85em;animation:spin 14s linear infinite}.mani .mk{width:.8em;height:.8em;fill:var(--b);animation:wig 4s ease-in-out infinite}
+.mani .sq{width:1.5em;height:.55em}.mani .sq path{fill:none;stroke:var(--b);stroke-width:7;stroke-linecap:round}
+.ab-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);margin-top:clamp(48px,7vw,100px);align-items:start}
+.ab-g p{font-size:clamp(16px,1.5vw,19px);max-width:52ch;margin-bottom:14px}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 30px}.facts span{box-shadow:inset 0 0 0 2px var(--ink);border-radius:99px;padding:5px 16px;font-weight:500;font-size:14px}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink);margin-top:clamp(40px,6vw,90px)}
+.nums div{padding:22px 16px 0 0}.nums div[hidden]{display:none}.nums b{display:block;font-size:clamp(54px,9vw,140px);letter-spacing:-.035em;line-height:.9;font-weight:500;color:var(--b)}.nums span{font-weight:500;font-size:15px}
+@media(max-width:860px){.ab-g{grid-template-columns:1fr}}
+/* ============ PRELOADER ============ */
+#pre{position:fixed;inset:0;z-index:300;background:var(--blue);color:#fff;display:grid;grid-template-rows:1fr auto 1fr;justify-items:center;padding:clamp(18px,3vw,36px) var(--pad);overflow:hidden;transition:clip-path .9s var(--ease);clip-path:inset(0 0 0 0)}
+#pre.done{clip-path:inset(0 0 100% 0)}
+#pre::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.22) 1.3px,transparent 1.8px);background-size:26px 26px;-webkit-mask-image:radial-gradient(circle at 50% 50%,#000,transparent 75%);mask-image:radial-gradient(circle at 50% 50%,#000,transparent 75%)}
+.pre-top,.pre-bot{position:relative;z-index:2;width:100%;display:flex;justify-content:space-between;font-weight:500;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+.pre-top{align-self:start;align-items:flex-start}
+.pre-bot{align-self:end;align-items:flex-end;justify-content:center}
+.pre-mq{position:absolute;left:0;right:0;top:50%;translate:0 -50%;display:grid;gap:0;pointer-events:none}
+.pre-row{display:flex;width:max-content;font-weight:500;font-size:clamp(60px,12vw,170px);line-height:1;letter-spacing:-.03em;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.14);white-space:nowrap;animation:slide 22s linear infinite}
+.pre-row.rev{animation-direction:reverse;animation-duration:28s}
+.pre-row span{padding-right:.4em}
+.pre-mid{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,3.2vw,40px)}
+.pre-tag{display:flex;justify-content:center;align-items:flex-start;font-weight:500;font-size:clamp(30px,9vw,150px);line-height:1.1;letter-spacing:-.03em;white-space:nowrap}
+.pw{display:grid;grid-template-columns:0fr;transition:grid-template-columns .7s var(--ease)}
+.pw>span{display:block;min-width:0;overflow:hidden;padding:.06em .02em .16em;opacity:0;transform:translateY(.35em);transition:opacity .45s,transform .7s var(--ease)}
+.pw.open{grid-template-columns:1fr}
+.pw.open>span{opacity:1;transform:none}
+.pre-tag.merged{animation:tagpop .7s var(--ease)}
+@keyframes tagpop{40%{transform:scale(1.05)}}
+#pre-n{font-weight:500;font-size:clamp(44px,9vw,110px);line-height:.8;letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+.pbar{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.2);z-index:3}
+.pbar i{position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left}
+
+body.lock{overflow:hidden}
+/* slides sticky */
+.stack{background:var(--ink)}.sl{position:sticky;top:var(--hh);min-height:calc(100svh - var(--hh));display:flex;border-top:2px solid #fff;background:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(160deg,#0a0c8f,#05060f 75%);overflow:hidden}
+.sl.bl{background:var(--b)}.sl.wh{background:#fff;color:var(--ink);--hc:var(--b)}.sl .wrap{width:100%;display:flex;flex-direction:column;justify-content:space-between;padding-block:24px 40px}
+.sl-bar{font-family:var(--mono);text-transform:uppercase;font-weight:400;display:flex;justify-content:space-between;font-weight:500;font-size:13px;letter-spacing:.04em}.sl-bar span{display:inline-flex;align-items:center;gap:8px}.sl-bar svg{width:20px;height:20px;fill:currentColor}
+.sl h2{font-size:clamp(44px,9.4vw,150px);line-height:1.02;margin:auto 0;padding-block:30px;max-width:12em}
+.sl .sel{--hc:#fff}.sl.wh .sel{--hc:var(--b)}.sl.bl .sel{background:#fff;color:var(--b)}
+.sl-ft{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}.sl-ft p{max-width:44ch;font-size:clamp(16px,1.6vw,21px)}.sl-ft b{font-size:clamp(54px,9vw,130px);letter-spacing:-.035em;line-height:.8;color:transparent;-webkit-text-stroke:2px currentColor}
+.sl .dc{position:absolute;right:5vw;top:24%;width:clamp(70px,12vw,200px);pointer-events:none;animation:flt 6s ease-in-out infinite}.sl .dc *{fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+
+.mono,.lbl{font-family:var(--mono);font-weight:400;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.lbl{display:flex;justify-content:space-between;gap:16px;border-top:1.5px solid currentColor;padding-top:14px;margin-bottom:clamp(28px,4vw,56px)}
+.sp{position:fixed;left:0;top:0;height:3px;width:100%;background:var(--b);transform:scaleX(0);transform-origin:left;z-index:80}
+.cur{position:fixed;left:0;top:0;width:30px;height:30px;margin:-15px 0 0 -15px;border:1.5px solid #fff;border-radius:50%;mix-blend-mode:difference;pointer-events:none;z-index:250;opacity:0;display:none;transition:width .25s,height .25s,margin .25s,background .25s,opacity .3s}
+@media(hover:hover) and (pointer:fine){.cur{display:block}}.cur.show{opacity:1}.cur.big{width:76px;height:76px;margin:-38px 0 0 -38px;background:#fff}
+/* layanan */
+.svc{padding-top:clamp(56px,7vw,100px)}.svc h2{margin-bottom:clamp(32px,5vw,64px)}
+.sv{position:relative;display:grid;grid-template-columns:clamp(44px,7vw,110px) 1fr auto 56px;align-items:center;gap:0 16px;padding:clamp(16px,2.2vw,30px) 0;border-top:1.5px solid var(--ink);overflow:hidden;isolation:isolate;transition:color .35s,padding .45s var(--ease)}.sv:last-child{border-bottom:1.5px solid var(--ink)}
+.sv .fill{position:absolute;inset:0;background:var(--b);transform:translateY(101%);transition:transform .5s var(--ease);z-index:-1}.sv.on .fill{transform:none}.sv.on{color:#fff;padding-inline:20px}
+.sv .n{font-family:var(--mono);font-size:13px}.sv b{font-size:clamp(30px,6.2vw,96px);font-weight:500;letter-spacing:-.035em;line-height:1}
+.sv .tg{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;text-align:right;max-width:24ch}
+.sv .ar{font-size:clamp(24px,3vw,44px);justify-self:end;transition:transform .4s var(--ease)}.sv.on .ar{transform:rotate(45deg)}
+.sv p{grid-column:2/4;max-height:0;opacity:0;overflow:hidden;transition:max-height .5s var(--ease),opacity .4s;max-width:50ch}.sv.on p{max-height:280px;opacity:1;margin-top:10px}
+@media(max-width:700px){.sv{grid-template-columns:34px 1fr 30px}.sv .tg{display:none}.sv p{grid-column:2/4}}
+#peek{position:fixed;left:0;top:0;pointer-events:none;z-index:40}
+.pk{position:absolute;left:0;top:0;width:clamp(150px,14vw,220px);aspect-ratio:4/5;border:3px solid #fff;background:#0a0c8f;box-shadow:7px 7px 0 var(--ink);opacity:0;scale:.2;transition:opacity .25s,scale .55s var(--ease)}
+#peek.show .pk{opacity:1;scale:1;transition-delay:calc(var(--i)*60ms)}.pk img{width:100%;height:100%;object-fit:cover;object-position:top}
+.pk b{position:absolute;left:-3px;bottom:12px;max-width:92%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;background:var(--b);color:#fff;font-size:11px;padding:3px 9px 4px;border:2px solid #fff}
+.th{display:none}@media(hover:none){.sv .th{display:flex;gap:8px;margin-top:12px}.th img{width:30%;aspect-ratio:4/5;object-fit:cover;border:2px solid #fff;transform:rotate(var(--r))}}
+/* karya: horizontal pin */
+.works{padding-bottom:0}.works .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:30px}
+.filters{display:flex;gap:6px;flex-wrap:wrap}.filters button{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:9px 13px;border:1px solid #fff;transition:background .2s,color .2s}.filters button[aria-pressed=true]{background:#fff;color:var(--b)}
+.hs-pin{position:relative}.hs-track{display:flex;gap:clamp(20px,3vw,48px);padding:0 var(--pad);width:max-content;will-change:transform}
+.hs.h .hs-pin{position:sticky;top:var(--hh);height:calc(100svh - var(--hh));overflow:hidden;display:flex;align-items:center}
+.hs:not(.h) .hs-pin{overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px}.hs:not(.h) .wk{scroll-snap-align:start}.hs:not(.h) .fr{height:auto;width:72vw;max-width:340px}
+.wk{flex:none;display:flex;flex-direction:column}
+.fr{position:relative;overflow:hidden;background:#0a0c8f;height:min(58svh,540px);aspect-ratio:4/5;clip-path:inset(0 0 100% 0);transition:clip-path .9s var(--ease);transform:skewX(var(--sk,0deg))}.wk.in .fr{clip-path:inset(0)}
+.fr img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .8s var(--ease)}.wk:hover img{transform:scale(1.07)}
+.fr .ix{position:absolute;left:12px;top:10px;font-family:var(--mono);font-size:12px;mix-blend-mode:difference;color:#fff;z-index:2}
+.fr .vw{position:absolute;right:12px;bottom:12px;width:64px;height:64px;border-radius:50%;background:#fff;color:var(--b);display:grid;place-items:center;font-family:var(--mono);font-size:11px;font-weight:400;scale:0;transition:scale .4s var(--ease)}.wk:hover .vw{scale:1}
+.ct{width:0;min-width:100%;display:flex;justify-content:space-between;gap:12px;align-items:baseline;margin-top:12px}.ct b{font-size:clamp(16px,1.5vw,22px);letter-spacing:-.03em;line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ct span{flex:none;opacity:.8;max-width:50%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wk.sk .fr{background:linear-gradient(100deg,#0a0c8f 30%,#2a2fff 50%,#0a0c8f 70%) 0 0/250% 100%;animation:shim 1.3s linear infinite}@keyframes shim{to{background-position:-150% 0}}
+.hs-ui{display:none;position:absolute;left:var(--pad);right:var(--pad);bottom:16px;align-items:center;gap:18px}.hs.h .hs-ui{display:flex}.hs-ui i{flex:1;height:2px;background:rgba(255,255,255,.3)}.hs-ui b{display:block;height:100%;width:0;background:#fff}
+.msg{padding:40px var(--pad);font-weight:500}.more{padding:28px var(--pad) 70px;display:flex}
+/* proses: pinned scramble */
+.px{height:340svh;background:var(--ink);position:relative}
+.px-pin{position:sticky;top:var(--hh);height:calc(100svh - var(--hh));overflow:hidden;display:grid;grid-template-rows:auto 1fr auto;padding:20px var(--pad) 28px;background:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px) 0 0/48px 48px}
+.px-bar{display:flex;justify-content:space-between;position:relative;z-index:2}
+.px-st{position:relative;display:grid;place-items:center}
+.px-ring{position:absolute;left:50%;top:50%;translate:-50% -50%;border:1.5px dashed rgba(255,255,255,.3);border-radius:50%;rotate:var(--rot,0deg)}.px-ring:nth-child(1){width:min(58vmin,520px);height:min(58vmin,520px)}.px-ring:nth-child(2){width:min(86vmin,760px);height:min(86vmin,760px);rotate:calc(var(--rot,0deg)*-1);border-style:solid;border-color:rgba(255,255,255,.14)}.px-ring:nth-child(3){width:min(118vmin,1050px);height:min(118vmin,1050px)}
+.px-ring::after{content:"";position:absolute;left:50%;top:-6px;width:12px;height:12px;margin-left:-6px;background:var(--b);box-shadow:0 0 0 2px #fff}
+.px-word{position:relative;z-index:2;font-weight:500;font-size:clamp(72px,21vw,340px);letter-spacing:-.035em;line-height:.9;color:transparent;-webkit-text-stroke:2px #fff;background:linear-gradient(#fff,#fff) 0 100%/100% calc(var(--fill,0)*1%) no-repeat;-webkit-background-clip:text;background-clip:text;padding:.05em .04em .12em}
+.px-rail{position:absolute;left:0;top:50%;translate:0 -50%;display:grid;gap:12px;z-index:2}.px-rail span{opacity:.35;transition:opacity .3s}.px-rail span.on{opacity:1}.px-rail span.on::before{content:"";display:inline-block;width:10px;height:10px;background:var(--b);box-shadow:0 0 0 2px #fff;margin-right:8px}
+.px-info{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;position:relative;z-index:2}.px-info p{max-width:42ch;font-size:clamp(16px,1.7vw,22px)}.px-info .o{background:var(--b);padding:8px 16px;box-shadow:0 0 0 2px #fff}
+@media(max-width:700px){.px-rail{display:none}}
+/* partner */
+.pt{background:var(--ink);padding:clamp(56px,7vw,100px) 0 clamp(72px,9vw,120px);overflow:hidden}.pt h3{font-size:clamp(28px,4.6vw,64px);letter-spacing:-.035em;margin-bottom:34px}
+.pt-row{border-block:1px solid rgba(255,255,255,.25);overflow:hidden}#ptr{display:flex;width:max-content;animation:sl 40s linear infinite}#ptr img{height:44px;width:auto;box-sizing:content-box;padding:30px 48px;border-right:1px solid rgba(255,255,255,.25);filter:brightness(0) invert(1);opacity:.75;transition:opacity .3s}#ptr img:hover{opacity:1}
+@keyframes sl{to{transform:translateX(-50%)}}
+/* footer */
+footer{background:var(--b);padding:clamp(72px,10vw,130px) 0 28px;overflow:hidden}
+footer h2{font-size:clamp(48px,10vw,160px);margin:28px 0 36px}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;margin:64px 0 40px;font-size:15px}.info b{display:block;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.giant{font-weight:500;font-size:clamp(90px,26vw,420px);letter-spacing:-.035em;line-height:.8;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.7);margin:0 -1vw;white-space:nowrap;background:linear-gradient(#fff,#fff) 0 100%/100% 0 no-repeat;-webkit-background-clip:text;background-clip:text;transition:background-size .9s var(--ease)}.giant:hover{background-size:100% 100%}
+.bot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;font-weight:500;margin-top:30px}.bot button{font-weight:500}
+
+.blue.works{background:radial-gradient(120% 70% at 50% 108%,var(--blue) 0%,#00007a 42%,#000 80%)}
+.fr{border:2px solid #fff}
+.px{--hc:#fff}.px-pin{background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#00007a 38%,#000 76%)}
+.px-floor{position:absolute;left:-10%;right:-10%;bottom:0;height:46%;perspective:420px;opacity:.5;pointer-events:none}.px-floor::before{content:"";position:absolute;inset:0;transform:rotateX(62deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:64px 64px;animation:run 3s linear infinite}
+.px-word{color:#fff;-webkit-text-stroke:0;background:var(--b);-webkit-background-clip:border-box;background-clip:border-box;font-size:clamp(64px,18vw,290px);letter-spacing:-.04em;padding:.04em .14em .14em;transform:rotate(-2deg)}
+.pxd{position:absolute;z-index:1;width:clamp(56px,9vw,130px);fill:var(--b);stroke:#fff;stroke-width:2;stroke-linejoin:round;opacity:.22;scale:.8;transition:opacity .4s,scale .5s var(--ease);animation:flt 5s ease-in-out infinite}
+.pxd.a{left:14%;top:14%}.pxd.b{right:12%;top:20%}.pxd.c{right:22%;bottom:12%}
+.px[data-i="0"] .pxd.a,.px[data-i="1"] .pxd.b,.px[data-i="2"] .pxd.c{opacity:1;scale:1.2}
+@media(max-width:700px){.pxd{display:none}}
+.sl .wrap{padding-block:56px}
+.sl::before{content:"";position:absolute;inset:14px;pointer-events:none;z-index:2;--c:linear-gradient(currentColor,currentColor);background:var(--c) 0 0/10px 10px,var(--c) 100% 0/10px 10px,var(--c) 0 100%/10px 10px,var(--c) 100% 100%/10px 10px;background-repeat:no-repeat}
+.vt{position:absolute;top:50%;z-index:2;font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.16em;text-transform:uppercase;writing-mode:vertical-rl}.vt.l{left:16px;transform:translateY(-50%) rotate(180deg)}.vt.r{right:16px;translate:0 -50%}
+@media(max-width:700px){.vt.l{display:none}.vt{font-size:10px;right:8px}}
+/* hierarchy + boundaries, no text strokes */
+.sel{padding:.04em .14em .1em;margin:0 .04em}
+.sh{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px 64px;align-items:end;margin-bottom:clamp(32px,4.5vw,64px)}.sh h2{margin:0}.sh .intro{max-width:46ch;font-size:clamp(15px,1.3vw,18px);opacity:.85}
+@media(max-width:820px){.sh{grid-template-columns:1fr}}
+.lbl{border-top-width:2px}
+.svc{padding-top:clamp(72px,10vw,140px)}.works .filters{margin-bottom:34px}
+.vh{background:var(--ink);color:#fff;--hc:#fff;padding-bottom:clamp(40px,5vw,72px)}
+.sl h2{font-size:clamp(40px,8.4vw,128px);max-width:none}
+.sl-ft b{color:currentColor;opacity:.22;-webkit-text-stroke:0}
+.strip .row.rev{color:rgba(255,255,255,.6);-webkit-text-stroke:0}
+.pre-row{color:rgba(255,255,255,.1);-webkit-text-stroke:0}
+.giant{color:rgba(255,255,255,.14);-webkit-text-stroke:0;background:none;transition:color .6s}.giant:hover{color:#fff}
+footer h2{font-size:clamp(40px,7vw,112px)}
+.px{border-top:2px solid #fff}
+.pt{background:#fff;color:var(--ink);--hc:var(--b)}.pt-row{border-block-color:rgba(5,6,15,.2)}#ptr img{filter:brightness(0);border-right-color:rgba(5,6,15,.2)}
+/* footer: creative agency */
+footer{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#00007a 38%,#000 76%);--hc:#fff;padding:clamp(72px,10vw,140px) 0 28px}
+.ft-floor{position:absolute;left:-10%;right:-10%;bottom:0;height:42%;perspective:420px;opacity:.4;pointer-events:none;z-index:-1}.ft-floor::before{content:"";position:absolute;inset:0;transform:rotateX(62deg);transform-origin:bottom;background-image:linear-gradient(rgba(255,255,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.35) 1px,transparent 1px);background-size:64px 64px;animation:run 3s linear infinite}
+.ft-cta{display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;margin-bottom:clamp(56px,8vw,110px)}
+.ft-h{display:block}.ft-h h2{font-size:clamp(44px,9.5vw,150px);line-height:1.02;margin:0}.ft-cta .intro{max-width:44ch;margin-top:28px;font-size:clamp(15px,1.3vw,18px);opacity:.85}
+.ft-stk{position:relative;flex:none;width:clamp(130px,15vw,210px);aspect-ratio:1;transition:translate .25s ease-out,scale .4s var(--ease)}.ft-stk:hover{scale:1.08}
+.ft-stk .rg{width:100%;height:100%;animation:spin 14s linear infinite}.ft-stk text{font-weight:500;font-size:15px;letter-spacing:.14em;fill:var(--b)}
+.ft-stk .go{position:absolute;left:50%;top:50%;width:34%;height:34%;margin:-17% 0 0 -17%;transition:transform .4s var(--ease)}.ft-stk:hover .go{transform:rotate(45deg)}
+.ft-grid{display:grid;grid-template-columns:1.4fr 1fr .8fr 1.2fr;gap:36px 40px;border-top:2px solid #fff;padding-top:28px}
+.ft-c b{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;opacity:.7}
+.ft-c p,.ft-c a{display:block;font-size:clamp(15px,1.3vw,18px);line-height:1.5;margin-bottom:8px;max-width:30ch}.ft-c .ft-t{font-family:var(--mono);font-size:14px;opacity:.8}
+.ft-c a{width:fit-content;background:linear-gradient(#fff,#fff) 0 100%/0 2px no-repeat;transition:background-size .4s var(--ease),translate .3s var(--ease)}.ft-c a:hover{background-size:100% 2px;translate:6px 0}
+@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.ft-grid{grid-template-columns:1fr}.ft-cta{align-items:flex-start}}
+.ft-logo{margin:clamp(56px,8vw,110px) auto 0}.ft-logo .klogo{width:100%;height:auto;margin:0;--mk:#fff;--txt:#fff}
+.bot{border-top:2px solid #fff;padding-top:20px;align-items:center;margin-top:28px}.bot button{border:1.5px solid #fff;border-radius:99px;padding:8px 16px;transition:background .3s,color .3s}.bot button:hover{background:#fff;color:var(--b)}
+/* round 7: calmer, tighter, responsive */
+section{padding:clamp(48px,6vw,88px) 0}.svc{padding-top:clamp(48px,6vw,88px)}
+.sh{margin-bottom:clamp(24px,3vw,44px)}.more{padding:20px var(--pad) 48px}
+.cur,.sp{display:none!important}
+.px{height:270svh}.px-bar,.px-rail{display:none}
+.px-word.pop{animation:pop .5s var(--ease)}@keyframes pop{from{transform:rotate(-2deg) translateY(.12em) scale(.94);opacity:.2}to{transform:rotate(-2deg);opacity:1}}
+.pt{padding:clamp(48px,6vw,88px) 0}footer{padding-top:clamp(56px,7vw,100px)}
+.ft-cta{margin-bottom:clamp(36px,5vw,64px)}.ft-logo{margin-top:clamp(36px,5vw,64px)}.ft-logo .klogo{width:clamp(180px,26vw,360px)}
+.bot{margin-top:24px}
+/* values */
+.vals{background:var(--b);color:#fff}
+.vgrid{display:grid;grid-template-columns:repeat(2,1fr);border-top:2px solid #fff;border-left:2px solid #fff}
+.vc{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;min-height:clamp(220px,24vw,320px);padding:clamp(22px,3vw,44px);border-right:2px solid #fff;border-bottom:2px solid #fff;overflow:hidden;isolation:isolate;transition:color .4s}
+.vc::before{content:"";position:absolute;inset:0;background:#fff;transform:translateY(101%);transition:transform .5s var(--ease);z-index:-1}.vc:hover::before{transform:none}.vc:hover{color:var(--b)}
+.vd{position:absolute;left:clamp(22px,3vw,44px);top:clamp(22px,3vw,40px);width:clamp(44px,5.5vw,80px);fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.vc h3{font-size:clamp(30px,4vw,56px);letter-spacing:-.03em}.vc p{max-width:40ch;font-size:clamp(15px,1.3vw,18px)}
+@media(max-width:700px){.vgrid{grid-template-columns:1fr}.vc{min-height:200px}}
+/* works 16:9 */
+.fr{height:auto;aspect-ratio:16/9;width:min(60vw,calc((100svh - var(--hh) - 190px)*1.7778));min-width:300px}.fr .ix{display:none}
+.hs:not(.h) .fr{width:82vw;max-width:460px;min-width:0}
+.hs-ui span{display:none}
+.pk{width:clamp(190px,17vw,270px);aspect-ratio:16/9}.sv .th img{aspect-ratio:16/9;width:32%}
+@media(max-width:899px){.hero h1{font-size:clamp(28px,min(6.2vw,10vh),112px)}}
+/* works on mobile */
+@media(max-width:820px){
+.hs:not(.h) .hs-pin{scroll-padding-inline:var(--pad);padding-bottom:14px;scrollbar-width:none}.hs:not(.h) .hs-pin::-webkit-scrollbar{display:none}
+.hs:not(.h) .hs-track{gap:14px}.hs:not(.h) .fr{width:84vw;max-width:520px}
+.works .filters{flex-wrap:nowrap;overflow-x:auto;margin-inline:calc(var(--pad)*-1);padding:0 var(--pad) 4px;margin-bottom:22px;scrollbar-width:none}.works .filters::-webkit-scrollbar{display:none}
+.filters button{flex:none;border-radius:99px;padding:8px 14px;font-size:11px}
+.ct{margin-top:10px}.ct b{font-size:16px}.ct span{font-size:11px}
 }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        body { font-family: 'Ubuntu', sans-serif; }
-        
-        /* --- OPTIMIZED INFINITY SCROLL CSS --- */
-        .marquee-track {
-            display: flex;
-            width: max-content;
-            /* SPEED ADJUSTED: 30s karena item lebih banyak (jalur lebih panjang) */
-            animation: scroll 8s linear infinite; 
-            will-change: transform; 
-        }
+@media(prefers-reduced-motion:reduce){.fr{clip-path:none!important}.draw{stroke-dashoffset:0!important}.klogo .mk{transform:none}.klogo .L{opacity:1;transform:none}*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* ================= V2 STYLE: editorial serif + glow pills + section labels ================= */
+:root{--serif:'Instrument Serif',Georgia,serif;--sans:'Inter Tight',system-ui,sans-serif;--mono:'Inter Tight',system-ui,sans-serif}
+body{font-family:var(--sans);font-weight:300;letter-spacing:-.005em}
+h1,h2,h3{font-weight:400;letter-spacing:-.04em;line-height:1.04}
+h2{font-size:clamp(36px,5.2vw,84px)}
+.mono,.lbl{font-weight:400;letter-spacing:.1em}
 
-        @keyframes scroll {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-50%, 0, 0); }
-        }
+/* highlighted word = italic serif (no more blue boxes) */
+.sel,.sel.inv{background:none;color:inherit;padding:0;margin:0;font-family:var(--serif);font-style:italic;font-weight:300;font-size:1.14em;letter-spacing:-.02em}
+.light .sel,.about .sel{color:var(--b)}
+.blue .sel,footer .sel{color:#fff}
 
-        .marquee-container:hover .marquee-track {
-            animation-play-state: paused;
-        }
+/* section label with line */
+.stitle{display:flex;align-items:center;gap:20px;font-size:12px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;margin-bottom:clamp(24px,3vw,44px)}
+.stitle i{flex:1;height:1px;background:currentColor;opacity:.35}
+.stitle span::before{content:"•";margin-right:10px}
+.sh{align-items:end}
+.sh .intro{font-size:clamp(15px,1.25vw,18px);opacity:.75;max-width:44ch}
 
-        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
-        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        
-        /* Menu Animation */
-        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .menu-open { overflow: hidden; }
+/* header */
+header{background:rgba(5,6,15,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
+header .klogo{--txt:#fff}header :focus-visible{outline-color:#fff}
+nav{font-weight:400;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+nav a:not(.btn):hover{color:#fff;opacity:.65}
+nav .btn{padding:9px 18px;font-size:12px;letter-spacing:.12em}
+.burger i{background:#fff}
+@media(max-width:820px){nav{background:var(--ink);font-size:26px;letter-spacing:-.02em;text-transform:none;border-bottom:1px solid rgba(255,255,255,.12)}nav .btn{font-size:14px}}
 
-        /* Fade Up Animation */
-        .fade-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; transform: translateY(20px); }
-        .delay-100 { animation-delay: 0.1s; }
-        .delay-200 { animation-delay: 0.2s; }
-        .delay-300 { animation-delay: 0.3s; }
-        
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+/* buttons: pill outline with travelling glow border */
+.btn{--bg:transparent;--fg:#fff;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3);overflow:visible;font-weight:400;letter-spacing:.02em;padding:13px 24px}
+.btn::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;transform:none;z-index:-1;opacity:.85;
+  background:linear-gradient(160deg,transparent 0%,#fff 15%,#7a7dff 20%,transparent 35%,transparent 40%,#fff 55%,#7a7dff 60%,transparent 75%,transparent 80%,#fff 95%,#7a7dff 100%);background-size:300% 300%;animation:glow 3s linear infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+@keyframes glow{0%{background-position:15% 15%}100%{background-position:75% 75%}}
+.btn:hover::before,.btn:focus-visible::before{transform:none;border-radius:inherit;opacity:1}
+.btn:hover,.btn:focus-visible{background:rgba(255,255,255,.1);color:#fff}
+.btn.w,.btn.ghost{--bg:transparent;--fg:#fff;background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.btn.w:hover,.btn.ghost:hover{color:#fff;background:rgba(255,255,255,.1)}
+.light .btn,.about .btn{color:var(--ink);border-color:rgba(5,6,15,.35)}
+.light .btn::before,.about .btn::before{background:linear-gradient(160deg,transparent 0%,var(--b) 15%,#7a7dff 20%,transparent 35%,transparent 40%,var(--b) 55%,#7a7dff 60%,transparent 75%,transparent 80%,var(--b) 95%);background-size:300% 300%}
+.light .btn:hover,.about .btn:hover{color:var(--ink);background:rgba(0,6,255,.06)}
 
-        /* FAQ Accordion Transition */
-        details > summary { list-style: none; }
-        details > summary::-webkit-details-marker { display: none; }
-        details[open] summary ~ * { animation: sweep .3s ease-in-out; }
-        @keyframes sweep { 0% {opacity: 0; transform: translateY(-10px)} 100% {opacity: 1; transform: translateY(0)} }
+/* hero */
+.hero{background:radial-gradient(95% 60% at 50% 112%,rgba(0,6,255,.6) 0%,rgba(0,6,122,.38) 40%,var(--ink) 78%);align-items:stretch;justify-content:flex-end;text-align:left;gap:clamp(18px,3.5vh,40px)}
+.floor,.orb,.deco,.cue{display:none}
+.hero-top{position:absolute;left:var(--pad);right:var(--pad);top:calc(var(--hh) + 22px);display:flex;justify-content:space-between;gap:16px;font-size:12px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;opacity:.8;z-index:2}
+.hero-top b{font-weight:400;font-variant-numeric:tabular-nums}
+.hp{position:relative;width:100%;z-index:1}.hp canvas{display:block;width:100%}
+.hero-in{max-width:none;padding:0;width:100%;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px clamp(24px,5vw,80px);align-items:end}
+.hero h1{grid-column:1/-1;font-size:clamp(28px,4.6vw,76px);line-height:1.08;margin:0;font-weight:400}
+.hero h1 .it{font-family:var(--serif);font-style:italic;font-weight:300;font-size:1.12em;letter-spacing:-.02em}
+.ln{display:block}
+.hero p.lead{grid-column:1;max-width:50ch;font-size:clamp(14px,1.2vw,17px);opacity:.72;margin:0}
+.hero .cta{grid-column:2;justify-content:flex-end;margin:0}
+@media(max-width:820px){.hero-in{grid-template-columns:1fr}.hero .cta{grid-column:1;justify-content:flex-start}.hero-top span:last-child{display:none}}
 
-        /* Featured Works Card Animation */
-        @keyframes featuredCardIn { to { opacity: 1; transform: translateY(0); } }
+/* strip */
+.strip{transform:none;border-block:0}
+.strip .row{font-weight:400;font-size:clamp(18px,2.4vw,30px);letter-spacing:-.02em;padding:16px 0}
+.strip svg{width:.6em;height:.6em}
 
-        /* Featured card image lift-on-hover */
-        /* ══════════════════════════════════════════════════
-           FIX: pisahkan transform (hover lift+rotate) dari
-           elemen yang punya border-radius + overflow:hidden,
-           dan kasih elemen radius-nya compositing layer sendiri.
-           Kalau transform + rounded-clip nempel di elemen yang
-           sama, browser (Chrome/WebKit) bisa "squash" layer-nya
-           pas hover berkali-kali, dan rounded-clip-nya sempat
-           di-rasterize ulang salah sehingga sudut jadi lancip
-           sesaat.
-        ══════════════════════════════════════════════════ */
-        .lift-card-wrap {
-            transform-origin: bottom left;
-            transition: transform .4s cubic-bezier(.23,1,.32,1);
-            will-change: transform;
-        }
-        .group:hover .lift-card-wrap {
-            transform: translateY(-10px) rotate(-1.5deg);
-        }
-        .lift-card {
-            transition: box-shadow .4s ease, border-color .4s ease;
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            isolation: isolate;
-            /* FIX 3: clip-path sebagai jalur clipping UTAMA, terpisah dari
-               overflow:hidden. clip-path dirender lewat pipeline compositing
-               yang beda di Chromium (bukan lewat rounded-rect-clip-cache
-               yang suka salah rasterize itu), jadi walau layer-nya sempat
-               di-squash lagi pas hover berkali-kali, sudutnya tetap rounded. */
-            clip-path: inset(0 round 1.5rem);
-            -webkit-clip-path: inset(0 round 1.5rem);
-        }
-        .group:hover .lift-card {
-            box-shadow: 0 30px 40px -20px rgba(0,6,255,.25);
-        }
+/* about */
+.mani{font-family:var(--sans);font-weight:300;font-size:clamp(30px,5vw,76px);letter-spacing:-.04em;line-height:1.1}
+.mani .w.on{font-weight:300}
+.mani .w:not(.pill)::after{display:none}
+.mani .pill{background:none;color:var(--b);font-family:var(--serif);font-style:italic;font-size:1.12em;letter-spacing:-.02em;padding:0;transform:none;border-radius:0}
+.nums{border-top:1px solid rgba(5,6,15,.25)}
+.nums b{font-family:var(--serif);font-style:italic;font-weight:300;letter-spacing:-.03em}
+.facts span{box-shadow:inset 0 0 0 1px rgba(5,6,15,.5);font-weight:400}
 
-        /* Showcase iframe (sama seperti works.html) */
-        #showcase-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-            display: block;
-        }
-        #iframe-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            transition: all 0.5s ease;
-        }
-    </style>
-    <!-- FAQ Schema Markup -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "Gimana caranya kalau mau mulai kerjasama dengan Kancah?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Gampang banget! Klik tombol 'Talk' di kanan atas atau langsung WA aja. Kita mulai dari ngobrol santai tentang brand kamu."
-        }
-      }, {
-        "@type": "Question",
-        "name": "Apa sih yang jadi spesialisasi atau keunggulan utama Kancah?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Kancah fokus di lima layanan utama: Brand Design, Promotion Design, Tech Development, Social Media Management, dan Audio Visual. Kita mulai dari riset, terus bangun solusi yang simpel, mudah dipake, dan cocok banget buat bisnis kamu."
-        }
-      }]
-    }
-    </script>
-    <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Organization",
-  "name":"Kancah Creative",
-  "url":"https://kancah.com",
-  "logo":"https://kancah.com/assets/kancah-logo.png",
-  "email":"kancahcreative@gmail.com",
-  "telephone":"+6289524687866",
-  "address":{
-    "@type":"PostalAddress",
-    "streetAddress":"Jalan Anggajaya 2, Condongcatur",
-    "addressLocality":"Sleman",
-    "addressRegion":"Yogyakarta",
-    "postalCode":"55281",
-    "addressCountry":"ID"
-  }
+/* values */
+.vgrid{border-top:1px solid rgba(255,255,255,.4);border-left:1px solid rgba(255,255,255,.4)}
+.vc{border-right:1px solid rgba(255,255,255,.4);border-bottom:1px solid rgba(255,255,255,.4)}
+.vc h3{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(38px,4.8vw,70px);letter-spacing:-.02em}
+.vd{stroke-width:2.5}
+
+/* services */
+.sv{border-top:1px solid rgba(5,6,15,.25)}.sv:last-child{border-bottom:1px solid rgba(5,6,15,.25)}
+.sv b{font-weight:400;letter-spacing:-.045em}
+.sv .n{font-family:var(--serif);font-style:italic;font-size:22px}
+.sv .tg{letter-spacing:.1em}
+.pk{border-width:1px;border-radius:6px;box-shadow:none}.pk img{border-radius:5px}.pk b{border-width:1px;border-radius:99px;left:10px}
+
+/* works */
+.fr{border:0;border-radius:6px}
+.fr .vw{display:none}
+.ct b{font-weight:400}
+.ct span{border:1px solid rgba(255,255,255,.4);border-radius:99px;padding:3px 11px;font-size:11px;letter-spacing:.08em;opacity:.9}
+.filters button{border-radius:99px;border-color:rgba(255,255,255,.4);padding:8px 15px;letter-spacing:.08em}
+.hs-ui i{height:1px}
+
+/* process */
+.px{border-top:0}
+.px-word.sel{background:none;color:#fff;transform:none;font-family:var(--serif);font-style:italic;font-weight:300;letter-spacing:-.03em;font-size:clamp(90px,24vw,380px);line-height:.9;padding:0 .06em .1em}
+.px-word.pop{animation:pop2 .6s var(--ease)}
+@keyframes pop2{from{transform:translateY(.12em);opacity:0}to{transform:none;opacity:1}}
+.pxd,.px-floor,.px-ring{display:none}
+.px-info p{opacity:.8}
+.px-info .o{background:none;box-shadow:none;border:1px solid rgba(255,255,255,.4);border-radius:99px;padding:8px 18px}
+
+/* partners */
+#ptr img{padding:30px 52px}
+
+/* footer: soft floating blobs */
+.ft-floor{display:none}
+footer::before,footer::after{content:"";position:absolute;border-radius:50%;filter:blur(100px);z-index:-1;pointer-events:none}
+footer::before{width:700px;height:700px;background:#7a7dff;opacity:.35;left:-200px;bottom:-260px;animation:fb1 4s ease-in-out infinite}
+footer::after{width:800px;height:800px;background:#00007a;opacity:.55;right:-220px;bottom:-280px;animation:fb2 5s ease-in-out infinite}
+@keyframes fb1{0%,100%{transform:translate(0,0) scale(.9)}50%{transform:translate(0,-30%) scale(1.25)}}
+@keyframes fb2{0%,100%{transform:translate(0,-20%) scale(1.2)}50%{transform:translate(0,5%) scale(.85)}}
+.ft-grid{border-top:1px solid rgba(255,255,255,.4)}
+.ft-c b{letter-spacing:.12em}
+.bot{border-top:1px solid rgba(255,255,255,.4)}
+.bot button{border-width:1px;font-weight:400}
+.ft-h h2{font-weight:400}
+
+/* cursor label */
+.vcur{position:fixed;left:0;top:0;pointer-events:none;z-index:260;background:rgba(5,6,15,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.18);padding:8px 16px;border-radius:4px;font-size:12px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:#fff;opacity:0;transition:opacity .3s;white-space:nowrap;display:none;align-items:center;gap:8px}
+.vcur::before{content:"•";font-size:16px;line-height:1}
+@media(hover:hover) and (pointer:fine){.vcur{display:flex}}
+
+/* ================= V3 ================= */
+:root{--sans:'Ubuntu',system-ui,sans-serif;--mono:'Ubuntu',system-ui,sans-serif}
+h1,h2,h3{letter-spacing:-.03em}
+.mani{letter-spacing:-.03em}
+.sv b{letter-spacing:-.03em}
+
+/* ---- Values: clean card grid ---- */
+.vals .vgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;border:0;height:auto;counter-reset:v}
+.vals .vc{counter-increment:v;position:relative;display:flex;flex-direction:column;justify-content:flex-start;gap:0;min-height:clamp(300px,26vw,380px);padding:clamp(22px,2.2vw,32px);background:linear-gradient(180deg,#000 0%,#00001f 30%,#0003a8 70%,#0006ff 100%);color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:20px;overflow:hidden;cursor:default;transition:background .35s,color .35s,transform .45s var(--ease),border-color .35s}
+.vals .vc::before{display:none}
+.vals .vc::after{content:"0" counter(v);position:absolute;right:clamp(22px,2.2vw,32px);top:clamp(26px,2.4vw,36px);font-family:var(--serif);font-style:italic;font-size:22px;opacity:.7}
+.vals .vc:hover{border-color:#fff;transform:translateY(-6px);box-shadow:0 22px 50px rgba(0,6,255,.45)}
+.vals .vd{position:static;width:56px;height:56px;padding:15px;box-sizing:border-box;border:1px solid currentColor;border-radius:50%;fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.vals .vc h3{margin-top:auto;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(28px,2.6vw,40px);letter-spacing:-.02em;line-height:1.05}
+.vals .vc p{max-width:none;margin-top:12px;font-size:clamp(14px,1.1vw,16px);line-height:1.5;opacity:.85}
+@media(max-width:1100px){.vals .vgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.vals .vc{min-height:260px}}
+@media(max-width:600px){.vals .vgrid{grid-template-columns:1fr}.vals .vc{min-height:230px}}
+
+/* ---- About: stats di kanan teks (desktop) ---- */
+.ab-g .ab-t .btn{margin-top:18px}
+@media(min-width:861px){
+ .ab-g{align-items:center}
+ .ab-g .nums{grid-template-columns:1fr;margin-top:0;border-top:1px solid rgba(5,6,15,.25)}
+ .ab-g .nums div{display:flex;align-items:baseline;justify-content:flex-start;gap:20px;padding:16px 0;border-bottom:1px solid rgba(5,6,15,.25)}
+ .ab-g .nums b{line-height:1}
+ .ab-g .nums div[hidden]{display:none}
+ .ab-g .nums b{font-size:clamp(44px,5vw,76px)}
+ .ab-g .nums span{font-size:clamp(15px,1.3vw,18px);text-align:left;line-height:1}
 }
-</script>
+
+/* tombol Lihat Semua Karya di tengah */
+.more{justify-content:center}
+
+/* ---- Works: vertical grid ---- */
+.hs-ui{display:none!important}
+.hs .hs-pin{position:relative!important;top:auto!important;height:auto!important;overflow:visible!important;display:block!important;scroll-snap-type:none!important;padding:0 var(--pad)!important;max-width:1440px;margin:0 auto}
+.hs .hs-track{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,3vw,48px) clamp(16px,2vw,32px);width:auto!important;padding:0!important;transform:none!important}
+.hs .wk{min-width:0}
+.hs .fr,.hs:not(.h) .fr{width:100%!important;max-width:none!important;min-width:0!important;aspect-ratio:16/10;height:auto;border-radius:14px}
+.hs .ct{width:auto;min-width:0;margin-top:14px}
+.hs .msg{grid-column:1/-1;padding:40px 0}
+.hs .fr::after{content:"\2197";position:absolute;right:14px;top:14px;width:42px;height:42px;border-radius:50%;background:#fff;color:var(--b);display:grid;place-items:center;font-size:18px;scale:0;transition:scale .4s var(--ease);z-index:2}
+.hs .wk:hover .fr::after{scale:1}
+.hs .wk:hover .fr{outline:2px solid #fff;outline-offset:4px}
+@media(max-width:1000px){.hs .hs-track{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.hs .hs-track{grid-template-columns:1fr}}
+.more{max-width:1440px;margin:0 auto}
+
+/* ---- Process: lower word, no black gaps ---- */
+.px{padding:0}
+.px-word.sel{margin-top:clamp(48px,14vh,160px)}
+
+
+
+/* ---- fix v4 ---- */
+/* garis gelap di bawah card values: gradient ke-repeat di area border */
+.vals .vc{background-origin:border-box;background-clip:border-box;background-repeat:no-repeat}
+/* partner baris 2: geser ke kanan */
+#ptr2{display:flex;width:max-content;animation:sl2 46s linear infinite;border-top:1px solid rgba(5,6,15,.2)}
+#ptr2 img{height:44px;width:auto;box-sizing:content-box;padding:30px 52px;border-right:1px solid rgba(5,6,15,.2);filter:brightness(0);opacity:.75;transition:opacity .3s}
+#ptr2 img:hover{opacity:1}
+@keyframes sl2{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+/* hierarki ketebalan: judul > subjudul > label > isi */
+h1,h2{font-weight:700}
+h3,.sv b,.ct b,.ft-c b{font-weight:500}
+.mani,.mani .w,.mani .w.on{font-weight:500}
+.mani .pill{font-weight:400}
+.nums span,.stitle,nav,.btn{font-weight:500}
+.sel,.sel.inv{font-weight:400}
+
+/* serif ikut tebal: Instrument Serif hanya punya 1 weight, jadi ditebalkan dengan stroke mengikuti weight sans */
+.hero h1 .it,h1 .sel,h2 .sel{-webkit-text-stroke:.03em currentColor}
+.nums b,.vc h3,.mani .pill{-webkit-text-stroke:.02em currentColor}
+.sv .n,.vals .vc::after{-webkit-text-stroke:.01em currentColor}
+.px-word.sel{-webkit-text-stroke:0}
+
+/* judul section & hero lebih tipis */
+h1,h2,.hero h1,.hero h1 .ln,.ft-h h2{font-weight:400}
+.hero h1 .it,h1 .sel,h2 .sel{-webkit-text-stroke:0}
+h3,.sv b,.ct b{font-weight:400}
+
+/* ---- menu hamburger mobile: selaras dengan gaya baru ---- */
+@media(max-width:820px){
+ .burger i{height:2px;background:#fff;left:11px;right:11px}
+ .burger i:first-child{top:17px}.burger i:last-child{top:25px}
+ .burger[aria-expanded=true] i:first-child{transform:translateY(4px) rotate(45deg)}
+ .burger[aria-expanded=true] i:last-child{transform:translateY(-4px) rotate(-45deg)}
+ nav{counter-reset:n;height:calc(100svh - 68px);overflow-y:auto;justify-content:flex-start;padding:12px var(--pad) 40px;background:linear-gradient(180deg,#000 0%,#00001f 30%,#0003a8 72%,#0006ff 100%);background-origin:border-box;border-bottom:0;font-size:clamp(30px,9vw,44px);font-weight:300;letter-spacing:-.03em;line-height:1.1;text-transform:none;transform:translateY(-110%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s}
+ nav.open{transform:none;visibility:visible;transition-delay:0s}
+ nav a:not(.btn){display:flex;align-items:baseline;justify-content:space-between;width:100%;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.2);font-weight:300;opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease),transform .5s var(--ease),color .3s}
+ nav a:not(.btn)::after{counter-increment:n;content:"0" counter(n);font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;letter-spacing:0;opacity:.6}
+ nav.open a{opacity:1;transform:none}
+ nav.open a:nth-child(1){transition-delay:.12s}nav.open a:nth-child(2){transition-delay:.18s}nav.open a:nth-child(3){transition-delay:.24s}nav.open a:nth-child(4){transition-delay:.3s}nav.open a:nth-child(5){transition-delay:.36s}
+ nav a:not(.btn):hover{color:#fff;opacity:.7}
+ nav .btn{margin-top:28px;align-self:flex-start;font-size:13px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:14px 26px;border:1px solid rgba(255,255,255,.6);border-radius:99px;opacity:0;transition:opacity .5s .45s}
+ nav.open .btn{opacity:1}
+}
+</style>
 </head>
-<body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden bg-tech-pattern bg-[length:24px_24px]">
-
-   <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
-        
-        <div class="flex-none">
-            <a href="/">
-                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
-            </a>
-        </div>
-
-      <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
-    
-    <a href="about" class="hover:text-[#0006ff] transition-colors">
-        Agency
-    </a>
-
-    <a href="services" class="hover:text-[#0006ff] transition-colors">
-        Capabilities
-    </a>
-
-    <a href="works" class="hover:text-[#0006ff] transition-colors">
-        Work
-    </a>
-
-    <a href="pricelist" class="hover:text-[#0006ff] transition-colors">
-        Pricelist
-    </a>
-
-    <a href="careers" class="hover:text-[#0006ff] transition-colors">
-        Careers
-    </a>
-
+<body class="lock"><div class="sp" id="sp"></div><div class="cur" id="cur" aria-hidden="true"></div>
+<!-- PRELOADER -->
+<div id="pre" aria-hidden="true">
+  <div class="pre-mq"><div class="pre-row"><span>DREAM</span><span>PLAY</span><span>CREATE</span><span>DREAM</span><span>PLAY</span><span>CREATE</span><span>DREAM</span><span>PLAY</span><span>CREATE</span><span>DREAM</span><span>PLAY</span><span>CREATE</span></div><div class="pre-row rev"><span>DREAM</span><span>PLAY</span><span>CREATE</span><span>DREAM</span><span>PLAY</span><span>CREATE</span><span>DREAM</span><span>PLAY</span><span>CREATE</span><span>DREAM</span><span>PLAY</span><span>CREATE</span></div></div>
+  <div class="pre-top"></div>
+  <div class="pre-mid">
+        <div class="pre-tag" id="pre-tag" aria-hidden="true"><span class="pw hash"><span>#</span></span><span class="pw"><span>Dream</span></span><span class="pw"><span>Play</span></span><span class="pw"><span>Create</span></span></div>
+  </div>
+  <div class="pre-bot"><b id="pre-n">0</b></div>
+  <div class="pbar"><i id="pre-bar"></i></div>
 </div>
 
-        <div class="flex items-center gap-2 sm:gap-4 h-8"> 
-            
-            <div id="weather-module-desktop" class="relative group hidden sm:block">
-                <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-[#0006ff] rounded-full select-none transition-all duration-300">
-                    <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
-                        <span id="nav-time">00:00:00</span>
-                        <span class="text-[#0006ff] font-black">|</span>
-                        <span id="nav-temp">--°C</span>
-                    </div>
-                    <div class="flex items-center justify-center gap-2 mt-1.5 leading-none">
-                        <div class="relative flex h-1 w-1">
-                            <span class="animate-ping absolute h-full w-full rounded-full bg-[#0006ff] opacity-40"></span>
-                            <span class="h-1 w-1 rounded-full bg-[#0006ff]"></span>
-                        </div>
-                        <span class="text-[#0006ff] font-black text-[8px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="relative sm:hidden">
-                <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-[#0006ff] text-[#0006ff] text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">
-                    Kancah HQ, Yogyakarta
-                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-b-[#0006ff]"></div>
-                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-[5px] border-transparent border-b-white/80 mb-[-1px]"></div>
-                </div>
-
-                <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-[#0006ff] border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
-                    <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
-                        <span id="nav-time-mobile">00:00</span>
-                        <span class="text-[#0006ff] font-black">|</span>
-                        <span id="nav-temp-mobile">--°C</span>
-                    </div>
-                </div>
-            </div>
-
-            <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-[#0006ff] text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
-                Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
-            </a>
-
-            <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
-                <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
-            </button>
-        </div>
-    </div>
-</nav>
-<div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full transition-transform duration-500 lg:hidden">
-    <button class="absolute top-6 right-6 text-3xl" id="close-menu">
-        <i class="fa-solid fa-xmark"></i>
-    </button>
-
-    <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-        <a href="about" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
-        <a href="services" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
-        <a href="works" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
-        <a href="pricelist" class="mobile-link hover:text-kancah-blue transition-colors">Pricelist</a>
-        <a href="careers" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
-        <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
-    </div>
-</div>
-
-<!-- ════════════════════════════════════════
-     WEB SHOWCASE OVERLAY
-════════════════════════════════════════ -->
-<div id="web-showcase" class="fixed inset-0 z-[200] bg-white hidden flex-col">
-
-    <!-- Header -->
-    <div class="h-16 sm:h-20 border-b border-gray-100 flex items-center justify-between px-4 sm:px-8 bg-white/90 backdrop-blur-xl">
-        <div class="flex items-center gap-4">
-            <button onclick="closeShowcase()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-slate-100 transition-colors">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <div class="hidden sm:block">
-                <h4 id="showcase-title" class="font-bold text-sm uppercase italic leading-none">Project Demo</h4>
-                <p class="text-[9px] text-kancah-blue font-bold uppercase tracking-widest mt-1">Live Experience Mode</p>
-            </div>
-        </div>
-
-        <div class="flex items-center gap-2">
-            <button onclick="copyDemoLink()" class="hidden sm:flex w-10 h-10 items-center justify-center rounded-full border border-slate-200 hover:border-kancah-blue hover:text-kancah-blue transition-all">
-                <i class="fa-regular fa-copy text-xs"></i>
-            </button>
-            <a id="showcase-new-tab" href="#" target="_blank" class="bg-kancah-blue text-white px-5 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-black transition-all">
-                Open <i class="fa-solid fa-arrow-up-right-from-square ml-1 text-[8px]"></i>
-            </a>
-        </div>
-    </div>
-
-    <!-- Iframe area -->
-    <div class="flex-1 bg-slate-100 p-4 sm:p-8 flex justify-center items-start overflow-hidden">
-        <div id="iframe-wrapper" class="w-full h-full bg-white shadow-2xl transition-all duration-500 rounded-xl overflow-hidden border border-slate-200">
-            <iframe id="showcase-iframe" src=""></iframe>
-        </div>
-    </div>
-</div>
-    <header class="relative min-h-screen flex flex-col justify-center items-center sm:items-start pt-32 lg:pt-36 pb-20 px-4 sm:px-6 max-w-[1500px] mx-auto overflow-hidden bg-white text-center sm:text-left">
-    
-    <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]" 
-         style="background-image: radial-gradient(#0006ff 1px, transparent 0); background-size: 30px 30px;">
-    </div>
-
-    <div class="relative z-10 w-full flex flex-col gap-6 lg:gap-8">
-        
-        <div class="flex flex-col gap-4 lg:gap-5 items-center sm:items-start">
-            <div class="flex items-center gap-3">
-                <div class="relative flex h-2 w-2 lg:h-2.5 lg:w-2.5 mr-1">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0006ff] opacity-75"></span>
-                    <span id="radar-dot" class="relative inline-flex rounded-full h-2 w-2 lg:h-2.5 lg:w-2.5 bg-[#0006ff]"></span>
-                </div>
-                <span class="text-[#0006ff] font-bold text-[10px] lg:text-xs uppercase tracking-[0.4em]">Digital & Creative Agency</span>
-            </div>
-
-           <!-- H1 Khusus SEO (Disembunyikan dari layar tapi dibaca Google) -->
-            <h1 class="sr-only">Kancah Creative: Digital and Creative Agency di Yogyakarta</h1>
-
-            <!-- Elemen Visual (Ubah tag h1 sebelumnya jadi div) -->
-        <div aria-hidden="true" class="flex flex-col leading-[0.85] tracking-tighter text-[#111111]">
-    <span class="text-[18vw] sm:text-[15vw] lg:text-[9.5vw] font-black uppercase">FUTURE</span>
-
-    <div class="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-10">
-        <span class="text-[18vw] sm:text-[15vw] lg:text-[9.5vw] font-black italic text-[#0006ff] uppercase">PROOF</span>
-
-        <p class="hidden lg:block text-gray-400 text-base xl:text-lg font-light leading-snug max-w-xs xl:max-w-md normal-case tracking-normal pt-4">
-           We help brands communicate better, grow faster, and create lasting impressions through design, technology, and creativity.
-        </p>
-    </div>
-
-    <span class="text-[18vw] sm:text-[15vw] lg:text-[9.5vw] font-black uppercase">CREATIVE.</span>
-</div>
-
-<!-- SEO TEXT -->
-<p class="sr-only">
-    Kancah Creative adalah creative agency dan digital agency di Yogyakarta yang menyediakan jasa pembuatan website, branding, social media management, dan audio visual untuk UMKM, institusi, dan perusahaan.
-</p>
-
-<p class="lg:hidden text-gray-400 text-sm sm:text-base font-light leading-relaxed max-w-sm mx-auto sm:mx-0">
-     We help brands communicate better, grow faster, and create lasting impressions through design, technology, and creativity.
-</p>
-
-            <div class="flex flex-row gap-3 lg:gap-4 mt-6 lg:mt-2 justify-center sm:justify-start">
-                <a href="works" class="bg-[#0006ff] text-white px-8 lg:px-10 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111111] transition-all duration-300 shadow-lg active:scale-95">
-                    Explore Work
-                </a>
-                <a href="contact" class="border-2 border-[#111111] px-8 lg:px-10 py-4 rounded-full font-bold uppercase tracking-widest text-[10px] hover:bg-[#111111] hover:text-white transition-all duration-300 active:scale-95">
-                    Let's Talk
-                </a>
-            </div>
-        </div>
-    </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="kmark" viewBox="29 37 342 344"><path fill-rule="evenodd" d="M272.5 378.1C271.4 377.6 268.2 377.0 265.5 376.6C260.5 375.9 257.1 374.9 251.3 372.4C249.6 371.6 248.0 371.0 247.7 371.0C247.4 371.0 242.6 368.3 237.1 364.9C227.6 359.2 224.9 356.6 193.7 324.8C175.5 306.1 156.5 286.9 151.6 282.1C136.2 267.2 120.7 249.6 116.4 242.4C109.2 230.2 106.3 212.0 109.5 199.7C110.3 196.5 111.0 193.2 111.0 192.3C111.0 189.9 115.7 180.5 120.0 174.2C122.2 171.1 132.3 160.1 142.6 149.8C159.7 132.5 161.4 131.1 163.3 132.2C166.4 133.8 190.0 158.3 190.0 159.8C190.0 160.5 186.3 164.8 181.7 169.3C156.6 194.2 152.6 199.0 151.1 206.0C148.7 216.8 151.2 222.2 165.3 236.3C171.5 242.5 194.5 265.8 216.6 288.1C264.3 336.4 263.2 335.6 281.0 335.4C294.9 335.2 300.5 333.1 308.2 325.3C320.8 312.4 324.6 298.7 320.1 282.9C317.3 273.2 315.6 270.4 305.8 260.3C295.5 249.6 295.6 249.8 300.4 236.7C306.3 220.9 306.9 198.3 301.7 188.3C299.4 183.9 296.0 174.7 296.0 173.0C296.0 172.1 300.1 167.4 305.1 162.5C327.1 140.7 328.1 117.5 308.1 96.7C300.7 89.0 294.7 86.8 281.5 86.7C267.4 86.6 262.4 88.8 250.6 100.0C237.9 112.1 240.0 112.3 225.2 96.9C218.2 89.7 212.2 83.2 211.7 82.5C209.7 79.0 231.5 59.3 244.6 52.7C266.3 41.8 294.9 41.3 315.3 51.7C329.0 58.6 341.5 68.9 347.9 78.5C368.0 108.6 369.3 140.5 351.6 171.4C348.2 177.4 331.7 196.5 322.1 205.4C316.5 210.7 317.3 212.4 332.3 227.8C348.7 244.8 356.1 255.9 359.9 269.0C360.6 271.5 361.6 274.8 362.1 276.5C365.0 285.7 363.9 310.7 360.4 318.9C353.6 334.6 347.3 345.5 341.3 351.5C330.9 361.9 314.9 371.6 302.5 374.8C287.2 378.9 277.2 379.9 272.5 378.1ZM112.0 377.1C110.6 376.6 107.9 376.1 106.0 376.1C95.3 375.7 73.1 363.8 61.6 352.3C34.0 324.7 29.7 282.2 51.0 249.6C55.0 243.5 62.6 234.9 80.8 216.1C83.1 213.6 84.9 211.3 84.8 210.9C84.6 210.5 78.2 203.6 70.5 195.5C52.3 176.3 47.2 169.0 42.2 155.0C36.4 139.0 35.9 114.9 41.0 103.5C41.5 102.4 42.9 99.0 44.0 95.9C56.2 62.3 99.7 38.2 134.3 45.9C145.7 48.4 155.9 52.8 165.8 59.5C174.3 65.2 273.3 165.1 280.3 175.1C287.8 185.7 292.9 203.4 291.7 214.5C290.6 224.6 287.5 235.6 284.2 240.9C277.5 251.9 273.5 256.7 257.3 273.0L239.0 291.5L225.0 277.5C217.3 269.8 211.0 263.1 211.0 262.6C211.0 262.1 219.0 253.8 228.8 244.1C240.5 232.5 247.0 225.3 247.9 223.0C248.6 221.1 249.6 218.7 250.1 217.8C252.4 213.3 249.7 199.9 245.3 194.6C244.4 193.5 221.1 169.9 193.6 142.3C154.6 103.2 142.4 91.5 138.5 89.5C117.0 79.0 93.4 87.2 82.0 109.2C78.9 115.3 78.7 115.9 78.8 127.0C78.8 144.0 80.0 146.7 95.2 163.3C104.0 173.0 103.8 172.1 100.0 182.5C95.0 196.1 93.2 216.4 96.1 227.4C98.7 237.4 99.5 239.8 101.7 244.2C103.0 246.8 104.0 249.2 104.0 249.5C104.0 249.9 99.7 254.6 94.5 260.1C81.0 274.2 78.8 278.8 78.8 294.0C78.8 303.7 79.1 306.3 80.9 310.5C89.7 330.5 111.0 341.1 130.8 335.4C139.6 332.9 141.8 331.4 152.2 321.2L162.0 311.6L175.2 325.5C182.5 333.1 188.6 339.8 188.8 340.4C189.1 341.9 172.8 357.9 166.5 362.2C156.2 369.3 143.6 374.7 134.0 376.2C124.9 377.6 114.7 378.0 112.0 377.1Z"/></symbol></svg>
+<header>
+  <a href="/" aria-label="Kancah beranda"><svg class="klogo" data-loop viewBox="30 38 1385 346" role="img" aria-label="Kancah"><path class="mk" fill-rule="evenodd" d="M272.5 378.1C271.4 377.6 268.2 377.0 265.5 376.6C260.5 375.9 257.1 374.9 251.3 372.4C249.6 371.6 248.0 371.0 247.7 371.0C247.4 371.0 242.6 368.3 237.1 364.9C227.6 359.2 224.9 356.6 193.7 324.8C175.5 306.1 156.5 286.9 151.6 282.1C136.2 267.2 120.7 249.6 116.4 242.4C109.2 230.2 106.3 212.0 109.5 199.7C110.3 196.5 111.0 193.2 111.0 192.3C111.0 189.9 115.7 180.5 120.0 174.2C122.2 171.1 132.3 160.1 142.6 149.8C159.7 132.5 161.4 131.1 163.3 132.2C166.4 133.8 190.0 158.3 190.0 159.8C190.0 160.5 186.3 164.8 181.7 169.3C156.6 194.2 152.6 199.0 151.1 206.0C148.7 216.8 151.2 222.2 165.3 236.3C171.5 242.5 194.5 265.8 216.6 288.1C264.3 336.4 263.2 335.6 281.0 335.4C294.9 335.2 300.5 333.1 308.2 325.3C320.8 312.4 324.6 298.7 320.1 282.9C317.3 273.2 315.6 270.4 305.8 260.3C295.5 249.6 295.6 249.8 300.4 236.7C306.3 220.9 306.9 198.3 301.7 188.3C299.4 183.9 296.0 174.7 296.0 173.0C296.0 172.1 300.1 167.4 305.1 162.5C327.1 140.7 328.1 117.5 308.1 96.7C300.7 89.0 294.7 86.8 281.5 86.7C267.4 86.6 262.4 88.8 250.6 100.0C237.9 112.1 240.0 112.3 225.2 96.9C218.2 89.7 212.2 83.2 211.7 82.5C209.7 79.0 231.5 59.3 244.6 52.7C266.3 41.8 294.9 41.3 315.3 51.7C329.0 58.6 341.5 68.9 347.9 78.5C368.0 108.6 369.3 140.5 351.6 171.4C348.2 177.4 331.7 196.5 322.1 205.4C316.5 210.7 317.3 212.4 332.3 227.8C348.7 244.8 356.1 255.9 359.9 269.0C360.6 271.5 361.6 274.8 362.1 276.5C365.0 285.7 363.9 310.7 360.4 318.9C353.6 334.6 347.3 345.5 341.3 351.5C330.9 361.9 314.9 371.6 302.5 374.8C287.2 378.9 277.2 379.9 272.5 378.1ZM112.0 377.1C110.6 376.6 107.9 376.1 106.0 376.1C95.3 375.7 73.1 363.8 61.6 352.3C34.0 324.7 29.7 282.2 51.0 249.6C55.0 243.5 62.6 234.9 80.8 216.1C83.1 213.6 84.9 211.3 84.8 210.9C84.6 210.5 78.2 203.6 70.5 195.5C52.3 176.3 47.2 169.0 42.2 155.0C36.4 139.0 35.9 114.9 41.0 103.5C41.5 102.4 42.9 99.0 44.0 95.9C56.2 62.3 99.7 38.2 134.3 45.9C145.7 48.4 155.9 52.8 165.8 59.5C174.3 65.2 273.3 165.1 280.3 175.1C287.8 185.7 292.9 203.4 291.7 214.5C290.6 224.6 287.5 235.6 284.2 240.9C277.5 251.9 273.5 256.7 257.3 273.0L239.0 291.5L225.0 277.5C217.3 269.8 211.0 263.1 211.0 262.6C211.0 262.1 219.0 253.8 228.8 244.1C240.5 232.5 247.0 225.3 247.9 223.0C248.6 221.1 249.6 218.7 250.1 217.8C252.4 213.3 249.7 199.9 245.3 194.6C244.4 193.5 221.1 169.9 193.6 142.3C154.6 103.2 142.4 91.5 138.5 89.5C117.0 79.0 93.4 87.2 82.0 109.2C78.9 115.3 78.7 115.9 78.8 127.0C78.8 144.0 80.0 146.7 95.2 163.3C104.0 173.0 103.8 172.1 100.0 182.5C95.0 196.1 93.2 216.4 96.1 227.4C98.7 237.4 99.5 239.8 101.7 244.2C103.0 246.8 104.0 249.2 104.0 249.5C104.0 249.9 99.7 254.6 94.5 260.1C81.0 274.2 78.8 278.8 78.8 294.0C78.8 303.7 79.1 306.3 80.9 310.5C89.7 330.5 111.0 341.1 130.8 335.4C139.6 332.9 141.8 331.4 152.2 321.2L162.0 311.6L175.2 325.5C182.5 333.1 188.6 339.8 188.8 340.4C189.1 341.9 172.8 357.9 166.5 362.2C156.2 369.3 143.6 374.7 134.0 376.2C124.9 377.6 114.7 378.0 112.0 377.1Z"/><g class="wm"><path class="L" d="M416.2 215.8L416.5 95.5L438.5 91.8C450.6 89.8 461.3 88.1 462.2 88.1C463.9 88.0 464.0 92.2 464.2 158.2L464.5 228.3L477.5 213.9C484.7 206.0 496.5 192.4 503.9 183.8L517.3 168.0L545.8 168.0L574.2 168.0L567.4 175.8C550.2 195.2 533.4 213.6 520.3 227.0L506.1 241.7L511.1 246.6C525.9 260.9 550.6 292.4 563.9 313.9C571.2 325.7 576.0 334.2 576.0 335.5C576.0 335.8 563.6 336.0 548.5 336.0C533.4 336.0 521.0 335.6 521.0 335.2C521.0 333.8 498.6 300.5 491.4 291.2C484.3 282.1 466.3 263.0 464.8 263.0C464.4 263.0 464.0 279.4 464.0 299.5L464.0 336.0L440.0 336.0L416.0 336.0L416.2 215.8Z"/><path class="L" d="M641.5 338.9C601.2 336.3 581.5 318.3 581.6 284.0C581.6 253.0 601.4 235.8 641.6 231.9C652.3 230.9 671.9 231.8 678.9 233.7C684.1 235.1 679.6 216.8 673.2 210.3C664.9 202.1 638.8 200.7 612.0 207.1C607.4 208.1 603.5 208.8 603.3 208.6C602.6 207.9 596.9 171.7 597.4 171.2C598.4 170.3 613.8 167.0 624.3 165.5C683.4 157.2 716.2 171.4 724.6 209.0C727.3 220.8 728.0 330.4 725.4 331.4C720.4 333.3 687.0 338.2 676.0 338.6C669.1 338.8 661.2 339.2 658.5 339.3C655.8 339.5 648.1 339.3 641.5 338.9ZM680.2 301.3C680.7 301.1 681.0 292.8 681.0 283.0L681.0 265.1L675.2 264.4C665.7 263.1 649.9 263.6 643.7 265.4C633.1 268.5 628.5 274.7 629.2 285.0C629.9 294.5 635.5 299.9 647.1 301.9C652.2 302.8 678.6 302.4 680.2 301.3Z"/><path class="L" d="M762.0 255.0C762.0 174.0 762.0 174.0 764.6 173.0C768.1 171.6 789.3 167.4 800.5 165.8C814.9 163.7 851.8 164.1 860.5 166.4C884.3 172.6 898.9 187.2 905.2 211.1C907.3 219.2 907.4 221.6 907.7 277.8L908.1 336.0L884.1 336.0L860.1 336.0L859.8 281.8C859.4 232.4 859.2 227.0 857.6 221.8C855.1 214.2 850.3 208.6 844.3 206.6C839.5 204.9 821.4 204.4 813.8 205.6L810.0 206.3L810.0 271.1L810.0 336.0L786.0 336.0L762.0 336.0L762.0 255.0Z"/><path class="L" d="M1004.7 339.0C964.7 331.8 941.8 305.4 938.0 262.2C931.7 190.7 990.7 146.4 1061.8 169.2C1069.3 171.6 1071.0 172.4 1070.6 173.8C1070.3 174.7 1068.2 182.9 1065.9 192.0C1063.6 201.1 1061.4 208.9 1061.0 209.3C1060.6 209.8 1057.2 209.2 1053.4 208.1C1012.7 195.5 986.6 212.6 986.6 252.0C986.6 275.6 994.0 290.4 1008.8 296.1C1019.7 300.3 1046.3 299.8 1060.7 295.0C1063.9 294.0 1066.6 293.3 1066.9 293.5C1067.3 294.0 1074.0 331.3 1073.7 331.6C1071.9 332.9 1067.3 334.5 1058.8 336.6C1047.6 339.5 1015.2 340.9 1004.7 339.0Z"/><path class="L" d="M1140.5 338.9C1100.2 336.3 1080.5 318.3 1080.6 284.0C1080.6 253.0 1100.4 235.8 1140.6 231.9C1151.3 230.9 1170.9 231.8 1177.9 233.7C1183.1 235.1 1178.6 216.8 1172.2 210.3C1163.9 202.1 1137.8 200.7 1111.0 207.1C1106.4 208.1 1102.5 208.8 1102.3 208.6C1101.6 207.9 1095.9 171.7 1096.4 171.2C1097.4 170.3 1112.8 167.0 1123.3 165.5C1182.4 157.2 1215.2 171.4 1223.6 209.0C1226.3 220.8 1227.0 330.4 1224.4 331.4C1219.4 333.3 1186.0 338.2 1175.0 338.6C1168.1 338.8 1160.2 339.2 1157.5 339.3C1154.8 339.5 1147.1 339.3 1140.5 338.9ZM1179.2 301.3C1179.7 301.1 1180.0 292.8 1180.0 283.0L1180.0 265.1L1174.2 264.4C1164.7 263.1 1148.9 263.6 1142.7 265.4C1132.1 268.5 1127.5 274.7 1128.2 285.0C1128.9 294.5 1134.5 299.9 1146.1 301.9C1151.2 302.8 1177.6 302.4 1179.2 301.3Z"/><path class="L" d="M1262.2 215.8L1262.5 95.5L1284.5 91.8C1296.6 89.8 1307.3 88.1 1308.2 88.1C1309.9 88.0 1310.0 90.6 1310.0 128.1C1310.0 168.2 1310.0 168.2 1312.2 167.6C1328.6 163.2 1349.7 162.9 1364.0 167.0C1383.4 172.5 1396.0 184.2 1402.7 202.8C1407.4 215.8 1408.0 224.3 1408.0 282.2L1408.0 336.0L1384.0 336.0L1360.1 336.0L1359.8 281.2C1359.5 231.4 1359.3 226.0 1357.6 221.0C1355.2 213.9 1349.2 207.7 1343.0 206.0C1337.8 204.6 1319.6 205.2 1313.8 207.0L1310.0 208.1L1310.0 272.0L1310.0 336.0L1286.0 336.0L1262.0 336.0L1262.2 215.8Z"/></g></svg></a>
+  <nav id="nav" aria-label="Navigasi utama">
+    <a href="about">About</a><a href="services">Services</a><a href="works">Portfolio</a><a href="pricelist">Pricing</a><a href="careers">Careers</a>
+    <a class="btn" href="https://wa.me/6289524687866">Contact Us</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="nav"><i></i><i></i></button>
 </header>
+<main>
+<div class="hero" id="top">
+  <div class="orb a" aria-hidden="true"></div><div class="orb b" aria-hidden="true"></div>
+  <div class="floor" aria-hidden="true"><div></div></div>
 
-<script>
-    document.addEventListener('mousemove', (e) => {
-        const { clientX, clientY } = e;
-        const centerX = window.innerWidth / 2;
-        const centerY = window.innerHeight / 2;
-
-        // 1. Gerakan Parallax Grid
-        const grid = document.getElementById('grid-bg');
-        if(grid) {
-            const moveX = (clientX - centerX) / 40;
-            const moveY = (clientY - centerY) / 40;
-            grid.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
-        }
-
-        // 2. 3D Tilt Soul Card (Desktop Only)
-        const card = document.getElementById('soul-card');
-        if (card && window.innerWidth > 1024) {
-            const rect = card.getBoundingClientRect();
-            const cardX = clientX - rect.left;
-            const cardY = clientY - rect.top;
-            const rotateX = (10 * (cardY - rect.height / 2)) / rect.height;
-            const rotateY = (-10 * (cardX - rect.width / 2)) / rect.width;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.01)`;
-        }
-    });
-</script>
-
-    <section id="services" class="py-24 bg-kancah-dark text-white relative overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-kancah-blue/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
-            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-16 border-b border-white/10 pb-8"> 
-                <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter">CAPABILITIES</h2>
-                <p class="text-gray-400 max-w-sm mt-6 lg:mt-0 font-light text-sm sm:text-base">Layanan utama yang bantu brandmu maju terus.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <div class="group border border-white/10 rounded-[2rem] p-8 hover:bg-white/5 transition-all duration-300 hover:border-kancah-blue/30">
-                    <div class="flex gap-6 items-start">
-                        <span class="text-kancah-blue font-bold text-xl mt-1">01</span>
-                        <div>
-                            <h3 class="text-3xl font-bold mb-4 group-hover:text-kancah-blue transition-colors">Brand Design</h3>
-                            <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
-                                Identitas brand yang gampang diingat dan konsisten. Kita bantu ubah karakter brandmu jadi visual yang kuat dan pas banget.
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Naming</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Logo</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Identity System</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group border border-white/10 rounded-[2rem] p-8 hover:bg-white/5 transition-all duration-300 hover:border-kancah-blue/30">
-                    <div class="flex gap-6 items-start">
-                        <span class="text-kancah-blue font-bold text-xl mt-1">02</span>
-                        <div>
-                            <h3 class="text-3xl font-bold mb-4 group-hover:text-kancah-blue transition-colors">Promotion Design</h3>
-                            <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
-                                Materi promosi yang simpel dan gampang dipake, baik buat iklan offline atau digital.
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Billboard</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Digital Ads</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Banner</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group border border-white/10 rounded-[2rem] p-8 hover:bg-white/5 transition-all duration-300 hover:border-kancah-blue/30">
-                    <div class="flex gap-6 items-start">
-                        <span class="text-kancah-blue font-bold text-xl mt-1">03</span>
-                        <div>
-                            <h3 class="text-3xl font-bold mb-4 group-hover:text-kancah-blue transition-colors">Tech Development</h3>
-                            <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
-                                Bikin web dan aplikasi yang gampang dipakai, cepat jalan, dan bisa tumbuh bareng bisnis kamu.
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Web Development</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">UI/UX Development</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Mobile Development</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Web App Development</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group border border-white/10 rounded-[2rem] p-8 hover:bg-white/5 transition-all duration-300 hover:border-kancah-blue/30">
-                    <div class="flex gap-6 items-start">
-                        <span class="text-kancah-blue font-bold text-xl mt-1">04</span>
-                        <div>
-                            <h3 class="text-3xl font-bold mb-4 group-hover:text-kancah-blue transition-colors">Social Media Management</h3>
-                            <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
-                                Kelola konten, design, dan jadwal posting biar akun bisnismu konsisten dan relevan terus.
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Content Plan</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Design & Copy</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Report</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group md:col-span-2 border border-white/10 rounded-[2rem] p-8 hover:bg-white/5 transition-all duration-300 hover:border-kancah-blue/30">
-                    <div class="flex gap-6 items-start">
-                        <span class="text-kancah-blue font-bold text-xl mt-1">05</span>
-                        <div>
-                            <h3 class="text-3xl font-bold mb-4 group-hover:text-kancah-blue transition-colors">Audio Visual</h3>
-                            <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
-                                Video dan foto yang bikin pesan brandmu jelas banget, biar audiens gampang ingat dan paham.
-                            </p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Video Commercial</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Photography</span>
-                                <span class="px-3 py-1 rounded-full border border-white/20 text-xs text-gray-300">Motion Graphics</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-   <section class="py-20 bg-white text-kancah-dark">
-        <div class="max-w-[1400px] mx-auto px-6">
-          <div class="text-left mb-12">
-    <span class="text-kancah-blue font-bold text-xs uppercase tracking-widest">
-        FAQ
-    </span>
-
-    <h2 class="text-4xl sm:text-5xl font-bold mt-2">
-        PERTANYAAN
-        <span class="text-kancah-blue italic">
-            STRATEGIS
-        </span>.
-    </h2>
-</div>
-
-       <div class="divide-y divide-gray-100 border-t border-b border-gray-100">
-
-    <details class="group cursor-pointer">
-        <summary class="flex justify-between items-center gap-6 font-bold text-lg py-5 select-none hover:text-kancah-blue transition-colors">
-            <span>Apa itu Kancah?</span>
-
-            <span class="text-kancah-blue transition-transform duration-300 group-open:rotate-180">
-                <i class="fa-solid fa-chevron-down"></i>
-            </span>
-        </summary>
-
-        <div class="pb-6 text-gray-600 leading-relaxed font-light">
-            Kancah adalah creative & digital agency yang membantu brand berkembang lewat visual, strategi, teknologi, dan pengalaman digital yang lebih relevan.
-        </div>
-    </details>
-
-    <details class="group cursor-pointer">
-        <summary class="flex justify-between items-center gap-6 font-bold text-lg py-5 select-none hover:text-kancah-blue transition-colors">
-            <span>Apa saja service yang Kancah provide?</span>
-
-            <span class="text-kancah-blue transition-transform duration-300 group-open:rotate-180">
-                <i class="fa-solid fa-chevron-down"></i>
-            </span>
-        </summary>
-
-        <div class="pb-6 text-gray-600 leading-relaxed font-light">
-            Service Kancah meliputi layanan Brand Design, Promotion Design, Tech Development, Social Media Management, dan Audio Visual.
-        </div>
-    </details>
-
-    <details class="group cursor-pointer">
-        <summary class="flex justify-between items-center gap-6 font-bold text-lg py-5 select-none hover:text-kancah-blue transition-colors">
-            <span>Kancah bisa membantu brand seperti apa?</span>
-
-            <span class="text-kancah-blue transition-transform duration-300 group-open:rotate-180">
-                <i class="fa-solid fa-chevron-down"></i>
-            </span>
-        </summary>
-
-        <div class="pb-6 text-gray-600 leading-relaxed font-light">
-            Mulai dari UMKM, Institusi, Personal Brand, Hingga Perusahaan.
-    </details>
-
-    <details class="group cursor-pointer">
-        <summary class="flex justify-between items-center gap-6 font-bold text-lg py-5 select-none hover:text-kancah-blue transition-colors">
-            <span>Apakah Boleh lihat portfolio Kancah?</span>
-
-            <span class="text-kancah-blue transition-transform duration-300 group-open:rotate-180">
-                <i class="fa-solid fa-chevron-down"></i>
-            </span>
-        </summary>
-
-        <div class="pb-6 text-gray-600 leading-relaxed font-light">
-             Tentu dong. Kamu bisa lihat berbagai karya dan project yang Kancah pernah kerjakan di halaman 
-        <a href="works" class="text-kancah-blue font-medium hover:underline">
-            Works</a>
-        </div>
-    </details>
-
-    <details class="group cursor-pointer">
-        <summary class="flex justify-between items-center gap-6 font-bold text-lg py-5 select-none hover:text-kancah-blue transition-colors">
-            <span>Bagaimana cara mulai kerja sama?</span>
-
-            <span class="text-kancah-blue transition-transform duration-300 group-open:rotate-180">
-                <i class="fa-solid fa-chevron-down"></i>
-            </span>
-        </summary>
-
-        <div class="pb-6 text-gray-600 leading-relaxed font-light">
-            Gass hubungi Kancah <a href="contact.html" class="text-kancah-blue font-medium hover:underline">
-            disini</a> Setelah itu kita diskusi apa saja yang bisa kami bantu untukmu.
-        </div>
-    </details>
-
-    <details class="group cursor-pointer">
-        <summary class="flex justify-between items-center gap-6 font-bold text-lg py-5 select-none hover:text-kancah-blue transition-colors">
-            <span>Apa yang bikin Kancah berbeda?</span>
-
-            <span class="text-kancah-blue transition-transform duration-300 group-open:rotate-180">
-                <i class="fa-solid fa-chevron-down"></i>
-            </span>
-        </summary>
-
-        <div class="pb-6 text-gray-600 leading-relaxed font-light">
-            Kancah nggak cuma fokus di hasil visual, tapi juga membantu brand punya arah, identitas, dan pengalaman digital yang lebih relevan untuk audiensnya.
-        </div>
-    </details>
-
-</div>
-        </div>
-    </section>
-
-<section id="featured-works" class="pt-20 sm:pt-28 pb-10 sm:pb-12 bg-gray-50 text-kancah-dark overflow-hidden">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6">
-        
-      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-12 sm:mb-16">
-
-    <div class="text-left">
-       <span class="text-kancah-blue font-black text-[10px] uppercase tracking-[0.35em]">
-    Selected Works
-</span>
-
-        <h2 class="text-5xl sm:text-6xl md:text-7xl font-black mt-4 tracking-tighter uppercase leading-[0.85]">
-            KARYA
-            <span class="text-kancah-blue italic opacity-90">
-                PILIHAN
-            </span>
-        </h2>
+  <div class="hero-top"><span>Yogyakarta <b id="hclk">--:--</b> WIB</span><span>Digital &amp; Creative Agency</span></div>
+  <div class="hp" aria-hidden="true"><canvas id="hp-c"></canvas></div>
+  <div class="hero-in">
+    <h1 class="rv"><span class="ln">Creative &amp; <em class="it">Digital</em></span><span class="ln">Agency <em class="it">dari Yogyakarta.</em></span></h1>
+    <p class="lead rv">Kancah Creative adalah agensi kreatif dan digital di Yogyakarta. Kami menangani brand design, tech development, social media management, dan audio visual dalam satu tim.</p>
+    <div class="cta rv">
+      <a class="btn w" href="https://wa.me/6289524687866">Hubungi Kami <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a>
+      <a class="btn ghost" href="#karya">Lihat Portofolio</a>
     </div>
-
-    <div class="max-w-md text-left">
-        <p class="text-gray-500 font-light text-sm sm:text-base leading-relaxed">
-            Pilihan project yang nunjukin cara Kancah ngeracik ide, visual, strategi, dan eksekusi digital jadi satu karya yang utuh.
-        </p>
-
-        <div class="mt-5 flex flex-wrap justify-start gap-2" id="featured-filter">
-                    <button type="button" onclick="loadFeaturedData('all')" data-featured-filter="all" class="featured-filter-btn px-4 py-2 rounded-full bg-kancah-blue border border-kancah-blue text-[9px] font-black uppercase tracking-widest text-white transition-all shadow-lg shadow-kancah-blue/20">All</button>
-                    <button type="button" onclick="loadFeaturedData('Brand Design')" data-featured-filter="Brand Design" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">Brand Design</button>
-                    <button type="button" onclick="loadFeaturedData('Promotion Design')" data-featured-filter="Promotion Design" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">Promotion Design</button>
-                    <button type="button" onclick="loadFeaturedData('Web Development')" data-featured-filter="Web Development" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">Tech Development</button>
-                    <button type="button" onclick="loadFeaturedData('Social Media Management')" data-featured-filter="Social Media Management" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">SMM</button>
-                    <button type="button" onclick="loadFeaturedData('Audio Visual')" data-featured-filter="Audio Visual" class="featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue">Audio Visual</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="featured-grid">
-            <div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">
-                Memuat karya pilihan...
-            </div>
-        </div>
-
-        <div class="pt-12 pb-2 flex items-center justify-center text-center">
-    <a href="works"
-       class="group inline-flex items-center justify-center gap-3 px-8 sm:px-10 py-4 bg-kancah-dark text-white rounded-full overflow-hidden transition-all hover:bg-kancah-blue active:scale-95 shadow-lg">
-
-        <span class="font-black uppercase tracking-[0.2em] text-[11px]">
-            See All Projects
-        </span>
-
-        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
-
-    </a>
-
+  </div>
+  <a class="cue" href="#layanan" aria-label="Scroll ke layanan"><i></i>Scroll</a>
 </div>
+
+<!-- STRIP -->
+<div class="strip-wrap" aria-hidden="true">
+  <div class="strip"><div class="row" data-marq></div></div>
+</div>
+
+<section class="about" id="tentang">
+  <div class="wrap">
+    <div class="stitle"><span>01 — Tentang Kami</span><i></i></div><p class="mani">Kancah itu gelanggang <svg class="in ring" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="30" fill="none" stroke="#0006ff" stroke-width="10"/><circle cx="40" cy="40" r="8" fill="#0006ff"/></svg> buat ide-ide <span class="in pill">gila</span> jadi nyata <svg class="in mk" viewBox="29 37 342 344" aria-hidden="true"><use href="#kmark" x="29" y="37" width="342" height="344"/></svg> langsung dari Yogyakarta <svg class="in sq" viewBox="0 0 120 30" aria-hidden="true"><path d="M5 18c10-14 20-14 25 0s15 14 25 0 15-14 25 0 15 14 30 0"/></svg></p>
+    <div class="ab-g">
+      <div class="ab-t"><p>Kancah Creative adalah agensi kreatif dan digital yang berbasis di Yogyakarta. Dalam bahasa Indonesia, kancah berarti gelanggang: tempat orang berkumpul, bermain, dan beradu gagasan. Suasana itulah yang kami bangun dalam setiap proyek.</p>
+      <p>Dalam satu tim, kami menangani brand design, promosi, pengembangan website dan aplikasi, pengelolaan konten, hingga produksi video, sehingga seluruh pekerjaan terhubung dari strategi sampai eksekusi. Kami tidak hanya mengerjakan brief, tetapi juga memahami persoalan bisnis di baliknya.</p><a class="btn" href="about">Tentang Kami <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div>
+      <div class="nums"><div id="n-proj" hidden><b data-n>0</b><span>Proyek di portofolio</span></div><div id="n-part" hidden><b data-n>0</b><span>Klien dan partner</span></div><div><b data-n="5">5</b><span>Bidang layanan</span></div></div>
     </div>
+  </div>
 </section>
 
-<section class="border-y border-gray-100 py-10 sm:py-12 bg-white overflow-hidden">
-    <div class="max-w-[1400px] mx-auto px-6 mb-8 text-center"><span class="text-xs font-bold uppercase tracking-widest text-gray-400">Dipercaya Oleh Mereka</span></div>
-    
-    <div class="marquee-container w-full relative overflow-hidden" 
-     style="-webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); 
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
-    
-    <div class="marquee-track flex gap-6 sm:gap-16 items-center px-4" id="partner-track">
-    </div>
-</div>
-</section>
- <section class="py-14 bg-white text-[#111] overflow-hidden">
-    <div class="max-w-[1500px] mx-auto px-4 sm:px-6">
-      <div class="cta-glow rounded-[2rem] text-white p-6 sm:p-8 lg:p-8 flex flex-col lg:flex-row justify-between gap-7 items-start lg:items-center overflow-hidden relative shadow-2xl shadow-[#0006ff]/20">
-        <div class="absolute right-0 top-0 w-[420px] h-full opacity-20 pointer-events-none">
-          <div class="absolute right-10 top-8 w-44 h-44 rounded-full border border-white/30"></div>
-          <div class="absolute right-28 bottom-8 w-24 h-24 rounded-full border border-white/20"></div>
-          <div class="absolute right-0 bottom-0 w-72 h-72 bg-white/10 blur-3xl rounded-full"></div>
-        </div>
+<section class="vals" id="values"><div class="wrap"><div class="stitle"><span>02 — Nilai Kami</span><i></i></div><div class="sh"><h2>Our <span class="sel inv">Values</span></h2><p class="intro">Empat nilai yang menjadi landasan cara kami bekerja dan berhubungan dengan klien.</p></div><div class="vgrid"><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="34"/><circle cx="50" cy="50" r="7" fill="currentColor"/></svg><h3>Creativity</h3><p>Kami mendorong gagasan yang berani dan orisinal, dengan tetap memastikan relevansinya bagi tujuan bisnis klien.</p></article><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><path d="M6 55c10-28 20-28 25 0s15 28 25 0 15-28 25 0 10 20 13 0"/></svg><h3>Collaboration</h3><p>Strategi, desain, teknologi, dan produksi dikerjakan dalam satu tim agar komunikasi efisien dan hasil selaras.</p></article><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 8l9 31 31 11-31 11-9 31-9-31-31-11 31-11z"/></svg><h3>Consistency</h3><p>Setiap karya menjaga identitas brand tetap seragam di seluruh titik temu dengan audiens.</p></article><article class="vc"><svg class="vd" viewBox="0 0 100 100" aria-hidden="true"><path d="M18 52l20 20 44-48"/><rect x="8" y="8" width="84" height="84"/></svg><h3>Integrity</h3><p>Kami bekerja secara transparan, menepati tenggat, dan bertanggung jawab atas kualitas hasil akhir.</p></article></div></div></section>
+<section class="light svc" id="layanan"><div class="wrap"><div class="stitle"><span>03 — Layanan</span><i></i></div><div class="sh"><h2>Our <span class="sel">Services</span></h2><p class="intro">Lima bidang layanan terintegrasi yang ditangani oleh satu tim, dari strategi hingga eksekusi.</p></div><div id="rows"></div></div></section>
+<div id="peek" aria-hidden="true"></div>
 
-        <div class="relative z-10 max-w-2xl">
-          <span class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[.3em] text-white/60">
-            <i class="fa-regular fa-comments"></i> Let's Talk !
-          </span>
-          <h2 class="text-4xl sm:text-5xl font-black uppercase tracking-tighter mt-3 leading-[.9]">
-            Siap Mengembangkan<br><span class="italic">Brand Kamu?</span>
-          </h2>
-          <p class="text-white/75 mt-4 leading-relaxed max-w-2xl">
-            Setiap brand punya tantangan yang berbeda. Diskusikan kebutuhanmu bersama tim Kancah Creative dan dapatkan solusi yang sesuai dengan tujuan bisnis.
-          </p>
-        </div>
+<section class="blue works" id="karya"><div class="wrap"><div class="stitle"><span>04 — Portofolio</span><i></i></div><div class="sh"><h2>Selected <span class="sel inv">Works</span></h2><p class="intro">Sebagian proyek yang telah kami kerjakan bersama klien dari berbagai industri.</p></div><div class="filters" id="filters" role="group" aria-label="Filter kategori"></div></div>
+<div class="hs" id="hs"><div class="hs-pin"><div class="hs-track" id="featured-grid" aria-busy="true"></div><div class="hs-ui mono"><span id="hs-c">01</span><i><b id="hs-p"></b></i><span id="hs-t">00</span></div></div></div>
+<div class="more"><a class="btn w" href="works">Lihat Semua Karya <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div></section>
 
-        <a href="contact" class="group relative z-10 bg-white text-[#0006ff] px-6 py-3 rounded-full font-black uppercase tracking-[.2em] text-[10px] hover:bg-[#111] hover:text-white transition-all flex items-center gap-3 shadow-xl">
-          Jadwalkan Konsultasi Gratis
-          <span class="w-7 h-7 rounded-full bg-[#0006ff] text-white group-hover:bg-white group-hover:text-[#111] flex items-center justify-center transition-all">
-            <i class="fa-solid fa-arrow-right arrow-move text-[10px]"></i>
-          </span>
-        </a>
+<section class="px" id="proses"><div class="px-pin"><div class="px-bar mono"><span>[05] Our Process</span><span id="px-s">01/03</span></div><div class="px-st"><i class="px-floor"></i><svg class="pxd a" viewBox="0 0 48 48" aria-hidden="true"><path d="M30 8a16 16 0 1 0 10 28A14 14 0 0 1 30 8z"/></svg><svg class="pxd b" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="19"/><path d="M20 16l13 8-13 8z" fill="#fff"/></svg><svg class="pxd c" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4l4.5 15.5L44 24l-15.5 4.5L24 44l-4.5-15.5L4 24l15.5-4.5z"/></svg><div class="px-word sel" id="px-w" aria-live="polite">Dream</div><div class="px-rail mono"><span>01 Dream</span><span>02 Play</span><span>03 Create</span></div></div><div class="px-info"><p id="px-p"></p><span class="o mono" id="px-o"></span></div></div></section>
+
+<div class="pt"><div class="wrap"><div class="stitle"><span>05 — Partner</span><i></i></div><div class="sh"><h2>Our <span class="sel">Partners</span></h2><p class="intro">Brand dan institusi yang telah mempercayakan kebutuhan kreatif dan digital mereka kepada kami.</p></div></div><div class="pt-row"><div id="ptr"></div><div id="ptr2"></div></div></div>
+
+<footer id="contact">
+  <i class="ft-floor" aria-hidden="true"></i>
+  <div class="wrap">
+    
+    <div class="ft-cta">
+      <div>
+        <a class="ft-h" href="https://wa.me/6289524687866" aria-label="Mulai proyek via WhatsApp"><h2>Let&rsquo;s work<br><span class="sel inv">together.</span></h2></a>
+        <p class="intro">Sampaikan kebutuhan brand atau bisnis Anda, dan tim kami akan membantu menyusun solusinya.</p>
       </div>
+      <a class="ft-stk" href="https://wa.me/6289524687866" aria-label="Start a project">
+        <svg class="rg" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring2" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs><circle cx="100" cy="100" r="98" fill="#fff"/><text><textPath href="#ring2" textLength="455" lengthAdjust="spacing">START A PROJECT &bull; START A PROJECT &bull;</textPath></text></svg>
+        <svg class="go" viewBox="0 0 24 24" fill="none" stroke="#0006ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10"/></svg>
+      </a>
     </div>
-  </section>
-    <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
-    
-        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
-            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-            </div>
-        </div>
-    
-        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
-                
-                <div class="lg:col-span-5 flex flex-col justify-start items-start">
-                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
-                        PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
-                    </h2>
-                    
-                    <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
-                        Ayo Ngobrol
-                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
-                    </a>
-                    </a>
-                </div>
-    
-                <div class="lg:col-span-4 flex flex-col gap-6">
-                    <div>
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
-                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
-                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
-                        </address>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <a href="mailto:kancahcreative@gmail.com" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
-                            <i class="fa-regular fa-envelope"></i> kancahcreative@gmail.com
-                        </a>
-                        <a href="https://wa.me/6289524687866" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
-                            <i class="fa-brands fa-whatsapp"></i> +62 895-2468-7866
-                        </a>
-                    </div>
-                </div>
-    
-                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
-                    
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="services" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
-                            <li><a href="works" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
-                            <li><a href="pricelist" class="text-white hover:text-kancah-blue transition-colors">Pricelist</a></li>
-                            <li><a href="about" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
-                            <li><a href="careers" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
-                        </ul>
-                    </div>
-    
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Instagram</a></li>
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">LinkedIn</a></li>
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Behance</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
-                <p class="text-center md:text-left">&copy; 2025 PT. Kancah Media Sejahtera.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <div class="ft-grid">
+      <div class="ft-c"><b>Office</b><p>Jalan Anggajaya 2, Condongcatur, Depok, Sleman, Yogyakarta 55281</p><p class="ft-t"><span id="clk">--:--:--</span> WIB</p></div>
+      <div class="ft-c"><b>Contact</b><a href="mailto:kancahcreative@gmail.com">kancahcreative@gmail.com</a><a href="tel:+6289524687866">+62 895-2468-7866</a><a href="https://wa.me/6289524687866" target="_blank" rel="noopener">WhatsApp</a></div>
+      <div class="ft-c"><b>Menu</b><a href="services">Services</a><a href="works">Portfolio</a><a href="pricelist">Pricing</a><a href="about">About</a><a href="careers">Careers</a></div>
+      <div class="ft-c"><b>Services</b><a href="services">Brand Design</a><a href="services">Promotion Design</a><a href="services">Tech Development</a><a href="services">Social Media Management</a><a href="services">Audio Visual</a></div>
+    </div>
+  </div>
+  <div class="wrap ft-logo"><svg class="klogo" id="foot-logo" viewBox="30 38 1385 346" role="img" aria-label="Kancah"><path class="mk" fill-rule="evenodd" d="M272.5 378.1C271.4 377.6 268.2 377.0 265.5 376.6C260.5 375.9 257.1 374.9 251.3 372.4C249.6 371.6 248.0 371.0 247.7 371.0C247.4 371.0 242.6 368.3 237.1 364.9C227.6 359.2 224.9 356.6 193.7 324.8C175.5 306.1 156.5 286.9 151.6 282.1C136.2 267.2 120.7 249.6 116.4 242.4C109.2 230.2 106.3 212.0 109.5 199.7C110.3 196.5 111.0 193.2 111.0 192.3C111.0 189.9 115.7 180.5 120.0 174.2C122.2 171.1 132.3 160.1 142.6 149.8C159.7 132.5 161.4 131.1 163.3 132.2C166.4 133.8 190.0 158.3 190.0 159.8C190.0 160.5 186.3 164.8 181.7 169.3C156.6 194.2 152.6 199.0 151.1 206.0C148.7 216.8 151.2 222.2 165.3 236.3C171.5 242.5 194.5 265.8 216.6 288.1C264.3 336.4 263.2 335.6 281.0 335.4C294.9 335.2 300.5 333.1 308.2 325.3C320.8 312.4 324.6 298.7 320.1 282.9C317.3 273.2 315.6 270.4 305.8 260.3C295.5 249.6 295.6 249.8 300.4 236.7C306.3 220.9 306.9 198.3 301.7 188.3C299.4 183.9 296.0 174.7 296.0 173.0C296.0 172.1 300.1 167.4 305.1 162.5C327.1 140.7 328.1 117.5 308.1 96.7C300.7 89.0 294.7 86.8 281.5 86.7C267.4 86.6 262.4 88.8 250.6 100.0C237.9 112.1 240.0 112.3 225.2 96.9C218.2 89.7 212.2 83.2 211.7 82.5C209.7 79.0 231.5 59.3 244.6 52.7C266.3 41.8 294.9 41.3 315.3 51.7C329.0 58.6 341.5 68.9 347.9 78.5C368.0 108.6 369.3 140.5 351.6 171.4C348.2 177.4 331.7 196.5 322.1 205.4C316.5 210.7 317.3 212.4 332.3 227.8C348.7 244.8 356.1 255.9 359.9 269.0C360.6 271.5 361.6 274.8 362.1 276.5C365.0 285.7 363.9 310.7 360.4 318.9C353.6 334.6 347.3 345.5 341.3 351.5C330.9 361.9 314.9 371.6 302.5 374.8C287.2 378.9 277.2 379.9 272.5 378.1ZM112.0 377.1C110.6 376.6 107.9 376.1 106.0 376.1C95.3 375.7 73.1 363.8 61.6 352.3C34.0 324.7 29.7 282.2 51.0 249.6C55.0 243.5 62.6 234.9 80.8 216.1C83.1 213.6 84.9 211.3 84.8 210.9C84.6 210.5 78.2 203.6 70.5 195.5C52.3 176.3 47.2 169.0 42.2 155.0C36.4 139.0 35.9 114.9 41.0 103.5C41.5 102.4 42.9 99.0 44.0 95.9C56.2 62.3 99.7 38.2 134.3 45.9C145.7 48.4 155.9 52.8 165.8 59.5C174.3 65.2 273.3 165.1 280.3 175.1C287.8 185.7 292.9 203.4 291.7 214.5C290.6 224.6 287.5 235.6 284.2 240.9C277.5 251.9 273.5 256.7 257.3 273.0L239.0 291.5L225.0 277.5C217.3 269.8 211.0 263.1 211.0 262.6C211.0 262.1 219.0 253.8 228.8 244.1C240.5 232.5 247.0 225.3 247.9 223.0C248.6 221.1 249.6 218.7 250.1 217.8C252.4 213.3 249.7 199.9 245.3 194.6C244.4 193.5 221.1 169.9 193.6 142.3C154.6 103.2 142.4 91.5 138.5 89.5C117.0 79.0 93.4 87.2 82.0 109.2C78.9 115.3 78.7 115.9 78.8 127.0C78.8 144.0 80.0 146.7 95.2 163.3C104.0 173.0 103.8 172.1 100.0 182.5C95.0 196.1 93.2 216.4 96.1 227.4C98.7 237.4 99.5 239.8 101.7 244.2C103.0 246.8 104.0 249.2 104.0 249.5C104.0 249.9 99.7 254.6 94.5 260.1C81.0 274.2 78.8 278.8 78.8 294.0C78.8 303.7 79.1 306.3 80.9 310.5C89.7 330.5 111.0 341.1 130.8 335.4C139.6 332.9 141.8 331.4 152.2 321.2L162.0 311.6L175.2 325.5C182.5 333.1 188.6 339.8 188.8 340.4C189.1 341.9 172.8 357.9 166.5 362.2C156.2 369.3 143.6 374.7 134.0 376.2C124.9 377.6 114.7 378.0 112.0 377.1Z"/><g class="wm"><path class="L" d="M416.2 215.8L416.5 95.5L438.5 91.8C450.6 89.8 461.3 88.1 462.2 88.1C463.9 88.0 464.0 92.2 464.2 158.2L464.5 228.3L477.5 213.9C484.7 206.0 496.5 192.4 503.9 183.8L517.3 168.0L545.8 168.0L574.2 168.0L567.4 175.8C550.2 195.2 533.4 213.6 520.3 227.0L506.1 241.7L511.1 246.6C525.9 260.9 550.6 292.4 563.9 313.9C571.2 325.7 576.0 334.2 576.0 335.5C576.0 335.8 563.6 336.0 548.5 336.0C533.4 336.0 521.0 335.6 521.0 335.2C521.0 333.8 498.6 300.5 491.4 291.2C484.3 282.1 466.3 263.0 464.8 263.0C464.4 263.0 464.0 279.4 464.0 299.5L464.0 336.0L440.0 336.0L416.0 336.0L416.2 215.8Z"/><path class="L" d="M641.5 338.9C601.2 336.3 581.5 318.3 581.6 284.0C581.6 253.0 601.4 235.8 641.6 231.9C652.3 230.9 671.9 231.8 678.9 233.7C684.1 235.1 679.6 216.8 673.2 210.3C664.9 202.1 638.8 200.7 612.0 207.1C607.4 208.1 603.5 208.8 603.3 208.6C602.6 207.9 596.9 171.7 597.4 171.2C598.4 170.3 613.8 167.0 624.3 165.5C683.4 157.2 716.2 171.4 724.6 209.0C727.3 220.8 728.0 330.4 725.4 331.4C720.4 333.3 687.0 338.2 676.0 338.6C669.1 338.8 661.2 339.2 658.5 339.3C655.8 339.5 648.1 339.3 641.5 338.9ZM680.2 301.3C680.7 301.1 681.0 292.8 681.0 283.0L681.0 265.1L675.2 264.4C665.7 263.1 649.9 263.6 643.7 265.4C633.1 268.5 628.5 274.7 629.2 285.0C629.9 294.5 635.5 299.9 647.1 301.9C652.2 302.8 678.6 302.4 680.2 301.3Z"/><path class="L" d="M762.0 255.0C762.0 174.0 762.0 174.0 764.6 173.0C768.1 171.6 789.3 167.4 800.5 165.8C814.9 163.7 851.8 164.1 860.5 166.4C884.3 172.6 898.9 187.2 905.2 211.1C907.3 219.2 907.4 221.6 907.7 277.8L908.1 336.0L884.1 336.0L860.1 336.0L859.8 281.8C859.4 232.4 859.2 227.0 857.6 221.8C855.1 214.2 850.3 208.6 844.3 206.6C839.5 204.9 821.4 204.4 813.8 205.6L810.0 206.3L810.0 271.1L810.0 336.0L786.0 336.0L762.0 336.0L762.0 255.0Z"/><path class="L" d="M1004.7 339.0C964.7 331.8 941.8 305.4 938.0 262.2C931.7 190.7 990.7 146.4 1061.8 169.2C1069.3 171.6 1071.0 172.4 1070.6 173.8C1070.3 174.7 1068.2 182.9 1065.9 192.0C1063.6 201.1 1061.4 208.9 1061.0 209.3C1060.6 209.8 1057.2 209.2 1053.4 208.1C1012.7 195.5 986.6 212.6 986.6 252.0C986.6 275.6 994.0 290.4 1008.8 296.1C1019.7 300.3 1046.3 299.8 1060.7 295.0C1063.9 294.0 1066.6 293.3 1066.9 293.5C1067.3 294.0 1074.0 331.3 1073.7 331.6C1071.9 332.9 1067.3 334.5 1058.8 336.6C1047.6 339.5 1015.2 340.9 1004.7 339.0Z"/><path class="L" d="M1140.5 338.9C1100.2 336.3 1080.5 318.3 1080.6 284.0C1080.6 253.0 1100.4 235.8 1140.6 231.9C1151.3 230.9 1170.9 231.8 1177.9 233.7C1183.1 235.1 1178.6 216.8 1172.2 210.3C1163.9 202.1 1137.8 200.7 1111.0 207.1C1106.4 208.1 1102.5 208.8 1102.3 208.6C1101.6 207.9 1095.9 171.7 1096.4 171.2C1097.4 170.3 1112.8 167.0 1123.3 165.5C1182.4 157.2 1215.2 171.4 1223.6 209.0C1226.3 220.8 1227.0 330.4 1224.4 331.4C1219.4 333.3 1186.0 338.2 1175.0 338.6C1168.1 338.8 1160.2 339.2 1157.5 339.3C1154.8 339.5 1147.1 339.3 1140.5 338.9ZM1179.2 301.3C1179.7 301.1 1180.0 292.8 1180.0 283.0L1180.0 265.1L1174.2 264.4C1164.7 263.1 1148.9 263.6 1142.7 265.4C1132.1 268.5 1127.5 274.7 1128.2 285.0C1128.9 294.5 1134.5 299.9 1146.1 301.9C1151.2 302.8 1177.6 302.4 1179.2 301.3Z"/><path class="L" d="M1262.2 215.8L1262.5 95.5L1284.5 91.8C1296.6 89.8 1307.3 88.1 1308.2 88.1C1309.9 88.0 1310.0 90.6 1310.0 128.1C1310.0 168.2 1310.0 168.2 1312.2 167.6C1328.6 163.2 1349.7 162.9 1364.0 167.0C1383.4 172.5 1396.0 184.2 1402.7 202.8C1407.4 215.8 1408.0 224.3 1408.0 282.2L1408.0 336.0L1384.0 336.0L1360.1 336.0L1359.8 281.2C1359.5 231.4 1359.3 226.0 1357.6 221.0C1355.2 213.9 1349.2 207.7 1343.0 206.0C1337.8 204.6 1319.6 205.2 1313.8 207.0L1310.0 208.1L1310.0 272.0L1310.0 336.0L1286.0 336.0L1262.0 336.0L1262.2 215.8Z"/></g></svg></div>
+  <div class="wrap">
+    <div class="bot"><span>&copy; <span id="yr">2026</span> PT. Kancah Media Sejahtera. All rights reserved.</span><span>#DreamPlayCreate</span><button id="totop" type="button">Kembali ke atas &uarr;</button></div>
+  </div>
+</footer>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-   // KONFIGURASI SUPABASE
-const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
-const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-const kancah = supabase.createClient(SB_URL, SB_KEY);
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* menu */
+const nav=$('#nav'),burger=$('#burger');
+const setMenu=o=>{nav.classList.toggle('open',o);burger.setAttribute('aria-expanded',o);burger.setAttribute('aria-label',o?'Tutup menu':'Buka menu')};
+burger.onclick=()=>setMenu(!nav.classList.contains('open'));
+$$('a',nav).forEach(a=>a.onclick=()=>setMenu(false));
+addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+$('#yr').textContent=new Date().getFullYear();
+$('#totop').onclick=()=>scrollTo({top:0,behavior:reduce?'auto':'smooth'});
 
-// State untuk showcase (dipindah ke top-level supaya bisa dipakai openShowcase/closeShowcase/copyDemoLink)
-let currentDemoUrl = '';
-let currentSlug = '';
-
-// 1. FUNGSI UTAMA LOAD PROJECT (FILTER BUTTON + AUTO ISI)
-function setFeaturedFilterActive(activeFilter = 'all') {
-    document.querySelectorAll('.featured-filter-btn').forEach(btn => {
-        const isActive = btn.dataset.featuredFilter === activeFilter;
-        btn.className = isActive
-            ? 'featured-filter-btn px-4 py-2 rounded-full bg-kancah-blue border border-kancah-blue text-[9px] font-black uppercase tracking-widest text-white transition-all shadow-lg shadow-kancah-blue/20'
-            : 'featured-filter-btn px-4 py-2 rounded-full bg-white border border-gray-200 text-[9px] font-black uppercase tracking-widest text-gray-500 transition-all hover:border-kancah-blue hover:text-kancah-blue';
-    });
+function loopLogo(el, once){
+  if(reduce){ el.classList.add('on'); return; }
+  const play = () => {
+    el.classList.remove('off'); el.getBoundingClientRect(); el.classList.add('on');
+    if(once) return;
+    setTimeout(() => {
+      el.classList.remove('on'); el.classList.add('off');
+      setTimeout(() => { el.classList.remove('off'); setTimeout(play, 160); }, 650);
+    }, 4400);
+  };
+  play();
 }
 
-async function loadFeaturedData(filter = 'all') {
-    const grid = document.getElementById('featured-grid');
-    if (!grid) return;
-
-    const TARGET_LIMIT = 9;
-    setFeaturedFilterActive(filter);
-
-    grid.innerHTML = `
-        <div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">
-            Memuat karya pilihan...
-        </div>`;
-
-    try {
-        const applyFilter = (query) => {
-            if (filter !== 'all') query = query.eq('category', filter);
-            return query;
-        };
-
-        // Ambil highlight sesuai filter dulu.
-        let highlightQuery = kancah
-            .from('projects')
-            .select('*')
-            .eq('is_highlight', true)
-            .order('created_at', { ascending: false })
-            .limit(TARGET_LIMIT);
-
-        const { data: highlighted, error: highlightError } = await applyFilter(highlightQuery);
-        if (highlightError) throw highlightError;
-
-        let projects = highlighted || [];
-
-        // Kalau highlight kurang, tambahkan project terbaru lain sesuai filter.
-        if (projects.length < TARGET_LIMIT) {
-            const usedIds = projects.map(p => p.id).filter(Boolean);
-
-            let moreQuery = kancah
-                .from('projects')
-                .select('*')
-                .order('created_at', { ascending: false })
-                .limit(TARGET_LIMIT - projects.length);
-
-            moreQuery = applyFilter(moreQuery);
-
-            if (usedIds.length > 0) {
-                moreQuery = moreQuery.not('id', 'in', `(${usedIds.join(',')})`);
-            }
-
-            const { data: moreProjects, error: moreError } = await moreQuery;
-            if (moreError) throw moreError;
-
-            projects = [...projects, ...(moreProjects || [])].slice(0, TARGET_LIMIT);
-        }
-
-        if (!projects || projects.length === 0) {
-            grid.innerHTML = `<div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">Belum ada karya di kategori ini.</div>`;
-            return;
-        }
-
-        grid.innerHTML = projects.map((p, i) => {
-            const isWeb  = (p.category || '').trim() === 'Web Development';
-            const action = isWeb
-                ? `openShowcase('${p.title}', '${p.demo_url}', '${p.slug}')`
-                : `window.location.href='detail-project?id=${p.slug}'`;
-            const idx   = String(i + 1).padStart(2, '0');
-            const delay = (i * 0.06).toFixed(2);
-
-            return `
-            <div class="group cursor-pointer"
-                 onclick="${action}"
-                 style="opacity:0; transform:translateY(24px);
-                        animation: featuredCardIn 0.55s cubic-bezier(.23,1,.32,1) ${delay}s forwards;">
-
-                <!-- Thumbnail (wrapper: cuma buat transform lift+rotate saat hover) -->
-                <div class="lift-card-wrap">
-<div class="lift-card relative overflow-hidden rounded-[1.5rem] aspect-[4/3] lg:aspect-[16/9] bg-kancah-dark border border-gray-200
-                            group-hover:border-kancah-blue transition-colors duration-500">
-                    <img src="${p.image_url}" alt="${p.title}" loading="lazy"
-                         class="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.05]">
-
-                    <!-- Scrim biar ghost number tetap kebaca di foto apapun -->
-                    <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/45 to-transparent pointer-events-none"></div>
-
-                    <!-- Ghost index number, bleeding di sudut -->
-                    <span class="pointer-events-none absolute -top-3 -right-1 text-[76px] sm:text-[92px] font-black italic leading-none select-none text-white/25">
-                        ${idx}
-                    </span>
-
-                    <!-- Wash biru saat hover -->
-                    <div class="absolute inset-0 bg-kancah-blue opacity-0 group-hover:opacity-[0.1] transition-opacity duration-500 pointer-events-none"></div>
-
-                    <!-- Live Preview pill (khusus web) -->
-                    ${isWeb ? `
-<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <span class="inline-flex items-center gap-2 bg-white text-kancah-dark px-5 py-2.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-xl">
-                            <span class="relative flex h-1.5 w-1.5">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-kancah-blue opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-kancah-blue"></span>
-                            </span>
-                            Live Preview
-                        </span>
-                    </div>` : ''}
-
-                    <!-- Arrow circle -->
-                    <div class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/95 backdrop-blur flex items-center justify-center
-                                opacity-0 scale-75 border border-transparent
-                                group-hover:opacity-100 group-hover:scale-100 group-hover:border-kancah-blue
-                                transition-all duration-300">
-                        <i class="fa-solid fa-arrow-right -rotate-45 text-kancah-blue text-[11px]"></i>
-                    </div>
-                </div>
-                </div>
-
-                <!-- Meta -->
-                <div class="pt-4">
-                    <span class="text-[9px] font-black uppercase tracking-[0.3em] text-kancah-blue mb-2 block">
-                        ${p.category}
-                    </span>
-                    <h3 class="text-lg font-black uppercase tracking-tight text-kancah-dark group-hover:text-kancah-blue transition-colors leading-tight">
-                        ${p.title}
-                    </h3>
-                    <div class="mt-3 h-[2px] w-full bg-gray-200 relative overflow-hidden">
-                        <div class="absolute inset-y-0 left-0 w-0 group-hover:w-full bg-kancah-blue transition-all duration-500"></div>
-                    </div>
-                </div>
-            </div>`;
-        }).join('');
-    } catch (error) {
-        console.error('Featured works error:', error);
-        grid.innerHTML = `<div class="lg:col-span-12 text-center py-20 text-gray-400 font-black uppercase tracking-[0.3em] text-[10px]">Gagal memuat karya.</div>`;
-    }
+/* ---------- Preloader: Dream -> Play -> Create -> menyatu jadi #DreamPlayCreate ---------- */
+const pre = $('#pre'), preN = $('#pre-n'), preBar = $('#pre-bar'), tag = $('#pre-tag'), pws = $$('.pw', tag);
+const PRE_MS = reduce ? 0 : 4000;
+let started = false, isLoaded = false, prog = 0;
+const preT0 = performance.now();
+const openOnly = a => pws.forEach((w, i) => w.classList.toggle('open', a.includes(i)));
+$$('.pre-row').forEach(r => r.innerHTML += r.innerHTML);
+if(reduce){ openOnly([0,1,2,3]); }
+else [[300,[1]],[1200,[2]],[2100,[3]],[3000,[0,1,2,3]]].forEach(([ms, a]) => setTimeout(() => { openOnly(a); if(a.length > 1) tag.classList.add('merged'); }, ms));
+(function pt(){
+  const k = PRE_MS ? Math.min(1, (performance.now() - preT0) / PRE_MS) : 1;
+  prog = started ? 100 : Math.min(k * 100, isLoaded ? 100 : 92);
+  preN.textContent = Math.round(prog); preBar.style.transform = `scaleX(${prog/100})`;
+  if(k >= 1 && isLoaded) start();
+  if(!started || prog < 100) requestAnimationFrame(pt);
+})();
+function start(){
+  if(started) return; started = true;
+  setTimeout(() => {
+    pre.classList.add('done'); document.body.classList.remove('lock');
+    setTimeout(() => pre.remove(), 1000);
+    loopLogo($('[data-loop]'));
+    window.heroParticles&&window.heroParticles();
+    $$('.draw').forEach(d=>d.classList.add('go'));
+  }, reduce ? 0 : 650);
 }
+document.body.classList.add('lock');
+if(document.readyState === 'complete') isLoaded = true; else addEventListener('load', () => isLoaded = true);
+setTimeout(() => { isLoaded = true; }, 9000);
+setTimeout(start, 12000);
 
-// ── FUNGSI SHOWCASE (top-level scope, identik dengan works.html) ──
-async function openShowcase(title, url, slug) {
-    currentDemoUrl = url;
-    currentSlug    = slug;
-
-    document.getElementById('showcase-title').innerText = title;
-    document.getElementById('web-showcase').classList.remove('hidden');
-    document.getElementById('web-showcase').classList.add('flex');
-    document.body.style.overflow = 'hidden';
-
-    const iframe = document.getElementById('showcase-iframe');
-    iframe.src    = '';
-    iframe.srcdoc = '';
-
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Gagal load demo');
-        const htmlText = await response.text();
-
-        const scriptPenjinak = `
-            <script>
-                document.addEventListener('click', function(e) {
-                    const link = e.target.closest('a');
-                    if (link) { e.preventDefault(); }
-                });
-            <\/script>`;
-
-        iframe.srcdoc = htmlText + scriptPenjinak;
-
-        const newTabBtn   = document.getElementById('showcase-new-tab');
-        newTabBtn.onclick = null;
-        newTabBtn.href    = window.location.origin + '/preview/' + encodeURIComponent(slug);
-        newTabBtn.target  = '_blank';
-
-    } catch (err) {
-        console.error('Error Demo:', err);
-        iframe.srcdoc = `<div style="display:flex;justify-content:center;align-items:center;
-                                     height:100vh;font-family:sans-serif;color:red;">
-                             <h2>❌ Gagal memuat demo.</h2>
-                         </div>`;
-    }
+new IntersectionObserver((es,ob)=>{if(es[0].isIntersecting){loopLogo($('#foot-logo'),true);ob.disconnect()}},{threshold:.4}).observe($('#foot-logo'));
+/* hero */
+if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!reduce){const hero=$('.hero'),decos=$$('.deco');hero.addEventListener('mousemove',e=>{const r=hero.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;decos.forEach(d=>{const k=+d.dataset.depth;d.style.setProperty('--px',x*k+'px');d.style.setProperty('--py',y*k+'px')})})}
+/* strip */
+const star='<svg viewBox="0 0 20 20"><path d="M10 0l2.4 7.6L20 10l-7.6 2.4L10 20l-2.4-7.6L0 10l7.6-2.4z"/></svg>';
+$$('[data-marq]').forEach(el=>{const h=['Strategy','Branding','Digital','Motion','Tech Development','Social Media','Audio Visual'].map(w=>`<span>${w}${star}</span>`).join('');el.innerHTML=h+h+h+h});
+/* about: manifesto menyala saat di-scroll */
+const mani=$('.mani');
+(function split(n){[...n.childNodes].forEach(c=>{if(c.nodeType===3){const f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(t=>{if(!t)return;if(/^\s+$/.test(t))f.append(' ');else{const s=document.createElement('span');s.className='w';s.textContent=t;s.dataset.t=t;f.append(s)}});c.replaceWith(f)}else if(c.classList&&c.classList.contains('pill'))c.classList.add('w')})})(mani);
+const ws=$$('.w',mani);
+function scrub(){const r=mani.getBoundingClientRect();const p=reduce?1:Math.min(1,Math.max(0,(innerHeight*.85-r.top)/(r.height+innerHeight*.3)));const n=Math.round(p*ws.length);ws.forEach((w,i)=>w.classList.toggle('on',i<n))}
+addEventListener('scroll',scrub,{passive:true});addEventListener('resize',scrub);scrub();
+function setNum(id,n){const box=$(id);if(!n||!box)return;const T=n>=10?10:n,S=n>=10?'+':'';box.hidden=false;const b=$('[data-n]',box);if(reduce){b.textContent=T+S;return}const t0=performance.now();const f=t=>{const k=Math.min(1,(t-t0)/1400);b.textContent=Math.round(T*(1-Math.pow(1-k,3)))+S;if(k<1)requestAnimationFrame(f)};new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){o.disconnect();requestAnimationFrame(f)}},{threshold:.4}).observe(box)}
+const K='<svg viewBox="29 37 342 344" aria-hidden="true"><use href="#kmark" x="29" y="37" width="342" height="344"/></svg>';
+const SV=[['Brand Design','Pengembangan identitas brand yang utuh, mulai dari naming, logo, hingga pedoman penerapannya.',['Naming','Logo','Identity']],['Promotion Design','Perancangan materi promosi untuk kanal offline maupun digital, dari billboard hingga iklan digital.',['Billboard','Ads','Banner']],['Tech Development','Pengembangan website dan aplikasi yang andal, mudah digunakan, dan siap berkembang bersama bisnis Anda.',['Website','Mobile App','UI/UX']],['Social Media Management','Pengelolaan akun media sosial secara menyeluruh: perencanaan konten, desain, copywriting, dan pelaporan.',['Content Plan','Copy','Report']],['Audio Visual','Produksi video komersial, fotografi, dan motion graphics untuk menyampaikan pesan brand secara efektif.',['Video','Photo','Motion']]];
+const byS={};let curS='';
+$('#rows').innerHTML=SV.map(([n,d,t],i)=>`<a class="sv" href="https://wa.me/6289524687866?text=${encodeURIComponent('Halo Kancah, saya tertarik dengan '+n)}" target="_blank" rel="noopener" data-n="${esc(n)}"><i class="fill"></i><span class="n">0${i+1}</span><b>${esc(n)}</b><span class="tg">${t.map(esc).join(' / ')}</span><span class="ar">&#8599;</span><p>${esc(d)}<span class="th"></span></p></a>`).join('');
+const rows=$$('#rows a'),peek=$('#peek'),fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+const PKN=5,OX=[0,70,140,-70,-140],OY=[0,20,-12,26,8],RT=[-4,6,-10,9,-14];
+peek.innerHTML=Array.from({length:PKN},(_,i)=>`<div class="pk" style="--i:${i};z-index:${PKN-i}"><img alt=""><b></b></div>`).join('');
+const pks=$$('.pk',peek),pst=pks.map(()=>({x:0,y:0}));let mx=0,my=0;
+function fillPk(n){const L=byS[n]||[];pks.forEach((p,i)=>{const it=L.length&&L[i%L.length];p.hidden=!it;if(it){$('img',p).src=it.u;$('b',p).textContent=it.t}})}
+function fillTh(){rows.forEach(r=>$('.th',r).innerHTML=(byS[r.dataset.n]||[]).slice(0,3).map((it,i)=>`<img src="${esc(it.u)}" alt="" style="--r:${[-5,3,-2][i]}deg">`).join(''))}
+function setS(n){if(n===curS)return;curS=n;rows.forEach(r=>r.classList.toggle('on',r.dataset.n===n));fillPk(n)}
+rows.forEach(r=>{r.addEventListener('mouseenter',()=>{setS(r.dataset.n);if(fine&&(byS[r.dataset.n]||[]).length)peek.classList.add('show')});r.addEventListener('mouseleave',()=>peek.classList.remove('show'));r.addEventListener('focus',()=>setS(r.dataset.n))});
+if(!fine){const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setS(e.target.dataset.n)}),{rootMargin:'-42% 0px -42% 0px'});rows.forEach(r=>rio.observe(r))}
+setS(SV[0][0]);
+/* cursor + progress + clock */
+const cur=$('#cur'),sp=$('#sp');
+if(fine&&!reduce){let cx=0,cy=0;addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.classList.add('show');cur.classList.toggle('big',!!e.target.closest('a,button'))});(function m(){cx+=(mx-cx)*.2;cy+=(my-cy)*.2;cur.style.transform=`translate(${cx}px,${cy}px)`;pks.forEach((p,i)=>{const s=pst[i],k=.22-i*.035,dx=mx+OX[i]-s.x;s.x+=dx*k;s.y+=(my-170+OY[i]-s.y)*k;p.style.transform=`translate(${s.x-110}px,${s.y}px) rotate(${RT[i]+Math.max(-25,Math.min(25,dx*.08))}deg)`});requestAnimationFrame(m)})()}
+$$('.ft-stk').forEach(a=>{if(!fine||reduce)return;a.addEventListener('mousemove',e=>{const r=a.getBoundingClientRect();a.style.translate=((e.clientX-r.left-r.width/2)*.3)+'px '+((e.clientY-r.top-r.height/2)*.3)+'px'});a.addEventListener('mouseleave',()=>a.style.translate='')});
+const clk=$('#clk');(function t(){clk.textContent=new Intl.DateTimeFormat('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:'Asia/Jakarta',hour12:false}).format(new Date()).replace(/\./g,':');setTimeout(t,1000)})();
+/* karya: pinned horizontal */
+const hs=$('#hs'),hpin=$('.hs-pin'),track=$('#featured-grid'),hc=$('#hs-c'),hp=$('#hs-p'),ht=$('#hs-t');
+let maxX=0,hcur=0,hz=false,hn=1;
+function layout(){hz=false;hs.classList.remove('h');hs.style.height='';track.style.transform='';return;hs.classList.toggle('h',hz);if(hz){maxX=Math.max(0,track.scrollWidth-hpin.clientWidth);hs.style.height=(maxX+hpin.clientHeight)+'px'}else{hs.style.height='';track.style.transform=''}}
+(function tick(){if(hz){const r=hs.getBoundingClientRect(),span=hs.offsetHeight-hpin.clientHeight||1,p=Math.min(1,Math.max(0,(68-r.top)/span)),tgt=p*maxX,v=tgt-hcur;hcur+=v*.1;track.style.transform=`translate3d(${-hcur}px,0,0)`;track.style.setProperty('--sk',Math.max(-7,Math.min(7,v*-.05))+'deg');hp.style.width=p*100+'%';hc.textContent=String(Math.round(p*(hn-1))+1).padStart(2,'0')}requestAnimationFrame(tick)})();
+addEventListener('resize',layout);
+const wio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');wio.unobserve(e.target)}}),{threshold:.12});
+const skel=()=>{track.innerHTML='<div class="wk sk in"><div class="fr"></div><div class="ct"><b>Memuat</b></div></div>'.repeat(5);layout()};skel();
+/* proses */
+const PX=[['Dream','Kami memulai dengan memahami tujuan bisnis, target audiens, dan lanskap kompetitor untuk menentukan arah strategi yang jelas.','Output: Brief & riset'],['Play','Tim kreatif mengeksplorasi konsep, moodboard, dan arah visual hingga menemukan pendekatan yang paling tepat.','Output: Konsep kreatif'],['Create','Konsep terpilih dieksekusi menjadi desain, website, konten, dan video dengan standar kualitas yang konsisten.','Output: Aset final']];
+const pxs=$('#proses'),pw=$('#px-w'),rail=$$('.px-rail span');let pi=-1,tm;
+function scr(t){pw.textContent=t;pw.classList.remove('pop');void pw.offsetWidth;pw.classList.add('pop')}
+function pxTick(){const r=pxs.getBoundingClientRect(),p=Math.min(.999,Math.max(0,(68-r.top)/(r.height-innerHeight+68))),i=Math.floor(p*3);if(i!==pi){pi=i;scr(PX[i][0]);$('#px-p').textContent=PX[i][1];$('#px-o').textContent=PX[i][2];$('#px-s').textContent='0'+(i+1)+'/03';rail.forEach((x,k)=>x.classList.toggle('on',k===i))}pxs.dataset.i=i;pw.style.setProperty('--fill',Math.min(100,(p*3-i)*140))}
+addEventListener('scroll',()=>{pxTick();sp.style.transform=`scaleX(${scrollY/(document.documentElement.scrollHeight-innerHeight||1)})`},{passive:true});pxTick();
+/* Supabase */
+const kancah=window.supabase?supabase.createClient('https://hmzwjceomnneiczbpban.supabase.co','sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__'):null;
+const SERVICES=[['Brand Design',/brand|logo|identit|naming|packaging|kemasan/],['Promotion Design',/promo|advert|banner|billboard|campaign|iklan|poster|flyer|spanduk|baliho/],['Tech Development',/\b(tech|web|apps?\b|aplikasi|develop|ui\b|ux\b|mobile|software|landing)/],['Social Media Management',/social|sosial|media|konten|content/],['Audio Visual',/audio|visual|video|photo|foto|motion|animat|film/]];
+const SVC_ORDER=[0,1,2,4,3];
+const svcOf=p=>{const c=String(p.category||'').toLowerCase().trim();const ex=SERVICES.find(([n])=>n.toLowerCase()===c);if(ex)return ex[0];const h=SVC_ORDER.map(i=>SERVICES[i]).find(([,re])=>re.test(c));return h?h[0]:''};
+async function loadWorks(){
+  const f=$('#filters');
+  const draw=l=>{hn=Math.max(1,l.length);ht.textContent=String(l.length).padStart(2,'0');hcur=0;track.removeAttribute('aria-busy');track.innerHTML=l.length?l.map((p,i)=>`<a class="wk" href="detail-project?id=${encodeURIComponent(p.slug)}"><div class="fr"><img src="${esc(p.image_url)}" alt="${esc(p.title)}" loading="lazy" onerror="this.remove()"><span class="ix">${String(i+1).padStart(2,'0')}</span><span class="vw">VIEW</span></div><div class="ct"><b>${esc(p.title)}</b><span class="mono">${esc(svcOf(p)||p.category)}</span></div></a>`).join(''):'<div class="msg">Belum ada proyek pada kategori ini.</div>';$$('.wk',track).forEach(w=>wio.observe(w));layout()};
+  f.innerHTML=['Semua',...SERVICES.map(s=>s[0])].map((c,i)=>`<button type="button" data-c="${i?esc(c):''}" aria-pressed="${i===0}">${esc(c)}</button>`).join('');
+  try{
+    const {data,error}=await kancah.from('projects').select('*').order('created_at',{ascending:false}).limit(120);
+    if(error)throw error;const all=data||[];
+    if(!all.length){track.innerHTML='<div class="msg">Belum ada proyek.</div>';return}
+    all.forEach(p=>{const n=svcOf(p);if(n&&p.image_url)(byS[n]=byS[n]||[]).push({u:p.image_url,t:p.title})});
+    fillPk(curS);fillTh();setNum('#n-proj',all.length);
+    const feat=all.filter(p=>p.is_highlight).concat(all.filter(p=>!p.is_highlight)).slice(0,6);
+    draw(feat);
+    f.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('button',f).forEach(x=>x.setAttribute('aria-pressed',x===b));draw(b.dataset.c?all.filter(p=>svcOf(p)===b.dataset.c).slice(0,6):feat)});
+  }catch(e){console.error(e);track.innerHTML='<div class="msg">Portofolio belum dapat dimuat. Silakan muat ulang halaman.</div>'}
 }
-
-function closeShowcase() {
-    document.getElementById('web-showcase').classList.remove('flex');
-    document.getElementById('web-showcase').classList.add('hidden');
-    const iframe  = document.getElementById('showcase-iframe');
-    iframe.src    = '';
-    iframe.srcdoc = '';
-    document.body.style.overflow = '';
+async function loadPartners(){
+  const {data,error}=await kancah.from('partners').select('*').order('sort_order',{ascending:true});
+  const t=$('#ptr');if(error||!data||!t)return;
+  const h=data.map(p=>`<img src="${esc(p.logo_url)}" alt="${esc(p.name||'Partner Kancah')}" loading="lazy">`).join('');t.innerHTML=h+h+h+h;const t2=$('#ptr2');if(t2){const h2=data.slice().reverse().map(p=>`<img src="${esc(p.logo_url)}" alt="${esc(p.name||'Partner Kancah')}" loading="lazy">`).join('');t2.innerHTML=h2+h2+h2+h2}setNum('#n-part',data.length);
 }
-
-function copyDemoLink() {
-    if (!currentSlug) return;
-    const cleanUrl = window.location.origin + '/preview/' + encodeURIComponent(currentSlug);
-    if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(cleanUrl).then(updateCopyButton).catch(() => copyFallback(cleanUrl));
-    } else {
-        copyFallback(cleanUrl);
-    }
-}
-
-function updateCopyButton() {
-    const btn = document.querySelector('[onclick="copyDemoLink()"] i');
-    if (!btn) return;
-    const orig = btn.className;
-    btn.className = 'fa-solid fa-check text-xs text-green-500';
-    setTimeout(() => { btn.className = orig; }, 2000);
-}
-
-function copyFallback(text) {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); updateCopyButton(); } catch (e) { console.error(e); }
-    document.body.removeChild(ta);
-}
-
-// 2. FUNGSI LOGO PARTNER
-async function loadPartners() {
-    const { data: partners, error } = await kancah.from('partners').select('*').order('sort_order', { ascending: true });
-    if (!error && partners) {
-        const track = document.getElementById('partner-track');
-        if (track) {
-            const logoHtml = partners.map(p => `
-                <img src="${p.logo_url}" class="h-10 sm:h-20 w-auto object-contain flex-shrink-0 [filter:brightness(0)_saturate(100%)_invert(55%)] hover:[filter:brightness(0)_saturate(100%)_invert(9%)_sepia(100%)_saturate(7484%)_hue-rotate(244deg)_brightness(100%)_contrast(145%)]" alt="${p.name}">
-            `).join('');
-            track.innerHTML = logoHtml + logoHtml;
-        }
-    }
-}
-
-// 3. FUNGSI JAM & CUACA
-function updateClock() {
-    const now = new Date();
-    const h = String(now.getHours()).padStart(2, '0');
-    const m = String(now.getMinutes()).padStart(2, '0');
-    const s = String(now.getSeconds()).padStart(2, '0');
-    if(document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
-    if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
-}
-
-async function updateWeather() {
-    try {
-        const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
-        const data = await res.json();
-        if (data && data.current_weather) {
-            const temp = Math.round(data.current_weather.temperature) + "°C";
-            if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = temp;
-            if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = temp;
-        }
-    } catch (e) { console.error("Weather Offline"); }
-}
-
-// 4. INIT SEMUA LOGIC
-document.addEventListener('DOMContentLoaded', () => {
-    loadFeaturedData();
-    loadPartners();
-    updateClock();
-    setInterval(updateClock, 1000);
-    updateWeather();
-
-    // Mobile Menu Logic
-    const btn = document.getElementById('mobile-menu-button');
-    const menu = document.getElementById('mobile-menu');
-    const close = document.getElementById('close-menu');
-    
-    if(btn) btn.addEventListener('click', () => {
-        menu.classList.remove('translate-x-full');
-        menu.classList.add('translate-x-0');
-        document.body.style.overflow = 'hidden';
-    });
-    
-    if(close) close.addEventListener('click', () => {
-        menu.classList.remove('translate-x-0');
-        menu.classList.add('translate-x-full');
-        document.body.style.overflow = '';
-    });
-});
+if(kancah){loadWorks();loadPartners().catch(console.error)}else{track.innerHTML='<div class="msg">Portofolio belum dapat dimuat. Silakan muat ulang halaman.</div>'}
 </script>
-</body>
+<script>
+/* ===== V2: hero "+" particle wordmark, header clock, cursor label ===== */
+(function(){
+  const $=(s,r=document)=>r.querySelector(s);
+  const reduceM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const hc=$('#hclk');
+  if(hc){(function t(){hc.textContent=new Intl.DateTimeFormat('id-ID',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Jakarta',hour12:false}).format(new Date()).replace(/\./g,':');setTimeout(t,30000)})()}
 
+  /* hover label on portfolio cards */
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!reduceM){
+    const c=document.createElement('div');c.className='vcur';c.textContent='Lihat Karya';document.body.append(c);
+    let x=0,y=0,tick=false;
+    addEventListener('mousemove',e=>{x=e.clientX+15;y=e.clientY+15;if(!tick){tick=true;requestAnimationFrame(()=>{c.style.transform=`translate(${x}px,${y}px)`;tick=false})}},{passive:true});
+    document.addEventListener('mouseover',e=>{c.style.opacity=e.target.closest&&e.target.closest('.wk')?'1':'0'});
+  }
+
+  let started=false;
+  window.heroParticles=function(){
+    if(started)return;started=true;
+    const box=$('.hp'),cv=$('#hp-c');if(!box||!cv)return;
+    const ctx=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2);
+    const mobile=innerWidth<=600,touch='ontouchstart' in window||navigator.maxTouchPoints>0;
+    const CFG={step:mobile?7:(innerWidth>1400?10:8),size:mobile?1.5:2.6,final:.5,fade:2200,stagger:1600,drift:14,hover:!touch&&!mobile,r2:110*110,out2:220*220};
+    const MARK=(()=>{const e=document.querySelector('#kmark path');return e?new Path2D(e.getAttribute('d')):null})();let P=[],W=0,H=0,t0=null,raf=null,vis=true,mx=-9999,my=-9999,cxm=-9999,cym=-9999,tm;
+    function build(){
+      W=box.clientWidth;
+      const off=document.createElement('canvas'),o=off.getContext('2d');
+      const font=s=>`700 ${s}px "Ubuntu",system-ui,sans-serif`;
+      let fs=200;o.font=font(fs);fs=fs*W/o.measureText('KANCAH').width;
+      H=Math.round(fs*.76);
+      cv.style.height=H+'px';cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+      off.width=W;off.height=H;o.font=font(fs);o.fillStyle='#fff';o.textBaseline='alphabetic';o.fillText('KANCAH',0,H*.985);
+      const d=o.getImageData(0,0,W,H).data;P=[];
+      for(let y=0;y<H;y+=CFG.step)for(let x=0;x<W;x+=CFG.step){
+        if(d[((y|0)*W+(x|0))*4+3]>100)P.push({x,y,ox:(Math.random()-.5)*CFG.drift*2,oy:(Math.random()-.5)*CFG.drift*2,dl:reduceM?0:Math.random()*CFG.stagger,ph:Math.random()*6.28,ch:'+',ls:0,gl:0});
+      }
+    }
+    const ease=t=>1-Math.pow(1-t,3);
+    function frame(ts){
+      raf=null;if(!vis)return;
+      if(!t0)t0=ts;const el=reduceM?1e5:ts-t0;
+      ctx.clearRect(0,0,W,H);if(cxm<-1000){mx=my=-9999}else{const rc=cv.getBoundingClientRect();mx=cxm-rc.left;my=cym-rc.top}
+      const buckets=new Map(),digits=[];
+      for(const p of P){
+        const lt=el-p.dl;if(lt<=0)continue;
+        const pr=reduceM?1:Math.min(lt/CFG.fade,1);if(pr<.05)continue;
+        const e=ease(pr),x=p.x+p.ox*(1-e),y=p.y+p.oy*(1-e);
+        let op=CFG.final*e;
+        if(pr>=1&&!reduceM)op=CFG.final*(1+Math.sin(ts*.0008+p.ph)*.12);
+        if(CFG.hover&&pr>=1){
+          const dx=mx-p.x,dy=my-p.y,d2=dx*dx+dy*dy;
+          if(p.ch==='+'&&d2<CFG.r2&&ts-p.ls>250&&Math.random()<.08*(1-d2/CFG.r2)){p.ch='K';p.ls=ts;p.gl=1}
+          else if(p.ch!=='+'&&(d2>CFG.r2||mx<-1000||ts-p.ls>2200)&&ts-p.ls>500&&Math.random()<.12){p.ch='+';p.ls=ts}
+        }
+        if(p.gl>0){p.gl*=.95;if(p.gl<.01)p.gl=0}
+        const fo=Math.min(1,op*(1+p.gl*.4));
+        if(p.ch==='+'){const k=Math.round(fo*40)/40;let b=buckets.get(k);if(!b){b=[];buckets.set(k,b)}b.push(x,y,CFG.size*e)}
+        else digits.push(x,y,fo,p.ch);
+      }
+      ctx.lineWidth=1;ctx.lineCap='square';
+      buckets.forEach((a,k)=>{ctx.strokeStyle=`rgba(255,255,255,${k})`;ctx.beginPath();for(let i=0;i<a.length;i+=3){const x=a[i],y=a[i+1],s=a[i+2];ctx.moveTo(x-s,y);ctx.lineTo(x+s,y);ctx.moveTo(x,y-s);ctx.lineTo(x,y+s)}ctx.stroke()});
+      if(digits.length&&MARK){const ms=mobile?5:8;for(let i=0;i<digits.length;i+=4){ctx.save();ctx.translate(digits[i]-ms/2,digits[i+1]-ms/2);ctx.scale(ms/342,ms/344);ctx.translate(-29,-37);ctx.fillStyle=`rgba(255,255,255,${Math.min(.55,digits[i+2])})`;ctx.fill(MARK,'evenodd');ctx.restore()}}
+      if(!reduceM)raf=requestAnimationFrame(frame);
+    }
+    const run=()=>{if(!raf){t0=null;raf=requestAnimationFrame(frame)}};
+    const go=()=>{build();run()};
+    (document.fonts&&document.fonts.load?document.fonts.load('700 100px "Ubuntu"').catch(()=>{}):Promise.resolve()).then(go);
+    new IntersectionObserver(es=>{vis=es[0].isIntersecting;if(vis&&!reduceM&&!raf)raf=requestAnimationFrame(frame)}).observe(cv);
+    addEventListener('mousemove',e=>{cxm=e.clientX;cym=e.clientY},{passive:true});
+    const leave=()=>{cxm=cym=-9999};document.addEventListener('mouseleave',leave);document.documentElement.addEventListener('mouseleave',leave);addEventListener('blur',leave);
+    addEventListener('resize',()=>{clearTimeout(tm);tm=setTimeout(()=>{if(raf){cancelAnimationFrame(raf);raf=null}go()},200)});
+  };
+})();
+
+</script>
+
+</body>
 </html>
