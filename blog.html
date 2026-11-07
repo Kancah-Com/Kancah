@@ -416,6 +416,71 @@ footer .bot-l>span{font-size:11px}
 .hero h1{font-size:clamp(29px,7.8vw,42px);line-height:1.02}
 .hero .cta .btn{width:auto;flex:1;padding:9px 10px;font-size:11px}
 }
+
+/* Exact footer styles copied from index.html */
+footer .klogo{--mk:#fff;--txt:#fff;--lh:clamp(54px,9vw,112px);margin-bottom:8px}
+footer{background:var(--b);padding:clamp(72px,10vw,130px) 0 28px;overflow:hidden}
+footer h2{font-size:clamp(48px,10vw,160px);margin:28px 0 36px}
+footer h2{font-size:clamp(40px,7vw,112px)}
+footer{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(120% 80% at 50% 115%,var(--blue) 0%,#000 76%);--hc:#fff;padding:clamp(72px,10vw,140px) 0 28px}
+footer{padding-top:clamp(56px,7vw,100px)}
+.blue .sel,footer .sel{color:#fff}
+footer::before,footer::after{content:"";position:absolute;border-radius:50%;filter:blur(100px);z-index:-1;pointer-events:none}
+footer::before{width:700px;height:700px;background:#0006ff;opacity:.35;left:-200px;bottom:-260px;animation:fb1 4s ease-in-out infinite}
+footer::after{width:800px;height:800px;background:#0006ff;opacity:.55;right:-220px;bottom:-280px;animation:fb2 5s ease-in-out infinite}
+@keyframes fb1{0%,100%{transform:translate(0,0) scale(.9)}50%{transform:translate(0,-30%) scale(1.25)}}
+@keyframes fb2{0%,100%{transform:translate(0,-20%) scale(1.2)}50%{transform:translate(0,5%) scale(.85)}}
+@media (max-width:820px){
+footer{padding-top:var(--m-sec)}
+}
+footer{padding:clamp(44px,5.5vw,76px) 0 22px}
+footer .ft-cta{margin-bottom:clamp(28px,3.6vw,48px);gap:24px;align-items:flex-end}
+footer .ft-h h2{font-size:clamp(34px,6.2vw,92px);line-height:1.06}
+footer .ft-cta .intro{margin-top:16px;max-width:42ch;font-size:clamp(14px,1.15vw,16px);opacity:.75}
+footer .ft-stk{width:clamp(96px,10vw,140px)}
+footer .ft-stk text{font-size:14px}
+footer .ft-grid{grid-template-columns:1.5fr 1.2fr .8fr 1.1fr;gap:24px clamp(24px,3vw,48px);padding-top:24px;border-top:1px solid rgba(255,255,255,.35)}
+footer .ft-c b{margin-bottom:12px;font-size:11px;letter-spacing:.14em;opacity:.6}
+footer .ft-c p,footer .ft-c a{font-size:clamp(14px,1.1vw,16px);line-height:1.5;margin-bottom:6px;opacity:.92}
+footer .ft-c .ft-t{font-size:13px;opacity:.65;margin-top:10px}
+footer .bot{margin-top:clamp(28px,3.6vw,44px);padding-top:18px;border-top:1px solid rgba(255,255,255,.35);display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px 24px;font-size:12px;font-weight:400}
+footer .bot-l,footer .bot-r{display:flex;align-items:center;gap:14px 22px;flex-wrap:wrap}
+footer .bot-l .klogo{height:22px;width:auto;margin:0;flex:none;--mk:#fff;--txt:#fff}
+footer .bot-l span,footer .bot-l span span{color:#fff;opacity:1}
+footer .bot .tag{font-family:var(--serif);font-style:italic;font-size:15px;opacity:.9}
+footer .bot button{padding:7px 16px;font-size:12px;letter-spacing:.04em}
+@media (max-width:900px){
+footer .ft-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:820px){
+footer{padding:40px 0 20px}
+footer .ft-cta{margin-bottom:28px;gap:18px;align-items:flex-start}
+footer .ft-h h2{font-size:clamp(34px,10.5vw,48px)}
+footer .ft-stk{width:84px}
+footer .ft-grid{gap:22px 16px;padding-top:20px}
+footer .ft-grid .ft-c:first-child{grid-column:1/-1}
+footer .bot{flex-direction:column;align-items:flex-start;margin-top:28px;gap:12px}
+footer .bot-r{width:100%;justify-content:space-between}
+}
+@media (max-width:520px){
+footer .ft-grid{grid-template-columns:1fr 1fr}
+}
+footer .bot{display:flex;justify-content:space-between;align-items:center;gap:18px 28px;flex-wrap:wrap}
+footer .bot-l{min-width:0;display:flex;align-items:center;gap:12px 18px;flex-wrap:wrap}
+footer .bot-l .klogo{display:block;width:88px;height:22px;max-width:100%;flex:0 0 auto}
+footer .bot-l>span{min-width:0;overflow-wrap:anywhere}
+footer .bot-r{flex:0 0 auto;margin-left:auto;white-space:nowrap}
+@media (max-width:820px){
+footer .bot{flex-direction:column;align-items:flex-start;gap:16px;margin-top:24px}
+footer .bot-l{width:100%;gap:12px 14px}
+footer .bot-r{width:100%;margin-left:0;padding-top:12px;border-top:1px solid rgba(255,255,255,.22);white-space:normal}
+footer .bot .tag{display:inline-block;font-size:16px}
+}
+@media (max-width:390px){
+footer .bot-l{align-items:flex-start}
+footer .bot-l .klogo{width:78px}
+footer .bot-l>span{font-size:11px}
+}
 </style>
 </head>
 <body>
@@ -455,7 +520,7 @@ footer .bot-l>span{font-size:11px}
     <div class="ft-grid">
       <div class="ft-c"><b>Office</b><p>Jalan Anggajaya 2, Condongcatur, Depok, Sleman, Yogyakarta 55281</p><p class="ft-t"><span id="clk">--:--:--</span> WIB</p></div>
       <div class="ft-c"><b>Contact</b><a href="mailto:kancahcreative@gmail.com">kancahcreative@gmail.com</a><a href="tel:+6289524687866">+62 895-2468-7866</a><a href="https://wa.me/6289524687866" target="_blank" rel="noopener">WhatsApp</a></div>
-      <div class="ft-c"><b>Menu</b><a href="services">Layanan</a><a href="works">Portfolio</a><a href="pricelist">Harga</a><a href="about">Tentang</a><a href="blog">Blog</a><a href="careers">Karier</a></div>
+      <div class="ft-c"><b>Menu</b><a href="services">Layanan</a><a href="works">Portfolio</a><a href="pricelist">Harga</a><a href="about">Tentang</a><a href="careers">Karier</a></div>
       <div class="ft-c"><b>Services</b><a href="services">Brand Design</a><a href="services">Promotion Design</a><a href="services">Tech Development</a><a href="services">Social Media Management</a><a href="services">Audio Visual</a></div>
     </div>
   </div>
@@ -492,7 +557,7 @@ async function fetchPosts(){
   grid.removeAttribute('aria-busy');
   if(error){console.error('Error Supabase:',error);grid.innerHTML='<div class="msg">Gagal memuat insight. Silakan muat ulang halaman.</div>';return}
   if(!data||!data.length){grid.innerHTML='<div class="msg">Belum ada insight.</div>';return}
-  grid.innerHTML=data.map(p=>`<a class="card" href="./blog-detail.html?slug=${encodeURIComponent(p.slug)}"><div class="th">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.title)}" loading="lazy" onerror="this.remove()">`:''}</div><div class="meta"><span class="pill">${esc(fmt(p.created_at)||'Insight')}</span></div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p></a>`).join('');
+  grid.innerHTML=data.map(p=>`<a class="card" href="/blog/${encodeURIComponent(p.slug)}"><div class="th">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.title)}" loading="lazy" onerror="this.remove()">`:''}</div><div class="meta"><span class="pill">${esc(fmt(p.created_at)||'Insight')}</span></div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p></a>`).join('');
   grid.querySelectorAll('.card').forEach(c=>io.observe(c));
 }
 fetchPosts();
@@ -505,5 +570,86 @@ fetchPosts();
 })();
 
 </script>
+<style>
+
+/* Final footer layout: stacked brand block on the left, serif hashtag on desktop right */
+footer .bot{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:24px;
+  text-align:left;
+}
+footer .bot-l{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px;
+  min-width:0;
+}
+footer .bot-l .klogo{
+  display:block;
+  width:clamp(160px,18vw,230px);
+  height:auto;
+  max-width:100%;
+  margin:0;
+}
+footer .bot-l>span{
+  display:block;
+  font-size:12px;
+  line-height:1.5;
+  text-align:left;
+  overflow-wrap:anywhere;
+  opacity:.8;
+}
+footer .bot-r{
+  display:flex!important;
+  width:auto;
+  align-items:flex-end;
+  justify-content:flex-end;
+  margin:0 0 2px auto;
+  padding:0;
+  border:0;
+  white-space:nowrap;
+}
+footer .bot .tag{
+  display:inline-block;
+  font-family:'Instrument Serif',Georgia,serif;
+  font-style:normal;
+  font-weight:400;
+  font-size:clamp(28px,3.4vw,48px);
+  line-height:1;
+  letter-spacing:-.025em;
+  text-transform:none;
+  opacity:1;
+  padding:0;
+  border:0;
+  border-radius:0;
+}
+@media(max-width:820px){
+  footer .bot{
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:flex-start;
+    gap:14px;
+    margin-top:24px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.28);
+  }
+  footer .bot-l{width:100%;gap:10px}
+  footer .bot-l .klogo{
+    width:clamp(140px,42vw,190px);
+    height:auto;
+  }
+  footer .bot-l>span{font-size:11px}
+  footer .bot-r{display:none!important}
+}
+@media(max-width:360px){
+  footer .bot{gap:12px}
+  footer .bot-l .klogo{width:140px}
+  footer .bot-l>span{font-size:10px}
+}
+
+</style>
 </body>
 </html>
