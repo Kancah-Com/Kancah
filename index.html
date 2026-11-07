@@ -301,9 +301,9 @@ nav .btn{padding:9px 18px;font-size:12px;letter-spacing:.12em}
 .btn:hover,.btn:focus-visible{background:rgba(255,255,255,.1);color:#fff}
 .btn.w,.btn.ghost{--bg:transparent;--fg:#fff;background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
 .btn.w:hover,.btn.ghost:hover{color:#fff;background:rgba(255,255,255,.1)}
-.light .btn,.about .btn{color:var(--ink);border-color:rgba(0,0,0,.35)}
-.light .btn::before,.about .btn::before{background:linear-gradient(160deg,transparent 0%,var(--b) 15%,#0006ff 20%,transparent 35%,transparent 40%,var(--b) 55%,#0006ff 60%,transparent 75%,transparent 80%,var(--b) 95%);background-size:300% 300%}
-.light .btn:hover,.about .btn:hover{color:var(--ink);background:rgba(0,6,255,.06)}
+.light .btn,.about .btn,.home-blog .btn{color:var(--ink);border-color:rgba(0,0,0,.35)}
+.light .btn::before,.about .btn::before,.home-blog .btn::before{background:linear-gradient(160deg,transparent 0%,var(--b) 15%,#0006ff 20%,transparent 35%,transparent 40%,var(--b) 55%,#0006ff 60%,transparent 75%,transparent 80%,var(--b) 95%);background-size:300% 300%}
+.light .btn:hover,.about .btn:hover,.home-blog .btn:hover{color:var(--ink);background:rgba(0,6,255,.06)}
 
 /* hero */
 .hero{background:radial-gradient(95% 60% at 50% 112%,rgba(0,6,255,.6) 0%,rgba(0,6,255,.25) 40%,var(--ink) 78%);align-items:stretch;justify-content:flex-end;text-align:left;gap:clamp(18px,3.5vh,40px)}
@@ -831,7 +831,7 @@ footer .bot-r{flex:0 0 auto;margin-left:auto;white-space:nowrap}
       <p class="intro">Pemikiran, strategi, dan cerita di balik proses kreatif Kancah.</p>
     </div>
     <div class="home-blog-grid" id="home-blog-grid" aria-live="polite" aria-busy="true"></div>
-    <div class="more"><a class="btn w" href="blog">Lihat Selengkapnya <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div>
+    <div class="more"><a class="btn" href="blog">Lihat Selengkapnya <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg></a></div>
   </div>
 </section>
 
@@ -952,7 +952,7 @@ const kancah=window.supabase?supabase.createClient('https://hmzwjceomnneiczbpban
 const SERVICES=[['Brand Design',/brand|logo|identit|naming|packaging|kemasan/],['Promotion Design',/promo|advert|banner|billboard|campaign|iklan|poster|flyer|spanduk|baliho/],['Tech Development',/\b(tech|web|apps?\b|aplikasi|develop|ui\b|ux\b|mobile|software|landing)/],['Social Media Management',/social|sosial|media|konten|content/],['Audio Visual',/audio|visual|video|photo|foto|motion|animat|film/]];
 const SVC_ORDER=[0,1,2,4,3];
 const svcOf=p=>{const c=String(p.category||'').toLowerCase().trim();const ex=SERVICES.find(([n])=>n.toLowerCase()===c);if(ex)return ex[0];const h=SVC_ORDER.map(i=>SERVICES[i]).find(([,re])=>re.test(c));return h?h[0]:''};
-const wkLink=p=>{const u=projUrl(p);if(!u)return 'href="detail-project?id='+encodeURIComponent(p.slug)+'"';return 'href="'+esc(u)+'" target="_blank" rel="noopener"'+(/\/storage\/v1\/object\/public\//.test(u)?' data-demo="'+esc(u)+'"':'')};
+const wkLink=p=>{const u=projUrl(p);if(!u)return 'href="/works/'+encodeURIComponent(p.slug)+'"';return 'href="'+esc(u)+'" target="_blank" rel="noopener"'+(/\/storage\/v1\/object\/public\//.test(u)?' data-demo="'+esc(u)+'"':'')};
 const projUrl=p=>{const keys=['project_url','website_url','web_url','live_url','demo_url','site_url','link_url','link','url','website'];for(const k of keys){const v=p[k];if(typeof v==='string'&&/^(https?:)?\/\//.test(v.trim()))return v.trim()}for(const k in p){const v=p[k];if(k!=='image_url'&&k!=='logo_url'&&typeof v==='string'&&/^https?:\/\/\S+\.html?(\?|#|$)/i.test(v.trim()))return v.trim()}return ''};
 const demoC=new Map(),warm=u=>{if(!demoC.has(u))demoC.set(u,fetch(u).then(r=>{if(!r.ok)throw 0;return r.blob()}).then(bl=>URL.createObjectURL(new Blob([bl],{type:'text/html;charset=utf-8'}))).catch(()=>{demoC.delete(u);return u}));return demoC.get(u)};
 const dio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){dio.unobserve(e.target);const c=navigator.connection;if(!(c&&c.saveData))warm(e.target.dataset.demo)}}),{rootMargin:'300px'});
@@ -1320,7 +1320,7 @@ footer .bot .tag{
     const {data,error}=await db.from('posts').select('*').order('created_at',{ascending:false}).limit(3);
     grid.removeAttribute('aria-busy');
     if(error||!data?.length){grid.innerHTML='<p style="opacity:.6">Belum ada insight.</p>';return}
-    grid.innerHTML=data.map(p=>`<a class="home-blog-card" href="blog-detail.html?slug=${encodeURIComponent(p.slug)}"><div class="home-blog-thumb">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.title)}" loading="lazy" onerror="this.remove()">`:''}</div><div class="home-blog-meta">${esc(fmt(p.created_at))}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt||'')}</p></a>`).join('');
+    grid.innerHTML=data.map(p=>`<a class="home-blog-card" href="/blog/${encodeURIComponent(p.slug)}"><div class="home-blog-thumb">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.title)}" loading="lazy" onerror="this.remove()">`:''}</div><div class="home-blog-meta">${esc(fmt(p.created_at))}</div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt||'')}</p></a>`).join('');
     const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
     grid.querySelectorAll('.home-blog-card').forEach((el,i)=>{el.style.transitionDelay=(i*80)+'ms';io.observe(el)});
   };

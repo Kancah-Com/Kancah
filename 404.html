@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<script>
+/* URL bersih di hosting statis: /blog/<slug>, /careers/<slug>, /works/<slug> -> halaman detail.
+   Halaman detail lalu mengembalikan alamat bersihnya lewat history.replaceState. */
+(function(){var m=location.pathname.match(/^\/(blog|careers|works)\/([^\/]+)\/?$/);
+if(m){location.replace({blog:'/blog-detail?slug=',careers:'/detail-careers?slug=',works:'/detail-project?id='}[m[1]]+m[2]+location.hash)}})();
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#000">

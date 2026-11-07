@@ -14,5 +14,10 @@ RewriteRule ^works/?$ works.html [L]
 RewriteRule ^contact/?$ contact.html [L]
 RewriteRule ^careers/?$ careers.html [L]
 
+# halaman detail (URL bersih)
+RewriteRule ^blog/([^/]+)/?$ blog-detail.html?slug=$1 [L,QSA]
+RewriteRule ^careers/([^/]+)/?$ detail-careers.html?slug=$1 [L,QSA]
+RewriteRule ^works/([^/]+)/?$ detail-project.html?id=$1 [L,QSA]
+
 # artikel
 RewriteRule ^([A-Za-z0-9_-]+)/?$ post.html?slug=$1 [L,QSA]

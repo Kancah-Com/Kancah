@@ -492,7 +492,7 @@ function draw(list){
   if(!items.length){msg('Belum ada proyek di kategori ini.');return}
   grid.innerHTML=items.map((p,i)=>{
     const web=(p.category||'').trim()==='Web Development'&&p.demo_url;
-    const href=web?'/preview/'+encodeURIComponent(p.slug):'detail-project?id='+encodeURIComponent(p.slug);
+    const href=web?'/preview/'+encodeURIComponent(p.slug):'/works/'+encodeURIComponent(p.slug);
     return `<a class="wk" style="--i:${Math.min(i,11)}" href="${esc(href)}"${web?` data-demo="${esc(p.demo_url)}" data-slug="${esc(p.slug)}" data-title="${esc(p.title)}"`:''}>
       <div class="fr"><img src="${esc(p.image_url)}" alt="${esc(p.title)}" loading="lazy">${web?'<span class="lv">Live Preview</span>':''}</div>
       <div class="ct"><b>${esc(p.title)}</b><span>${esc(p.category)}</span></div></a>`}).join('');
