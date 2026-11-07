@@ -171,7 +171,7 @@ footer.kf .tag{font-family:var(--serif);font-size:26px;line-height:1;color:var(-
   <!-- BLOG -->
   <section id="tab-blog" class="tab">
     <div class="card">
-      <h2 class="text-2xl mb-6">Manage <span class="sel">Blog Posts</span></h2>
+      <h2 id="b-form-title" class="text-2xl mb-6">Manage <span class="sel">Blog Posts</span></h2>
       <form id="blogForm" class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <input type="text" id="b-title" class="inp" placeholder="Judul Blog" required>
         <input type="text" id="b-slug" class="inp" placeholder="Slug (url-friendly-title)" required>
@@ -183,6 +183,7 @@ footer.kf .tag{font-family:var(--serif);font-size:26px;line-height:1;color:var(-
           <div id="b-editor" class="ed"></div>
         </div>
         <button type="submit" id="btn-b" class="btn md:col-span-2">Publish Post</button>
+        <button type="button" id="btn-b-cancel" onclick="resetBlog()" class="hidden btn btn-g md:col-span-2">Batal Edit</button>
       </form>
     </div>
     <div class="card"><h3 class="tiny mb-4">Existing Posts</h3><table class="w-full text-left"><tbody id="blog-list"></tbody></table></div>
@@ -336,6 +337,7 @@ function showTab(n) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('on')); document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
   $('tab-' + n).classList.add('on'); $('btn-' + n).classList.add('active');
   $('main-title').innerHTML = TITLES[n] + ' <span class="sel">Console</span>';
+  if (n === 'users') loadAdmins();
   if (innerWidth < 768 && !$('sidebar').classList.contains('-translate-x-full')) toggleSidebar();
 }
 function applyTheme() {
@@ -659,20 +661,36 @@ let slugTouched = false;
 $('b-slug').addEventListener('input', () => slugTouched = true);
 $('b-title').addEventListener('input', e => { if (!slugTouched) $('b-slug').value = slugify(e.target.value); });
 $('b-image').addEventListener('change', e => { const f = e.target.files[0]; $('b-preview-wrap').classList.toggle('hidden', !f); if (f) $('b-preview').src = URL.createObjectURL(f); });
+function resetBlog() {
+  E.post = null; slugTouched = false; $('blogForm').reset(); bQuill.setContents([]);
+  $('b-preview-wrap').classList.add('hidden'); $('btn-b').textContent = 'Publish Post'; $('btn-b-cancel').classList.add('hidden');
+  $('b-form-title').innerHTML = 'Manage <span class="sel">Blog Posts</span>';
+}
+async function editPost(id) {
+  const { data: p, error } = await sb.from('posts').select('*').eq('id', id).single(); if (error) return toast(error.message, true);
+  E.post = p.id; slugTouched = true;
+  $('b-title').value = p.title || ''; $('b-slug').value = p.slug || ''; $('b-excerpt').value = p.excerpt || ''; $('b-image').value = '';
+  bQuill.root.innerHTML = p.content_html || '';
+  if (p.image_url) { $('b-preview').src = p.image_url; $('b-preview-wrap').classList.remove('hidden'); } else $('b-preview-wrap').classList.add('hidden');
+  $('btn-b').textContent = 'UPDATE POST'; $('btn-b-cancel').classList.remove('hidden'); $('b-form-title').innerHTML = 'Edit <span class="sel">Blog Post</span>';
+  scrollTo({ top: 0, behavior: 'smooth' });
+}
 $('blogForm').addEventListener('submit', async e => {
   e.preventDefault(); const btn = $('btn-b'); btn.disabled = true; btn.textContent = 'PROCESSING...';
   try {
     const payload = { title: $('b-title').value.trim(), slug: $('b-slug').value.trim(), excerpt: $('b-excerpt').value.trim(), content_html: bQuill.root.innerHTML };
-    const cover = $('b-image').files[0]; if (cover) payload.image_url = await upload('project-images', `blog/covers/${Date.now()}_${rid()}.${(cover.name.split('.').pop() || 'jpg').toLowerCase()}`, cover, { contentType: cover.type || undefined });
-    const { error } = await sb.from('posts').insert([payload]); if (error) throw error;
-    toast('POST PUBLISHED!'); e.target.reset(); slugTouched = false; bQuill.setContents([]); $('b-preview-wrap').classList.add('hidden'); loadBlog();
-  } catch (err) { toast(err.message, true); } finally { btn.disabled = false; btn.textContent = 'Publish Post'; }
+    const cover = $('b-image').files[0];   // cover lama tetap dipakai kalau tidak pilih file baru
+    if (cover) payload.image_url = await upload('project-images', `blog/covers/${Date.now()}_${rid()}.${(cover.name.split('.').pop() || 'jpg').toLowerCase()}`, cover, { contentType: cover.type || undefined });
+    if (E.post) { const { error } = await sb.from('posts').update(payload).eq('id', E.post); if (error) throw error; toast('POST UPDATED!'); }
+    else { const { error } = await sb.from('posts').insert([payload]); if (error) throw error; toast('POST PUBLISHED!'); }
+    resetBlog(); loadBlog();
+  } catch (err) { toast(err.message, true); } finally { btn.disabled = false; btn.textContent = E.post ? 'UPDATE POST' : 'Publish Post'; }
 });
 async function loadBlog() {
   const { data, error } = await sb.from('posts').select('*').order('created_at', { ascending: false }); if (error) return toast('Gagal load blog: ' + error.message, true);
-  $('blog-list').innerHTML = (data || []).map(p => `<tr class="row"><td class="w-24">${p.image_url ? `<img src="${esc(p.image_url)}" class="h-12 w-20 object-cover rounded-xl cursor-pointer" onclick="zoom(this.src)">` : ''}</td><td class="font-bold">${esc(p.title)}<span class="tiny block mt-1">/${esc(p.slug)}</span></td><td class="text-right"><button onclick="delPost('${p.id}')" class="ico d"><i class="fa-solid fa-trash-can"></i></button></td></tr>`).join('') || '<tr><td class="py-10 text-center mut text-xs font-bold uppercase">Belum ada post</td></tr>';
+  $('blog-list').innerHTML = (data || []).map(p => `<tr class="row"><td class="w-24">${p.image_url ? `<img src="${esc(p.image_url)}" class="h-12 w-20 object-cover rounded-xl cursor-pointer" onclick="zoom(this.src)">` : ''}</td><td class="font-bold cursor-pointer" onclick="editPost('${p.id}')">${esc(p.title)}<span class="tiny block mt-1">/${esc(p.slug)} · Edit Post</span></td><td class="text-right whitespace-nowrap"><button onclick="editPost('${p.id}')" class="ico"><i class="fa-solid fa-pen"></i></button><button onclick="delPost('${p.id}')" class="ico d"><i class="fa-solid fa-trash-can"></i></button></td></tr>`).join('') || '<tr><td class="py-10 text-center mut text-xs font-bold uppercase">Belum ada post</td></tr>';
 }
-async function delPost(id) { if (!await ask('Hapus Post?', 'Post yang dihapus tidak bisa dikembalikan.')) return; const { error } = await sb.from('posts').delete().eq('id', id); if (error) return toast(error.message, true); toast('POST DIHAPUS!'); loadBlog(); }
+async function delPost(id) { if (!await ask('Hapus Post?', 'Post yang dihapus tidak bisa dikembalikan.')) return; const { error } = await sb.from('posts').delete().eq('id', id); if (error) return toast(error.message, true); if (E.post === id) resetBlog(); toast('POST DIHAPUS!'); loadBlog(); }
 
 /* ---------- CLIENTS ---------- */
 async function loadClients() {
@@ -847,8 +865,10 @@ $('pkgForm').addEventListener('submit', async e => {
 
 /* ---------- LINKS ---------- */
 async function loadLinks() {
-  const { data } = await sb.from('links').select('*').order('sort_order', { ascending: true });
-  $('link-list').innerHTML = (data || []).map(l => `<tr class="row"><td class="font-bold">${esc(l.title)}</td><td class="font-bold" style="color:#7b80ff">${l.clicks || 0} Clicks</td><td class="text-right"><button onclick="delLink(${JSON.stringify(l.id)})" class="ico d"><i class="fa-solid fa-trash-can"></i></button></td></tr>`).join('');
+  const { data, error } = await sb.from('links').select('*').order('sort_order', { ascending: true });
+  if (error) { $('link-list').innerHTML = `<tr><td class="py-6 text-red-400 font-bold text-xs">${esc(error.message)}</td></tr>`; return; }
+  const total = (data || []).reduce((n, l) => n + Number(l.clicks || 0), 0);
+  $('link-list').innerHTML = (data || []).map(l => `<tr class="row"><td><p class="font-bold">${esc(l.title)}</p><a href="${esc(l.url)}" target="_blank" class="tiny block mt-1 truncate" style="max-width:260px">${esc(l.url)}</a></td><td class="font-bold" style="color:#7b80ff">${l.clicks || 0} Clicks</td><td class="text-right"><button onclick="delLink(${JSON.stringify(l.id)})" class="ico d"><i class="fa-solid fa-trash-can"></i></button></td></tr>`).join('') + ((data || []).length ? `<tr><td class="tiny pt-4">Total</td><td class="font-bold pt-4">${total} Clicks</td><td></td></tr>` : '<tr><td class="py-10 text-center mut text-xs font-bold uppercase">Belum ada link</td></tr>');
 }
 $('linkForm').addEventListener('submit', async e => {
   e.preventDefault(); let url = $('link-url').value.trim(); if (url && !/^https?:\/\//i.test(url)) url = 'https://' + url;
@@ -858,8 +878,12 @@ async function delLink(id) { if (!await ask('Hapus Link?', 'Link ini akan dihapu
 
 /* ---------- ADMINS ---------- */
 async function loadAdmins() {
-  if (role !== 'super_admin') return; const { data } = await sb.from('profiles').select('*').order('created_at', { ascending: false }); adminsCache = data || [];
-  $('admin-list').innerHTML = adminsCache.map(u => `<tr class="row"><td><p class="font-bold">${esc(u.full_name)}</p><p class="tiny mt-1">${esc(u.email)}</p></td><td class="text-center"><span class="pill ${u.role === 'super_admin' ? 'p' : ''}">${esc(u.role.replace('_', ' '))}</span></td><td class="text-right whitespace-nowrap"><button onclick="editAdmin('${u.id}')" class="ico"><i class="fa-solid fa-pen"></i></button>${u.role !== 'super_admin' ? `<button onclick="delAdmin('${u.id}')" class="ico d"><i class="fa-solid fa-trash-can"></i></button>` : ''}</td></tr>`).join('');
+  if (role !== 'super_admin') return;
+  let { data, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false });
+  if (error) ({ data, error } = await sb.from('profiles').select('*'));   // kolom created_at mungkin tidak ada
+  if (error) { $('admin-list').innerHTML = `<tr><td class="py-6 text-red-400 font-bold text-xs">${esc(error.message)}</td></tr>`; return toast('Gagal load admin: ' + error.message, true); }
+  adminsCache = data || [];
+  $('admin-list').innerHTML = adminsCache.map(u => { const r = String(u.role || 'editor'); return `<tr class="row"><td><p class="font-bold">${esc(u.full_name || '-')}</p><p class="tiny mt-1">${esc(u.email || '')}</p></td><td class="text-center"><span class="pill ${r === 'super_admin' ? 'p' : ''}">${esc(r.replace('_', ' '))}</span></td><td class="text-right whitespace-nowrap"><button onclick="editAdmin('${u.id}')" class="ico"><i class="fa-solid fa-pen"></i></button>${r !== 'super_admin' ? `<button onclick="delAdmin('${u.id}')" class="ico d"><i class="fa-solid fa-trash-can"></i></button>` : ''}</td></tr>`; }).join('') || '<tr><td class="py-10 text-center mut text-xs font-bold uppercase">Belum ada data admin</td></tr>';
 }
 function editAdmin(id) {
   const u = adminsCache.find(x => x.id === id); if (!u) return; E.user = id;
