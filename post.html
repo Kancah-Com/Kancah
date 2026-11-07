@@ -1,48 +1,115 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#000">
-<title>Journal | Kancah Creative</title>
-<link rel="icon" type="image/png" href="/assets/logowh.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500;1,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/kancah.css">
-<script>document.documentElement.classList.add('js')</script>
-<meta id="meta-desc" name="description" content="Membaca tulisan terbaru dari Kancah Creative.">
-<meta property="og:type" content="article">
-<meta id="og-title" property="og:title" content="Kancah Creative">
-<meta id="og-image" property="og:image" content="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading... • Kancah Creative</title>
+    <meta id="meta-desc" name="description" content="Membaca insight terbaru dari Kancah Creative.">
+    <meta property="og:type" content="article">
+    <meta id="og-title" property="og:title" content="Kancah Creative">
+    <meta id="og-image" property="og:image" content="">
+    
+    <link rel="icon" type="image/png" href="./assets/logowh.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Ubuntu', sans-serif; }
+        /* Style agar konten dari Quill Editor tampil cantik */
+        .post-content h1, .post-content h2 { font-weight: 800; letter-spacing: -0.02em; color: #111; }
+        .post-content h1 { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .post-content h2 { font-size: 1.8rem; margin: 2.5rem 0 1rem; }
+        .post-content p { margin-bottom: 1.5rem; line-height: 1.8; color: #4b5563; font-weight: 300; }
+        .post-content img { border-radius: 1.5rem; margin: 2rem 0; width: 100%; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .post-content blockquote { border-left: 4px solid #0006ff; padding-left: 1.5rem; font-style: italic; color: #111; margin: 2rem 0; font-size: 1.25rem; }
+        .post-content a { color: #0006ff; text-decoration: underline; }
+    </style>
 </head>
-<body data-page="blog">
-<header id="hd"></header>
-<main>
-<section class="ph sm"><div class="wrap" style="max-width:900px"><div class="stitle"><span id="p-date">Journal</span><i></i></div><h1 id="p-title" style="font-size:clamp(34px,5.2vw,76px)">Memuat...</h1></div></section>
-<section class="light"><div class="wrap" style="max-width:860px">
-<div class="fr" style="aspect-ratio:16/9;border-radius:16px;margin-bottom:clamp(28px,4vw,56px)"><img id="p-img" alt="" style="object-position:center"></div>
-<div class="prose" id="p-body"></div>
-<a class="btn" href="blog" style="margin-top:clamp(32px,4vw,56px)">Kembali ke Journal</a>
-</div></section>
-</main>
-<footer id="ft"></footer>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/assets/kancah.js"></script>
-<script>
-const {$,db}=K;
-const slug=new URLSearchParams(location.search).get('slug')||location.pathname.split('/').filter(Boolean).pop();
-(async()=>{
-  const {data,error}=await db.from('posts').select('*').ilike('slug',slug).maybeSingle();
-  if(error)console.error(error);
-  if(error||!data){$('#p-title').textContent='Tulisan tidak ditemukan';$('#p-img').closest('.fr').hidden=true;return}
-  document.title=data.title+' | Kancah Creative';
-  $('#p-title').textContent=data.title;
-  $('#p-date').textContent=new Date(data.created_at).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
-  $('#p-img').src=data.image_url;$('#p-img').alt=data.title;$('#p-body').innerHTML=data.content_html||'';
-  const set=(s,a,v)=>{const m=document.querySelector(s);if(m)m.setAttribute(a,v)};
-  set('#meta-desc','content',data.excerpt||'');set('#og-title','content',data.title);set('#og-image','content',data.image_url||'');
-})();
+<body class="bg-white text-kancah-dark">
+
+    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-20 flex justify-between items-center px-6 md:px-12">
+        <a href="/"><img src="assets/kancah-logo.png" class="h-8 w-auto"></a>
+        <a href="blog" class="text-kancah-blue font-bold uppercase tracking-widest text-[10px] hover:underline">Back to Journal</a>
+    </nav>
+
+    <main class="pt-40 pb-24 max-w-3xl mx-auto px-6">
+        <article id="article-container" class="opacity-0 transition-opacity duration-700">
+            <div class="mb-10">
+                <span id="post-date" class="text-gray-400 text-xs font-bold uppercase tracking-widest">Memuat tanggal...</span>
+                <h1 id="post-title" class="text-4xl md:text-6xl font-black uppercase tracking-tighter italic mt-3 leading-tight">...</h1>
+            </div>
+
+            <div class="w-full h-[300px] md:h-[450px] bg-slate-100 rounded-[2rem] overflow-hidden mb-12 shadow-xl">
+                <img id="post-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="w-full h-full object-cover">
+            </div>
+
+            <div id="post-content" class="post-content text-lg">
+                <div class="animate-pulse space-y-4">
+                    <div class="h-4 bg-gray-200 rounded w-full"></div>
+                    <div class="h-4 bg-gray-200 rounded w-5/6"></div>
+                    <div class="h-4 bg-gray-200 rounded w-4/6"></div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <script>
+    const kancah = supabase.createClient('https://hmzwjceomnneiczbpban.supabase.co', 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__');
+
+    function getSlug() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const slugParam = urlParams.get('slug');
+        if (slugParam) return slugParam;
+        
+        const path = window.location.pathname;
+        return path.split('/').filter(Boolean).pop(); 
+    }
+
+ async function loadPost() {
+    const slug = getSlug();
+    console.log("LOG SLUG YANG DITANGKAP:", slug); // CEK INI DI F12 CONSOLE
+
+    // Ganti .single() dengan .maybeSingle() agar tidak error kalau tidak ketemu
+    // Ganti .from('posts') ke 'projects' jika datamu ada di tabel projects
+    const { data, error } = await kancah
+        .from('posts') 
+        .select('*')
+        .ilike('slug', slug)
+        .maybeSingle(); // <--- Pakai ini lebih aman
+    
+    if (error) {
+        console.error("Supabase Error:", error);
+        // Cek apakah error karena Policy (406 sering karena Policy)
+        if(error.code === 'PGRST116') {
+             // Data tidak ditemukan
+        }
+        return;
+    }
+
+    if (!data) {
+        document.body.innerHTML = '<div class="text-center py-20">Post tidak ditemukan di database.</div>';
+        return;
+    }
+
+        // Render Data
+        document.title = data.title + ' • Kancah Creative';
+        document.getElementById('post-title').innerText = data.title;
+        document.getElementById('post-date').innerText = new Date(data.created_at).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'});
+        document.getElementById('post-image').src = data.image_url;
+        document.getElementById('post-content').innerHTML = data.content_html;
+        
+        // Metadata
+        document.getElementById('meta-desc').content = data.excerpt || '';
+        document.getElementById('og-title').content = data.title;
+        document.getElementById('og-image').content = data.image_url;
+        
+        document.getElementById('article-container').classList.remove('opacity-0');
+        document.getElementById('article-container').classList.add('opacity-100');
+    }
+
+    loadPost();
 </script>
 </body>
 </html>
