@@ -1,143 +1,174 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insights • Kancah Creative</title>
-    <meta name="description" content="Kumpulan pemikiran, strategi, dan cerita di balik layar Kancah Creative.">
-    <link rel="icon" type="image/png" href="./assets/logowh.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
-                    colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Ubuntu', sans-serif; background-color: #ffffff; }
-        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
-        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .fade-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-        .fade-up.active { opacity: 1; transform: translateY(0); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000">
+<title>Insights • Kancah Creative</title>
+<meta name="description" content="Kumpulan pemikiran, strategi, dan cerita di balik layar Kancah Creative.">
+<link rel="icon" type="image/png" href="./assets/logowh.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--b:#0006ff;--pad:clamp(20px,4.5vw,64px);--hh:68px;--ease:cubic-bezier(.2,.8,.2,1);--serif:'Instrument Serif',Georgia,serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px;overflow-x:clip}
+body{font:300 16px/1.55 'Ubuntu',system-ui,sans-serif;background:#000;color:#fff;overflow-x:clip;letter-spacing:-.005em}
+a{color:inherit;text-decoration:none}img{max-width:100%;display:block}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.wrap{padding:0 var(--pad);max-width:1440px;margin:0 auto}
+h1,h2,h3{font-weight:400;letter-spacing:-.04em;line-height:1.04}
+.sel{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.14em;letter-spacing:-.02em}
+.logo{height:26px;width:auto;filter:brightness(0) invert(1)}
+/* header */
+header{position:fixed;inset:0 0 auto 0;z-index:50;height:var(--hh);display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.1)}
+nav{display:flex;align-items:center;gap:clamp(16px,2.6vw,36px);font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+nav a:not(.btn){transition:opacity .3s}nav a:not(.btn):hover{opacity:.65}
+nav a.act{box-shadow:0 1px 0 #fff;padding-bottom:3px}
+.burger{display:none;width:44px;height:44px;position:relative}
+.burger i{position:absolute;left:11px;right:11px;height:2px;background:#fff;transition:transform .3s}.burger i:first-child{top:17px}.burger i:last-child{top:25px}
+.burger[aria-expanded=true] i:first-child{transform:translateY(4px) rotate(45deg)}.burger[aria-expanded=true] i:last-child{transform:translateY(-4px) rotate(-45deg)}
+/* button: pill outline + glow border */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:.55em;color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:13px 24px;font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;isolation:isolate;transition:background .3s}
+.btn::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;z-index:-1;opacity:.85;background:linear-gradient(160deg,transparent 0%,#fff 15%,#0006ff 20%,transparent 35%,transparent 40%,#fff 55%,#0006ff 60%,transparent 75%,transparent 80%,#fff 95%,#0006ff 100%);background-size:300% 300%;animation:glow 3s linear infinite;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.btn:hover{background:rgba(255,255,255,.1)}
+.btn svg{width:1.1em;height:1.1em}
+@keyframes glow{0%{background-position:15% 15%}100%{background-position:75% 75%}}
+@media(max-width:820px){
+ .burger{display:block}
+ nav{position:fixed;inset:var(--hh) 0 auto 0;height:calc(100svh - var(--hh));overflow-y:auto;flex-direction:column;align-items:flex-start;gap:0;padding:12px var(--pad) 40px;background:linear-gradient(180deg,#000 0%,#000 30%,#0006ff 100%);font-size:clamp(30px,9vw,44px);font-weight:300;letter-spacing:-.03em;text-transform:none;transform:translateY(-110%);visibility:hidden;transition:transform .5s var(--ease),visibility 0s .5s}
+ nav.open{transform:none;visibility:visible;transition-delay:0s}
+ nav a:not(.btn){width:100%;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.2);box-shadow:none!important}
+ nav .btn{margin-top:28px;font-size:13px}
+}
+/* hero + grid */
+.top{padding:calc(var(--hh) + clamp(56px,9vw,120px)) 0 clamp(28px,4vw,56px);background:radial-gradient(95% 60% at 50% 112%,rgba(0,6,255,.6) 0%,rgba(0,6,255,.2) 40%,#000 78%)}
+.stitle{display:flex;align-items:center;gap:20px;font-size:12px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;margin-bottom:clamp(24px,3vw,44px)}
+.stitle i{flex:1;height:1px;background:currentColor;opacity:.35}.stitle span::before{content:"•";margin-right:10px}
+.sh{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px 64px;align-items:end}
+.sh h1{font-size:clamp(44px,8.4vw,128px)}
+.sh p{max-width:44ch;font-size:clamp(15px,1.25vw,18px);opacity:.75}
+@media(max-width:820px){.sh{grid-template-columns:1fr;gap:14px}.sh h1{font-size:clamp(40px,12vw,64px)}}
+main section{padding:clamp(32px,4vw,64px) 0 clamp(64px,8vw,120px)}
+#blog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(32px,3.4vw,56px) clamp(16px,2vw,32px)}
+@media(max-width:1000px){#blog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){#blog-grid{grid-template-columns:1fr;gap:32px}}
+.card{display:block;opacity:0;transform:translateY(20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.card.in{opacity:1;transform:none}
+.th{position:relative;overflow:hidden;aspect-ratio:16/10;border-radius:14px;background:linear-gradient(180deg,#000 0%,#0006ff 100%);border:1px solid rgba(255,255,255,.18)}
+.th img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.card:hover .th img{transform:scale(1.07)}
+.th::after{content:"\2197";position:absolute;right:14px;top:14px;width:42px;height:42px;border-radius:50%;background:#fff;color:var(--b);display:grid;place-items:center;font-size:18px;scale:0;transition:scale .4s var(--ease)}
+.card:hover .th::after{scale:1}
+.meta{margin-top:16px;display:flex;gap:10px;align-items:center}
+.pill{border:1px solid rgba(255,255,255,.4);border-radius:99px;padding:3px 11px;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.card h3{margin-top:12px;font-size:clamp(22px,2vw,30px);line-height:1.12}
+.card p{margin-top:10px;font-size:15px;line-height:1.6;opacity:.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sk .th{animation:shim 1.3s linear infinite;background:linear-gradient(100deg,#0006ff 30%,#000 50%,#0006ff 70%) 0 0/250% 100%}
+@keyframes shim{to{background-position:-150% 0}}
+.msg{grid-column:1/-1;padding:56px 0;text-align:center;font-weight:500;opacity:.8}
+/* footer */
+footer{position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(120% 80% at 50% 115%,var(--b) 0%,#000 76%);padding:clamp(44px,5.5vw,76px) 0 22px}
+footer::before,footer::after{content:"";position:absolute;border-radius:50%;filter:blur(100px);z-index:-1;pointer-events:none;background:var(--b)}
+footer::before{width:700px;height:700px;opacity:.35;left:-200px;bottom:-260px;animation:fb1 4s ease-in-out infinite}
+footer::after{width:800px;height:800px;opacity:.55;right:-220px;bottom:-280px;animation:fb2 5s ease-in-out infinite}
+@keyframes fb1{0%,100%{transform:translate(0,0) scale(.9)}50%{transform:translate(0,-30%) scale(1.25)}}
+@keyframes fb2{0%,100%{transform:translate(0,-20%) scale(1.2)}50%{transform:translate(0,5%) scale(.85)}}
+.ft-cta{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,3.6vw,48px)}
+.ft-cta h2{font-size:clamp(34px,6.2vw,92px);line-height:1.06}
+.ft-cta p{margin-top:16px;max-width:42ch;font-size:clamp(14px,1.15vw,16px);opacity:.75}
+.ft-stk{position:relative;flex:none;width:clamp(96px,10vw,140px);aspect-ratio:1;transition:scale .4s var(--ease)}.ft-stk:hover{scale:1.08}
+.ft-stk .rg{width:100%;height:100%;animation:spin 14s linear infinite}.ft-stk text{font-weight:500;font-size:14px;letter-spacing:.14em;fill:var(--b)}
+.ft-stk .go{position:absolute;left:50%;top:50%;width:34%;height:34%;margin:-17% 0 0 -17%;transition:transform .4s var(--ease)}.ft-stk:hover .go{transform:rotate(45deg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ft-grid{display:grid;grid-template-columns:1.5fr 1.2fr .8fr 1.1fr;gap:24px clamp(24px,3vw,48px);padding-top:24px;border-top:1px solid rgba(255,255,255,.35)}
+.ft-c b{display:block;font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;opacity:.6}
+.ft-c p,.ft-c a{display:block;font-size:clamp(14px,1.1vw,16px);line-height:1.5;margin-bottom:6px;opacity:.92;max-width:30ch}
+.ft-c a{width:fit-content;transition:translate .3s var(--ease)}.ft-c a:hover{translate:6px 0}
+.ft-c .ft-t{font-size:13px;opacity:.65;margin-top:10px}
+.bot{margin-top:clamp(28px,3.6vw,44px);padding-top:18px;border-top:1px solid rgba(255,255,255,.35);display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.bot-l{display:flex;flex-direction:column;gap:12px}.bot-l .logo{height:clamp(34px,4vw,48px)}.bot-l span{font-size:12px;opacity:.8}
+.tag{font-family:var(--serif);font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-.025em}
+@media(max-width:900px){.ft-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:820px){.ft-grid .ft-c:first-child{grid-column:1/-1}.bot{flex-direction:column;align-items:flex-start;gap:14px}.tag{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card{opacity:1;transform:none}}
+</style>
 </head>
-<body class="text-kancah-dark overflow-x-hidden">
+<body>
+<header>
+  <a href="/" aria-label="Kancah beranda"><img class="logo" src="assets/kancah-logo.png" alt="Kancah"></a>
+  <nav id="nav" aria-label="Navigasi utama">
+    <a href="about">Tentang</a><a href="services">Layanan</a><a href="works">Karya</a><a href="pricelist">Harga</a><a href="blog" class="act">Blog</a><a href="careers">Karier</a>
+    <a class="btn" href="https://wa.me/6289524687866">Mulai Proyek</a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Buka menu" aria-expanded="false" aria-controls="nav"><i></i><i></i></button>
+</header>
 
-    <!-- Navbar -->
-    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-20 flex justify-between items-center px-6 md:px-12">
-        <a href="/"><img src="assets/kancah-logo.png" class="h-8 w-auto"></a>
-        <div class="hidden lg:flex gap-8 text-[11px] font-bold uppercase tracking-[0.2em]">
-            <a href="about" class="hover:text-kancah-blue">Agency</a>
-            <a href="services" class="hover:text-kancah-blue">Capabilities</a>
-            <a href="works" class="hover:text-kancah-blue">Work</a>
-            <a href="blog" class="text-kancah-blue">Insights</a>
-        </div>
-        <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-black transition-all">Talk</a>
-    </nav>
+<main>
+  <div class="top"><div class="wrap">
+    <div class="sh">
+      <h1>Kancah <span class="sel">Insights</span></h1>
+      <p>Kumpulan pemikiran, strategi, dan cerita di balik layar Kancah Creative.</p>
+    </div>
+  </div></div>
+  <section><div class="wrap"><div id="blog-grid" aria-busy="true"></div></div></section>
+</main>
 
-    <!-- Content -->
-    <main class="pt-40 pb-24 max-w-[1440px] mx-auto px-6 md:px-12">
-        <header class="mb-20 fade-up active">
-            <span class="text-kancah-blue font-bold text-xs uppercase tracking-[0.3em] block mb-4">The Journal</span>
-            <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter italic">Kancah <span class="text-kancah-blue not-italic">Insights</span></h1>
-        </header>
+<footer id="contact">
+  <div class="wrap">
+    <div class="ft-cta">
+      <div>
+        <a href="https://wa.me/6289524687866" aria-label="Mulai proyek via WhatsApp"><h2>Mari berkarya<br><span class="sel">bersama.</span></h2></a>
+        <p>Punya proyek atau kebutuhan kreatif dan digital? Ceritakan kepada kami. Kami akan membantu menentukan langkah berikutnya.</p>
+      </div>
+      <a class="ft-stk" href="https://wa.me/6289524687866" aria-label="Mulai proyek">
+        <svg class="rg" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="ring2" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs><circle cx="100" cy="100" r="98" fill="#fff"/><text><textPath href="#ring2" textLength="455" lengthAdjust="spacing">MULAI PROYEK &bull; MULAI PROYEK &bull;</textPath></text></svg>
+        <svg class="go" viewBox="0 0 24 24" fill="none" stroke="#0006ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18L18 6M8 6h10v10"/></svg>
+      </a>
+    </div>
+    <div class="ft-grid">
+      <div class="ft-c"><b>Office</b><p>Jalan Anggajaya 2, Condongcatur, Depok, Sleman, Yogyakarta 55281</p><p class="ft-t"><span id="clk">--:--:--</span> WIB</p></div>
+      <div class="ft-c"><b>Contact</b><a href="mailto:kancahcreative@gmail.com">kancahcreative@gmail.com</a><a href="tel:+6289524687866">+62 895-2468-7866</a><a href="https://wa.me/6289524687866" target="_blank" rel="noopener">WhatsApp</a></div>
+      <div class="ft-c"><b>Menu</b><a href="services">Layanan</a><a href="works">Portfolio</a><a href="pricelist">Harga</a><a href="about">Tentang</a><a href="blog">Blog</a><a href="careers">Karier</a></div>
+      <div class="ft-c"><b>Services</b><a href="services">Brand Design</a><a href="services">Promotion Design</a><a href="services">Tech Development</a><a href="services">Social Media Management</a><a href="services">Audio Visual</a></div>
+    </div>
+    <div class="bot">
+      <div class="bot-l"><img class="logo" src="assets/kancah-logo.png" alt="Kancah"><span>&copy; <span id="yr">2026</span> Kancah Creative. All rights reserved.</span></div>
+      <span class="tag">#DreamPlayCreate</span>
+    </div>
+  </div>
+</footer>
 
-        <section id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <!-- Loader -->
-            <div class="col-span-full py-20 text-center text-gray-400">
-                <i class="fa-solid fa-circle-notch fa-spin text-2xl"></i>
-            </div>
-        </section>
-    </main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* menu */
+const nav=$('#nav'),burger=$('#burger');
+const setMenu=o=>{nav.classList.toggle('open',o);burger.setAttribute('aria-expanded',o);burger.setAttribute('aria-label',o?'Tutup menu':'Buka menu')};
+burger.onclick=()=>setMenu(!nav.classList.contains('open'));
+nav.querySelectorAll('a').forEach(a=>a.onclick=()=>setMenu(false));
+addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+$('#yr').textContent=new Date().getFullYear();
+(function t(){$('#clk').textContent=new Intl.DateTimeFormat('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:'Asia/Jakarta',hour12:false}).format(new Date()).replace(/\./g,':');setTimeout(t,1000)})();
 
-    <!-- Footer -->
-    <footer class="bg-kancah-dark text-white border-t border-white/10">
-        <div class="w-full py-4 border-b border-white/10 bg-white/5">
-            <div class="footer-marquee-content flex gap-12 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-            </div>
-        </div>
-        <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-16">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-5xl font-bold tracking-tighter mb-6">Punya ide kreatif?</h2>
-                    <a href="contact" class="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all">Hubungi Kami <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="grid grid-cols-2 gap-8 text-sm">
-                    <div>
-                        <h4 class="text-gray-500 mb-4 font-bold text-[10px] uppercase">Agency</h4>
-                        <ul class="space-y-2">
-                            <li><a href="about">About Us</a></li>
-                            <li><a href="services">Capabilities</a></li>
-                            <li><a href="careers">Careers</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-gray-500 mb-4 font-bold text-[10px] uppercase">Socials</h4>
-                        <ul class="space-y-2">
-                            <li><a href="#">Instagram</a></li>
-                            <li><a href="#">LinkedIn</a></li>
-                            <li><a href="#">Behance</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+/* blog */
+const kancah=supabase.createClient('https://hmzwjceomnneiczbpban.supabase.co','sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__');
+const grid=$('#blog-grid');
+grid.innerHTML='<div class="card sk in"><div class="th"></div></div>'.repeat(3);
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+const fmt=d=>d?new Date(d).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'';
 
-    <!-- Scripts -->
- <script>
-    const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
-    const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-    const kancah = supabase.createClient(kancahUrl, kancahKey);
-
-    async function fetchPosts() {
-        const grid = document.getElementById('blog-grid');
-        
-        // Mengambil data dari tabel 'posts'
-        const { data, error } = await kancah
-            .from('posts')
-            .select('*')
-            .order('created_at', {ascending: false});
-        
-        if (error) {
-            console.error("Error Supabase:", error);
-            grid.innerHTML = '<div class="col-span-full py-20 text-center font-bold text-red-500">Gagal memuat insight. Coba cek console.</div>';
-            return;
-        }
-        
-        if(!data || data.length === 0) {
-            grid.innerHTML = '<div class="col-span-full py-20 text-center font-bold">Belum ada insight.</div>';
-            return;
-        }
-
-        // MENGISI DATA KE HTML
-        grid.innerHTML = data.map(post => `
-            <article class="fade-up group hover:-translate-y-2 transition-all duration-300">
-                <a href="/${post.slug}">
-                    <div class="overflow-hidden rounded-3xl mb-6 bg-slate-100 aspect-[3/2]">
-                        <img src="${post.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    </div>
-                    <h3 class="text-xl font-bold uppercase tracking-tight mb-2 group-hover:text-kancah-blue">${post.title}</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">${post.excerpt}</p>
-                </a>
-            </article>
-        `).join('');
-
-        // Aktifkan animasi fade-up
-        document.querySelectorAll('.fade-up').forEach(el => el.classList.add('active'));
-    }
-    
-    fetchPosts();
+async function fetchPosts(){
+  const {data,error}=await kancah.from('posts').select('*').order('created_at',{ascending:false});
+  grid.removeAttribute('aria-busy');
+  if(error){console.error('Error Supabase:',error);grid.innerHTML='<div class="msg">Gagal memuat insight. Silakan muat ulang halaman.</div>';return}
+  if(!data||!data.length){grid.innerHTML='<div class="msg">Belum ada insight.</div>';return}
+  grid.innerHTML=data.map(p=>`<a class="card" href="/${encodeURIComponent(p.slug)}"><div class="th">${p.image_url?`<img src="${esc(p.image_url)}" alt="${esc(p.title)}" loading="lazy" onerror="this.remove()">`:''}</div><div class="meta"><span class="pill">${esc(fmt(p.created_at)||'Insight')}</span></div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p></a>`).join('');
+  grid.querySelectorAll('.card').forEach(c=>io.observe(c));
+}
+fetchPosts();
 </script>
 </body>
 </html>
