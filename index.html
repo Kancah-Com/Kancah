@@ -967,7 +967,25 @@ async function loadWorks(){
 async function loadPartners(){
   const {data,error}=await kancah.from('partners').select('*').order('sort_order',{ascending:true});
   const t=$('#ptr');if(error||!data||!t)return;
-  const h=data.map(p=>`<img src="${esc(p.logo_url)}" alt="${esc(p.name||'Partner Kancah')}" loading="lazy">`).join('');t.innerHTML=h+h+h+h;const t2=$('#ptr2');if(t2){const h2=data.slice().reverse().map(p=>`<img src="${esc(p.logo_url)}" alt="${esc(p.name||'Partner Kancah')}" loading="lazy">`).join('');t2.innerHTML=h2+h2+h2+h2}setNum('#n-part',data.length);
+  const t2=$('#ptr2');
+  const img=p=>`<img src="${esc(p.logo_url)}" alt="${esc(p.name||'Partner Kancah')}" loading="lazy">`;
+  // isi satu baris: ulang unit sampai cukup panjang, lalu gandakan 2x biar loop -50% mulus
+  const fill=list=>{
+    if(!list.length)return '';
+    const unit=list.map(img).join('');
+    const half=unit.repeat(Math.max(1,Math.ceil(10/list.length)));
+    return half+half;
+  };
+  if(t2&&data.length>=2){
+    const rowA=data.filter((_,i)=>i%2===0);   // baris atas: urutan 1,3,5,...
+    const rowB=data.filter((_,i)=>i%2===1);   // baris bawah: urutan 2,4,6,...
+    t.innerHTML=fill(rowA);
+    t2.innerHTML=fill(rowB);
+  }else{
+    t.innerHTML=fill(data);
+    if(t2)t2.style.display='none';
+  }
+  setNum('#n-part',data.length);
 }
 if(kancah){loadWorks();loadPartners().catch(console.error)}else{track.innerHTML='<div class="msg">Portofolio belum dapat dimuat. Silakan muat ulang halaman.</div>'}
 
