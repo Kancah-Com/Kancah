@@ -1,143 +1,41 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insights • Kancah Creative</title>
-    <meta name="description" content="Kumpulan pemikiran, strategi, dan cerita di balik layar Kancah Creative.">
-    <link rel="icon" type="image/png" href="./assets/logowh.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
-                    colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Ubuntu', sans-serif; background-color: #ffffff; }
-        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
-        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .fade-up { opacity: 0; transform: translateY(20px); transition: all 0.6s ease-out; }
-        .fade-up.active { opacity: 1; transform: translateY(0); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000">
+<title>Journal | Kancah Creative</title>
+<meta name="description" content="Pemikiran, strategi, dan cerita di balik layar Kancah Creative.">
+<link rel="icon" type="image/png" href="/assets/logowh.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500;1,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kancah.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
-<body class="text-kancah-dark overflow-x-hidden">
-
-    <!-- Navbar -->
-    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-20 flex justify-between items-center px-6 md:px-12">
-        <a href="/"><img src="assets/kancah-logo.png" class="h-8 w-auto"></a>
-        <div class="hidden lg:flex gap-8 text-[11px] font-bold uppercase tracking-[0.2em]">
-            <a href="about" class="hover:text-kancah-blue">Agency</a>
-            <a href="services" class="hover:text-kancah-blue">Capabilities</a>
-            <a href="works" class="hover:text-kancah-blue">Work</a>
-            <a href="blog" class="text-kancah-blue">Insights</a>
-        </div>
-        <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-black transition-all">Talk</a>
-    </nav>
-
-    <!-- Content -->
-    <main class="pt-40 pb-24 max-w-[1440px] mx-auto px-6 md:px-12">
-        <header class="mb-20 fade-up active">
-            <span class="text-kancah-blue font-bold text-xs uppercase tracking-[0.3em] block mb-4">The Journal</span>
-            <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter italic">Kancah <span class="text-kancah-blue not-italic">Insights</span></h1>
-        </header>
-
-        <section id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            <!-- Loader -->
-            <div class="col-span-full py-20 text-center text-gray-400">
-                <i class="fa-solid fa-circle-notch fa-spin text-2xl"></i>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-kancah-dark text-white border-t border-white/10">
-        <div class="w-full py-4 border-b border-white/10 bg-white/5">
-            <div class="footer-marquee-content flex gap-12 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-            </div>
-        </div>
-        <div class="max-w-[1440px] mx-auto px-6 md:px-12 py-16">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div>
-                    <h2 class="text-5xl font-bold tracking-tighter mb-6">Punya ide kreatif?</h2>
-                    <a href="contact" class="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all">Hubungi Kami <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="grid grid-cols-2 gap-8 text-sm">
-                    <div>
-                        <h4 class="text-gray-500 mb-4 font-bold text-[10px] uppercase">Agency</h4>
-                        <ul class="space-y-2">
-                            <li><a href="about">About Us</a></li>
-                            <li><a href="services">Capabilities</a></li>
-                            <li><a href="careers">Careers</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-gray-500 mb-4 font-bold text-[10px] uppercase">Socials</h4>
-                        <ul class="space-y-2">
-                            <li><a href="#">Instagram</a></li>
-                            <li><a href="#">LinkedIn</a></li>
-                            <li><a href="#">Behance</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
- <script>
-    const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
-    const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-    const kancah = supabase.createClient(kancahUrl, kancahKey);
-
-    async function fetchPosts() {
-        const grid = document.getElementById('blog-grid');
-        
-        // Mengambil data dari tabel 'posts'
-        const { data, error } = await kancah
-            .from('posts')
-            .select('*')
-            .order('created_at', {ascending: false});
-        
-        if (error) {
-            console.error("Error Supabase:", error);
-            grid.innerHTML = '<div class="col-span-full py-20 text-center font-bold text-red-500">Gagal memuat insight. Coba cek console.</div>';
-            return;
-        }
-        
-        if(!data || data.length === 0) {
-            grid.innerHTML = '<div class="col-span-full py-20 text-center font-bold">Belum ada insight.</div>';
-            return;
-        }
-
-        // MENGISI DATA KE HTML
-        grid.innerHTML = data.map(post => `
-            <article class="fade-up group hover:-translate-y-2 transition-all duration-300">
-                <a href="/${post.slug}">
-                    <div class="overflow-hidden rounded-3xl mb-6 bg-slate-100 aspect-[3/2]">
-                        <img src="${post.image_url}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                    </div>
-                    <h3 class="text-xl font-bold uppercase tracking-tight mb-2 group-hover:text-kancah-blue">${post.title}</h3>
-                    <p class="text-gray-500 text-sm leading-relaxed">${post.excerpt}</p>
-                </a>
-            </article>
-        `).join('');
-
-        // Aktifkan animasi fade-up
-        document.querySelectorAll('.fade-up').forEach(el => el.classList.add('active'));
-    }
-    
-    fetchPosts();
+<body data-page="blog">
+<header id="hd"></header>
+<main>
+<section class="ph sm"><div class="wrap">
+<div class="stitle rv"><span>Journal</span><i></i></div>
+<h1 class="rv">Pemikiran, strategi, dan <span class="sel">cerita</span> dari balik layar.</h1>
+<p class="lead rv">Catatan dari tim Kancah Creative tentang brand, desain, dan teknologi.</p>
+</div></section>
+<section><div class="wrap"><div class="bgrid" id="bg"><div class="msg">Memuat tulisan...</div></div></div></section>
+</main>
+<footer id="ft"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/kancah.js"></script>
+<script>
+const {$,esc,db}=K,g=$('#bg');
+(async()=>{
+  if(!db){g.innerHTML='<div class="msg">Tulisan belum dapat dimuat.</div>';return}
+  const {data,error}=await db.from('posts').select('*').order('created_at',{ascending:false});
+  if(error){console.error(error);g.innerHTML='<div class="msg">Tulisan belum dapat dimuat. Silakan muat ulang halaman.</div>';return}
+  if(!data||!data.length){g.innerHTML='<div class="msg">Belum ada tulisan.</div>';return}
+  g.innerHTML=data.map(p=>`<article class="rv"><a href="/${encodeURIComponent(p.slug)}"><div class="fr"><img src="${esc(p.image_url)}" alt="${esc(p.title)}" loading="lazy"></div><h3>${esc(p.title)}</h3><p>${esc(p.excerpt)}</p></a></article>`).join('');
+  K.reveal(g);
+})();
 </script>
 </body>
 </html>

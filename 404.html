@@ -3,49 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memuat Project... • Kampiun</title>
+    <title>Memuat Proyek... | Kancah Creative</title>
     <link rel="icon" type="image/png" href="/assets/logowh.png">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <style>
-        body { 
-            margin: 0; 
-            background-color: #0a0a0a; 
-            color: #ffffff; 
-            display: flex; 
-            flex-direction: column;
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-        }
-        h2 { font-weight: 400; font-size: 1.2rem; letter-spacing: 1px; }
-        #error-msg { display: none; text-align: center; color: #ff4444; }
-        a { color: #555; text-decoration: none; margin-top: 20px; font-size: 0.9rem; transition: 0.3s; }
-        a:hover { color: #fff; }
+        body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px; box-sizing: border-box; text-align: center; color: #fff; font: 300 16px/1.55 'Ubuntu', system-ui, sans-serif; background: radial-gradient(95% 60% at 50% 112%, rgba(0,6,255,.6) 0%, rgba(0,6,255,.25) 40%, #000 78%); }
+        #loading { font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .7; }
+        #error-msg { display: none; max-width: 520px; }
+        #error-msg small { display: block; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .6; margin-bottom: 16px; }
+        #error-msg h2 { margin: 0 0 16px; font-weight: 400; font-size: clamp(36px, 7vw, 64px); line-height: 1.05; letter-spacing: -.03em; }
+        #error-msg h2 em { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 1.14em; letter-spacing: -.02em; }
+        #error-msg p { margin: 0 0 28px; opacity: .75; }
+        #error-msg a { display: inline-block; padding: 13px 24px; border: 1px solid rgba(255,255,255,.4); border-radius: 999px; color: #fff; text-decoration: none; font-weight: 500; font-size: 14px; transition: background .3s; }
+        #error-msg a:hover { background: rgba(255,255,255,.12); }
     </style>
 </head>
 <body>
 
+    <div id="loading">Memuat proyek...</div>
+
     <div id="error-msg">
-        <h2>❌ 404 - Project Tidak Ditemukan</h2>
-        <p>Halaman yang kamu cari mungkin sudah dihapus atau link-nya salah.</p>
-        <a href="/">← Kembali ke Beranda</a>
+        <small>Error 404</small>
+        <h2>Halaman tidak <em>ditemukan.</em></h2>
+        <p>Halaman yang Anda cari mungkin sudah dihapus atau tautannya salah.</p>
+        <a href="/">Kembali ke Beranda</a>
     </div>
 
     <script>
         // --- CONFIGURATION ---
         const SB_URL = 'https://hmzwjceomnneiczbpban.supabase.co';
-        const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__'; // Gunakan Anon Key kamu
+        const SB_KEY = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
         const kancah = supabase.createClient(SB_URL, SB_KEY);
 
         async function initRouter() {
-            // 1. Ambil slug dari URL (misal: kampiun.online/web-kopi)
+            // 1. Ambil slug dari URL (misal: kancah.com/preview/web-kopi)
             const path = window.location.pathname.replace(/^\/|\/$/g, '');
-            const slug = path.split('/').pop();
+            const slug = decodeURIComponent(path.split('/').pop());
 
-            if (!slug || slug === "" || slug === "index.html") {
+            if (!slug || slug === "index.html") {
                 showError();
                 return;
             }
@@ -58,28 +54,27 @@
                     .eq('slug', slug)
                     .single();
 
-                if (error || !data) {
+                if (error || !data || !data.demo_url) {
                     showError();
                     return;
                 }
 
-                // 3. Update Title Tab
+                // 3. Update judul tab
                 document.title = `${data.title} - Live Preview`;
 
-                // 4. Ambil Konten HTML dari link Supabase Storage
+                // 4. Ambil konten HTML dari Supabase Storage
                 const response = await fetch(data.demo_url);
                 if (!response.ok) throw new Error("File tidak dapat diakses");
                 const htmlText = await response.text();
 
-                // 5. Suntik script pencegah pindah halaman (opsional)
+                // 5. Nonaktifkan navigasi internal agar tidak berpindah halaman (mode preview)
                 const scriptPenjinak = `
                     <script>
                         document.addEventListener('click', function(e) {
                             const link = e.target.closest('a');
-                            if(link) {
-                                // Jika link adalah internal (relative), kita matikan agar tidak error 404
+                            if (link) {
                                 const href = link.getAttribute('href');
-                                if(href && !href.startsWith('http')) {
+                                if (href && !href.startsWith('http')) {
                                     e.preventDefault();
                                     console.log('Navigasi dibatasi pada mode preview.');
                                 }
@@ -88,7 +83,7 @@
                     <\/script>
                 `;
 
-                // 6. RENDER KE HALAMAN
+                // 6. Render ke halaman
                 renderFullPage(htmlText + scriptPenjinak);
 
             } catch (err) {
@@ -98,38 +93,33 @@
         }
 
         function renderFullPage(content) {
-            // Hapus UI Loading
             document.body.innerHTML = "";
-            
-            // Tulis konten baru
             document.open();
             document.write(content);
             document.close();
 
-            // RE-EXECUTE SCRIPTS: Supaya JS di dalam file yang ditarik bisa jalan
+            // Eksekusi ulang script agar JS pada file yang ditarik berjalan
             setTimeout(() => {
                 const scripts = document.querySelectorAll("script");
                 scripts.forEach(oldScript => {
-                    if(oldScript.src) {
-                        const newScript = document.createElement("script");
+                    const newScript = document.createElement("script");
+                    if (oldScript.src) {
                         newScript.src = oldScript.src;
-                        document.head.appendChild(newScript);
                     } else {
-                        const newScript = document.createElement("script");
                         newScript.textContent = oldScript.textContent;
-                        document.head.appendChild(newScript);
                     }
+                    document.head.appendChild(newScript);
                     oldScript.remove();
                 });
             }, 100);
         }
 
         function showError() {
+            document.getElementById('loading').style.display = 'none';
             document.getElementById('error-msg').style.display = 'block';
-            document.title = "404 Not Found";
+            document.title = "404 | Kancah Creative";
         }
 
-        // Jalankan router
         initRouter();
     </script>
 </body>

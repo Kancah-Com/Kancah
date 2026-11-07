@@ -1,317 +1,48 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Careers • Kancah</title>
-     <link rel="icon" type="image/png" href="./assets/logowh.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
-                    colors: { kancah: { blue: '#0006ff', dark: '#111111' } }
-                }
-            }
-        }
-    </script>
-    <style>
-        body { font-family: 'Ubuntu', sans-serif; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
-        .job-card { transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); opacity: 0; transform: translateY(20px); }
-        .job-card.loaded { opacity: 1; transform: translateY(0); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000">
+<title>Karier | Kancah Creative</title>
+<meta name="description" content="Lowongan full time dan internship di Kancah Creative, creative agency di Yogyakarta.">
+<link rel="icon" type="image/png" href="/assets/logowh.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500;1,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kancah.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
-<body class="bg-gray-50 text-kancah-dark overflow-x-hidden selection:bg-kancah-blue selection:text-white">
-    
-    <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
-        
-        <div class="flex-none">
-            <a href="/">
-                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
-            </a>
-        </div>
-
-        <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
-            <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
-            <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
-            <a href="works" class="hover:text-kancah-blue transition-colors">Work</a>
-            <a href="pricelist" class="hover:text-kancah-blue transition-colors">Pricelist</a>
-            <a href="careers" class="text-kancah-blue font-black transition-colors">Careers</a>
-        </div>
-
-        <div class="flex items-center gap-2 sm:gap-4 h-8"> 
-            
-            <div id="weather-module-desktop" class="relative group hidden sm:block">
-                <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-kancah-blue rounded-full select-none transition-all duration-300">
-                    <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
-                        <span id="nav-time">00:00:00</span>
-                        <span class="text-kancah-blue font-black">|</span>
-                        <span id="nav-temp">--°C</span>
-                    </div>
-                    <div class="flex items-center justify-center gap-2 mt-1.5 leading-none">
-                        <div class="relative flex h-1 w-1">
-                            <span class="animate-ping absolute h-full w-full rounded-full bg-kancah-blue opacity-40"></span>
-                            <span class="h-1 w-1 rounded-full bg-kancah-blue"></span>
-                        </div>
-                        <span class="text-kancah-blue font-black text-[8px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="relative sm:hidden">
-                <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-kancah-blue text-kancah-blue text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">
-                    Kancah HQ, Yogyakarta
-                </div>
-
-                <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-kancah-blue border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
-                    <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
-                        <span id="nav-time-mobile">00:00</span>
-                        <span class="text-kancah-blue font-black">|</span>
-                        <span id="nav-temp-mobile">--°C</span>
-                    </div>
-                </div>
-            </div>
-
-            <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
-                Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
-            </a>
-
-            <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
-                <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
-            </button>
-        </div>
-    </div>
-</nav>
-
-
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full lg:hidden">
-        <button class="absolute top-6 right-6 text-3xl" id="close-menu">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-            <a href="about" class="mobile-link">Agency</a>
-            <a href="services" class="mobile-link">Capabilities</a>
-            <a href="works" class="mobile-link">Work</a>
-            <a href="pricelist" class="mobile-link">Pricelist</a>
-            <a href="careers" class="mobile-link text-kancah-blue">Careers</a>
-            <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
-        </div>
-    </div>
-
-    <main class="pt-32 pb-10 px-6 max-w-[1400px] mx-auto min-h-screen">
-        <header class="max-w-5xl mb-10 sm:mb-16">
-            <span class="text-kancah-blue font-bold text-[10px] uppercase tracking-[0.4em] block mb-6">Join Kancah 2026</span>
-            <h1 class="text-5xl sm:text-7xl md:text-8xl lg:text-[110px] font-bold tracking-tighter leading-[0.85] mb-10 uppercase text-kancah-dark">
-                Tempat Main <br> Anak <span class="text-kancah-blue italic">Kreatif.</span>
-            </h1>
-            <div class="flex flex-wrap gap-2" id="filterContainer">
-                <button onclick="fetchJobs('all')" class="filter-btn active px-6 py-2 rounded-full font-bold text-[10px] uppercase transition-all bg-kancah-blue text-white shadow-xl shadow-kancah-blue/20" data-filter="all">All Roles</button>
-                <button onclick="fetchJobs('Full-Time')" class="filter-btn px-6 py-2 rounded-full font-bold text-[10px] uppercase transition-all bg-white text-gray-400 border border-gray-200" data-filter="Full-Time">Full Time</button>
-                <button onclick="fetchJobs('Internship')" class="filter-btn px-6 py-2 rounded-full font-bold text-[10px] uppercase transition-all bg-white text-gray-400 border border-gray-200" data-filter="Internship">Internship</button>
-            </div>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 mb-10 items-stretch" id="jobGrid"></div>
-    </main>
-
-    <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
-    
-        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
-            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-            </div>
-        </div>
-    
-        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
-                
-                <div class="lg:col-span-5 flex flex-col justify-start items-start">
-                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
-                        PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
-                    </h2>
-                    
-                    <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
-                        Ayo Diskusi
-                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
-                    </a>
-                </div>
-    
-                <div class="lg:col-span-4 flex flex-col gap-6">
-                    <div>
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
-                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
-                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
-                        </address>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <a href="mailto:kancahcreative@gmail.com" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
-                            <i class="fa-regular fa-envelope"></i> kancahcreative@gmail.com
-                        </a>
-                        <a href="https://wa.me/6289524687866" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
-                            <i class="fa-brands fa-whatsapp"></i> +62 895-2468-7866
-                        </a>
-                    </div>
-                </div>
-    
-                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
-                    
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="services" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
-                            <li><a href="works" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
-                            <li><a href="pricelist" class="text-white hover:text-kancah-blue transition-colors">Pricelist</a></li>
-                            <li><a href="about" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
-                            <li><a href="careers" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
-                        </ul>
-                    </div>
-    
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Instagram</a></li>
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">LinkedIn</a></li>
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Behance</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
-                <p class="text-center md:text-left">&copy; 2025 PT. Kancah Media Sejahtera.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        const kancahUrl = 'https://hmzwjceomnneiczbpban.supabase.co';
-        const kancahKey = 'sb_publishable_s5OWo5nHTHSv_MLYUxRLoA_xh97qS__';
-        const kancah = supabase.createClient(kancahUrl, kancahKey);
-
-        async function fetchJobs(filter = 'all') {
-            const grid = document.getElementById('jobGrid');
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.className = btn.dataset.filter === filter ? "filter-btn active px-8 py-3 rounded-full font-bold text-[10px] uppercase bg-kancah-blue text-white shadow-xl shadow-kancah-blue/20" : "filter-btn px-8 py-3 rounded-full font-bold text-[10px] uppercase bg-white text-gray-400 border border-gray-200 hover:border-kancah-blue hover:text-kancah-blue");
-            
-            let query = kancah.from('careers').select('*').order('created_at', { ascending: false });
-            if (filter !== 'all') query = query.eq('type', filter);
-            
-            const { data: jobs, error } = await query;
-            if (error) return;
-            
-            grid.innerHTML = jobs.map(job => `
-                <div class="job-card bg-white rounded-[1rem] lg:rounded-[2.5rem] p-5 lg:p-10 border border-kancah-blue transition-all group flex flex-col h-full hover:shadow-[0_20px_50px_rgba(0,6,255,0.1)]">
-                    <div class="flex flex-wrap gap-2 mb-4 lg:mb-8">
-                        <span class="px-3 py-1 bg-kancah-blue/10 text-kancah-blue text-[8px] font-black uppercase tracking-widest rounded-full">${job.type}</span>
-                        <span class="px-3 py-1 bg-gray-50 text-gray-400 text-[8px] font-black uppercase tracking-widest rounded-full">${job.location || 'Yogyakarta'}</span>
-                    </div>
-                    <div class="flex-grow flex items-center min-h-[60px] lg:min-h-[110px] mb-6 lg:mb-12">
-                        <a href="detail-careers?id=${job.id}" class="block w-full">
-                            <h3 class="text-3xl lg:text-5xl font-bold tracking-tighter uppercase italic group-hover:text-kancah-blue transition-colors leading-[0.85]">${job.title}</h3>
-                        </a>
-                    </div>
-                    <div class="flex justify-between items-center mt-auto border-t border-gray-100 pt-5 lg:pt-8">
-                        <a href="detail-careers?id=${job.id}" class="text-[9px] font-black uppercase tracking-[0.2em] flex items-center gap-2 group/btn">
-                            View Position <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform"></i>
-                        </a>
-                        <span class="text-[8px] font-bold text-gray-300 uppercase tracking-widest whitespace-nowrap">2026 Slot</span>
-                    </div>
-                </div>
-            `).join('');
-
-            setTimeout(() => document.querySelectorAll('.job-card').forEach(c => c.classList.add('loaded')), 50);
-        }
-
-        function updateClock() {
-            const n = new Date();
-            const h = String(n.getHours()).padStart(2, '0');
-            const m = String(n.getMinutes()).padStart(2, '0');
-            const s = String(n.getSeconds()).padStart(2, '0');
-            
-            if(document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
-            if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
-        }
-
-        async function updateWeather() {
-            try {
-                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
-                const data = await res.json();
-                if (data && data.current_weather) {
-                    const temp = Math.round(data.current_weather.temperature) + "°C";
-                    if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = temp;
-                    if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = temp;
-                }
-            } catch (e) {}
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const trigger = document.getElementById('weather-mobile-trigger');
-const popup = document.getElementById('location-popup');
-
-if (trigger && popup) {
-    trigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // Toggle muncul/hilang
-        const isOpen = popup.classList.contains('opacity-100');
-        if (isOpen) {
-            popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-            popup.classList.remove('opacity-100', 'scale-100');
-        } else {
-            popup.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
-            popup.classList.add('opacity-100', 'scale-100');
-            // Auto-close setelah 3 detik
-            setTimeout(() => {
-                popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-                popup.classList.remove('opacity-100', 'scale-100');
-            }, 3000);
-        }
-    });
-
-    // Close otomatis kalau klik di mana saja selain popup
-    document.addEventListener('click', () => {
-        popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-        popup.classList.remove('opacity-100', 'scale-100');
-    });
+<body data-page="careers">
+<header id="hd"></header>
+<main>
+<section class="ph sm"><div class="wrap">
+<div class="stitle rv"><span>Karier</span><i></i></div>
+<h1 class="rv">Bergabung dengan tim <span class="sel">kreatif</span> kami.</h1>
+<p class="lead rv">Kami membuka kesempatan bagi talenta kreatif dan digital untuk berkembang bersama Kancah, baik sebagai tim penuh waktu maupun peserta magang.</p>
+</div></section>
+<section class="light"><div class="wrap">
+<div class="flt" id="filters" role="group" aria-label="Filter tipe posisi"><button type="button" data-t="all" aria-pressed="true">Semua Posisi</button><button type="button" data-t="Full-Time" aria-pressed="false">Full Time</button><button type="button" data-t="Internship" aria-pressed="false">Internship</button></div>
+<div id="jobs" aria-busy="true"><div class="msg">Memuat posisi...</div></div>
+</div></section>
+</main>
+<footer id="ft"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/assets/kancah.js"></script>
+<script>
+const {$,$$,esc,db}=K;
+const box=$('#jobs');
+async function load(t='all'){
+  if(!db){box.innerHTML='<div class="msg">Posisi belum dapat dimuat.</div>';return}
+  let q=db.from('careers').select('*').order('created_at',{ascending:false});if(t!=='all')q=q.eq('type',t);
+  const {data,error}=await q;box.removeAttribute('aria-busy');
+  if(error){console.error(error);box.innerHTML='<div class="msg">Posisi belum dapat dimuat. Silakan muat ulang halaman.</div>';return}
+  if(!data.length){box.innerHTML='<div class="msg">Belum ada posisi yang dibuka saat ini.</div>';return}
+  box.innerHTML='<div class="rows" style="border-top:1px solid rgba(0,0,0,.25)">'+data.map(j=>`<a class="jb rv" href="detail-careers?id=${encodeURIComponent(j.id)}"><h3>${esc(j.title)}</h3><div class="meta"><span>${esc(j.type)}</span><span>${esc(j.location||'Yogyakarta')}</span></div>${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>'}</a>`).join('')+'</div>';
+  K.reveal(box);
 }
-            fetchJobs('all'); updateWeather(); updateClock(); setInterval(updateClock, 1000);
-            
-            const btn = document.getElementById('mobile-menu-button');
-            const menu = document.getElementById('mobile-menu');
-            const close = document.getElementById('close-menu');
-            const body = document.body;
-
-            if(btn && menu) {
-                btn.onclick = () => { 
-                    menu.classList.replace('translate-x-full', 'translate-x-0'); 
-                    body.style.overflow = 'hidden'; 
-                };
-            }
-            if(close && menu) {
-                close.onclick = () => { 
-                    menu.classList.replace('translate-x-0', 'translate-x-full'); 
-                    body.style.overflow = ''; 
-                };
-            }
-            document.querySelectorAll('.mobile-link').forEach(link => {
-                link.onclick = () => {
-                    menu.classList.replace('translate-x-0', 'translate-x-full');
-                    body.style.overflow = '';
-                };
-            });
-        });
-    </script>
+$('#filters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('#filters button').forEach(x=>x.setAttribute('aria-pressed',x===b));load(b.dataset.t)});
+load();
+</script>
 </body>
 </html>

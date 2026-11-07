@@ -1,358 +1,51 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact • Kancah Agency</title>
-     <link rel="icon" type="image/png" href="./assets/logowh.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Ubuntu', 'sans-serif'] },
-                    colors: { kancah: { blue: '#0006ff', dark: '#111111', gray: '#393939', light: '#f4f4f5' } },
-                    screens: { 'xs': '475px' }
-                }
-            }
-        }
-    </script>
-    <style>
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        body { font-family: 'Ubuntu', sans-serif; }
-        
-        /* Marquee Animation */
-        .footer-marquee-content { display: flex; width: max-content; animation: footer-marquee 20s linear infinite; }
-        @keyframes footer-marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-        
-        /* Menu Animation */
-        #mobile-menu { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .menu-open { overflow: hidden; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000">
+<title>Kontak | Kancah Creative</title>
+<meta name="description" content="Hubungi Kancah Creative untuk berdiskusi tentang brand, strategi, dan kebutuhan digital Anda. Kantor di Condongcatur, Sleman, Yogyakarta.">
+<link rel="icon" type="image/png" href="/assets/logowh.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,500;1,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/kancah.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
-<body class="bg-white text-kancah-dark selection:bg-kancah-blue selection:text-white overflow-x-hidden">
-
-      <nav class="fixed w-full z-[100] top-0 bg-white/80 backdrop-blur-xl border-b border-gray-100 h-16 sm:h-20 transition-all duration-300">
-    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center relative">
-        
-        <div class="flex-none">
-            <a href="/">
-                <img src="assets/kancah-logo.png" alt="Kancah Logo" class="h-6 sm:h-9 w-auto object-contain">
-            </a>
-        </div>
-
-        <div class="hidden lg:flex gap-6 xl:gap-8 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]">
-            <a href="about" class="hover:text-kancah-blue transition-colors">Agency</a>
-            <a href="services" class="hover:text-kancah-blue transition-colors">Capabilities</a>
-            <a href="works" class="hover:text-kancah-blue transition-colors">Work</a>
-            <a href="pricelist" class="hover:text-kancah-blue transition-colors">Pricelist</a>
-            <a href="careers" class="hover:text-kancah-blue transition-colors">Careers</a>
-        </div>
-
-        <div class="flex items-center gap-2 sm:gap-4 h-8"> 
-            
-            <div id="weather-module-desktop" class="relative group hidden sm:block">
-                <div class="flex flex-col items-center justify-center h-[52px] min-w-[210px] px-8 bg-transparent border border-kancah-blue rounded-full select-none transition-all duration-300">
-                    <div class="flex items-center justify-center gap-4 tabular-nums font-black text-[17px] text-[#111111] tracking-[0.05em] leading-none">
-                        <span id="nav-time">00:00:00</span>
-                        <span class="text-kancah-blue font-black">|</span>
-                        <span id="nav-temp">--°C</span>
-                    </div>
-                    <div class="flex items-center justify-center gap-2 mt-1.5 leading-none">
-                        <div class="relative flex h-1 w-1">
-                            <span class="animate-ping absolute h-full w-full rounded-full bg-kancah-blue opacity-40"></span>
-                            <span class="h-1 w-1 rounded-full bg-kancah-blue"></span>
-                        </div>
-                        <span class="text-kancah-blue font-black text-[8px] uppercase tracking-[0.2em]">Kancah HQ, Yogyakarta</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="relative sm:hidden">
-                <div id="location-popup" class="absolute top-full left-1/2 -translate-x-1/2 mt-3 px-4 py-2 bg-white/80 backdrop-blur-xl border border-kancah-blue text-kancah-blue text-[10px] font-black uppercase tracking-widest rounded-lg opacity-0 scale-90 pointer-events-none transition-all duration-300 shadow-xl whitespace-nowrap z-[110]">
-                    Kancah HQ, Yogyakarta
-                </div>
-
-                <div id="weather-mobile-trigger" class="flex items-center justify-center h-8 min-w-[90px] px-3 bg-transparent border border-kancah-blue border-solid rounded-full select-none tabular-nums cursor-pointer active:scale-95 transition-transform">
-                    <div class="flex items-center justify-center gap-2 font-black text-[13px] text-[#111111] leading-none tracking-tight">
-                        <span id="nav-time-mobile">00:00</span>
-                        <span class="text-kancah-blue font-black">|</span>
-                        <span id="nav-temp-mobile">--°C</span>
-                    </div>
-                </div>
-            </div>
-
-            <a href="contact" class="hidden sm:flex items-center justify-center h-[52px] px-8 bg-kancah-blue text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-full hover:bg-[#111111] transition-all">
-                Talk <i class="fa-solid fa-arrow-right -rotate-45 ml-2 text-[10px]"></i>
-            </a>
-
-            <button class="lg:hidden flex items-center justify-center w-8 h-8 text-[#111111] active:scale-90 transition-transform" id="mobile-menu-button">
-                <i class="fa-solid fa-bars-staggered text-base leading-none"></i>
-            </button>
-        </div>
-    </div>
-</nav>
-
-    <div id="mobile-menu" class="fixed inset-0 bg-white z-[150] flex flex-col justify-center items-center gap-8 translate-x-full transition-transform duration-500 lg:hidden">
-        <button class="absolute top-6 right-6 text-3xl" id="close-menu">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-        <div class="flex flex-col items-center gap-8 text-2xl font-black uppercase tracking-widest text-kancah-dark">
-            <a href="about" class="mobile-link hover:text-kancah-blue transition-colors">Agency</a>
-            <a href="services" class="mobile-link hover:text-kancah-blue transition-colors">Capabilities</a>
-            <a href="works" class="mobile-link hover:text-kancah-blue transition-colors">Work</a>
-            <a href="pricelist" class="mobile-link hover:text-kancah-blue transition-colors">Pricelist</a>
-            <a href="careers" class="mobile-link hover:text-kancah-blue transition-colors">Careers</a>
-            <a href="contact" class="mobile-link px-8 py-3 bg-kancah-blue text-white rounded-full text-sm">Talk to us</a>
-        </div>
-    </div>
-
-    <main class="pt-20 sm:pt-32 pb-16 relative"> 
-        <section id="contact-main" class="relative z-10">
-            <div class="max-w-[1400px] mx-auto px-6 w-full">
-                <div class="mb-8 sm:mb-20 border-b border-gray-100 pb-6 sm:pb-10 flex flex-col md:flex-row justify-between items-end gap-6">
-                    <div class="w-full md:w-auto">
-                        <div class="flex items-center gap-3 mb-2"> 
-                            <span class="text-kancah-blue font-bold text-[10px] sm:text-xs uppercase tracking-[0.3em] block">YUK, HUBUNGI KAMI</span>
-                        </div>
-                        <h1 class="text-[13vw] xs:text-[11vw] sm:text-7xl md:text-8xl font-bold tracking-tighter leading-[0.85] uppercase">
-                            JANGAN <br> <span class="text-kancah-blue italic">SUNGKAN.</span>
-                        </h1>
-                    </div>
-                    <div class="text-left md:text-right max-w-sm w-full">
-                        <p class="text-gray-500 text-sm sm:text-base md:text-lg leading-relaxed font-light">
-                            Nggak harus langsung deal proyek kok. Curhat soal brand, tanya-tanya strategi, atau sekadar ngajak ngopi juga kita gas.
-                        </p>
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 items-start">
-                    <div class="lg:col-span-7 order-1 lg:order-2">
-                        <form id="contact-form" class="space-y-6 sm:space-y-8 bg-white">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                                <div class="relative group">
-                                    <input type="text" id="name" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Nama">
-                                    <label for="name" class="absolute left-0 -top-3.5 text-gray-400 text-xs font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-xs peer-focus:font-bold">Nama Panggilan</label>
-                                </div>
-                                <div class="relative group">
-                                    <input type="text" id="brand" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Brand">
-                                    <label for="brand" class="absolute left-0 -top-3.5 text-gray-400 text-xs font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-xs peer-focus:font-bold">Nama Brand / Bisnis</label>
-                                </div>
-                            </div>
-    
-                            <div class="relative group">
-                                <input type="email" id="email" required class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent" placeholder="Email">
-                                <label for="email" class="absolute left-0 -top-3.5 text-gray-400 text-xs font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-xs peer-focus:font-bold">Email Aktif</label>
-                            </div>
-    
-                            <div class="relative group">
-                                <textarea id="message" required rows="1" class="peer w-full bg-transparent border-b-2 border-gray-200 py-3 sm:py-4 text-xl font-bold text-kancah-dark focus:outline-none focus:border-kancah-blue transition-colors placeholder-transparent resize-none h-auto min-h-[80px]" placeholder="Pesan" oninput="this.style.height = ''; this.style.height = this.scrollHeight + 'px'"></textarea>
-                                <label for="message" class="absolute left-0 -top-3.5 text-gray-400 text-xs font-bold uppercase tracking-widest transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-4 peer-placeholder-shown:font-normal peer-focus:-top-3.5 peer-focus:text-gray-400 peer-focus:text-xs peer-focus:font-bold">Ceritain Dikit Needs Kamu</label>
-                            </div>
-    
-                            <div class="pt-6 sm:pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                                <div class="text-[10px] sm:text-xs font-bold text-gray-300 uppercase tracking-widest max-w-[200px]">
-                                    *Pesanmu akan tetap kita baca, tapi sabar ya, kita bukan robot, hehe.
-                                </div>
-                                <button type="submit" class="w-full sm:w-auto group relative inline-flex items-center justify-center gap-3 bg-kancah-dark text-white px-8 sm:px-10 py-4 sm:py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-kancah-blue transition-all duration-300 shadow-xl hover:shadow-kancah-blue/30 overflow-hidden">
-                                    <span class="relative z-10">Kirim Sinyal</span>
-                                    <i class="fa-solid fa-paper-plane relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
-                                    <div class="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="lg:col-span-5 flex flex-col justify-start h-full order-2 lg:order-1 lg:sticky lg:top-32">
-                        <div class="space-y-8">
-                            <div class="group">
-                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Markas (The Base)</h3>
-                                <p class="text-xl sm:text-2xl font-medium leading-relaxed group-hover:text-kancah-blue transition-colors">
-                                    Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta.
-                                </p>
-                                <a href="https://maps.google.com" target="_blank" class="inline-block mt-2 text-sm font-bold border-b border-kancah-dark pb-0.5 hover:text-kancah-blue hover:border-kancah-blue transition-all">Lihat di Maps <i class="fa-solid fa-arrow-right -rotate-45 ml-1"></i></a>
-                            </div>
-    
-                            <div class="group">
-                                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Jalur Cepat (Direct Line)</h3>
-                                <div class="flex flex-col gap-2">
-                                    <a href="https://wa.me/6289524687866" class="text-2xl sm:text-3xl font-bold hover:text-kancah-blue transition-colors flex items-center gap-3">
-                                        <i class="fa-brands fa-whatsapp text-xl"></i> +62 895-2468-7866
-                                    </a>
-                                    <a href="mailto:kancahcreative@gmail.com" class="text-xl sm:text-3xl font-bold hover:text-kancah-blue transition-colors flex items-center gap-3 break-all sm:break-normal">
-                                        <i class="fa-regular fa-envelope text-xl"></i> kancahcreative@gmail.com
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="p-6 bg-kancah-blue rounded-2xl text-white shadow-lg shadow-kancah-blue/20">
-                                <div class="flex items-start gap-4">
-                                    <i class="fa-solid fa-mug-hot text-white text-2xl mt-1"></i>
-                                    <div>
-                                        <h4 class="font-bold text-lg mb-1">Kopi Gratis.</h4>
-                                        <p class="text-blue-100 text-sm font-light">Main ke kantor aja, baristanya anak desain sendiri (maaf kalau latte art-nya abstrak).</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-kancah-dark text-white overflow-hidden border-t border-white/10 text-sm font-sans" id="contact">
-        <div class="w-full py-3 border-b border-white/10 bg-white/5 backdrop-blur-sm">
-            <div class="footer-marquee-content flex gap-12 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span> • 
-                <span>Strategy</span> • <span>Branding</span> • <span>Digital</span> • <span>Motion</span> • <span>Development</span>
-            </div>
-        </div>
-        <div class="max-w-[1400px] mx-auto px-6 pt-10 pb-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8">
-                <div class="lg:col-span-5 flex flex-col justify-start items-start">
-                    <h2 class="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter leading-[0.9] text-white mb-8">
-                        PUNYA IDE? <br> <span class="text-kancah-blue italic">OBROLIN AJA.</span>
-                    </h2>
-                    <a href="contact" class="group inline-flex items-center justify-center gap-3 bg-white text-kancah-dark px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-kancah-blue hover:text-white transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,6,255,0.3)] hover:-translate-y-1">
-                        Ayo Diskusi
-                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
-                    </a>
-                </div>
-                <div class="lg:col-span-4 flex flex-col gap-6">
-                    <div>
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Office</h4>
-                        <address class="not-italic font-medium text-gray-300 leading-relaxed text-sm">
-                            <p>Jalan Anggajaya 2, Condongcatur,<br>Depok, Sleman, Yogyakarta 55281</p>
-                        </address>
-                    </div>
-                    <div class="flex flex-col gap-2">
-                        <a href="mailto:kancahcreative@gmail.com" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
-                            <i class="fa-regular fa-envelope"></i> kancahcreative@gmail.com
-                        </a>
-                        <a href="https://wa.me/62895246878660" class="text-sm font-bold text-white hover:text-kancah-blue transition-colors flex items-center gap-2 w-max">
-                            <i class="fa-brands fa-whatsapp"></i> +62 812-3456-7890
-                        </a>
-                    </div>
-                </div>
-                <div class="lg:col-span-3 grid grid-cols-2 gap-8">
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Menu</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="services" class="text-white hover:text-kancah-blue transition-colors">Services</a></li>
-                            <li><a href="works" class="text-white hover:text-kancah-blue transition-colors">Work</a></li>
-                            <li><a href="pricelist" class="text-white hover:text-kancah-blue transition-colors">Pricelist</a></li>
-                            <li><a href="about" class="text-white hover:text-kancah-blue transition-colors">About</a></li>
-                            <li><a href="careers" class="text-white hover:text-kancah-blue transition-colors">Careers</a></li>
-                        </ul>
-                    </div>
-                    <div class="flex flex-col gap-4">
-                        <h4 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Socials</h4>
-                        <ul class="flex flex-col gap-3 font-medium text-sm">
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Instagram</a></li>
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">LinkedIn</a></li>
-                            <li><a href="#" class="text-white hover:text-kancah-blue transition-colors">Behance</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="border-t border-white/10 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-500 font-bold tracking-widest uppercase gap-4">
-                <p class="text-center md:text-left">© 2025 PT. Kancah Media Sejahtera.</p>
-                <div class="flex gap-6">
-                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        async function updateWeather() {
-            try {
-                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-7.7956&longitude=110.3695&current_weather=true');
-                const data = await res.json();
-                if (data?.current_weather) {
-                    const t = Math.round(data.current_weather.temperature) + "°C";
-                    if(document.getElementById('nav-temp')) document.getElementById('nav-temp').innerText = t;
-                    if(document.getElementById('nav-temp-mobile')) document.getElementById('nav-temp-mobile').innerText = t;
-                }
-            } catch (e) {}
-        }
-
-        function updateClock() {
-            const n = new Date();
-            const h = String(n.getHours()).padStart(2,'0'), m = String(n.getMinutes()).padStart(2,'0'), s = String(n.getSeconds()).padStart(2,'0');
-            if(document.getElementById('nav-time')) document.getElementById('nav-time').innerText = `${h}:${m}:${s}`;
-            if(document.getElementById('nav-time-mobile')) document.getElementById('nav-time-mobile').innerText = `${h}:${m}`;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            updateWeather(); updateClock(); setInterval(updateClock, 1000);
-            
-            const trigger = document.getElementById('weather-mobile-trigger');
-            const popup = document.getElementById('location-popup');
-
-            if (trigger && popup) {
-                trigger.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const isOpen = popup.classList.contains('opacity-100');
-                    if (isOpen) {
-                        popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-                        popup.classList.remove('opacity-100', 'scale-100');
-                    } else {
-                        popup.classList.remove('opacity-0', 'scale-90', 'pointer-events-none');
-                        popup.classList.add('opacity-100', 'scale-100');
-                        setTimeout(() => {
-                            popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-                            popup.classList.remove('opacity-100', 'scale-100');
-                        }, 3000);
-                    }
-                });
-                document.addEventListener('click', () => {
-                    popup.classList.add('opacity-0', 'scale-90', 'pointer-events-none');
-                    popup.classList.remove('opacity-100', 'scale-100');
-                });
-            }
-
-            const btn = document.getElementById('mobile-menu-button'), 
-                  menu = document.getElementById('mobile-menu'),
-                  close = document.getElementById('close-menu'),
-                  body = document.body;
-
-            const openMenu = () => {
-                menu.classList.replace('translate-x-full', 'translate-x-0');
-                body.style.overflow = 'hidden';
-            };
-            const closeMenu = () => {
-                menu.classList.replace('translate-x-0', 'translate-x-full');
-                body.style.overflow = '';
-            };
-
-            if(btn) btn.onclick = (e) => { e.stopPropagation(); openMenu(); };
-            if(close) close.onclick = (e) => { e.stopPropagation(); closeMenu(); };
-            document.querySelectorAll('.mobile-link').forEach(l => l.onclick = () => closeMenu());
-
-            // WHATSAPP FORM LOGIC
-            const contactForm = document.getElementById('contact-form');
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const name = document.getElementById('name').value;
-                const brand = document.getElementById('brand').value;
-                const email = document.getElementById('email').value;
-                const message = document.getElementById('message').value;
-                const phoneNumber = "62895339328011"; 
-                const fullMessage = `Halo Kancah Agency! 👋%0A%0A` +
-                                    `*Nama:* ${name}%0A` +
-                                    `*Brand:* ${brand}%0A` +
-                                    `*Email:* ${email}%0A%0A` +
-                                    `*Pesan:*%0A${message}`;
-                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${fullMessage}`;
-                window.open(whatsappUrl, '_blank');
-            });
-        });
-    </script>
+<body data-page="contact">
+<header id="hd"></header>
+<main>
+<section class="ph sm"><div class="wrap">
+<div class="stitle rv"><span>Kontak</span><i></i></div>
+<h1 class="rv">Ceritakan kebutuhan Anda, kami <span class="sel">dengarkan.</span></h1>
+<p class="lead rv">Tidak perlu langsung memutuskan proyek. Anda bisa berdiskusi lebih dulu tentang brand, strategi, atau kebutuhan digital yang sedang dipertimbangkan.</p>
+</div></section>
+<section class="light"><div class="wrap"><div class="split">
+<div>
+<div class="info-b rv"><b>Kantor</b><p>Jalan Anggajaya 2, Condongcatur, Depok, Sleman, Yogyakarta 55281</p><a class="lnk" href="https://www.google.com/maps/search/?api=1&query=Jalan+Anggajaya+2+Condongcatur+Depok+Sleman+Yogyakarta" target="_blank" rel="noopener">Lihat di Maps</a></div>
+<div class="info-b rv"><b>Hubungi langsung</b><a href="https://wa.me/6289524687866" target="_blank" rel="noopener">+62 895-2468-7866</a><a href="mailto:kancahcreative@gmail.com">kancahcreative@gmail.com</a></div>
+<div class="info-b rv"><b>Kunjungan</b><p class="sub" style="margin-top:0">Anda dipersilakan berkunjung ke kantor kami di Yogyakarta. Mohon hubungi kami terlebih dahulu agar jadwal pertemuan dapat disesuaikan.</p></div>
+</div>
+<form id="cf" class="rv" novalidate>
+<div class="f2"><label class="fld"><span>Nama</span><input id="name" required autocomplete="name" placeholder="Nama Anda"></label><label class="fld"><span>Brand atau bisnis</span><input id="brand" required placeholder="Nama brand atau bisnis"></label></div>
+<label class="fld"><span>Email</span><input id="email" type="email" required autocomplete="email" placeholder="nama@email.com"></label>
+<label class="fld"><span>Kebutuhan Anda</span><textarea id="message" required rows="3" placeholder="Jelaskan singkat proyek atau kebutuhan Anda"></textarea></label>
+<div style="display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap"><p style="font-size:13px;opacity:.6;max-width:32ch">Pesan Anda akan dikirim melalui WhatsApp ke tim kami.</p><button class="btn solid" type="submit">Kirim Pesan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg></button></div>
+</form></div></div></section>
+</main>
+<footer id="ft"></footer>
+<script src="/assets/kancah.js"></script>
+<script>
+const f=K.$('#cf');
+f.addEventListener('input',e=>{if(e.target.id==='message'){e.target.style.height='';e.target.style.height=e.target.scrollHeight+'px'}});
+f.addEventListener('submit',e=>{e.preventDefault();
+ if(!f.reportValidity())return;
+ const v=id=>K.$('#'+id).value.trim();
+ const t=`Halo Kancah Creative,\n\nNama: ${v('name')}\nBrand: ${v('brand')}\nEmail: ${v('email')}\n\nKebutuhan:\n${v('message')}`;
+ window.open(`${K.WA}?text=${encodeURIComponent(t)}`,'_blank','noopener');
+ K.toast('Membuka WhatsApp untuk mengirim pesan Anda.');
+});
+</script>
 </body>
 </html>
