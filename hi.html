@@ -213,20 +213,21 @@ const list = document.getElementById('list');
   `).join('');
 })();
 
-// Catat klik melalui RPC, lalu arahkan pengunjung ke link tujuan.
-list.addEventListener('click', async e => {
+// Catat klik via RPC, lalu arahkan ke link tujuan.
+list.addEventListener('click', e => {
   const a = e.target.closest('a.lk');
   if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
   e.preventDefault();
   const id = isNaN(a.dataset.id) ? a.dataset.id : Number(a.dataset.id);
 
-  await Promise.race([
-    sb.rpc('increment_link_clicks', { link_id: id }).catch(() => {}),
-    new Promise(resolve => setTimeout(resolve, 800))
-  ]);
+  let done = false;
+  const go = () => { if (done) return; done = true; location.href = a.href; };
 
-  location.href = a.href;
+  setTimeout(go, 800); // jaga-jaga kalau RPC lambat
+  try {
+    sb.rpc('increment_link_clicks', { link_id: id }).then(go, go);
+  } catch (_) { go(); }
 });
 </script>
 </body>
